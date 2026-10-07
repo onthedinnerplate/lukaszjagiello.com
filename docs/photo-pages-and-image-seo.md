@@ -18,7 +18,8 @@ on Render's small instance.
 | Path | What it is |
 |---|---|
 | `lib/photos.js` | The 46 photos: `src` (lightbox full), `thumb`, `alt`, `title`. Order = gallery order. Filenames are `lukasz-jagiello-NN-*.webp`; **NN is the photo's stable identity.** |
-| `lib/photo-data.js` | Server-only. `getPhotos()` measures each full and thumb with sharp at build time → adds `width`, `height`, `thumbWidth`, `thumbHeight`, `color`, and prefixes `src`/`thumb` with `/`. Use this in `getStaticProps`; never import `photos.js` directly into a page. |
+| `lib/photo-data.js` | Server-only. `getPhotos()` / `getHero()` read dimensions and dominant colour from `lib/photo-manifest.json` (no image work) and add `thumbWidth`, `thumbHeight`, `href`, and the leading `/` on `src`/`thumb`. Use this in `getStaticProps`; never import `photos.js` directly into a page. |
+| `lib/photo-manifest.json` + `scripts/generate-photo-manifest.mjs` | Written in `prebuild` (`npm run manifest`): sharp measures all 46 fulls + thumbs + hero **once** (~9 s). Committed so dev works without running it. |
 | `lib/photoMetadata.js` | EXIF per photo number: `camera`, `lens`, `focal_length`, `shutter_speed`, `aperture`, `iso`. |
 | `lib/photoCaption.js` | `photoNumberFromSrc(src)` → NN; `captionFor(photo)` → `{ equipment, specs }` display strings; `gearFromMetadata()` for the About page. |
 | `lib/site.js` | `SITE_URL`, `site` (name, photographer, email, `ogImage`, `homeFeatured` list), `absoluteUrl()`. |
@@ -32,6 +33,39 @@ on Render's small instance.
 | `public/images/gallery/` | `lukasz-jagiello-NN-thumb.webp` (800px long edge). |
 | `public/images/gallery/lightbox/` | `lukasz-jagiello-NN-full.webp` (1600px long edge). |
 | `public/og-image.jpg` | Site-wide 1200×630 share image. |
+
+---
+
+## Build rule: no image work in page code
+
+**Anything that opens an image file — `sharp`, `metadata()`, `stats()`, resizing,
+encoding — runs in a `prebuild` script, never in `getStaticProps`,
+`getStaticPaths`, API routes, or `next.config.mjs`.**
+
+Why this is a hard rule here: `next build` renders pages across ~11 worker
+processes, each with its own module scope. A module-level cache does **not**
+protect you — every worker still pays the full cost once. When the 46 photo
+pages landed, `getPhotos()` was decoding all 92 WebPs per worker
+(`sharp.stats()` fully decodes a 1–1.8 MB file to find the dominant colour),
+and every page blew Next's 60-second static-generation limit on Render's
+instance. The build failed outright.
+
+The fix that shipped, and the pattern to follow for anything similar:
+
+1. Do the heavy work in a script (`scripts/generate-photo-manifest.mjs`).
+2. Write the result to a JSON file in `lib/` (`lib/photo-manifest.json`).
+3. Import the JSON from page code. Zero I/O at page-generation time.
+4. Add the script to `"prebuild"` in `package.json` so Render regenerates it
+   on every deploy, and **commit the JSON** so `npm run dev` works cold.
+
+Related rules that have already bitten this project once:
+
+* Keep `unoptimized` on every `next/image`. The on-demand optimizer caused
+  intermittent blank tiles on Render; all image variants are pre-encoded.
+* With `unoptimized`, `next/image` emits no `srcset`. Responsive thumbs are
+  declared on a `<picture><source srcSet>` wrapper (see `MasonryGallery.js`).
+* Image scripts (`thumbs`, `fulls`, `og`) are run **locally** and their output
+  committed — they are not part of the Render build.
 
 ---
 
@@ -274,7 +308,7 @@ needed).
 - [ ] `width`/`height` present on every image
 
 **Verify**
-- [ ] `npm run build` passes (46 photo pages in the build output)
+- [ ] `npm run build` passes (46 photo pages in the build output), with **no** "took more than 60 seconds" lines — page generation must not touch image files (see *Build rule*)
 - [ ] Paste a photo URL into iMessage / Slack / LinkedIn Post Inspector → the photo shows, not the site card
 - [ ] Google Rich Results Test on one photo page: `ImageObject` valid, no errors
 - [ ] `/sitemap.xml` lists 50 URLs (4 pages + 46 photos)
