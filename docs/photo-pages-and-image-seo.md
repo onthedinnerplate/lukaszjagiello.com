@@ -195,6 +195,65 @@ from the new fulls.
 
 ---
 
+## Locations
+
+Each entry in `lib/photos.js` now has a `location` field. **Where it is an
+empty string, omit the location line and `contentLocation` on the page — do
+not guess.** 20 are confirmed by the photographer; 26 are blank
+and for Łukasz to fill in (edit the string in `lib/photos.js`; no other change
+needed).
+
+| NN | Title | Location |
+|---|---|---|
+| 01 | Flag Bearer | Jamaica |
+| 02 | Jamaican Dance Troupe | Jamaica |
+| 03 | Negril Lighthouse | Negril, Jamaica |
+| 04 | Negril Lighthouse at Dusk | Negril, Jamaica |
+| 05 | Lone Boat Under Storm Clouds | **— fill in —** |
+| 06 | After the Storm | **— fill in —** |
+| 07 | Anchorage at Sunset | **— fill in —** |
+| 08 | Alcatraz Water Tower | Alcatraz Island, San Francisco |
+| 09 | Streetcar 1057 | San Francisco |
+| 10 | Cable Car on the Hill | San Francisco |
+| 11 | Golden Gate Surf | Golden Gate Bridge, San Francisco |
+| 12 | Golden Gate Long Exposure | Golden Gate Bridge, San Francisco |
+| 13 | Powell–Market Cable Car | San Francisco |
+| 14 | Painted Ladies | Alamo Square, San Francisco |
+| 15 | Golden Gate from Fort Point | Golden Gate Bridge, San Francisco |
+| 16 | Looking Up the Tower | Golden Gate Bridge, San Francisco |
+| 17 | Redwood Highway | **— fill in —** |
+| 18 | Elk in Tall Grass | **— fill in —** |
+| 19 | Smith River Canyon | Smith River, Highway 199, Northern California |
+| 20 | Green Iguana in the Reeds | **— fill in —** |
+| 21 | Iguana in the Palms | **— fill in —** |
+| 22 | Iguana Foraging | **— fill in —** |
+| 23 | Slot Canyon Light | **— fill in —** |
+| 24 | Beached Boat | **— fill in —** |
+| 25 | Swim Line at Sunset | **— fill in —** |
+| 26 | Bear Among the Logs | **— fill in —** |
+| 27 | Aspen Canopy | **— fill in —** |
+| 28 | Forgotten Homestead | **— fill in —** |
+| 29 | Squirrel Monkey | **— fill in —** |
+| 30 | Rainbow Umbrellas | **— fill in —** |
+| 31 | Black Oystercatcher | **— fill in —** |
+| 32 | Seattle Skyline | Seattle, Washington |
+| 33 | Under Full Sail | **— fill in —** |
+| 34 | Myrtle Falls | Mount Rainier National Park, Washington |
+| 35 | Steller's Jay | **— fill in —** |
+| 36 | Christine Falls | Mount Rainier National Park, Washington |
+| 37 | Snoqualmie Falls | Snoqualmie Falls, Washington |
+| 38 | Snoqualmie Falls from Above | Snoqualmie Falls, Washington |
+| 39 | Ruby Beach | Ruby Beach, Washington |
+| 40 | Mossy Rainforest | **— fill in —** |
+| 41 | Hidden Falls | **— fill in —** |
+| 42 | Bighorn in the Shadows | **— fill in —** |
+| 43 | Phainopepla | **— fill in —** |
+| 44 | Burrowing Owl on a Log | **— fill in —** |
+| 45 | Owl at the Burrow | **— fill in —** |
+| 46 | Bald Eagle | **— fill in —** |
+
+---
+
 ## Checklist
 
 **Per-photo pages**
