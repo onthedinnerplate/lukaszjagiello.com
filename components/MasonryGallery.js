@@ -42,16 +42,22 @@ export default function MasonryGallery({ photos, wide = false, priorityCount = 0
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // Shared links look like /gallery#photo-12 — open that photo on arrival.
+  // Shared links look like /gallery#photo-12 — open that photo on arrival,
+  // including when the hash changes without a full reload.
   useEffect(() => {
-    const m = window.location.hash.match(/^#photo-(\d+)$/);
-    if (!m) return;
-    const n = parseInt(m[1], 10);
-    const idx = photos.findIndex((p) => photoNumberFromSrc(p.src) === n);
-    if (idx >= 0) {
-      setSelectedIndex(idx);
-      setLightboxOpen(true);
-    }
+    const openFromHash = () => {
+      const m = window.location.hash.match(/^#photo-(\d+)$/);
+      if (!m) return;
+      const n = parseInt(m[1], 10);
+      const idx = photos.findIndex((p) => photoNumberFromSrc(p.src) === n);
+      if (idx >= 0) {
+        setSelectedIndex(idx);
+        setLightboxOpen(true);
+      }
+    };
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+    return () => window.removeEventListener('hashchange', openFromHash);
   }, [photos]);
 
   const handleImageClick = (index) => {

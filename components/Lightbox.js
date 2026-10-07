@@ -24,9 +24,14 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
         /* unsupported or not allowed — plain overlay is fine */
       }
     }
+    // Only treat a fullscreen exit as "close" after we actually entered it.
+    // A shared /gallery#photo-NN link opens the lightbox on load, without a
+    // user gesture, so requestFullscreen is rejected and must not dismiss it.
+    let entered = false;
     const onFsChange = () => {
       const fsEl = doc.fullscreenElement || doc.webkitFullscreenElement;
-      if (!fsEl) onClose();
+      if (fsEl) entered = true;
+      else if (entered) onClose();
     };
     doc.addEventListener('fullscreenchange', onFsChange);
     doc.addEventListener('webkitfullscreenchange', onFsChange);
