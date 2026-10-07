@@ -89,24 +89,26 @@
   .heroGridItem:nth-child(4) { animation-delay: 360ms; }
   .heroGridItem:nth-child(5) { animation-delay: 460ms; }
 
+  /* Scale about the photo's focal point (same value as object-position), so the
+     subject — bridge tower, waterfall — stays in frame at maximum zoom. */
   .heroGridItem img {
-    transform-origin: center;
+    transform-origin: var(--focus, 50% 50%);
     will-change: transform;
-    animation: heroDrift 26s ease-in-out infinite alternate;
+    animation: heroDrift 20s ease-in-out infinite alternate;
   }
   .heroGridItem:nth-child(2n) img { animation-direction: alternate-reverse; }
-  .heroGridItem:nth-child(2) img { animation-duration: 30s; }
-  .heroGridItem:nth-child(3) img { animation-duration: 24s; }
-  .heroGridItem:nth-child(4) img { animation-duration: 28s; }
-  .heroGridItem:nth-child(5) img { animation-duration: 22s; }
+  .heroGridItem:nth-child(2) img { animation-duration: 24s; }
+  .heroGridItem:nth-child(3) img { animation-duration: 18s; }
+  .heroGridItem:nth-child(4) img { animation-duration: 22s; }
+  .heroGridItem:nth-child(5) img { animation-duration: 19s; }
 }
 
 @keyframes heroRise {
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes heroDrift {
-  from { transform: scale(1) translate(0, 0); }
-  to   { transform: scale(1.06) translate(-1.2%, 0.8%); }
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
 }
 
 @media (max-width: 900px) {

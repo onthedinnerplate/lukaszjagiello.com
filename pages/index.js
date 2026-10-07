@@ -50,7 +50,7 @@ export default function Home({ hero, photos, total }) {
         {/* Image grid on the right */}
         <div className={styles.heroGrid}>
           {heroImages.map((photo, idx) => (
-            <div key={photo.src} className={styles.heroGridItem}>
+            <div key={photo.src} className={styles.heroGridItem} style={{ '--focus': photo.focus || '50% 50%' }}>
               <Image
                 src={photo.src}
                 alt={photo.alt}
@@ -58,7 +58,7 @@ export default function Home({ hero, photos, total }) {
                 sizes="(max-width: 900px) 50vw, 20vw"
                 priority={idx === 0}
                 unoptimized
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
               />
             </div>
           ))}
