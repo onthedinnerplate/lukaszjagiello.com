@@ -35,6 +35,13 @@ export default function Home({ hero, photos, total }) {
       setLbOpen(true);
     }
   };
+  // Tiles are real links to the photo page (crawlable, middle-clickable);
+  // a plain left click opens the lightbox instead.
+  const onTileClick = (e, photo) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    openPhoto(photo);
+  };
 
   return (
     <>
@@ -77,11 +84,11 @@ export default function Home({ hero, photos, total }) {
               onFocus={() => setHoverIndex(idx === 0 ? null : idx)}
               onBlur={() => setHoverIndex(null)}
             >
-              <button
-                type="button"
+              <Link
+                href={photo.href || '/gallery'}
                 className={styles.heroTileBtn}
-                onClick={() => openPhoto(photo)}
-                aria-label={`View ${photo.title} in fullscreen`}
+                onClick={(e) => onTileClick(e, photo)}
+                aria-label={`${photo.title} — view fullscreen`}
               >
                 <Image
                   src={photo.src}
@@ -92,7 +99,7 @@ export default function Home({ hero, photos, total }) {
                   unoptimized
                   style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
                 />
-              </button>
+              </Link>
               <ShareButton
                 title={photo.title}
                 url={photo.href}

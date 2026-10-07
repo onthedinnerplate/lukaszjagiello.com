@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Lightbox from './Lightbox';
 import ShareButton from './ShareButton';
 import { captionFor, photoNumberFromSrc } from '@/lib/photoCaption';
@@ -64,6 +65,14 @@ export default function MasonryGallery({ photos, wide = false, priorityCount = 0
     setSelectedIndex(index);
     setLightboxOpen(true);
   };
+  // Cards are real links to /photo/<slug> so crawlers (and middle-click,
+  // ctrl/cmd-click, "open in new tab") reach the photo pages. A plain left
+  // click is intercepted to open the lightbox instead.
+  const onCardClick = (e, index) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    handleImageClick(index);
+  };
   const handleCloseLightbox = () => setLightboxOpen(false);
   const handleNextImage = () => setSelectedIndex((prev) => (prev + 1) % photos.length);
   const handlePrevImage = () => setSelectedIndex((prev) => (prev - 1 + photos.length) % photos.length);
@@ -83,12 +92,12 @@ export default function MasonryGallery({ photos, wide = false, priorityCount = 0
               <figure className={styles.figure}>
                 <div className={styles.frame} style={{ backgroundColor: photo.color }}>
                   <ShareButton title={photo.title} url={shareUrl} className={styles.share} toastClassName={styles.toast} wrapperClassName={styles.shareWrap} />
-                  <button
-                    type="button"
+                  <Link
+                    href={photo.href || `/gallery#photo-${num}`}
                     className={styles.imgBtn}
-                    onClick={() => handleImageClick(i)}
-                    aria-label={`View ${photo.title || photo.alt} in fullscreen`}
-                    style={{ display: 'block', width: '100%', background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+                    onClick={(e) => onCardClick(e, i)}
+                    aria-label={`${photo.title || photo.alt} — view fullscreen`}
+                    style={{ display: 'block', width: '100%', cursor: 'pointer' }}
                   >
                     {/* next/image drops srcSet when unoptimized, so the three
                         pre-encoded thumbs are declared on <source>. The img stays
@@ -106,10 +115,12 @@ export default function MasonryGallery({ photos, wide = false, priorityCount = 0
                         className={styles.img}
                       />
                     </picture>
-                  </button>
+                  </Link>
                 </div>
                 <figcaption className={styles.caption}>
-                  <span className={styles.title}>{photo.title}</span>
+                  <span className={styles.title}>
+                    {photo.href ? <Link href={photo.href} className={styles.titleLink}>{photo.title}</Link> : photo.title}
+                  </span>
                   {(equipment || specs) && (
                     <span className={styles.metaBlock}>
                       {equipment && <span className={styles.meta}>{equipment}</span>}
