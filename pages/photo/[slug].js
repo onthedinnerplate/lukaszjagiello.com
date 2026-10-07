@@ -57,21 +57,19 @@ export default function PhotoPage({ photo, prev, next }) {
           />
         </div>
 
-        <h1>{photo.title}</h1>
-
-        {(equipment || specs) && (
-          <div className={styles.photoMeta}>
-            {equipment && <p className={styles.meta}>{equipment}</p>}
-            {specs && <p className={styles.meta}>{specs}</p>}
-          </div>
-        )}
-
-        {(location || photo.coords) && (
-          <div className={styles.placeRow}>
-            {location ? <p className={styles.location}>{location}</p> : <span />}
-            <PhotoMap coords={photo.coords} location={location} title={photo.title} />
-          </div>
-        )}
+        {/* Title + gear on the left; square map card on the right, vertically
+            centred against them. The card carries the place name, so there is
+            no separate location line. Expanded, the map spans the full width. */}
+        <PhotoMap coords={photo.coords} location={location} title={photo.title}>
+          <h1 className={styles.photoTitle}>{photo.title}</h1>
+          {(equipment || specs) && (
+            <div className={styles.photoMeta}>
+              {equipment && <p className={styles.meta}>{equipment}</p>}
+              {specs && <p className={styles.meta}>{specs}</p>}
+            </div>
+          )}
+          {!photo.coords && location ? <p className={styles.location}>{location}</p> : null}
+        </PhotoMap>
 
         <nav className={styles.photoNav} aria-label="Adjacent photographs">
           <Link href={prev.href} rel="prev" className={styles.photoNavLink}>

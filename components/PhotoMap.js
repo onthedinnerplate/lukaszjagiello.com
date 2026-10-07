@@ -2,16 +2,18 @@ import { useState } from 'react';
 import styles from '@/styles/Page.module.css';
 
 /**
- * Where the photo was taken. Collapsed: a small map card (pin + place name)
- * that loads nothing from Google. Click → expands in place into an
- * interactive Google Maps embed (no API key needed for the plain embed URL),
- * with an "Open in Google Maps" link. Click the header again to collapse.
+ * Photo-page header: `children` (title + gear) on the left, a square map card
+ * on the right, vertically centred. The card — pin on top, place name beneath —
+ * loads nothing from Google while closed. Click → an interactive Google Maps
+ * embed (plain embed URL, no API key) opens full-width below the header, with
+ * an "Open in Google Maps" link; click the card again to collapse.
  *
- * Renders nothing when the photo has no coordinates.
+ * With no coordinates it renders just the children (no card).
  */
-export default function PhotoMap({ coords, location, title }) {
+export default function PhotoMap({ coords, location, title, children }) {
   const [open, setOpen] = useState(false);
-  if (!coords || typeof coords.lat !== 'number' || typeof coords.lng !== 'number') return null;
+  const has = coords && typeof coords.lat === 'number' && typeof coords.lng === 'number';
+  if (!has) return <header className={styles.photoHeader}>{children ? <div className={styles.photoHeaderText}>{children}</div> : null}</header>;
 
   const { lat, lng } = coords;
   const zoom = coords.zoom || 13;
@@ -20,25 +22,27 @@ export default function PhotoMap({ coords, location, title }) {
   const label = location || title;
 
   return (
-    <div className={`${styles.map} ${open ? styles.mapOpen : ''}`}>
-      <button
-        type="button"
-        className={styles.mapToggle}
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        aria-controls="photo-map-panel"
-      >
-        <span className={styles.mapTile} aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12z" />
-            <circle cx="12" cy="10" r="2.5" />
-          </svg>
-        </span>
-        <span className={styles.mapText}>
+    <>
+      <header className={styles.photoHeader}>
+        <div className={styles.photoHeaderText}>{children}</div>
+        <button
+          type="button"
+          className={`${styles.mapCard} ${open ? styles.mapCardOpen : ''}`}
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-controls="photo-map-panel"
+          title={open ? 'Hide map' : 'View on map'}
+        >
+          <span className={styles.mapPin} aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12z" />
+              <circle cx="12" cy="10" r="2.5" />
+            </svg>
+          </span>
           <span className={styles.mapLabel}>{label}</span>
           <span className={styles.mapHint}>{open ? 'Hide map' : 'View on map'}</span>
-        </span>
-      </button>
+        </button>
+      </header>
 
       {open && (
         <div id="photo-map-panel" className={styles.mapPanel}>
@@ -54,6 +58,6 @@ export default function PhotoMap({ coords, location, title }) {
           </a>
         </div>
       )}
-    </div>
+    </>
   );
 }
