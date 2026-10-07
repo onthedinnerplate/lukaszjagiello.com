@@ -73,6 +73,42 @@
 .heroGridItem:nth-child(4) { grid-column: 2; grid-row: 2; min-height: 150px; }
 .heroGridItem:nth-child(5) { grid-column: 3; grid-row: 2; min-height: 150px; }
 
+/* Motion — only for people who haven't asked for reduced motion.
+   1) Tiles fade in and rise on load, staggered left-to-right.
+   2) Each image drifts very slowly (Ken Burns), alternating direction per tile,
+      clipped by the rounded tile. GPU-only properties (opacity/transform). */
+@media (prefers-reduced-motion: no-preference) {
+  .heroGridItem {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: heroRise 700ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  }
+  .heroGridItem:nth-child(1) { animation-delay: 60ms; }
+  .heroGridItem:nth-child(2) { animation-delay: 160ms; }
+  .heroGridItem:nth-child(3) { animation-delay: 260ms; }
+  .heroGridItem:nth-child(4) { animation-delay: 360ms; }
+  .heroGridItem:nth-child(5) { animation-delay: 460ms; }
+
+  .heroGridItem img {
+    transform-origin: center;
+    will-change: transform;
+    animation: heroDrift 26s ease-in-out infinite alternate;
+  }
+  .heroGridItem:nth-child(2n) img { animation-direction: alternate-reverse; }
+  .heroGridItem:nth-child(2) img { animation-duration: 30s; }
+  .heroGridItem:nth-child(3) img { animation-duration: 24s; }
+  .heroGridItem:nth-child(4) img { animation-duration: 28s; }
+  .heroGridItem:nth-child(5) img { animation-duration: 22s; }
+}
+
+@keyframes heroRise {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroDrift {
+  from { transform: scale(1) translate(0, 0); }
+  to   { transform: scale(1.06) translate(-1.2%, 0.8%); }
+}
+
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
