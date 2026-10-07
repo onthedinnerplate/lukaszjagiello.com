@@ -1,17 +1,23 @@
-// Regenerates the gallery thumbnails from the full-size lightbox WebPs.
+// Regenerates gallery thumbnails from the full-size lightbox WebPs.
 //
-// The grid serves thumbs directly (no on-demand optimizer), so they need to be
-// large enough for a desktop column (~450–500px CSS, 2x on retina). Default is
-// 800px on the long edge, WebP quality 80. Filenames are unchanged, so nothing
-// in lib/photos.js needs to be touched afterwards.
+// The grid serves these files directly (next/image is unoptimized), with an
+// explicit srcSet of three long-edge sizes:
+//   *-thumb-400.webp   400px
+//   *-thumb.webp        800px  (unchanged filename)
+//   *-thumb-1200.webp  1200px
 //
-//   npm run thumbs                 # all 46, 800px long edge
-//   npm run thumbs -- --size=1000  # different long edge
-//   npm run thumbs -- --quality=85 # different WebP quality
+// WebP quality 80, effort 6. Budgets are approximate: 400 ≈ 15–40 KB,
+// 800 ≈ 30–160 KB, 1200 ≈ 80–300 KB.
 //
-// Run this locally, then commit the updated public/images/gallery/*-thumb.webp.
+//   npm run thumbs
+//   npm run thumbs -- --quality=85
+//
+// `--size` still overrides the middle (800) variant's long edge. Leave it at
+// 800 so the gallery srcSet widths stay correct.
+//
+// Run this locally, then commit public/images/gallery/*-thumb*.webp.
 
-import { existsSync, statSync } from 'node:fs';
+import { existsSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -23,10 +29,16 @@ const arg = (name, fallback) => {
   const hit = process.argv.find((a) => a.startsWith(`--${name}=`));
   return hit ? Number(hit.split('=')[1]) : fallback;
 };
-const SIZE = arg('size', 800);
+const LEGACY_SIZE = arg('size', 800);
 const QUALITY = arg('quality', 80);
 
 const kb = (bytes) => `${(bytes / 1024).toFixed(0)} KB`;
+
+const variantsFor = (thumbRel) => [
+  { edge: 400, budget: 40 * 1024, rel: thumbRel.replace(/-thumb\.webp$/, '-thumb-400.webp') },
+  { edge: LEGACY_SIZE, budget: 160 * 1024, rel: thumbRel },
+  { edge: 1200, budget: 300 * 1024, rel: thumbRel.replace(/-thumb\.webp$/, '-thumb-1200.webp') },
+];
 
 let ok = 0;
 let failed = 0;
@@ -35,31 +47,47 @@ let after = 0;
 
 for (const p of photos) {
   const src = path.join(root, p.src);
-  const out = path.join(root, p.thumb);
-  const name = path.basename(out);
-
   if (!existsSync(src)) {
-    console.error(`✗ ${name}: source missing (${p.src})`);
+    console.error(`✗ ${p.thumb}: source missing (${p.src})`);
     failed++;
     continue;
   }
 
-  try {
-    const oldSize = existsSync(out) ? statSync(out).size : 0;
-    before += oldSize;
+  for (const variant of variantsFor(p.thumb)) {
+    const out = path.join(root, variant.rel);
+    const name = path.basename(out);
+    try {
+      const oldSize = existsSync(out) ? statSync(out).size : 0;
+      before += oldSize;
 
-    const info = await sharp(src)
-      .rotate() // honour EXIF orientation if any survived
-      .resize({ width: SIZE, height: SIZE, fit: 'inside', withoutEnlargement: true })
-      .webp({ quality: QUALITY, effort: 6 })
-      .toFile(out);
+      // Start at the requested quality and step down only when a frame misses
+      // its approximate size budget. Dimensions stay on the long-edge target.
+      let quality = QUALITY;
+      let buf = await sharp(src)
+        .rotate()
+        .resize({ width: variant.edge, height: variant.edge, fit: 'inside', withoutEnlargement: true })
+        .webp({ quality, effort: 6 })
+        .toBuffer();
+      while (buf.length > variant.budget && quality > 60) {
+        quality -= 4;
+        buf = await sharp(src)
+          .rotate()
+          .resize({ width: variant.edge, height: variant.edge, fit: 'inside', withoutEnlargement: true })
+          .webp({ quality, effort: 6 })
+          .toBuffer();
+      }
+      writeFileSync(out, buf);
+      const meta = await sharp(buf).metadata();
 
-    after += info.size;
-    ok++;
-    console.log(`✓ ${name}  ${info.width}×${info.height}  ${kb(oldSize)} → ${kb(info.size)}`);
-  } catch (err) {
-    failed++;
-    console.error(`✗ ${name}: ${err.message}`);
+      after += buf.length;
+      ok++;
+      const qNote = quality === QUALITY ? '' : `  q${quality}`;
+      const over = buf.length > variant.budget ? `  over ~${kb(variant.budget)} budget` : '';
+      console.log(`✓ ${name}  ${meta.width}×${meta.height}  ${kb(oldSize)} → ${kb(buf.length)}${qNote}${over}`);
+    } catch (err) {
+      failed++;
+      console.error(`✗ ${name}: ${err.message}`);
+    }
   }
 }
 
