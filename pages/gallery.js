@@ -31,7 +31,7 @@ export default function Gallery({ photos }) {
           <h1 id="gallery-heading">Gallery</h1>
           <p className={styles.lede}>{photos.length} photographs.</p>
         </header>
-        <MasonryGallery photos={photos} wide eagerCount={3} headingId="gallery-heading" />
+        <MasonryGallery photos={photos} wide headingId="gallery-heading" />
       </section>
     </>
   );

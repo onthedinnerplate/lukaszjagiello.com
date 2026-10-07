@@ -79,7 +79,7 @@ export default function Home({ hero, photos, total }) {
                 alt={photo.alt}
                 fill
                 sizes="(max-width: 900px) 50vw, 20vw"
-                priority={idx === 0}
+                {...(idx === 0 ? { priority: true } : { loading: 'lazy' })}
                 unoptimized
                 style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
               />
