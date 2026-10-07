@@ -72,7 +72,7 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
               </p>
             )}
             {specsLine && (
-              <p style={{ fontSize: '0.90em', opacity: 0.70, margin: '0.25rem 0 0 0', fontFamily: 'monospace' }}>
+              <p style={{ fontSize: '0.80em', opacity: 0.8, margin: '0.10rem 0 0 0', fontWeight: 500 }}>
                 {specsLine}
               </p>
             )}

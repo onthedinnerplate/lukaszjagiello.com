@@ -86,7 +86,7 @@ export default function MasonryGallery({ photos, wide = false, eagerCount = 0, h
                     </span>
                   )}
                   {specsLine && (
-                    <span style={{ display: 'block', fontSize: '0.75em', opacity: 0.65, marginTop: '0.15rem', fontFamily: 'monospace' }}>
+                    <span style={{ display: 'block', fontSize: '0.80em', opacity: 0.8, marginTop: '0.10rem', fontWeight: 500 }}>
                       {specsLine}
                     </span>
                   )}
