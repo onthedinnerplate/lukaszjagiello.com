@@ -13,8 +13,7 @@ const SIZES_WIDE = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 34vw';
  * 3-column masonry (CSS multi-column). Photos keep their true aspect ratio —
  * nothing is cropped, which matters for a photographer's portfolio.
  *
- * Caption under each photo, stacked:
- *   Title
+ * Caption under each photo: title on the left; on the right, stacked,
  *   Camera · Lens
  *   focal | shutter | aperture | ISO
  * Click any photo for the lightbox (Esc closes, arrows navigate).
@@ -60,8 +59,12 @@ export default function MasonryGallery({ photos, wide = false, eagerCount = 0, h
                 </div>
                 <figcaption className={styles.caption}>
                   <span className={styles.title}>{photo.title}</span>
-                  {equipment && <span className={styles.meta}>{equipment}</span>}
-                  {specs && <span className={styles.meta}>{specs}</span>}
+                  {(equipment || specs) && (
+                    <span className={styles.metaBlock}>
+                      {equipment && <span className={styles.meta}>{equipment}</span>}
+                      {specs && <span className={styles.meta}>{specs}</span>}
+                    </span>
+                  )}
                 </figcaption>
               </figure>
             </li>

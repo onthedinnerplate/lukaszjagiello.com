@@ -47,8 +47,12 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
 
         <div className={styles.caption}>
           {photo.title && <h2 className={styles.title}>{photo.title}</h2>}
-          {equipment && <p className={styles.meta}>{equipment}</p>}
-          {specs && <p className={styles.meta}>{specs}</p>}
+          {(equipment || specs) && (
+            <div className={styles.metaBlock}>
+              {equipment && <p className={styles.meta}>{equipment}</p>}
+              {specs && <p className={styles.meta}>{specs}</p>}
+            </div>
+          )}
         </div>
       </div>
 

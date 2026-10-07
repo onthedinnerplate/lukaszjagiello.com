@@ -130,16 +130,31 @@
   width: 100%;
   color: white;
   padding: 1rem var(--gutter) 0.25rem;
-  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.metaBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  flex: 0 0 auto;
+}
+@media (max-width: 640px) {
+  .caption { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+  .metaBlock { align-items: flex-start; text-align: left; }
 }
 
 .title {
-  margin: 0 0 0.35rem 0;
+  margin: 0;
+  flex: 1 1 auto;
   font-size: 1.25rem;
   font-weight: 600;
 }
 .meta {
-  margin: 0.15rem 0 0 0;
+  margin: 0;
   font-size: 0.9375rem;
   font-weight: 500;
   line-height: 1.35;
