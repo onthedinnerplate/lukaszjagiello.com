@@ -15,8 +15,8 @@ const meta = {
 };
 
 export default function Home({ hero, photos, total }) {
-  // Hero collage = first four of the curated homepage set (cover-cropped to the grid).
-  const heroImages = photos.slice(0, 4);
+  // Hero collage = first `heroCount` of the curated homepage set (cover-cropped to the grid).
+  const heroImages = photos.slice(0, site.heroCount || 4);
 
   return (
     <>
@@ -55,7 +55,7 @@ export default function Home({ hero, photos, total }) {
                 src={photo.src}
                 alt={photo.alt}
                 fill
-                sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 900px) 50vw, 20vw"
                 priority={idx === 0}
                 unoptimized
                 style={{ objectFit: 'cover' }}
