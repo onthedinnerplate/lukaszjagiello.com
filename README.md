@@ -53,16 +53,11 @@ Turnstile) at the same time, because the IP rate limit can be spoofed.
 
 ## Deploying to Render
 
-**Today (inside the cookbook repo):** New → Web Service → this repo, then set:
-Root Directory `lukaszjagiello-com`, Build `npm ci && npm run build`,
-Start `npm start`, Health check `/`, and add the env vars from `render.yaml`.
-
-**Recommended: move it to its own repo** so that `render.yaml` works as a Blueprint:
-```bash
-git subtree split --prefix=lukaszjagiello-com -b lukaszjagiello-site
-# create an empty GitHub repo, then:
-git push git@github.com:<you>/lukaszjagiello-com.git lukaszjagiello-site:main
-```
+`render.yaml` at the repo root is a Render Blueprint. In Render go to
+New → Blueprint, pick this repo and apply it. That creates the `lukaszjagiello-com` web
+service with its build/start commands, health check, env vars and custom domains.
+Set `RESEND_API_KEY` in the dashboard when contact delivery is wired up
+(it's declared `sync: false`, so it's never stored in git).
 
 **Domain:** add `lukaszjagiello.com` and `www.lukaszjagiello.com` under the
 service's Custom Domains, then create the DNS records Render shows you. Render

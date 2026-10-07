@@ -1,9 +1,6 @@
 # Render Blueprint for lukaszjagiello.com
 #
-# Render reads render.yaml only from the ROOT of a repository. This file is
-# written for the site living in its own repo (see README → "Move to its own
-# repo"). While it still sits inside the cookbook repo, create the service from
-# the dashboard instead and set Root Directory = lukaszjagiello-com.
+# New → Blueprint in the Render dashboard, then select this repo.
 services:
   - type: web
     name: lukaszjagiello-com
