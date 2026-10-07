@@ -49,7 +49,6 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
         {photo.title && (
           <div className={styles.caption}>
             <h2 className={styles.title}>{photo.title}</h2>
-            {photo.tag && <span className={styles.tag}>{photo.tag}</span>}
           </div>
         )}
       </div>

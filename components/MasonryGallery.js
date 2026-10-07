@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Lightbox from './Lightbox';
-import { LOCATIONS, locationSlug } from '@/lib/photos';
 import styles from '@/styles/Gallery.module.css';
 
 // Responsive `sizes` matching the column breakpoints in Gallery.module.css,
@@ -13,17 +12,12 @@ const SIZES_WIDE = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 34vw';
  * 3-column masonry (CSS multi-column). Photos keep their true aspect ratio —
  * nothing is cropped, which matters for a photographer's portfolio.
  *
- * Filtering: every tile carries data-location; the filter bar renders only
- * when `filterable` is true (NEXT_PUBLIC_GALLERY_FILTERS=true). The logic is
- * already wired, so activation is a config flip, not a code change.
+ * Location data is read from image metadata. Click any photo to view it
+ * fullscreen with keyboard navigation (Escape to close, arrow keys to navigate).
  */
-export default function MasonryGallery({ photos, filterable = false, wide = false, eagerCount = 0, headingId }) {
-  const [active, setActive] = useState('all');
+export default function MasonryGallery({ photos, wide = false, eagerCount = 0, headingId }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const visible = active === 'all' ? photos : photos.filter((p) => locationSlug(p.location) === active);
-  const filters = [{ slug: 'all', label: 'All' }, ...LOCATIONS.map((l) => ({ slug: locationSlug(l), label: l }))];
 
   const handleImageClick = (index) => {
     setSelectedIndex(index);
@@ -35,39 +29,18 @@ export default function MasonryGallery({ photos, filterable = false, wide = fals
   };
 
   const handleNextImage = () => {
-    setSelectedIndex((prev) => (prev + 1) % visible.length);
+    setSelectedIndex((prev) => (prev + 1) % photos.length);
   };
 
   const handlePrevImage = () => {
-    setSelectedIndex((prev) => (prev - 1 + visible.length) % visible.length);
+    setSelectedIndex((prev) => (prev - 1 + photos.length) % photos.length);
   };
 
   return (
     <div className={styles.wrap}>
-      {filterable && (
-        <div className={styles.filters} role="group" aria-label="Filter photos by location">
-          {filters.map(({ slug, label }) => (
-            <button
-              key={slug}
-              type="button"
-              className={styles.filter}
-              data-filter={slug}
-              aria-pressed={active === slug}
-              onClick={() => setActive(slug)}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      )}
-      {filterable && (
-        <p className={styles.srOnly} aria-live="polite">
-          Showing {visible.length} of {photos.length} photos
-        </p>
-      )}
       <ul className={styles.masonry} aria-labelledby={headingId}>
-        {visible.map((photo, i) => (
-          <li key={photo.id} className={styles.item} data-location={locationSlug(photo.location)}>
+        {photos.map((photo, i) => (
+          <li key={photo.id} className={styles.item}>
             <figure className={styles.figure}>
               <div className={styles.frame} style={{ backgroundColor: photo.color }}>
                 <button
@@ -89,7 +62,6 @@ export default function MasonryGallery({ photos, filterable = false, wide = fals
               </div>
               <figcaption className={styles.caption}>
                 <span className={styles.title}>{photo.title}</span>
-                <span className={styles.tag}>{photo.location}</span>
               </figcaption>
             </figure>
           </li>
@@ -98,7 +70,7 @@ export default function MasonryGallery({ photos, filterable = false, wide = fals
 
       <Lightbox
         isOpen={lightboxOpen}
-        photo={visible[selectedIndex]}
+        photo={photos[selectedIndex]}
         onClose={handleCloseLightbox}
         onNext={handleNextImage}
         onPrev={handlePrevImage}
