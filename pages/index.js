@@ -5,6 +5,7 @@ import MasonryGallery from '@/components/MasonryGallery';
 import { getPhotos, getHero } from '@/lib/photo-data';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
+import { photoNumberFromSrc } from '@/lib/photoCaption';
 import styles from '@/styles/Home.module.css';
 
 const meta = {
@@ -14,7 +15,7 @@ const meta = {
 };
 
 export default function Home({ hero, photos, total }) {
-  // Get 4 sample images for hero grid
+  // Hero collage = first four of the curated homepage set (cover-cropped to the grid).
   const heroImages = photos.slice(0, 4);
 
   return (
@@ -49,12 +50,14 @@ export default function Home({ hero, photos, total }) {
         {/* Image grid on the right */}
         <div className={styles.heroGrid}>
           {heroImages.map((photo, idx) => (
-            <div key={photo.id} className={styles.heroGridItem}>
+            <div key={photo.src} className={styles.heroGridItem}>
               <Image
                 src={photo.src}
                 alt={photo.alt}
                 fill
                 sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority={idx === 0}
+                unoptimized
                 style={{ objectFit: 'cover' }}
               />
             </div>
@@ -85,5 +88,11 @@ export default function Home({ hero, photos, total }) {
 
 export async function getStaticProps() {
   const [hero, all] = await Promise.all([getHero(), getPhotos()]);
-  return { props: { hero, photos: all.slice(0, site.homeFeaturedCount), total: all.length } };
+  // Curated set, selected by photo number so retitling/reordering photos.js never changes it.
+  const byNumber = new Map(all.map((p) => [photoNumberFromSrc(p.src), p]));
+  const curated = (site.homeFeatured || [])
+    .map((n) => byNumber.get(n))
+    .filter(Boolean);
+  const photos = curated.length ? curated : all.slice(0, site.homeFeaturedCount);
+  return { props: { hero, photos, total: all.length } };
 }
