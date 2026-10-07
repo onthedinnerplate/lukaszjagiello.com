@@ -26,11 +26,10 @@ export default function About() {
           <p className={styles.lede}>Chasing light along the Pacific coast and beyond.</p>
         </header>
 
-        {/* TODO(owner): replace placeholder bio with your own story. */}
         <section aria-labelledby="bio-heading" className={styles.block}>
           <h2 id="bio-heading">Bio</h2>
           <p>
-            I&rsquo;m {site.photographer}, a landscape and wildlife photographer based in the San Francisco Bay Area. My
+            I&rsquo;m {site.photographer}, a landscape and wildlife photographer based in Phoenix, Arizona. My
             work moves between fog-wrapped city landmarks, the rugged sea stacks of the Olympic Peninsula, the kelp
             forests of Monterey Bay and the warm water of Jamaica&rsquo;s coast.
           </p>
@@ -41,6 +40,30 @@ export default function About() {
           <p>
             Prints, licensing and commissions are available — <Link href="/contact">get in touch</Link>.
           </p>
+        </section>
+
+        <section aria-labelledby="locations-heading" className={styles.block}>
+          <h2 id="locations-heading">Where I&rsquo;ve been</h2>
+          <ul style={{ columns: '2', columnGap: '2rem', lineHeight: '1.8' }}>
+            <li>Dominican Republic</li>
+            <li>Jamaica</li>
+            <li>Playa del Carmen, Mexico</li>
+            <li>Puerto Los Cabos, Mexico</li>
+            <li>San Antonio, Texas</li>
+            <li>Williams, Arizona</li>
+            <li>Prescott, Arizona</li>
+            <li>Flagstaff, Arizona</li>
+            <li>Page, Arizona</li>
+            <li>Zion National Park</li>
+            <li>Bryce Canyon</li>
+            <li>Monterey Bay, California</li>
+            <li>San Francisco, California</li>
+            <li>Fort Bragg, California</li>
+            <li>Redwood National Park, California</li>
+            <li>Olympic National Park, Washington</li>
+            <li>Seattle, Washington</li>
+            <li>Port Angeles, Washington</li>
+          </ul>
         </section>
 
         <section aria-labelledby="gear-heading" className={styles.block}>
