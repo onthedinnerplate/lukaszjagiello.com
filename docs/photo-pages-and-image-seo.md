@@ -199,7 +199,7 @@ from the new fulls.
 
 Each entry in `lib/photos.js` now has a `location` field. **Where it is an
 empty string, omit the location line and `contentLocation` on the page — do
-not guess.** 20 are confirmed by the photographer; 26 are blank
+not guess.** 21 are confirmed by the photographer; 25 are blank
 and for Łukasz to fill in (edit the string in `lib/photos.js`; no other change
 needed).
 
@@ -245,7 +245,7 @@ needed).
 | 38 | Snoqualmie Falls from Above | Snoqualmie Falls, Washington |
 | 39 | Ruby Beach | Ruby Beach, Washington |
 | 40 | Mossy Rainforest | **— fill in —** |
-| 41 | Hidden Falls | **— fill in —** |
+| 41 | Marymere Falls | Marymere Falls, Olympic National Park, Washington |
 | 42 | Bighorn in the Shadows | **— fill in —** |
 | 43 | Phainopepla | **— fill in —** |
 | 44 | Burrowing Owl on a Log | **— fill in —** |
