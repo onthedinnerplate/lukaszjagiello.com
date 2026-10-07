@@ -2,17 +2,18 @@
   "name": "lukaszjagiello-com",
   "version": "1.0.0",
   "private": true,
-  "description": "Portfolio website for Łukasz Jagiełło Photography (lukaszjagiello.com).",
+  "description": "Portfolio website for \u0141ukasz Jagie\u0142\u0142o Photography (lukaszjagiello.com).",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-sitemap.mjs",
+    "prebuild": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-photo-manifest.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-sitemap.mjs",
     "build": "next build --webpack",
     "start": "next start",
     "placeholders": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-placeholders.mjs",
     "thumbs": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-thumbs.mjs",
     "fulls": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-fulls.mjs",
     "og": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-og.mjs",
-    "sitemap": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-sitemap.mjs"
+    "sitemap": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-sitemap.mjs",
+    "manifest": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-photo-manifest.mjs"
   },
   "engines": {
     "node": ">=22.12.0"

@@ -1,0 +1,331 @@
+{
+  "photos": {
+    "images/gallery/lightbox/lukasz-jagiello-01-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#080808",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-02-full.webp": {
+      "width": 1600,
+      "height": 1067,
+      "color": "#080808",
+      "thumbWidth": 800,
+      "thumbHeight": 534
+    },
+    "images/gallery/lightbox/lukasz-jagiello-03-full.webp": {
+      "width": 1600,
+      "height": 1067,
+      "color": "#0878a8",
+      "thumbWidth": 800,
+      "thumbHeight": 534
+    },
+    "images/gallery/lightbox/lukasz-jagiello-04-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#080808",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-05-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#080808",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-06-full.webp": {
+      "width": 1600,
+      "height": 1067,
+      "color": "#082838",
+      "thumbWidth": 800,
+      "thumbHeight": 534
+    },
+    "images/gallery/lightbox/lukasz-jagiello-07-full.webp": {
+      "width": 1600,
+      "height": 1067,
+      "color": "#081818",
+      "thumbWidth": 800,
+      "thumbHeight": 534
+    },
+    "images/gallery/lightbox/lukasz-jagiello-08-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#a8c8e8",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-09-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#081808",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-10-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#081808",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-11-full.webp": {
+      "width": 1600,
+      "height": 900,
+      "color": "#085868",
+      "thumbWidth": 800,
+      "thumbHeight": 450
+    },
+    "images/gallery/lightbox/lukasz-jagiello-12-full.webp": {
+      "width": 1600,
+      "height": 2400,
+      "color": "#08a8c8",
+      "thumbWidth": 533,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-13-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#282828",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-14-full.webp": {
+      "width": 1600,
+      "height": 900,
+      "color": "#080808",
+      "thumbWidth": 800,
+      "thumbHeight": 450
+    },
+    "images/gallery/lightbox/lukasz-jagiello-15-full.webp": {
+      "width": 1600,
+      "height": 1067,
+      "color": "#084888",
+      "thumbWidth": 800,
+      "thumbHeight": 534
+    },
+    "images/gallery/lightbox/lukasz-jagiello-16-full.webp": {
+      "width": 1600,
+      "height": 2400,
+      "color": "#0858a8",
+      "thumbWidth": 533,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-17-full.webp": {
+      "width": 1600,
+      "height": 2070,
+      "color": "#080808",
+      "thumbWidth": 618,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-18-full.webp": {
+      "width": 1600,
+      "height": 1000,
+      "color": "#080818",
+      "thumbWidth": 800,
+      "thumbHeight": 500
+    },
+    "images/gallery/lightbox/lukasz-jagiello-19-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#788898",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-20-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#081808",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-21-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#084808",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-22-full.webp": {
+      "width": 1600,
+      "height": 1143,
+      "color": "#080808",
+      "thumbWidth": 800,
+      "thumbHeight": 572
+    },
+    "images/gallery/lightbox/lukasz-jagiello-23-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#081808",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-24-full.webp": {
+      "width": 1600,
+      "height": 1067,
+      "color": "#e8b888",
+      "thumbWidth": 800,
+      "thumbHeight": 534
+    },
+    "images/gallery/lightbox/lukasz-jagiello-25-full.webp": {
+      "width": 1600,
+      "height": 1067,
+      "color": "#080808",
+      "thumbWidth": 800,
+      "thumbHeight": 534
+    },
+    "images/gallery/lightbox/lukasz-jagiello-26-full.webp": {
+      "width": 1600,
+      "height": 1060,
+      "color": "#080808",
+      "thumbWidth": 800,
+      "thumbHeight": 530
+    },
+    "images/gallery/lightbox/lukasz-jagiello-27-full.webp": {
+      "width": 1600,
+      "height": 1067,
+      "color": "#080808",
+      "thumbWidth": 800,
+      "thumbHeight": 534
+    },
+    "images/gallery/lightbox/lukasz-jagiello-28-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#080808",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-29-full.webp": {
+      "width": 1600,
+      "height": 1067,
+      "color": "#181808",
+      "thumbWidth": 800,
+      "thumbHeight": 534
+    },
+    "images/gallery/lightbox/lukasz-jagiello-30-full.webp": {
+      "width": 1600,
+      "height": 1230,
+      "color": "#f8e8e8",
+      "thumbWidth": 800,
+      "thumbHeight": 615
+    },
+    "images/gallery/lightbox/lukasz-jagiello-31-full.webp": {
+      "width": 1600,
+      "height": 2845,
+      "color": "#081818",
+      "thumbWidth": 450,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-32-full.webp": {
+      "width": 1600,
+      "height": 900,
+      "color": "#0888b8",
+      "thumbWidth": 800,
+      "thumbHeight": 450
+    },
+    "images/gallery/lightbox/lukasz-jagiello-33-full.webp": {
+      "width": 1600,
+      "height": 2845,
+      "color": "#f8f8f8",
+      "thumbWidth": 450,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-34-full.webp": {
+      "width": 1600,
+      "height": 2272,
+      "color": "#f8f8f8",
+      "thumbWidth": 563,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-35-full.webp": {
+      "width": 1600,
+      "height": 2036,
+      "color": "#382808",
+      "thumbWidth": 629,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-36-full.webp": {
+      "width": 1600,
+      "height": 2399,
+      "color": "#181808",
+      "thumbWidth": 534,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-37-full.webp": {
+      "width": 1600,
+      "height": 2473,
+      "color": "#080808",
+      "thumbWidth": 518,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-38-full.webp": {
+      "width": 1600,
+      "height": 1067,
+      "color": "#180808",
+      "thumbWidth": 800,
+      "thumbHeight": 534
+    },
+    "images/gallery/lightbox/lukasz-jagiello-39-full.webp": {
+      "width": 1600,
+      "height": 1000,
+      "color": "#281818",
+      "thumbWidth": 800,
+      "thumbHeight": 500
+    },
+    "images/gallery/lightbox/lukasz-jagiello-40-full.webp": {
+      "width": 1600,
+      "height": 2071,
+      "color": "#080808",
+      "thumbWidth": 618,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-41-full.webp": {
+      "width": 1600,
+      "height": 1000,
+      "color": "#080808",
+      "thumbWidth": 800,
+      "thumbHeight": 500
+    },
+    "images/gallery/lightbox/lukasz-jagiello-42-full.webp": {
+      "width": 1600,
+      "height": 1067,
+      "color": "#080808",
+      "thumbWidth": 800,
+      "thumbHeight": 534
+    },
+    "images/gallery/lightbox/lukasz-jagiello-43-full.webp": {
+      "width": 1600,
+      "height": 1067,
+      "color": "#382818",
+      "thumbWidth": 800,
+      "thumbHeight": 534
+    },
+    "images/gallery/lightbox/lukasz-jagiello-44-full.webp": {
+      "width": 1600,
+      "height": 2400,
+      "color": "#080808",
+      "thumbWidth": 533,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-45-full.webp": {
+      "width": 1600,
+      "height": 2400,
+      "color": "#080808",
+      "thumbWidth": 533,
+      "thumbHeight": 800
+    },
+    "images/gallery/lightbox/lukasz-jagiello-46-full.webp": {
+      "width": 1600,
+      "height": 2400,
+      "color": "#080808",
+      "thumbWidth": 533,
+      "thumbHeight": 800
+    }
+  },
+  "hero": {
+    "width": 1200,
+    "height": 550,
+    "color": "#080808"
+  }
+}
