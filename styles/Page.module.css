@@ -32,6 +32,13 @@
   color: var(--muted);
 }
 .gear dd { margin: 0.25rem 0 0; font-size: 1.125rem; font-weight: 600; }
+.gear dd + dd { margin-top: 0.5rem; }
+.gearCount {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--muted);
+}
 
 /* Contact form */
 .form { display: grid; gap: 1.5rem; }

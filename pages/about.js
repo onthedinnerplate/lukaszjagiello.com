@@ -2,12 +2,17 @@ import Link from 'next/link';
 import Seo from '@/components/Seo';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
+import { gearFromMetadata } from '@/lib/photoCaption';
 import styles from '@/styles/Page.module.css';
+
+const gear = gearFromMetadata();
+const mainCamera = gear.cameras[0]?.name || site.gear.camera;
+const lensList = gear.lenses.map((l) => l.name);
 
 const meta = {
   path: '/about',
   title: 'About',
-  description: `About ${site.photographer}, a landscape and wildlife photographer shooting on the ${site.gear.camera} with the ${site.gear.lens}.`,
+  description: `About ${site.photographer}, a landscape and wildlife photographer shooting on the ${mainCamera} with the ${lensList.slice(0, 2).join(' and ') || site.gear.lens}.`,
 };
 
 export default function About() {
@@ -17,7 +22,7 @@ export default function About() {
         title={meta.title}
         description={meta.description}
         path={meta.path}
-        keywords={['about the photographer', 'Sony A7R III', 'Sony 16-35mm GM II']}
+        keywords={['about the photographer', ...gear.cameras.map((c) => c.name), ...lensList]}
         jsonLd={graph(websiteNode(), { ...pageNode('ProfilePage', meta), mainEntity: { '@id': personNode()['@id'] } }, personNode())}
       />
       <article className={styles.page}>
@@ -72,14 +77,23 @@ export default function About() {
 
         <section aria-labelledby="gear-heading" className={styles.block}>
           <h2 id="gear-heading">Camera gear</h2>
-          <dl className={styles.gear}>
+          <p className={styles.formNote}>Every body and lens below comes straight from the EXIF data of the photographs in the gallery.</p>
+          <dl className={styles.gear} style={{ marginTop: '1rem' }}>
             <div>
-              <dt>Camera</dt>
-              <dd>{site.gear.camera}</dd>
+              <dt>{gear.cameras.length === 1 ? 'Camera' : 'Cameras'}</dt>
+              {gear.cameras.map((c) => (
+                <dd key={c.name}>
+                  {c.name} <span className={styles.gearCount}>{c.count} {c.count === 1 ? 'photo' : 'photos'}</span>
+                </dd>
+              ))}
             </div>
             <div>
-              <dt>Lens</dt>
-              <dd>{site.gear.lens}</dd>
+              <dt>{gear.lenses.length === 1 ? 'Lens' : 'Lenses'}</dt>
+              {gear.lenses.map((l) => (
+                <dd key={l.name}>
+                  {l.name} <span className={styles.gearCount}>{l.count} {l.count === 1 ? 'photo' : 'photos'}</span>
+                </dd>
+              ))}
             </div>
           </dl>
         </section>
