@@ -1,126 +1,98 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import ShareButton from './ShareButton';
 import styles from '@/styles/Home.module.css';
 
-// Timing (ms). Whole cycle per tile ≈ OPEN + HOLD + CLOSE + GAP = 5000.
-const OPEN = 600;
-const HOLD = 3500;
-const CLOSE = 600;
-const GAP = 300;
-
-// Slot order is clockwise through the 2×2 block: TL → TR → BR → BL.
-// `photos` must be the four small-tile photos in DOM order (TL, TR, BL, BR).
-const CLOCKWISE = [0, 1, 3, 2];
-const SLOT_CLASS = [styles.spotTL, styles.spotTR, styles.spotBL, styles.spotBR];
-
 /**
- * Spotlight cycle over the hero's 2×2 block. Every ~5s one tile's photo
- * expands to fill the whole block (revealing more of the frame, not zooming),
- * holds, collapses back, then the next tile clockwise takes its turn.
- * Pauses on hover; off entirely for reduced-motion users and on narrow
- * layouts where the block isn't a 2×2.
+ * Hover reveal over the hero's 2×2 block. Nothing moves on its own.
+ *
+ * Hover one of the four small tiles (slots 1–4) → its photo slides in from the
+ * right edge and covers the whole 2×2 block; leaving the collage slides it back
+ * out. The tall Golden Gate tile (slot 0) is static and never triggers this.
+ * Clicking the slid-in photo opens the lightbox; it carries a share disc too.
+ *
+ * Compositor-only (transform + opacity). Disabled under 900px where the grid
+ * isn't a 3×2; instant for reduced-motion users (CSS).
  */
-export default function HeroSpotlight({ photos, onSelect }) {
-  const [step, setStep] = useState(0); // index into CLOCKWISE
+export default function HeroSpotlight({ photos, hoverIndex, onHover, onSelect }) {
+  const [slot, setSlot] = useState(null); // last hovered small-tile slot (1–4)
   const [open, setOpen] = useState(false);
   const [enabled, setEnabled] = useState(false);
-  const paused = useRef(false);
-  const timers = useRef([]);
-  const el = useRef(null);
-
-  // Pause while the pointer is anywhere over the collage (the parent grid).
-  useEffect(() => {
-    const grid = el.current?.parentElement;
-    if (!grid) return undefined;
-    const on = () => (paused.current = true);
-    const off = () => (paused.current = false);
-    const offIfLeft = (e) => {
-      if (!grid.contains(e.relatedTarget)) off();
-    };
-    grid.addEventListener('mouseenter', on);
-    grid.addEventListener('mouseleave', off);
-    grid.addEventListener('focusin', on);
-    grid.addEventListener('focusout', offIfLeft);
-    return () => {
-      grid.removeEventListener('mouseenter', on);
-      grid.removeEventListener('mouseleave', off);
-      grid.removeEventListener('focusin', on);
-      grid.removeEventListener('focusout', offIfLeft);
-    };
-  }, [enabled]);
+  const raf = useRef(0);
 
   useEffect(() => {
-    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const wide = window.matchMedia('(min-width: 901px)');
-    const update = () => setEnabled(!motion.matches && wide.matches);
+    const update = () => setEnabled(wide.matches);
     update();
-    motion.addEventListener('change', update);
     wide.addEventListener('change', update);
-    return () => {
-      motion.removeEventListener('change', update);
-      wide.removeEventListener('change', update);
-    };
+    return () => wide.removeEventListener('change', update);
   }, []);
 
   useEffect(() => {
-    if (!enabled || photos.length < 4) return undefined;
-    let cancelled = false;
-    const later = (fn, ms) => {
-      const id = setTimeout(() => !cancelled && fn(), ms);
-      timers.current.push(id);
-    };
-    // Wait while hovered, polling lightly, then continue.
-    const whenUnpaused = (fn) => {
-      const tick = () => (paused.current ? later(tick, 250) : fn());
-      tick();
-    };
+    cancelAnimationFrame(raf.current);
+    if (hoverIndex == null || hoverIndex === 0) {
+      setOpen(false); // slide back out to the right
+      return undefined;
+    }
+    if (hoverIndex !== slot) {
+      if (open) {
+        // Already covering the block: just swap the photo (CSS crossfades it).
+        setSlot(hoverIndex);
+      } else {
+        // Closed: snap the new photo off-screen right, then slide in next frame.
+        setSlot(hoverIndex);
+        raf.current = requestAnimationFrame(() => {
+          raf.current = requestAnimationFrame(() => setOpen(true));
+        });
+      }
+    } else {
+      setOpen(true);
+    }
+    return () => cancelAnimationFrame(raf.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hoverIndex]);
 
-    const run = () => {
-      whenUnpaused(() => {
-        setOpen(true);
-        later(() => {
-          whenUnpaused(() => {
-            setOpen(false);
-            later(() => {
-              setStep((s) => (s + 1) % CLOCKWISE.length);
-              later(run, GAP);
-            }, CLOSE);
-          });
-        }, OPEN + HOLD);
-      });
-    };
-    // Let the entrance animation finish before the first spotlight.
-    later(run, 1600);
+  // While the panel covers the block, map pointer position to the quadrant
+  // beneath it so sweeping across still switches photos (TL=1, TR=2, BL=3, BR=4).
+  const onMove = (e) => {
+    if (!open || !onHover) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const right = e.clientX - r.left > r.width / 2;
+    const bottom = e.clientY - r.top > r.height / 2;
+    const idx = 1 + (right ? 1 : 0) + (bottom ? 2 : 0);
+    if (idx !== hoverIndex) onHover(idx);
+  };
 
-    return () => {
-      cancelled = true;
-      timers.current.forEach(clearTimeout);
-      timers.current = [];
-    };
-  }, [enabled, photos.length]);
+  if (!enabled || slot == null || !photos[slot]) return null;
 
-  if (!enabled || photos.length < 4) return null;
-
-  const slot = CLOCKWISE[step];
   const photo = photos[slot];
+  const shareUrl = photo.href;
 
   return (
-    <div
-      ref={el}
-      className={`${styles.spotlight} ${SLOT_CLASS[slot]} ${open ? styles.spotOpen : ''}`}
-      aria-hidden="true"
-      onClick={() => open && onSelect && onSelect(photo)}
-      style={{ cursor: open ? 'pointer' : 'default' }}
-    >
-      <Image
-        key={photo.src}
-        src={photo.thumb || photo.src}
-        alt=""
-        fill
-        sizes="(max-width: 900px) 100vw, 40vw"
-        unoptimized
-        style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
-      />
+    <div className={`${styles.spotlight} ${open ? styles.spotOpen : ''}`} aria-hidden="true">
+      <div
+        className={styles.spotPanel}
+        onClick={() => open && onSelect && onSelect(photo)}
+        onMouseMove={onMove}
+        style={{ cursor: open ? 'pointer' : 'default' }}
+      >
+        <Image
+          key={photo.src}
+          src={photo.thumb || photo.src}
+          alt=""
+          fill
+          sizes="(max-width: 900px) 100vw, 45vw"
+          unoptimized
+          style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
+        />
+        <ShareButton
+          title={photo.title}
+          url={shareUrl}
+          className={styles.share}
+          toastClassName={styles.toast}
+          wrapperClassName={styles.shareWrap}
+        />
+      </div>
     </div>
   );
 }

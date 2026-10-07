@@ -55,15 +55,57 @@
   position: relative;
   overflow: hidden;
   background: #f0f0f0;
-  /* tiles are <button>s */
+}
+.heroTileBtn {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
+  height: 100%;
   padding: 0;
   border: none;
+  background: none;
   cursor: pointer;
-  font: inherit;
 }
-.heroGridItem:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+.heroTileBtn:focus-visible { outline: 3px solid var(--orange); outline-offset: -3px; }
+
+/* Share disc, bottom-right of each tile — same look as the gallery cards. */
+.shareWrap { position: absolute; right: 8px; bottom: 8px; z-index: 3; }
+.share {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: var(--charcoal);
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.share:hover { background: rgba(255, 255, 255, 1); transform: scale(1.05); }
+.share:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.toast {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: var(--charcoal);
+  color: #fff;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.toast[data-show='true'] { opacity: 1; transform: translateY(0); }
 
 .heroGridItem img {
   width: 100%;
@@ -81,32 +123,39 @@
 .heroGridItem:nth-child(4) { grid-column: 2; grid-row: 2; min-height: 150px; }
 .heroGridItem:nth-child(5) { grid-column: 3; grid-row: 2; min-height: 150px; }
 
-/* Spotlight: a layer over the 2×2 block that reveals one photo at full block
-   size via clip-path (compositor-only; no layout shift, no magnification).
-   The inset for each slot is half the block minus half the grid gap. */
+/* Hover reveal over the 2×2 block: the hovered small tile's photo slides in
+   from the right edge and covers the block; slides back out on leave.
+   Outer = clipped block area; inner panel is what moves (transform only). */
 .spotlight {
-  --half: calc(50% + 0.5rem); /* 0.5rem = half of the 1rem grid gap */
   grid-column: 2 / 4;
   grid-row: 1 / 3;
   position: relative;
   z-index: 2;
-  pointer-events: none;
-  border-radius: var(--card-radius, 12px);
   overflow: hidden;
+  border-radius: var(--card-radius, 12px);
+  pointer-events: none;
+}
+.spotPanel {
+  position: absolute;
+  inset: 0;
+  transform: translateX(104%);
   opacity: 0;
-  transition: clip-path 600ms cubic-bezier(0.65, 0, 0.35, 1), opacity 200ms ease 400ms;
+  transition: transform 450ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 160ms ease 290ms;
 }
-.spotTL { clip-path: inset(0 var(--half) var(--half) 0 round var(--card-radius, 12px)); }
-.spotTR { clip-path: inset(0 0 var(--half) var(--half) round var(--card-radius, 12px)); }
-.spotBL { clip-path: inset(var(--half) var(--half) 0 0 round var(--card-radius, 12px)); }
-.spotBR { clip-path: inset(var(--half) 0 0 var(--half) round var(--card-radius, 12px)); }
-.spotOpen {
-  clip-path: inset(0 0 0 0 round var(--card-radius, 12px));
+.spotOpen { pointer-events: auto; }
+.spotOpen .spotPanel {
+  transform: translateX(0);
   opacity: 1;
-  pointer-events: auto;
-  transition: clip-path 600ms cubic-bezier(0.65, 0, 0.35, 1), opacity 200ms ease 0ms;
+  transition: transform 450ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 120ms ease 0ms;
 }
+/* Photo swap while open: new image fades in over the previous frame. */
+.spotPanel img { animation: spotFade 220ms ease; }
+@keyframes spotFade { from { opacity: 0; } to { opacity: 1; } }
 @media (max-width: 900px) { .spotlight { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .spotPanel, .spotOpen .spotPanel { transition: none; }
+  .spotPanel img { animation: none; }
+}
 
 /* Motion — only for people who haven't asked for reduced motion.
    1) Tiles fade in and rise on load, staggered left-to-right.
