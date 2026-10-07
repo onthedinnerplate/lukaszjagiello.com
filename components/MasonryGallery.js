@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Lightbox from './Lightbox';
-import { photoMetadata } from '@/lib/locations';
+import { photoMetadata as locationMetadata } from '@/lib/locations';
+import { photoMetadata } from '@/lib/photoMetadata';
 import styles from '@/styles/Gallery.module.css';
 
 // Responsive `sizes` matching the column breakpoints in Gallery.module.css,
@@ -43,8 +44,18 @@ export default function MasonryGallery({ photos, wide = false, eagerCount = 0, h
         {photos.map((photo, i) => {
           // Extract photo number from title (e.g., "Photograph 1" → 1)
           const photoNum = parseInt(photo.title.replace('Photograph ', ''), 10);
-          const metadata = photoMetadata[photoNum] || { location: '', equipment: '' };
-          const displayTitle = metadata.location || `Photograph ${photoNum}`;
+          const locationData = locationMetadata[photoNum] || { location: '', equipment: '' };
+          const exifData = photoMetadata[photoNum] || {};
+          const displayTitle = locationData.location || `Photograph ${photoNum}`;
+
+          // Format camera and lens info (simplified for display)
+          const cameraDisplay = exifData.camera ? exifData.camera.replace('SONY ILCE-7RM3', 'Sony A7R III') : '';
+          const lensDisplay = exifData.lens ? exifData.lens.replace(/FE /, '').replace(/GM OSS II/, 'GM II').replace(/GM II/, 'GM II') : '';
+
+          // Format EXIF specs line
+          const specsLine = exifData.focal_length && exifData.shutter_speed && exifData.aperture && exifData.iso
+            ? `${exifData.focal_length} | ${exifData.shutter_speed} | ${exifData.aperture} | ISO ${exifData.iso}`
+            : '';
 
           return (
             <li key={photo.src} className={styles.item}>
@@ -69,9 +80,14 @@ export default function MasonryGallery({ photos, wide = false, eagerCount = 0, h
                 </div>
                 <figcaption className={styles.caption}>
                   <span className={styles.title}>{displayTitle}</span>
-                  {metadata.equipment && (
-                    <span style={{ display: 'block', fontSize: '0.85em', opacity: 0.7, marginTop: '0.25rem' }}>
-                      {metadata.equipment}
+                  {(cameraDisplay || lensDisplay) && (
+                    <span style={{ display: 'block', fontSize: '0.80em', opacity: 0.8, marginTop: '0.25rem', fontWeight: 500 }}>
+                      {cameraDisplay} {lensDisplay}
+                    </span>
+                  )}
+                  {specsLine && (
+                    <span style={{ display: 'block', fontSize: '0.75em', opacity: 0.65, marginTop: '0.15rem', fontFamily: 'monospace' }}>
+                      {specsLine}
                     </span>
                   )}
                 </figcaption>
