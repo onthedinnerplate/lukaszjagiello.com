@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Photography gallery - Browse Łukasz Jagiełło's landscape and wildlife photography collection.">
+    <meta name="keywords" content="photography gallery, landscape, wildlife, nature photography">
+    <meta name="author" content="Łukasz Jagiełło">
+    <meta property="og:title" content="Gallery - Łukasz Jagiełło Photography">
+    <meta property="og:description" content="Explore the complete photography collection">
+
+    <title>Gallery - Łukasz Jagiełło Photography</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <a href="/" class="logo">Łukasz Jagiełło</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/gallery.html" class="nav-link active">Gallery</a></li>
+                <li><a href="/about.html" class="nav-link">About</a></li>
+                <li><a href="/contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1>Photography Gallery</h1>
+            <p>A curated collection of landscape and wildlife photography from around the world</p>
+        </div>
+    </header>
+
+    <!-- Filter Section (Architecture ready for future implementation) -->
+    <section class="filter-section" aria-labelledby="filter-heading">
+        <div class="container">
+            <h2 id="filter-heading" class="sr-only">Filter Gallery</h2>
+            <div class="filter-buttons" role="group" aria-label="Location filters">
+                <button class="filter-btn active" data-filter="all">All Photos</button>
+                <button class="filter-btn" data-filter="san-francisco">San Francisco</button>
+                <button class="filter-btn" data-filter="alcatraz">Alcatraz</button>
+                <button class="filter-btn" data-filter="jamaica">Jamaica</button>
+                <button class="filter-btn" data-filter="monterey-bay">Monterey Bay</button>
+                <button class="filter-btn" data-filter="ruby-beach">Ruby Beach</button>
+                <button class="filter-btn" data-filter="wildlife">Wildlife</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section" aria-labelledby="gallery-heading">
+        <div class="container">
+            <h2 id="gallery-heading" class="sr-only">Gallery Grid</h2>
+            <div class="gallery-grid" role="region" aria-label="Image gallery">
+                <!-- Image 1: Portrait orientation -->
+                <article
+                    class="gallery-item portrait"
+                    data-location="san-francisco"
+                    data-alt-category="san-francisco"
+                >
+                    <img
+                        src="public/images/gallery/img1.jpg"
+                        alt="Golden Gate Bridge at sunrise with morning mist rolling through the bay"
+                        class="gallery-image"
+                        loading="lazy"
+                    >
+                    <div class="image-overlay">
+                        <div class="image-info">
+                            <h3>Golden Gate Sunrise</h3>
+                            <p class="location">San Francisco, CA</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Image 2: Landscape orientation -->
+                <article
+                    class="gallery-item landscape"
+                    data-location="monterey-bay"
+                    data-alt-category="monterey-bay"
+                >
+                    <img
+                        src="public/images/gallery/img2.jpg"
+                        alt="Dramatic rocky coastline with crashing waves at Monterey Bay"
+                        class="gallery-image"
+                        loading="lazy"
+                    >
+                    <div class="image-overlay">
+                        <div class="image-info">
+                            <h3>Monterey Cliffs</h3>
+                            <p class="location">Monterey Bay, CA</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Image 3: Landscape orientation -->
+                <article
+                    class="gallery-item landscape"
+                    data-location="jamaica"
+                    data-alt-category="jamaica"
+                >
+                    <img
+                        src="public/images/gallery/img3.jpg"
+                        alt="Tropical paradise with turquoise waters and white sand beach"
+                        class="gallery-image"
+                        loading="lazy"
+                    >
+                    <div class="image-overlay">
+                        <div class="image-info">
+                            <h3>Caribbean Paradise</h3>
+                            <p class="location">Jamaica</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Image 4: Portrait orientation -->
+                <article
+                    class="gallery-item portrait"
+                    data-location="wildlife"
+                    data-alt-category="wildlife"
+                >
+                    <img
+                        src="public/images/gallery/img4.jpg"
+                        alt="Majestic eagle in flight with wings spread against clear blue sky"
+                        class="gallery-image"
+                        loading="lazy"
+                    >
+                    <div class="image-overlay">
+                        <div class="image-info">
+                            <h3>Eagle in Flight</h3>
+                            <p class="location">Wildlife</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Image 5: Landscape orientation -->
+                <article
+                    class="gallery-item landscape"
+                    data-location="ruby-beach"
+                    data-alt-category="ruby-beach"
+                >
+                    <img
+                        src="public/images/gallery/img5.jpg"
+                        alt="Moody sunset over rocky beach with dramatic cloud formations"
+                        class="gallery-image"
+                        loading="lazy"
+                    >
+                    <div class="image-overlay">
+                        <div class="image-info">
+                            <h3>Ruby Beach Sunset</h3>
+                            <p class="location">Ruby Beach, WA</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Image 6: Portrait orientation -->
+                <article
+                    class="gallery-item portrait"
+                    data-location="alcatraz"
+                    data-alt-category="alcatraz"
+                >
+                    <img
+                        src="public/images/gallery/img6.jpg"
+                        alt="Historic Alcatraz Island prison with weathered brick walls and fog"
+                        class="gallery-image"
+                        loading="lazy"
+                    >
+                    <div class="image-overlay">
+                        <div class="image-info">
+                            <h3>Alcatraz Island</h3>
+                            <p class="location">San Francisco, CA</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Image 7: Landscape orientation -->
+                <article
+                    class="gallery-item landscape"
+                    data-location="monterey-bay"
+                    data-alt-category="monterey-bay"
+                >
+                    <img
+                        src="public/images/gallery/img7.jpg"
+                        alt="Sea otters swimming in clear ocean waters near kelp forests"
+                        class="gallery-image"
+                        loading="lazy"
+                    >
+                    <div class="image-overlay">
+                        <div class="image-info">
+                            <h3>Sea Otters</h3>
+                            <p class="location">Monterey Bay, CA</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Image 8: Portrait orientation -->
+                <article
+                    class="gallery-item portrait"
+                    data-location="wildlife"
+                    data-alt-category="wildlife"
+                >
+                    <img
+                        src="public/images/gallery/img8.jpg"
+                        alt="Closeup of mountain lion face in natural habitat at dusk"
+                        class="gallery-image"
+                        loading="lazy"
+                    >
+                    <div class="image-overlay">
+                        <div class="image-info">
+                            <h3>Mountain Lion</h3>
+                            <p class="location">Wildlife</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Image 9: Landscape orientation -->
+                <article
+                    class="gallery-item landscape"
+                    data-location="jamaica"
+                    data-alt-category="jamaica"
+                >
+                    <img
+                        src="public/images/gallery/img9.jpg"
+                        alt="Aerial view of lush green mountains and coastal landscape"
+                        class="gallery-image"
+                        loading="lazy"
+                    >
+                    <div class="image-overlay">
+                        <div class="image-info">
+                            <h3>Mountain Landscape</h3>
+                            <p class="location">Jamaica</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section" aria-labelledby="gallery-cta-heading">
+        <div class="cta-content">
+            <h2 id="gallery-cta-heading">Interested in Using These Images?</h2>
+            <p>Available for commercial licensing, prints, and custom photography projects.</p>
+            <a href="/contact.html" class="cta-button cta-button-large">Inquire About Usage</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Łukasz Jagiełło</h3>
+                <p>Photography portfolio showcasing landscape and wildlife imagery from diverse locations worldwide.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/gallery.html">Gallery</a></li>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul class="social-links">
+                    <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram</a></li>
+                    <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">Twitter</a></li>
+                    <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><a href="mailto:hello@lukaszjagiello.com">hello@lukaszjagiello.com</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Łukasz Jagiełło. All rights reserved. All photographs are protected by copyright.</p>
+        </div>
+    </footer>
+
+    <script src="src/js/main.js"></script>
+    <script src="src/js/gallery.js"></script>
+</body>
+</html>
