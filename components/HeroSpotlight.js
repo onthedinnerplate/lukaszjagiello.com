@@ -2,112 +2,66 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from '@/styles/Home.module.css';
 
-// Timing (ms). Whole cycle per tile ≈ OPEN + HOLD + CLOSE + GAP = 5000.
-const OPEN = 600;
-const HOLD = 3500;
-const CLOSE = 600;
-const GAP = 300;
-
-// Slot order is clockwise through the 2×2 block: TL → TR → BR → BL.
-// `photos` must be the four small-tile photos in DOM order (TL, TR, BL, BR).
-const CLOCKWISE = [0, 1, 3, 2];
-const SLOT_CLASS = [styles.spotTL, styles.spotTR, styles.spotBL, styles.spotBR];
+// Collapsed clip rectangles, one per hero slot (index = DOM order of tiles):
+// 0 = tall left tile, 1 = TL, 2 = TR, 3 = BL, 4 = BR of the 2×2 block.
+const SLOT_CLASS = [styles.spotTall, styles.spotTL, styles.spotTR, styles.spotBL, styles.spotBR];
 
 /**
- * Spotlight cycle over the hero's 2×2 block. Every ~5s one tile's photo
- * expands to fill the whole block (revealing more of the frame, not zooming),
- * holds, collapses back, then the next tile clockwise takes its turn.
- * Pauses on hover; off entirely for reduced-motion users and on narrow
- * layouts where the block isn't a 2×2.
+ * Hover-driven reveal over the hero collage. Nothing moves on its own.
+ *
+ * - Hover one of the four small tiles → its photo expands to fill the 2×2
+ *   block (revealing more of the frame at its focal point), collapses on leave.
+ * - Hover the tall Golden Gate tile → it expands across the whole collage,
+ *   shown uncropped (letterboxed on dark) so the entire frame is visible.
+ * - Click the expanded photo → opens the lightbox (same as clicking the tile).
+ *
+ * `hoverIndex` is owned by the page (tiles set it on mouseenter, the grid
+ * clears it on mouseleave). Disabled on narrow layouts, where the grid is
+ * not a 3×2, and the transition is instant for reduced-motion users (CSS).
  */
-export default function HeroSpotlight({ photos, onSelect }) {
-  const [step, setStep] = useState(0); // index into CLOCKWISE
+export default function HeroSpotlight({ photos, hoverIndex, onSelect }) {
+  const [slot, setSlot] = useState(null); // which rectangle the layer is clipped to
   const [open, setOpen] = useState(false);
   const [enabled, setEnabled] = useState(false);
-  const paused = useRef(false);
-  const timers = useRef([]);
-  const el = useRef(null);
-
-  // Pause while the pointer is anywhere over the collage (the parent grid).
-  useEffect(() => {
-    const grid = el.current?.parentElement;
-    if (!grid) return undefined;
-    const on = () => (paused.current = true);
-    const off = () => (paused.current = false);
-    const offIfLeft = (e) => {
-      if (!grid.contains(e.relatedTarget)) off();
-    };
-    grid.addEventListener('mouseenter', on);
-    grid.addEventListener('mouseleave', off);
-    grid.addEventListener('focusin', on);
-    grid.addEventListener('focusout', offIfLeft);
-    return () => {
-      grid.removeEventListener('mouseenter', on);
-      grid.removeEventListener('mouseleave', off);
-      grid.removeEventListener('focusin', on);
-      grid.removeEventListener('focusout', offIfLeft);
-    };
-  }, [enabled]);
+  const raf = useRef(0);
 
   useEffect(() => {
-    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const wide = window.matchMedia('(min-width: 901px)');
-    const update = () => setEnabled(!motion.matches && wide.matches);
+    const update = () => setEnabled(wide.matches);
     update();
-    motion.addEventListener('change', update);
     wide.addEventListener('change', update);
-    return () => {
-      motion.removeEventListener('change', update);
-      wide.removeEventListener('change', update);
-    };
+    return () => wide.removeEventListener('change', update);
   }, []);
 
+  // Two-step so the expand always animates from the hovered tile's rectangle:
+  // first snap (collapsed, invisible) to that slot, then open on the next frame.
   useEffect(() => {
-    if (!enabled || photos.length < 4) return undefined;
-    let cancelled = false;
-    const later = (fn, ms) => {
-      const id = setTimeout(() => !cancelled && fn(), ms);
-      timers.current.push(id);
-    };
-    // Wait while hovered, polling lightly, then continue.
-    const whenUnpaused = (fn) => {
-      const tick = () => (paused.current ? later(tick, 250) : fn());
-      tick();
-    };
+    cancelAnimationFrame(raf.current);
+    if (hoverIndex == null) {
+      setOpen(false); // collapses back to the current slot, then fades
+      return undefined;
+    }
+    setSlot(hoverIndex);
+    setOpen(false);
+    raf.current = requestAnimationFrame(() => {
+      raf.current = requestAnimationFrame(() => setOpen(true));
+    });
+    return () => cancelAnimationFrame(raf.current);
+  }, [hoverIndex]);
 
-    const run = () => {
-      whenUnpaused(() => {
-        setOpen(true);
-        later(() => {
-          whenUnpaused(() => {
-            setOpen(false);
-            later(() => {
-              setStep((s) => (s + 1) % CLOCKWISE.length);
-              later(run, GAP);
-            }, CLOSE);
-          });
-        }, OPEN + HOLD);
-      });
-    };
-    // Let the entrance animation finish before the first spotlight.
-    later(run, 1600);
+  if (!enabled || slot == null || photos.length < 5) return null;
 
-    return () => {
-      cancelled = true;
-      timers.current.forEach(clearTimeout);
-      timers.current = [];
-    };
-  }, [enabled, photos.length]);
-
-  if (!enabled || photos.length < 4) return null;
-
-  const slot = CLOCKWISE[step];
   const photo = photos[slot];
+  const isTall = slot === 0;
 
   return (
     <div
-      ref={el}
-      className={`${styles.spotlight} ${SLOT_CLASS[slot]} ${open ? styles.spotOpen : ''}`}
+      className={[
+        styles.spotlight,
+        SLOT_CLASS[slot],
+        open ? (isTall ? styles.spotOpenFull : styles.spotOpenBlock) : '',
+        isTall ? styles.spotContain : '',
+      ].join(' ')}
       aria-hidden="true"
       onClick={() => open && onSelect && onSelect(photo)}
       style={{ cursor: open ? 'pointer' : 'default' }}
@@ -117,9 +71,9 @@ export default function HeroSpotlight({ photos, onSelect }) {
         src={photo.thumb || photo.src}
         alt=""
         fill
-        sizes="(max-width: 900px) 100vw, 40vw"
+        sizes="(max-width: 900px) 100vw, 60vw"
         unoptimized
-        style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
+        style={{ objectFit: isTall ? 'contain' : 'cover', objectPosition: isTall ? '50% 50%' : photo.focus || '50% 50%' }}
       />
     </div>
   );

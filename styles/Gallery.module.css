@@ -75,16 +75,16 @@
 /* Share: round 50%-white disc with dark icon, bottom-right of the image. */
 .shareWrap {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: 8px;
+  bottom: 8px;
   z-index: 2;
 }
 .share {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 25px;
+  height: 25px;
   padding: 0;
   border: none;
   border-radius: 50%;

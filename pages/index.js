@@ -26,6 +26,7 @@ export default function Home({ hero, photos, total }) {
   // (see docs/photo-pages-and-image-seo.md) and keep the lightbox for the grid.
   const [lbOpen, setLbOpen] = useState(false);
   const [lbIndex, setLbIndex] = useState(0);
+  const [hoverIndex, setHoverIndex] = useState(null); // hero tile under the pointer, or null
   const openPhoto = (photo) => {
     const i = photos.findIndex((p) => p.src === photo.src);
     if (i >= 0) {
@@ -64,7 +65,7 @@ export default function Home({ hero, photos, total }) {
         </div>
 
         {/* Image grid on the right */}
-        <div className={styles.heroGrid}>
+        <div className={styles.heroGrid} onMouseLeave={() => setHoverIndex(null)}>
           {heroImages.map((photo, idx) => (
             <button
               key={photo.src}
@@ -72,6 +73,9 @@ export default function Home({ hero, photos, total }) {
               className={styles.heroGridItem}
               style={{ '--focus': photo.focus || '50% 50%' }}
               onClick={() => openPhoto(photo)}
+              onMouseEnter={() => setHoverIndex(idx)}
+              onFocus={() => setHoverIndex(idx)}
+              onBlur={() => setHoverIndex(null)}
               aria-label={`View ${photo.title} in fullscreen`}
             >
               <Image
@@ -86,7 +90,7 @@ export default function Home({ hero, photos, total }) {
             </button>
           ))}
           {/* Rendered after the tiles so the :nth-child tile rules stay 1–5. */}
-          {heroImages.length >= 5 && <HeroSpotlight photos={heroImages.slice(1, 5)} onSelect={openPhoto} />}
+          {heroImages.length >= 5 && <HeroSpotlight photos={heroImages} hoverIndex={hoverIndex} onSelect={openPhoto} />}
         </div>
       </section>
 
