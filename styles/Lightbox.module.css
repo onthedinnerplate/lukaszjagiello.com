@@ -190,7 +190,7 @@
 }
 .meta {
   margin: 0;
-  font-size: 0.9375rem;
+  font-size: 0.75rem; /* ~25% smaller than before (was 0.9375rem) */
   font-weight: 500;
   line-height: 1.35;
   opacity: 0.85;
