@@ -49,7 +49,7 @@ export default function MasonryGallery({ photos, wide = false, eagerCount = 0, h
         {photos.map((photo, i) => {
           const { equipment, specs } = captionFor(photo);
           const num = photoNumberFromSrc(photo.src);
-          const shareUrl = `/gallery#photo-${num}`;
+          const shareUrl = photo.href;
           return (
             <li key={photo.src} id={`photo-${num}`} className={styles.item}>
               <figure className={styles.figure}>

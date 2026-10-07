@@ -4,10 +4,20 @@ import { site, absoluteUrl } from '@/lib/site';
 // Escape "<" so no string in the data can close the <script> element early.
 const serialize = (data) => JSON.stringify(data).replace(/</g, '\\u003c');
 
-export default function Seo({ title, description = site.description, path = '/', keywords = [], jsonLd, noindex = false }) {
+export default function Seo({
+  title,
+  description = site.description,
+  path = '/',
+  keywords = [],
+  jsonLd,
+  noindex = false,
+  image,
+  ogType = 'website',
+}) {
   const fullTitle = title ? `${title} | ${site.name}` : site.name;
   const url = absoluteUrl(path);
-  const ogImage = absoluteUrl(site.ogImage.src);
+  const og = image || site.ogImage;
+  const ogImage = absoluteUrl(og.src);
   const allKeywords = [...new Set([...keywords, ...site.keywords])].join(', ');
 
   return (
@@ -19,22 +29,22 @@ export default function Seo({ title, description = site.description, path = '/',
       <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
       {!noindex && <link rel="canonical" href={url} />}
 
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={ogType} />
       <meta property="og:site_name" content={site.name} />
       <meta property="og:locale" content={site.locale} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:image:width" content={String(site.ogImage.width)} />
-      <meta property="og:image:height" content={String(site.ogImage.height)} />
-      <meta property="og:image:alt" content={site.ogImage.alt} />
+      <meta property="og:image:width" content={String(og.width)} />
+      <meta property="og:image:height" content={String(og.height)} />
+      <meta property="og:image:alt" content={og.alt} />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={ogImage} />
-      <meta name="twitter:image:alt" content={site.ogImage.alt} />
+      <meta name="twitter:image:alt" content={og.alt} />
 
       {jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serialize(jsonLd) }} />}
     </Head>
