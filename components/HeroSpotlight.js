@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import ShareButton from './ShareButton';
-import { photoNumberFromSrc } from '@/lib/photoCaption';
 import styles from '@/styles/Home.module.css';
 
 /**
@@ -67,7 +66,7 @@ export default function HeroSpotlight({ photos, hoverIndex, onHover, onSelect })
   if (!enabled || slot == null || !photos[slot]) return null;
 
   const photo = photos[slot];
-  const shareUrl = `/gallery#photo-${photoNumberFromSrc(photo.src)}`;
+  const shareUrl = photo.href;
 
   return (
     <div className={`${styles.spotlight} ${open ? styles.spotOpen : ''}`} aria-hidden="true">

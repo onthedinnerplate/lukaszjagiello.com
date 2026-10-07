@@ -1,5 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { photos } from './lib/photos.js';
+import { numericPhotoRedirects } from './lib/slug.js';
 
 const isDev = process.env.NODE_ENV !== 'production';
 // Pin the project root: this app may sit inside a larger repo with its own lockfile.
@@ -75,6 +77,8 @@ const nextConfig = {
         destination: 'https://lukaszjagiello.com/:path*',
         permanent: true,
       },
+      // /photo/NN (and /photo/N) stay valid when a title — and its slug — changes.
+      ...numericPhotoRedirects(photos),
     ];
   },
 };

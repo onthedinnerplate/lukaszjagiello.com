@@ -82,3 +82,93 @@
 }
 
 .form :global(.button) { justify-self: start; }
+
+/* Per-photo page. Same type scale and muted caption colour as the gallery cards. */
+.photoPage {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem var(--gutter) 4rem;
+}
+.photoFrame {
+  margin: 0 0 1.5rem;
+  background: var(--surface);
+}
+.photoImg {
+  width: 100%;
+  height: auto;
+}
+.photoMeta { margin: 0 0 0.75rem; }
+.meta {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--muted);
+}
+.location {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+.photoNav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin: 2rem 0 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.photoNavLink {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  text-decoration: none;
+}
+.photoNavNext { text-align: right; align-items: flex-end; }
+.photoNavDir {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.back { margin: 0 0 1.25rem; }
+.share {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0 0.95rem 0 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--charcoal);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.share:hover { background: rgba(0, 0, 0, 0.04); }
+.share:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.toast {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 6px);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: var(--charcoal);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.toast[data-show='true'] { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 640px) {
+  .photoNav { grid-template-columns: 1fr; gap: 1rem; }
+  .photoNavNext { text-align: left; align-items: flex-start; }
+}

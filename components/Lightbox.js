@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import ShareButton from './ShareButton';
-import { captionFor, photoNumberFromSrc } from '@/lib/photoCaption';
+import { captionFor } from '@/lib/photoCaption';
 import styles from '@/styles/Lightbox.module.css';
 
 export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
@@ -24,9 +24,14 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
         /* unsupported or not allowed — plain overlay is fine */
       }
     }
+    // Only treat a fullscreen exit as "close" after we actually entered it.
+    // A shared /gallery#photo-NN link opens the lightbox on load, without a
+    // user gesture, so requestFullscreen is rejected and must not dismiss it.
+    let entered = false;
     const onFsChange = () => {
       const fsEl = doc.fullscreenElement || doc.webkitFullscreenElement;
-      if (!fsEl) onClose();
+      if (fsEl) entered = true;
+      else if (entered) onClose();
     };
     doc.addEventListener('fullscreenchange', onFsChange);
     doc.addEventListener('webkitfullscreenchange', onFsChange);
@@ -67,7 +72,7 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
   if (!isOpen || !photo) return null;
 
   const { equipment, specs } = captionFor(photo);
-  const shareUrl = `/gallery#photo-${photoNumberFromSrc(photo.src)}`;
+  const shareUrl = photo.href;
 
   return (
     <div ref={overlayRef} className={styles.overlay} onClick={onClose} role="dialog" aria-modal="true" aria-label={photo.title || photo.alt}>

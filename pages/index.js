@@ -6,7 +6,6 @@ import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
 import HeroSpotlight from '@/components/HeroSpotlight';
 import ShareButton from '@/components/ShareButton';
-import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { getPhotos, getHero } from '@/lib/photo-data';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
@@ -89,14 +88,14 @@ export default function Home({ hero, photos, total }) {
                   alt={photo.alt}
                   fill
                   sizes="(max-width: 900px) 50vw, 20vw"
-                  priority={idx === 0}
+                  {...(idx === 0 ? { priority: true } : { loading: 'lazy' })}
                   unoptimized
                   style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
                 />
               </button>
               <ShareButton
                 title={photo.title}
-                url={`/gallery#photo-${photoNumberFromSrc(photo.src)}`}
+                url={photo.href}
                 className={styles.share}
                 toastClassName={styles.toast}
                 wrapperClassName={styles.shareWrap}
