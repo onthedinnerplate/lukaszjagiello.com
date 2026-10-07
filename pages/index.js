@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
+import HeroSpotlight from '@/components/HeroSpotlight';
 import { getPhotos, getHero } from '@/lib/photo-data';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
@@ -62,6 +63,8 @@ export default function Home({ hero, photos, total }) {
               />
             </div>
           ))}
+          {/* Rendered after the tiles so the :nth-child tile rules stay 1–5. */}
+          {heroImages.length >= 5 && <HeroSpotlight photos={heroImages.slice(1, 5)} />}
         </div>
       </section>
 

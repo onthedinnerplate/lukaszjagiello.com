@@ -73,6 +73,33 @@
 .heroGridItem:nth-child(4) { grid-column: 2; grid-row: 2; min-height: 150px; }
 .heroGridItem:nth-child(5) { grid-column: 3; grid-row: 2; min-height: 150px; }
 
+/* Spotlight: a layer over the 2×2 block that reveals one photo at full block
+   size via clip-path (compositor-only; no layout shift, no magnification).
+   The inset for each slot is half the block minus half the grid gap. */
+.spotlight {
+  --half: calc(50% + 0.5rem); /* 0.5rem = half of the 1rem grid gap */
+  grid-column: 2 / 4;
+  grid-row: 1 / 3;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: var(--card-radius, 12px);
+  overflow: hidden;
+  opacity: 0;
+  transition: clip-path 600ms cubic-bezier(0.65, 0, 0.35, 1), opacity 200ms ease 400ms;
+}
+.spotTL { clip-path: inset(0 var(--half) var(--half) 0 round var(--card-radius, 12px)); }
+.spotTR { clip-path: inset(0 0 var(--half) var(--half) round var(--card-radius, 12px)); }
+.spotBL { clip-path: inset(var(--half) var(--half) 0 0 round var(--card-radius, 12px)); }
+.spotBR { clip-path: inset(var(--half) 0 0 var(--half) round var(--card-radius, 12px)); }
+.spotOpen {
+  clip-path: inset(0 0 0 0 round var(--card-radius, 12px));
+  opacity: 1;
+  pointer-events: auto;
+  transition: clip-path 600ms cubic-bezier(0.65, 0, 0.35, 1), opacity 200ms ease 0ms;
+}
+@media (max-width: 900px) { .spotlight { display: none; } }
+
 /* Motion — only for people who haven't asked for reduced motion.
    1) Tiles fade in and rise on load, staggered left-to-right.
    2) Each image drifts very slowly (Ken Burns), alternating direction per tile,
@@ -91,16 +118,11 @@
 
   /* Scale about the photo's focal point (same value as object-position), so the
      subject — bridge tower, waterfall — stays in frame at maximum zoom. */
-  .heroGridItem img {
+  .heroGridItem:nth-child(1) img {
     transform-origin: var(--focus, 50% 50%);
     will-change: transform;
-    animation: heroDrift 20s ease-in-out infinite alternate;
+    animation: heroDrift 22s ease-in-out infinite alternate;
   }
-  .heroGridItem:nth-child(2n) img { animation-direction: alternate-reverse; }
-  .heroGridItem:nth-child(2) img { animation-duration: 24s; }
-  .heroGridItem:nth-child(3) img { animation-duration: 18s; }
-  .heroGridItem:nth-child(4) img { animation-duration: 22s; }
-  .heroGridItem:nth-child(5) img { animation-duration: 19s; }
 }
 
 @keyframes heroRise {
