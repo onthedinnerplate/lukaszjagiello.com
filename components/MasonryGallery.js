@@ -40,7 +40,7 @@ export default function MasonryGallery({ photos, wide = false, eagerCount = 0, h
     <div className={styles.wrap}>
       <ul className={styles.masonry} aria-labelledby={headingId}>
         {photos.map((photo, i) => (
-          <li key={photo.id} className={styles.item}>
+          <li key={photo.src} className={styles.item}>
             <figure className={styles.figure}>
               <div className={styles.frame} style={{ backgroundColor: photo.color }}>
                 <button
