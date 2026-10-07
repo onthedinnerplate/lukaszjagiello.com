@@ -1,0 +1,36 @@
+# Render Blueprint for lukaszjagiello.com
+#
+# Render reads render.yaml only from the ROOT of a repository. This file is
+# written for the site living in its own repo (see README → "Move to its own
+# repo"). While it still sits inside the cookbook repo, create the service from
+# the dashboard instead and set Root Directory = lukaszjagiello-com.
+services:
+  - type: web
+    name: lukaszjagiello-com
+    runtime: node
+    # "free" works but spins down when idle; the first visitor after a quiet
+    # spell waits for a cold start, which wrecks real-world load times.
+    # Use a paid instance for the production domain.
+    plan: starter
+    region: oregon
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    autoDeploy: true
+    domains:
+      - lukaszjagiello.com
+      - www.lukaszjagiello.com
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://lukaszjagiello.com
+      - key: NEXT_PUBLIC_GALLERY_FILTERS
+        value: "false"
+      # Contact delivery (set in the dashboard once pages/api/contact.js is wired up)
+      - key: RESEND_API_KEY
+        sync: false
+      - key: CONTACT_TO_EMAIL
+        value: hello@lukaszjagiello.com

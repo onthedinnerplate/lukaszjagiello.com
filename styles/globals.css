@@ -1,0 +1,104 @@
+/*
+ * Brand tokens.
+ * Contrast (WCAG 2.x):  charcoal on white 11.37:1 · charcoal on lime 8.39:1
+ *                       lime on white 1.36:1  ← NEVER use lime as text or as the
+ * only visual boundary on white. Lime is a fill/highlight; pair it with charcoal.
+ */
+:root {
+  --white: #ffffff;
+  --charcoal: #3a3a3a;
+  --lime: #39ff14;
+  --muted: #595959; /* 7.0:1 on white */
+  --surface: #f4f4f4;
+  --border: #d9d9d9;
+  --error: #b00020; /* 6.6:1 on white */
+  --success-bg: #ecffe6;
+
+  --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --nav-h: 72px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --max: 1200px;
+  --max-wide: 1600px;
+  --radius: 4px;
+}
+
+@media (max-width: 720px) {
+  :root { --nav-h: 104px; } /* nav wraps to two rows */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--charcoal);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { line-height: 1.2; margin: 0 0 0.5em; font-weight: 600; letter-spacing: -0.01em; }
+h1 { font-size: clamp(2rem, 4.5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+p { margin: 0 0 1em; }
+img { max-width: 100%; height: auto; display: block; }
+
+/* Links: charcoal text + charcoal underline (identifiable without colour);
+   lime is the hover/focus highlight behind charcoal text. */
+a {
+  color: var(--charcoal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a:hover {
+  background-color: var(--lime);
+  text-decoration-thickness: 2px;
+}
+
+/* Visible focus for keyboard users: charcoal ring + lime halo. */
+:focus-visible {
+  outline: 3px solid var(--charcoal);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--lime);
+  border-radius: 2px;
+}
+main:focus { outline: none; }
+
+/* Primary button — lime fill, charcoal text & border. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px; /* comfortable touch target */
+  padding: 0.75rem 1.75rem;
+  border: 2px solid var(--charcoal);
+  border-radius: var(--radius);
+  background: var(--lime);
+  color: var(--charcoal);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.button:hover {
+  background: var(--charcoal);
+  color: var(--lime);
+}
+.button:disabled { opacity: 0.6; cursor: progress; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

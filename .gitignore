@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+.env
+.env.*
+!.env.example
+npm-debug.log*
+.DS_Store
+# Generated at build time by scripts/generate-sitemap.mjs
+public/sitemap.xml
+public/robots.txt

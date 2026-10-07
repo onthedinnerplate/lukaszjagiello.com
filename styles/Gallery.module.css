@@ -1,0 +1,88 @@
+.wrap { width: 100%; }
+
+/* Masonry via CSS multi-column: 1 col mobile, 2 tablet, 3 desktop.
+   DOM order flows down each column; tiles never get cropped. */
+.masonry {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 3;
+  column-gap: 20px;
+}
+@media (max-width: 1024px) { .masonry { columns: 2; column-gap: 16px; } }
+@media (max-width: 640px)  { .masonry { columns: 1; } }
+
+.item {
+  break-inside: avoid;
+  margin-bottom: 20px;
+}
+@media (max-width: 1024px) { .item { margin-bottom: 16px; } }
+
+.figure { margin: 0; }
+.frame {
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+.img {
+  width: 100%;
+  height: auto;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .img { transition: transform 0.4s ease; }
+  .item:hover .img { transform: scale(1.02); }
+}
+
+.caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.125rem 0;
+  font-size: 0.9375rem;
+}
+.title { font-weight: 600; }
+.tag {
+  flex-shrink: 0;
+  padding: 0.1rem 0.5rem;
+  border-left: 4px solid var(--lime);
+  background: var(--surface);
+  font-size: 0.8125rem;
+  color: var(--charcoal);
+}
+
+/* Filter bar — rendered only when NEXT_PUBLIC_GALLERY_FILTERS=true. */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.filter {
+  min-height: 40px;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--charcoal);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--charcoal);
+  font: inherit;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+.filter:hover { background: var(--lime); }
+.filter[aria-pressed='true'] {
+  background: var(--lime);
+  border-width: 2px;
+  font-weight: 700;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

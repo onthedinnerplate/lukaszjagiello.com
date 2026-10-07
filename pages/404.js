@@ -1,0 +1,20 @@
+import Link from 'next/link';
+import Seo from '@/components/Seo';
+import styles from '@/styles/Page.module.css';
+
+export default function NotFound() {
+  return (
+    <>
+      <Seo title="Page not found" path="/404" noindex description="The page you were looking for doesn't exist." />
+      <article className={styles.page}>
+        <header className={styles.pageHeader}>
+          <h1>Page not found</h1>
+          <p className={styles.lede}>That page has wandered off into the fog.</p>
+        </header>
+        <Link href="/" className="button">
+          Back to home
+        </Link>
+      </article>
+    </>
+  );
+}

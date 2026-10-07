@@ -1,0 +1,40 @@
+.hero {
+  position: relative;
+  height: 550px;
+  overflow: hidden;
+}
+.heroImg { object-fit: cover; }
+
+/* Scrim guarantees ≥4.5:1 for white text even over a pure-white photo
+   (white over rgba(0,0,0,.6) on white → effective bg #666 → 5.7:1). */
+.heroScrim {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 6rem var(--gutter) 2.5rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.62) 55%, rgba(0, 0, 0, 0));
+}
+.heroText {
+  max-width: var(--max);
+  margin: 0 auto;
+  color: #fff;
+}
+.heroTitle { color: #fff; margin-bottom: 0.25em; }
+.heroSub { margin: 0; font-size: 1.125rem; max-width: 40ch; }
+
+.section {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 4rem var(--gutter) 2rem;
+}
+.sectionHead { margin-bottom: 2rem; }
+.sectionHead p { color: var(--muted); max-width: 60ch; }
+
+.cta {
+  max-width: var(--max);
+  margin: 2rem auto 0;
+  padding: 4rem var(--gutter);
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+.ctaTitle { font-size: clamp(2rem, 5vw, 3rem); }
+.ctaText { color: var(--muted); margin-bottom: 1.75rem; }
