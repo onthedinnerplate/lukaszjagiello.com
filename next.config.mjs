@@ -22,6 +22,8 @@ const csp = [
   "font-src 'self'",
   `connect-src 'self'${isDev ? ' ws: wss:' : ''}`,
   "form-action 'self'",
+  // Photo pages embed Google Maps on demand (components/PhotoMap.js).
+  'frame-src https://www.google.com https://maps.google.com',
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "object-src 'none'",

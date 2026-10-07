@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Seo from '@/components/Seo';
 import ShareButton from '@/components/ShareButton';
+import PhotoMap from '@/components/PhotoMap';
 import { getPhotos } from '@/lib/photo-data';
 import { captionFor, exifDataFor } from '@/lib/photoCaption';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
@@ -65,7 +66,12 @@ export default function PhotoPage({ photo, prev, next }) {
           </div>
         )}
 
-        {location ? <p className={styles.location}>{location}</p> : null}
+        {(location || photo.coords) && (
+          <div className={styles.placeRow}>
+            {location ? <p className={styles.location}>{location}</p> : <span />}
+            <PhotoMap coords={photo.coords} location={location} title={photo.title} />
+          </div>
+        )}
 
         <nav className={styles.photoNav} aria-label="Adjacent photographs">
           <Link href={prev.href} rel="prev" className={styles.photoNavLink}>
