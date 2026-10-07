@@ -41,6 +41,7 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
             fill
             sizes="(max-width: 768px) 100vw, 90vw"
             priority
+            unoptimized
             style={{ objectFit: 'contain' }}
           />
         </div>

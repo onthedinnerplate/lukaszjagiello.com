@@ -47,12 +47,13 @@ export default function MasonryGallery({ photos, wide = false, eagerCount = 0, h
                     style={{ display: 'block', width: '100%', background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
                   >
                     <Image
-                      src={photo.src}
+                      src={photo.thumb || photo.src}
                       alt={photo.alt}
-                      width={photo.width}
-                      height={photo.height}
+                      width={photo.thumbWidth || photo.width}
+                      height={photo.thumbHeight || photo.height}
                       sizes={wide ? SIZES_WIDE : SIZES}
                       loading={i < eagerCount ? 'eager' : 'lazy'}
+                      unoptimized
                       className={styles.img}
                     />
                   </button>
