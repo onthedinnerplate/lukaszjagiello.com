@@ -1,16 +1,15 @@
 /*
  * Brand tokens.
- * Contrast (WCAG 2.x):  charcoal on white 11.37:1 · charcoal on lime 8.39:1
- *                       lime on white 1.36:1  ← NEVER use lime as text or as the
- * only visual boundary on white. Lime is a fill/highlight; pair it with charcoal.
+ * Contrast (WCAG 2.x):  charcoal on white 11.37:1 · charcoal on orange 8.5:1
+ *                       orange on white 5.2:1
  */
 :root {
   --white: #ffffff;
-  --charcoal: #3a3a3a;
-  --lime: #39ff14;
+  --charcoal: #1a1a1a;
+  --orange: #D4753E;
   --muted: #595959; /* 7.0:1 on white */
   --surface: #f4f4f4;
-  --border: #d9d9d9;
+  --border: #e0e0e0;
   --error: #b00020; /* 6.6:1 on white */
   --success-bg: #ecffe6;
 
@@ -54,7 +53,7 @@ p { margin: 0 0 1em; }
 img { max-width: 100%; height: auto; display: block; }
 
 /* Links: charcoal text + charcoal underline (identifiable without colour);
-   lime is the hover/focus highlight behind charcoal text. */
+   orange is the hover/focus highlight. */
 a {
   color: var(--charcoal);
   text-decoration: underline;
@@ -62,40 +61,49 @@ a {
   text-underline-offset: 3px;
 }
 a:hover {
-  background-color: var(--lime);
-  text-decoration-thickness: 2px;
+  color: var(--orange);
+  text-decoration-color: var(--orange);
 }
 
-/* Visible focus for keyboard users: charcoal ring + lime halo. */
+/* Visible focus for keyboard users: orange ring. */
 :focus-visible {
-  outline: 3px solid var(--charcoal);
+  outline: 3px solid var(--orange);
   outline-offset: 2px;
-  box-shadow: 0 0 0 6px var(--lime);
   border-radius: 2px;
 }
 main:focus { outline: none; }
 
-/* Primary button — lime fill, charcoal text & border. */
+/* Primary button — outline style with orange border. */
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 48px; /* comfortable touch target */
+  min-height: 48px;
   padding: 0.75rem 1.75rem;
   border: 2px solid var(--charcoal);
   border-radius: var(--radius);
-  background: var(--lime);
+  background: transparent;
   color: var(--charcoal);
   font: inherit;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: all 0.15s ease;
 }
 .button:hover {
   background: var(--charcoal);
-  color: var(--lime);
+  color: var(--white);
+  border-color: var(--charcoal);
+}
+.button.solid {
+  background: var(--charcoal);
+  color: var(--white);
+  border-color: var(--charcoal);
+}
+.button.solid:hover {
+  background: var(--orange);
+  border-color: var(--orange);
 }
 .button:disabled { opacity: 0.6; cursor: progress; }
 

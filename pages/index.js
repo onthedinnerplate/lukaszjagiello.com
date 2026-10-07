@@ -14,54 +14,69 @@ const meta = {
 };
 
 export default function Home({ hero, photos, total }) {
+  // Get 4 sample images for hero grid
+  const heroImages = photos.slice(0, 4);
+
   return (
     <>
       <Seo
         title={meta.title}
         description={meta.description}
         path={meta.path}
-        keywords={['photography portfolio', 'Monterey Bay', 'Ruby Beach', 'Alcatraz', 'Jamaica']}
+        keywords={['photography portfolio', 'landscape photography', 'professional photographer']}
         jsonLd={graph(websiteNode(), personNode(), pageNode('WebPage', { ...meta, title: site.name }))}
       />
 
       <section className={styles.hero} aria-labelledby="hero-heading">
-        <Image
-          src={hero.src}
-          alt={hero.alt}
-          fill
-          preload
-          fetchPriority="high"
-          // On phones the 550px-tall box crops a wide image, so it renders
-          // ~2x the viewport width; request accordingly to avoid a soft hero.
-          sizes="(max-width: 640px) 200vw, 100vw"
-          className={styles.heroImg}
-          style={{ backgroundColor: hero.color }}
-        />
-        <div className={styles.heroScrim}>
-          <div className={styles.heroText}>
-            <h1 id="hero-heading" className={styles.heroTitle}>
-              {site.name}
-            </h1>
-            <p className={styles.heroSub}>Landscapes, coastlines &amp; wildlife — from the Golden Gate to the Caribbean.</p>
+        <div className={styles.heroText}>
+          <h1 id="hero-heading" className={styles.heroTitle}>
+            Every Frame Has A Story
+          </h1>
+          <p className={styles.heroSub}>
+            A curated collection of landscape, travel, and lifestyle photography.
+            Capturing moments from around the world.
+          </p>
+          <div className={styles.heroButtons}>
+            <Link href="/gallery" className="button">
+              Explore Work
+            </Link>
+            <Link href="/contact" className="button solid">
+              Contact
+            </Link>
           </div>
+        </div>
+
+        {/* Image grid on the right */}
+        <div className={styles.heroGrid}>
+          {heroImages.map((photo, idx) => (
+            <div key={photo.id} className={styles.heroGridItem}>
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+          ))}
         </div>
       </section>
 
       <section className={styles.section} aria-labelledby="featured-heading">
         <div className={styles.sectionHead}>
-          <h2 id="featured-heading">Featured work</h2>
-          <p>A selection from San Francisco, Alcatraz, Jamaica, Monterey Bay, Ruby Beach and the wild.</p>
+          <h2 id="featured-heading">Featured Collections</h2>
+          <p>A selection of curated photography from diverse locations and subjects.</p>
         </div>
         <MasonryGallery photos={photos} headingId="featured-heading" />
       </section>
 
       <section className={styles.cta} aria-labelledby="cta-heading">
         <h2 id="cta-heading" className={styles.ctaTitle}>
-          Explore more
+          View all work
         </h2>
-        <p className={styles.ctaText}>See all {total} photographs in the full gallery.</p>
+        <p className={styles.ctaText}>Explore the complete gallery with {total} photographs.</p>
         <Link href="/gallery" className="button">
-          View the gallery
+          See the full collection
         </Link>
       </section>
     </>
