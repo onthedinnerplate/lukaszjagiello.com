@@ -5,6 +5,8 @@ import Lightbox from '@/components/Lightbox';
 import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
 import HeroSpotlight from '@/components/HeroSpotlight';
+import ShareButton from '@/components/ShareButton';
+import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { getPhotos, getHero } from '@/lib/photo-data';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
@@ -67,30 +69,42 @@ export default function Home({ hero, photos, total }) {
         {/* Image grid on the right */}
         <div className={styles.heroGrid} onMouseLeave={() => setHoverIndex(null)}>
           {heroImages.map((photo, idx) => (
-            <button
+            <div
               key={photo.src}
-              type="button"
               className={styles.heroGridItem}
               style={{ '--focus': photo.focus || '50% 50%' }}
-              onClick={() => openPhoto(photo)}
-              onMouseEnter={() => setHoverIndex(idx)}
-              onFocus={() => setHoverIndex(idx)}
+              // Slot 0 (the tall Golden Gate tile) is static — it never triggers the reveal.
+              onMouseEnter={() => setHoverIndex(idx === 0 ? null : idx)}
+              onFocus={() => setHoverIndex(idx === 0 ? null : idx)}
               onBlur={() => setHoverIndex(null)}
-              aria-label={`View ${photo.title} in fullscreen`}
             >
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                sizes="(max-width: 900px) 50vw, 20vw"
-                priority={idx === 0}
-                unoptimized
-                style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
+              <button
+                type="button"
+                className={styles.heroTileBtn}
+                onClick={() => openPhoto(photo)}
+                aria-label={`View ${photo.title} in fullscreen`}
+              >
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes="(max-width: 900px) 50vw, 20vw"
+                  priority={idx === 0}
+                  unoptimized
+                  style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
+                />
+              </button>
+              <ShareButton
+                title={photo.title}
+                url={`/gallery#photo-${photoNumberFromSrc(photo.src)}`}
+                className={styles.share}
+                toastClassName={styles.toast}
+                wrapperClassName={styles.shareWrap}
               />
-            </button>
+            </div>
           ))}
           {/* Rendered after the tiles so the :nth-child tile rules stay 1–5. */}
-          {heroImages.length >= 5 && <HeroSpotlight photos={heroImages} hoverIndex={hoverIndex} onSelect={openPhoto} />}
+          {heroImages.length >= 5 && <HeroSpotlight photos={heroImages} hoverIndex={hoverIndex} onHover={setHoverIndex} onSelect={openPhoto} />}
         </div>
       </section>
 

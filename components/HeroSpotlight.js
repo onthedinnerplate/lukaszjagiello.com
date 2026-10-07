@@ -1,26 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import ShareButton from './ShareButton';
+import { photoNumberFromSrc } from '@/lib/photoCaption';
 import styles from '@/styles/Home.module.css';
 
-// Collapsed clip rectangles, one per hero slot (index = DOM order of tiles):
-// 0 = tall left tile, 1 = TL, 2 = TR, 3 = BL, 4 = BR of the 2×2 block.
-const SLOT_CLASS = [styles.spotTall, styles.spotTL, styles.spotTR, styles.spotBL, styles.spotBR];
-
 /**
- * Hover-driven reveal over the hero collage. Nothing moves on its own.
+ * Hover reveal over the hero's 2×2 block. Nothing moves on its own.
  *
- * - Hover one of the four small tiles → its photo expands to fill the 2×2
- *   block (revealing more of the frame at its focal point), collapses on leave.
- * - Hover the tall Golden Gate tile → it expands across the whole collage,
- *   shown uncropped (letterboxed on dark) so the entire frame is visible.
- * - Click the expanded photo → opens the lightbox (same as clicking the tile).
+ * Hover one of the four small tiles (slots 1–4) → its photo slides in from the
+ * right edge and covers the whole 2×2 block; leaving the collage slides it back
+ * out. The tall Golden Gate tile (slot 0) is static and never triggers this.
+ * Clicking the slid-in photo opens the lightbox; it carries a share disc too.
  *
- * `hoverIndex` is owned by the page (tiles set it on mouseenter, the grid
- * clears it on mouseleave). Disabled on narrow layouts, where the grid is
- * not a 3×2, and the transition is instant for reduced-motion users (CSS).
+ * Compositor-only (transform + opacity). Disabled under 900px where the grid
+ * isn't a 3×2; instant for reduced-motion users (CSS).
  */
-export default function HeroSpotlight({ photos, hoverIndex, onSelect }) {
-  const [slot, setSlot] = useState(null); // which rectangle the layer is clipped to
+export default function HeroSpotlight({ photos, hoverIndex, onHover, onSelect }) {
+  const [slot, setSlot] = useState(null); // last hovered small-tile slot (1–4)
   const [open, setOpen] = useState(false);
   const [enabled, setEnabled] = useState(false);
   const raf = useRef(0);
@@ -33,48 +29,71 @@ export default function HeroSpotlight({ photos, hoverIndex, onSelect }) {
     return () => wide.removeEventListener('change', update);
   }, []);
 
-  // Two-step so the expand always animates from the hovered tile's rectangle:
-  // first snap (collapsed, invisible) to that slot, then open on the next frame.
   useEffect(() => {
     cancelAnimationFrame(raf.current);
-    if (hoverIndex == null) {
-      setOpen(false); // collapses back to the current slot, then fades
+    if (hoverIndex == null || hoverIndex === 0) {
+      setOpen(false); // slide back out to the right
       return undefined;
     }
-    setSlot(hoverIndex);
-    setOpen(false);
-    raf.current = requestAnimationFrame(() => {
-      raf.current = requestAnimationFrame(() => setOpen(true));
-    });
+    if (hoverIndex !== slot) {
+      if (open) {
+        // Already covering the block: just swap the photo (CSS crossfades it).
+        setSlot(hoverIndex);
+      } else {
+        // Closed: snap the new photo off-screen right, then slide in next frame.
+        setSlot(hoverIndex);
+        raf.current = requestAnimationFrame(() => {
+          raf.current = requestAnimationFrame(() => setOpen(true));
+        });
+      }
+    } else {
+      setOpen(true);
+    }
     return () => cancelAnimationFrame(raf.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hoverIndex]);
 
-  if (!enabled || slot == null || photos.length < 5) return null;
+  // While the panel covers the block, map pointer position to the quadrant
+  // beneath it so sweeping across still switches photos (TL=1, TR=2, BL=3, BR=4).
+  const onMove = (e) => {
+    if (!open || !onHover) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const right = e.clientX - r.left > r.width / 2;
+    const bottom = e.clientY - r.top > r.height / 2;
+    const idx = 1 + (right ? 1 : 0) + (bottom ? 2 : 0);
+    if (idx !== hoverIndex) onHover(idx);
+  };
+
+  if (!enabled || slot == null || !photos[slot]) return null;
 
   const photo = photos[slot];
-  const isTall = slot === 0;
+  const shareUrl = `/gallery#photo-${photoNumberFromSrc(photo.src)}`;
 
   return (
-    <div
-      className={[
-        styles.spotlight,
-        SLOT_CLASS[slot],
-        open ? (isTall ? styles.spotOpenFull : styles.spotOpenBlock) : '',
-        isTall ? styles.spotContain : '',
-      ].join(' ')}
-      aria-hidden="true"
-      onClick={() => open && onSelect && onSelect(photo)}
-      style={{ cursor: open ? 'pointer' : 'default' }}
-    >
-      <Image
-        key={photo.src}
-        src={photo.thumb || photo.src}
-        alt=""
-        fill
-        sizes="(max-width: 900px) 100vw, 60vw"
-        unoptimized
-        style={{ objectFit: isTall ? 'contain' : 'cover', objectPosition: isTall ? '50% 50%' : photo.focus || '50% 50%' }}
-      />
+    <div className={`${styles.spotlight} ${open ? styles.spotOpen : ''}`} aria-hidden="true">
+      <div
+        className={styles.spotPanel}
+        onClick={() => open && onSelect && onSelect(photo)}
+        onMouseMove={onMove}
+        style={{ cursor: open ? 'pointer' : 'default' }}
+      >
+        <Image
+          key={photo.src}
+          src={photo.thumb || photo.src}
+          alt=""
+          fill
+          sizes="(max-width: 900px) 100vw, 45vw"
+          unoptimized
+          style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
+        />
+        <ShareButton
+          title={photo.title}
+          url={shareUrl}
+          className={styles.share}
+          toastClassName={styles.toast}
+          wrapperClassName={styles.shareWrap}
+        />
+      </div>
     </div>
   );
 }
