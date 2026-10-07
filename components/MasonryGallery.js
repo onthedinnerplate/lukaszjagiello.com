@@ -42,11 +42,11 @@ export default function MasonryGallery({ photos, wide = false, eagerCount = 0, h
     <div className={styles.wrap}>
       <ul className={styles.masonry} aria-labelledby={headingId}>
         {photos.map((photo, i) => {
-          // Extract photo number from title (e.g., "Photograph 1" → 1)
-          const photoNum = parseInt(photo.title.replace('Photograph ', ''), 10);
-          const locationData = locationMetadata[photoNum] || { location: '', equipment: '' };
-          const exifData = photoMetadata[photoNum] || {};
-          const displayTitle = locationData.location || `Photograph ${photoNum}`;
+          // Extract photo number from src filename (e.g., "lukasz-jagiello-01" → 1)
+          const photoNumMatch = photo.src.match(/lukasz-jagiello-(\d+)/);
+          const photoNum = photoNumMatch ? parseInt(photoNumMatch[1], 10) : null;
+          const locationData = photoNum ? (locationMetadata[photoNum] || {}) : {};
+          const exifData = photoNum ? (photoMetadata[photoNum] || {}) : {};
 
           // Format camera and lens info (simplified for display)
           const cameraDisplay = exifData.camera ? exifData.camera.replace('SONY ILCE-7RM3', 'Sony A7R III') : '';
@@ -79,7 +79,7 @@ export default function MasonryGallery({ photos, wide = false, eagerCount = 0, h
                   </button>
                 </div>
                 <figcaption className={styles.caption}>
-                  <span className={styles.title}>{displayTitle}</span>
+                  <span className={styles.title}>{photo.title}</span>
                   {(cameraDisplay || lensDisplay) && (
                     <span style={{ display: 'block', fontSize: '0.80em', opacity: 0.8, marginTop: '0.25rem', fontWeight: 500 }}>
                       {cameraDisplay} {lensDisplay}
