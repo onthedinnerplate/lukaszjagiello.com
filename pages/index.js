@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Lightbox from '@/components/Lightbox';
 import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
 import HeroSpotlight from '@/components/HeroSpotlight';
@@ -18,6 +20,19 @@ const meta = {
 export default function Home({ hero, photos, total }) {
   // Hero collage = first `heroCount` of the curated homepage set (cover-cropped to the grid).
   const heroImages = photos.slice(0, site.heroCount || 4);
+
+  // Hero tiles open the lightbox over the full homepage set so prev/next work.
+  // TODO: once per-photo pages exist at /photo/[slug], link tiles there instead
+  // (see docs/photo-pages-and-image-seo.md) and keep the lightbox for the grid.
+  const [lbOpen, setLbOpen] = useState(false);
+  const [lbIndex, setLbIndex] = useState(0);
+  const openPhoto = (photo) => {
+    const i = photos.findIndex((p) => p.src === photo.src);
+    if (i >= 0) {
+      setLbIndex(i);
+      setLbOpen(true);
+    }
+  };
 
   return (
     <>
@@ -51,7 +66,14 @@ export default function Home({ hero, photos, total }) {
         {/* Image grid on the right */}
         <div className={styles.heroGrid}>
           {heroImages.map((photo, idx) => (
-            <div key={photo.src} className={styles.heroGridItem} style={{ '--focus': photo.focus || '50% 50%' }}>
+            <button
+              key={photo.src}
+              type="button"
+              className={styles.heroGridItem}
+              style={{ '--focus': photo.focus || '50% 50%' }}
+              onClick={() => openPhoto(photo)}
+              aria-label={`View ${photo.title} in fullscreen`}
+            >
               <Image
                 src={photo.src}
                 alt={photo.alt}
@@ -61,12 +83,20 @@ export default function Home({ hero, photos, total }) {
                 unoptimized
                 style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
               />
-            </div>
+            </button>
           ))}
           {/* Rendered after the tiles so the :nth-child tile rules stay 1–5. */}
-          {heroImages.length >= 5 && <HeroSpotlight photos={heroImages.slice(1, 5)} />}
+          {heroImages.length >= 5 && <HeroSpotlight photos={heroImages.slice(1, 5)} onSelect={openPhoto} />}
         </div>
       </section>
+
+      <Lightbox
+        isOpen={lbOpen}
+        photo={photos[lbIndex]}
+        onClose={() => setLbOpen(false)}
+        onNext={() => setLbIndex((i) => (i + 1) % photos.length)}
+        onPrev={() => setLbIndex((i) => (i - 1 + photos.length) % photos.length)}
+      />
 
       <section className={styles.section} aria-labelledby="featured-heading">
         <div className={styles.sectionHead}>

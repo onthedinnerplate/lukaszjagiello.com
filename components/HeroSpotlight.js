@@ -20,7 +20,7 @@ const SLOT_CLASS = [styles.spotTL, styles.spotTR, styles.spotBL, styles.spotBR];
  * Pauses on hover; off entirely for reduced-motion users and on narrow
  * layouts where the block isn't a 2×2.
  */
-export default function HeroSpotlight({ photos }) {
+export default function HeroSpotlight({ photos, onSelect }) {
   const [step, setStep] = useState(0); // index into CLOCKWISE
   const [open, setOpen] = useState(false);
   const [enabled, setEnabled] = useState(false);
@@ -34,11 +34,18 @@ export default function HeroSpotlight({ photos }) {
     if (!grid) return undefined;
     const on = () => (paused.current = true);
     const off = () => (paused.current = false);
+    const offIfLeft = (e) => {
+      if (!grid.contains(e.relatedTarget)) off();
+    };
     grid.addEventListener('mouseenter', on);
     grid.addEventListener('mouseleave', off);
+    grid.addEventListener('focusin', on);
+    grid.addEventListener('focusout', offIfLeft);
     return () => {
       grid.removeEventListener('mouseenter', on);
       grid.removeEventListener('mouseleave', off);
+      grid.removeEventListener('focusin', on);
+      grid.removeEventListener('focusout', offIfLeft);
     };
   }, [enabled]);
 
@@ -98,7 +105,13 @@ export default function HeroSpotlight({ photos }) {
   const photo = photos[slot];
 
   return (
-    <div ref={el} className={`${styles.spotlight} ${SLOT_CLASS[slot]} ${open ? styles.spotOpen : ''}`} aria-hidden="true">
+    <div
+      ref={el}
+      className={`${styles.spotlight} ${SLOT_CLASS[slot]} ${open ? styles.spotOpen : ''}`}
+      aria-hidden="true"
+      onClick={() => open && onSelect && onSelect(photo)}
+      style={{ cursor: open ? 'pointer' : 'default' }}
+    >
       <Image
         key={photo.src}
         src={photo.thumb || photo.src}

@@ -54,6 +54,7 @@ export default function MasonryGallery({ photos, wide = false, eagerCount = 0, h
             <li key={photo.src} id={`photo-${num}`} className={styles.item}>
               <figure className={styles.figure}>
                 <div className={styles.frame} style={{ backgroundColor: photo.color }}>
+                  <ShareButton title={photo.title} url={shareUrl} className={styles.share} toastClassName={styles.toast} wrapperClassName={styles.shareWrap} />
                   <button
                     type="button"
                     className={styles.imgBtn}
@@ -81,7 +82,6 @@ export default function MasonryGallery({ photos, wide = false, eagerCount = 0, h
                       {specs && <span className={styles.meta}>{specs}</span>}
                     </span>
                   )}
-                  <ShareButton title={photo.title} url={shareUrl} className={styles.share} toastClassName={styles.toast} />
                 </figcaption>
               </figure>
             </li>

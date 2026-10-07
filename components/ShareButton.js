@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
  * Share a photo: native share sheet where available (phones, Safari, Edge),
  * otherwise copy the link and show a brief "Link copied" confirmation.
  */
-export default function ShareButton({ title, url, className, toastClassName }) {
+export default function ShareButton({ title, url, className, toastClassName, wrapperClassName }) {
   const [state, setState] = useState(null); // null | 'copied' | 'failed'
   const timer = useRef(null);
 
@@ -38,7 +38,10 @@ export default function ShareButton({ title, url, className, toastClassName }) {
   };
 
   return (
-    <span style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+    <span
+      className={wrapperClassName}
+      style={{ position: wrapperClassName ? undefined : 'relative', display: 'inline-flex', alignItems: 'center' }}
+    >
       <button
         type="button"
         className={className}
