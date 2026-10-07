@@ -26,44 +26,48 @@ export default function About() {
           <p className={styles.lede}>Chasing light along the Pacific coast and beyond.</p>
         </header>
 
-        <section aria-labelledby="bio-heading" className={styles.block}>
-          <h2 id="bio-heading">Bio</h2>
+        <section aria-labelledby="intro-heading" className={styles.block}>
+          <h2 id="intro-heading">Based in Phoenix, Arizona</h2>
           <p>
-            I&rsquo;m {site.photographer}, a landscape and wildlife photographer based in Phoenix, Arizona. My
-            work moves between fog-wrapped city landmarks, the rugged sea stacks of the Olympic Peninsula, the kelp
-            forests of Monterey Bay and the warm water of Jamaica&rsquo;s coast.
-          </p>
-          <p>
-            I&rsquo;m drawn to quiet moments: the minute before sunrise, a harbor seal surfacing, fog rolling through the
-            Golden Gate. Every image here is about patience, place, and paying attention.
-          </p>
-          <p>
-            Prints, licensing and commissions are available — <Link href="/contact">get in touch</Link>.
+            I&rsquo;m a landscape photographer drawn to the raw beauty of natural spaces. My work captures the dramatic
+            light, texture, and emotion found in wild places—from desert expanses to coastal cliffs to mountain peaks.
           </p>
         </section>
 
-        <section aria-labelledby="locations-heading" className={styles.block}>
-          <h2 id="locations-heading">Where I&rsquo;ve been</h2>
-          <ul style={{ columns: '2', columnGap: '2rem', lineHeight: '1.8' }}>
-            <li>Dominican Republic</li>
-            <li>Jamaica</li>
-            <li>Playa del Carmen, Mexico</li>
-            <li>Puerto Los Cabos, Mexico</li>
-            <li>San Antonio, Texas</li>
-            <li>Williams, Arizona</li>
-            <li>Prescott, Arizona</li>
-            <li>Flagstaff, Arizona</li>
-            <li>Page, Arizona</li>
-            <li>Zion National Park</li>
-            <li>Bryce Canyon</li>
-            <li>Monterey Bay, California</li>
-            <li>San Francisco, California</li>
-            <li>Fort Bragg, California</li>
-            <li>Redwood National Park, California</li>
-            <li>Olympic National Park, Washington</li>
-            <li>Seattle, Washington</li>
-            <li>Port Angeles, Washington</li>
-          </ul>
+        <section aria-labelledby="travel-heading" className={styles.block}>
+          <h2 id="travel-heading">Where I&rsquo;ve Traveled</h2>
+          <p>
+            My photography takes me across North America and beyond. I&rsquo;ve documented the landscapes of:
+          </p>
+          <div style={{ marginTop: '1.5rem' }}>
+            <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>Arizona</h3>
+            <p style={{ marginBottom: '1.5rem' }}>Williams • Prescott • Flagstaff • Page</p>
+
+            <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>California</h3>
+            <p style={{ marginBottom: '1.5rem' }}>Monterey Bay • San Francisco • Fort Bragg • Redwood National Park</p>
+
+            <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>Other Destinations</h3>
+            <p>
+              Zion National Park • Bryce Canyon • Olympic National Park (Washington) • Seattle • Port Angeles (Washington) •
+              San Antonio (Texas) • Playa del Carmen (Mexico) • Puerto Los Cabos (Mexico) • Jamaica • Dominican Republic
+            </p>
+          </div>
+        </section>
+
+        <section aria-labelledby="work-heading" className={styles.block}>
+          <h2 id="work-heading">The Work</h2>
+          <p>
+            Each photograph is about capturing a moment—the interplay of light, shadow, and landscape that makes a place
+            unforgettable. Whether it&rsquo;s the rugged Oregon coast, the Colorado plateaus, or the hidden corners of the
+            desert, I&rsquo;m always looking for the story in the terrain.
+          </p>
+          <p>
+            I shoot on location, working with natural light to reveal the authentic character of each landscape. No filters,
+            no shortcuts—just the honest beauty of the earth.
+          </p>
+          <p style={{ marginTop: '1.5rem' }}>
+            Prints, licensing and commissions are available — <Link href="/contact">get in touch</Link>.
+          </p>
         </section>
 
         <section aria-labelledby="gear-heading" className={styles.block}>
