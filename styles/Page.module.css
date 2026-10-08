@@ -247,3 +247,59 @@
   .photoNav { grid-template-columns: 1fr; gap: 1rem; }
   .photoNavNext { text-align: left; align-items: flex-start; }
 }
+
+/* ---- Digital download purchase (components/BuyButton.js) ---- */
+.buy {
+  margin: 2.5rem 0 0;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--orange);
+  border-radius: var(--card-radius, 12px);
+  background: var(--surface);
+}
+.buyHeading {
+  margin: 0 0 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.buyTiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  border: 0;
+}
+.buyTier {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--white);
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.buyTier:hover { border-color: var(--charcoal); }
+.buyTier:has(:focus-visible) { outline: 2px solid var(--orange); outline-offset: 2px; }
+.buyTierActive { border-color: var(--orange); box-shadow: 0 0 0 1px var(--orange); }
+.buyTierLabel { font-weight: 600; }
+.buyTierBlurb { font-size: 0.875rem; color: var(--muted); }
+.buyTierPrice { margin-top: 0.25rem; font-size: 1.125rem; font-weight: 700; }
+.buyRow { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.buyNote { margin: 0; font-size: 0.875rem; color: var(--muted); }
+.buyError { margin: 0.75rem 0 0; color: var(--error); font-weight: 500; }
+.buyLicence { margin: 1rem 0 0; font-size: 0.8125rem; color: var(--muted); }
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

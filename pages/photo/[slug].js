@@ -3,13 +3,16 @@ import Link from 'next/link';
 import Seo from '@/components/Seo';
 import ShareButton from '@/components/ShareButton';
 import PhotoMap from '@/components/PhotoMap';
+import BuyButton from '@/components/BuyButton';
+import { availableTiers, LICENCE_SUMMARY } from '@/lib/store';
+import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { getPhotos, getGalleryPhotos } from '@/lib/photo-data';
 import { captionFor, exifDataFor } from '@/lib/photoCaption';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
 import { ogImageSrc } from '@/lib/slug';
 import styles from '@/styles/Page.module.css';
 
-export default function PhotoPage({ photo, prev, next }) {
+export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
   const { equipment, specs } = captionFor(photo);
   const description = photo.alt;
   const location = typeof photo.location === 'string' ? photo.location.trim() : '';
@@ -71,6 +74,8 @@ export default function PhotoPage({ photo, prev, next }) {
           {!photo.coords && location ? <p className={styles.location}>{location}</p> : null}
         </PhotoMap>
 
+        <BuyButton photoNumber={photoNumber} tiers={tiers} licence={LICENCE_SUMMARY} />
+
         <nav className={styles.photoNav} aria-label="Adjacent photographs">
           <Link href={prev.href} rel="prev" className={styles.photoNavLink}>
             <span className={styles.photoNavDir}>Previous</span>
@@ -117,5 +122,9 @@ export async function getStaticProps({ params }) {
   const next = photos[(index + 1) % photos.length];
   const neighbour = ({ title, href }) => ({ title, href });
 
-  return { props: { photo, prev: neighbour(prev), next: neighbour(next) } };
+  const photoNumber = photoNumberFromSrc(photo.src);
+  // Only tiers whose file exists on the server are offered (see lib/store.js).
+  const tiers = availableTiers(photoNumber);
+
+  return { props: { photo, prev: neighbour(prev), next: neighbour(next), tiers, photoNumber } };
 }

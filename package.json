@@ -13,7 +13,8 @@
     "fulls": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-fulls.mjs",
     "og": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-og.mjs",
     "sitemap": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-sitemap.mjs",
-    "manifest": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-photo-manifest.mjs"
+    "manifest": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-photo-manifest.mjs",
+    "downloads": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-downloads.mjs"
   },
   "engines": {
     "node": ">=22.12.0"
