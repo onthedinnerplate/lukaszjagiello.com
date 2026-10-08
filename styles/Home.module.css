@@ -70,7 +70,8 @@
 .heroTileBtn:focus-visible { outline: 3px solid var(--orange); outline-offset: -3px; }
 
 /* Share disc, bottom-right of each tile — same look as the gallery cards. */
-.shareWrap { position: absolute; right: 8px; bottom: 8px; z-index: 3; }
+.cardActions { position: absolute; right: 8px; bottom: 8px; z-index: 3; display: inline-flex; align-items: center; gap: 6px; }
+.shareWrap { position: relative; display: inline-flex; }
 .share {
   display: inline-flex;
   align-items: center;
