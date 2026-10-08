@@ -34,7 +34,7 @@ export default function BuyButton({ photoNumber, tiers = [], licence }) {
   };
 
   return (
-    <section className={styles.buy} aria-labelledby="buy-heading">
+    <section id="buy" className={styles.buy} aria-labelledby="buy-heading">
       <h2 id="buy-heading" className={styles.buyHeading}>Buy a digital download</h2>
       <div className={styles.buyTiers} role="radiogroup" aria-label="Download size">
         {tiers.map((t) => (

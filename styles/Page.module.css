@@ -224,6 +224,10 @@
   cursor: pointer;
 }
 .share:hover { background: rgba(0, 0, 0, 0.04); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+.buyLink { text-decoration: none; border-color: var(--charcoal); }
+.buyLink:hover { background: var(--charcoal); color: var(--white); }
+.buy { scroll-margin-top: 5rem; }
 .share:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 .toast {
   position: absolute;

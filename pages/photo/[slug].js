@@ -92,13 +92,25 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
           <Link href="/gallery">Back to gallery</Link>
         </p>
 
-        <ShareButton
-          title={photo.title}
-          url={photo.href}
-          label="Share"
-          className={styles.share}
-          toastClassName={styles.toast}
-        />
+        <div className={styles.actions}>
+          <ShareButton
+            title={photo.title}
+            url={photo.href}
+            label="Share"
+            className={styles.share}
+            toastClassName={styles.toast}
+          />
+          {tiers.length > 0 && (
+            <a href="#buy" className={`${styles.share} ${styles.buyLink}`} title="Buy a digital download">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                <path d="M3 6h18" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+              <span>Buy · from {tiers[0].price}</span>
+            </a>
+          )}
+        </div>
       </article>
     </>
   );
