@@ -131,6 +131,7 @@ export default function MasonryGallery({ photos, wide = false, priorityCount = 0
                 <figcaption className={styles.caption}>
                   <span className={styles.title}>
                     {photo.href ? <Link href={photo.href} className={styles.titleLink}>{photo.title}</Link> : photo.title}
+                    {photo.location ? <span className={styles.location}>{photo.location}</span> : null}
                   </span>
                   {(equipment || specs) && (
                     <span className={styles.metaBlock}>
