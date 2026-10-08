@@ -54,8 +54,7 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
       />
       <article className={`${styles.photoPage} ${styles.photoLayout}`}>
         {/* Left third: title, gear, map, buy, prev/next. Right two-thirds: the
-            photo, capped to the viewport so the page never becomes a scroll
-            wall on portrait frames; click opens the lightbox. */}
+            photo at full column width; click opens the lightbox. */}
         <div className={styles.photoAside}>
           <PhotoMap coords={photo.coords} location={location} title={photo.title} stacked>
             <h1 className={styles.photoTitle}>{photo.title}</h1>
