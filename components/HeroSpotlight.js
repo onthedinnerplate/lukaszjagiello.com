@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import ShareButton from './ShareButton';
+import BuyIcon from './BuyIcon';
 import styles from '@/styles/Home.module.css';
 
 /**
@@ -87,15 +87,7 @@ export default function HeroSpotlight({ photos, hoverIndex, onHover, onSelect })
           style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
         />
         <span className={styles.cardActions}>
-          {photo.forSale && photo.href ? (
-            <Link href={`${photo.href}#buy`} className={styles.share} aria-label={`Buy a download of ${photo.title}`} title="Buy a download">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-                <path d="M3 6h18" />
-                <path d="M16 10a4 4 0 0 1-8 0" />
-              </svg>
-            </Link>
-          ) : null}
+          <BuyIcon photo={photo} className={styles.share} />
           <ShareButton
             title={photo.title}
             url={shareUrl}

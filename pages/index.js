@@ -6,6 +6,7 @@ import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
 import HeroSpotlight from '@/components/HeroSpotlight';
 import ShareButton from '@/components/ShareButton';
+import BuyIcon from '@/components/BuyIcon';
 import { getPhotos, getHero } from '@/lib/photo-data';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
@@ -100,13 +101,16 @@ export default function Home({ hero, photos, total }) {
                   style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
                 />
               </Link>
-              <ShareButton
-                title={photo.title}
-                url={photo.href}
-                className={styles.share}
-                toastClassName={styles.toast}
-                wrapperClassName={styles.shareWrap}
-              />
+              <span className={styles.cardActions}>
+                <BuyIcon photo={photo} className={styles.share} />
+                <ShareButton
+                  title={photo.title}
+                  url={photo.href}
+                  className={styles.share}
+                  toastClassName={styles.toast}
+                  wrapperClassName={styles.shareWrap}
+                />
+              </span>
             </div>
           ))}
           {/* Rendered after the tiles so the :nth-child tile rules stay 1–5. */}
