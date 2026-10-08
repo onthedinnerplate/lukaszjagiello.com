@@ -225,7 +225,6 @@
 }
 .share:hover { background: rgba(0, 0, 0, 0.04); }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
-.buy { scroll-margin-top: 5rem; }
 .share:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 .toast {
   position: absolute;
@@ -252,34 +251,37 @@
 
 /* ---- Digital download purchase (components/BuyButton.js) ---- */
 .buy {
-  margin: 2.5rem 0 0;
-  padding: 1.5rem;
+  max-width: 640px;
+  margin: 2rem 0 0;
+  padding: 1rem 1.125rem;
   border: 1px solid var(--border);
-  border-left: 4px solid var(--orange);
-  border-radius: var(--card-radius, 12px);
+  border-left: 3px solid var(--orange);
+  border-radius: 10px;
   background: var(--surface);
+  scroll-margin-top: 5rem;
 }
 .buyHeading {
-  margin: 0 0 1rem;
-  font-size: 1.125rem;
+  margin: 0 0 0.625rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   letter-spacing: 0.01em;
 }
 .buyTiers {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 0.75rem;
-  margin: 0 0 1.25rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
   padding: 0;
   border: 0;
 }
+@media (max-width: 480px) { .buyTiers { grid-template-columns: 1fr; } }
 .buyTier {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  padding: 0.875rem 1rem;
-  border: 2px solid var(--border);
-  border-radius: 10px;
+  gap: 0.1rem;
+  padding: 0.5rem 0.625rem;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
   background: var(--white);
   cursor: pointer;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -287,13 +289,14 @@
 .buyTier:hover { border-color: var(--charcoal); }
 .buyTier:has(:focus-visible) { outline: 2px solid var(--orange); outline-offset: 2px; }
 .buyTierActive { border-color: var(--orange); box-shadow: 0 0 0 1px var(--orange); }
-.buyTierLabel { font-weight: 600; }
-.buyTierBlurb { font-size: 0.875rem; color: var(--muted); }
-.buyTierPrice { margin-top: 0.25rem; font-size: 1.125rem; font-weight: 700; }
-.buyRow { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
-.buyNote { margin: 0; font-size: 0.875rem; color: var(--muted); }
-.buyError { margin: 0.75rem 0 0; color: var(--error); font-weight: 500; }
-.buyLicence { margin: 1rem 0 0; font-size: 0.8125rem; color: var(--muted); }
+.buyTierLabel { font-size: 0.875rem; font-weight: 600; }
+.buyTierBlurb { font-size: 0.6875rem; line-height: 1.35; color: var(--muted); }
+.buyTierPrice { margin-top: 0.15rem; font-size: 0.9375rem; font-weight: 700; }
+.buyRow { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+.buyRow > button { padding: 0.5rem 1rem; font-size: 0.875rem; }
+.buyNote { margin: 0; font-size: 0.75rem; color: var(--muted); }
+.buyError { margin: 0.5rem 0 0; font-size: 0.875rem; color: var(--error); font-weight: 500; }
+.buyLicence { margin: 0.625rem 0 0; font-size: 0.6875rem; line-height: 1.4; color: var(--muted); }
 .srOnly {
   position: absolute;
   width: 1px;
