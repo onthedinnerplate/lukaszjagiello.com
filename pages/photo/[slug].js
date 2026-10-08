@@ -59,6 +59,13 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
             unoptimized
             className={styles.photoImg}
           />
+          <ShareButton
+            title={photo.title}
+            url={photo.href}
+            className={styles.share}
+            toastClassName={styles.toast}
+            wrapperClassName={styles.shareWrap}
+          />
         </div>
 
         {/* Title + gear on the left; square map card on the right, vertically
@@ -92,15 +99,6 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
           <Link href="/gallery">Back to gallery</Link>
         </p>
 
-        <div className={styles.actions}>
-          <ShareButton
-            title={photo.title}
-            url={photo.href}
-            label="Share"
-            className={styles.share}
-            toastClassName={styles.toast}
-          />
-        </div>
       </article>
     </>
   );
