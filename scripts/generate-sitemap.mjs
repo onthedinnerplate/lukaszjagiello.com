@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SITE_URL, site } from '../lib/site.js';
 import { photos } from '../lib/photos.js';
+import { CATEGORIES, galleryPathFor } from '../lib/categories.js';
 import { photoPath } from '../lib/slug.js';
 
 const pub = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'public');
@@ -23,6 +24,12 @@ const photoPages = photos.map((p) => ({
 const pages = [
   { path: '/', priority: '1.0', freq: 'weekly' },
   { path: '/gallery', priority: '0.9', freq: 'weekly', images: photos.map((p) => ({ src: p.src })) },
+  ...CATEGORIES.map((c) => ({
+    path: galleryPathFor(c.slug),
+    priority: '0.8',
+    freq: 'weekly',
+    images: photos.filter((p) => p.category === c.slug).map((p) => ({ src: p.src })),
+  })),
   { path: '/about', priority: '0.6', freq: 'monthly' },
   { path: '/contact', priority: '0.5', freq: 'yearly' },
   ...photoPages,

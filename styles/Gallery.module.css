@@ -146,7 +146,33 @@
   font-weight: 500;
 }
 
-/* Filter bar — rendered only when NEXT_PUBLIC_GALLERY_FILTERS=true. */
+/* Category row under the gallery heading: real links, active one underlined in orange. */
+.catNav { margin-top: 1.25rem; }
+.catList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.catLink {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.35rem 0;
+  color: var(--charcoal);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.catLink:hover { border-bottom-color: rgba(26, 26, 26, 0.3); }
+.catLink:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; border-radius: 2px; }
+.catActive { font-weight: 600; border-bottom-color: var(--orange); }
+.catCount { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+
+/* Legacy filter bar — rendered only when NEXT_PUBLIC_GALLERY_FILTERS=true. */
 .filters {
   display: flex;
   flex-wrap: wrap;
