@@ -9,6 +9,5 @@ npm-debug.log*
 # Generated at build time by scripts/generate-sitemap.mjs
 public/sitemap.xml
 public/robots.txt
-# Paid downloads: 1080/2k tiers are committed; full-res originals stay out of git
+# Paid downloads (private/downloads/NN/*.jpg) are committed; raw originals never are
 private/downloads/originals/
-private/downloads/**/full.jpg

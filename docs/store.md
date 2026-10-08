@@ -33,7 +33,7 @@ this design. Add one later only if you want order emails / analytics.
 ```
 private/downloads/NN/1080.jpg   committed
 private/downloads/NN/2k.jpg     committed
-private/downloads/NN/full.jpg   git-ignored (too large; see "Full-res" below)
+private/downloads/NN/full.jpg   committed (~7 MB each, ~330 MB for all 46)
 ```
 
 `private/` is outside `public/`, so Next never serves these directly.
@@ -50,15 +50,15 @@ npm run downloads -- --source="C:\Photography\porfolio\done"
 
 The script refuses to write a tier the original can't fill (a 1600px source is
 not sold as "2K") and lists anything it skipped. Commit `private/downloads/`
-(1080 + 2k only, ~1–3 MB per photo) and push; Render redeploys, and the buy box
+(~8 MB per photo) and push; Render redeploys, and the buy box
 appears on each photo that has files.
 
 ### Full-res
 
-`full.jpg` is ignored by git. Until the full-res tier is hosted somewhere
-(Cloudflare R2 + presigned URL is the planned route), it will simply not be
-offered. The code needs no change for that; `availableTiers()` only lists files
-that exist.
+Committed alongside the other tiers. Total stays well under GitHub's limits
+(100 MB per file, ~1 GB per repo). If the catalogue ever grows past a few
+hundred photos, move `full.jpg` to object storage (Cloudflare R2 + presigned
+URL); `availableTiers()` is the only place that would need to learn about it.
 
 ## Environment (Render → Environment)
 
