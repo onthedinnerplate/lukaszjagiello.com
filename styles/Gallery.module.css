@@ -89,12 +89,16 @@
   white-space: nowrap;
 }
 /* Share: round 50%-white disc with dark icon, bottom-right of the image. */
-.shareWrap {
+.cardActions {
   position: absolute;
   right: 8px;
   bottom: 8px;
   z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
+.shareWrap { position: relative; display: inline-flex; }
 .share {
   display: inline-flex;
   align-items: center;
