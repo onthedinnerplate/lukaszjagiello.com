@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Lightbox from '@/components/Lightbox';
 import Seo from '@/components/Seo';
 import ShareButton from '@/components/ShareButton';
 import PhotoMap from '@/components/PhotoMap';
@@ -14,6 +17,8 @@ import { ogImageSrc } from '@/lib/slug';
 import styles from '@/styles/Page.module.css';
 
 export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
+  const router = useRouter();
+  const [lbOpen, setLbOpen] = useState(false);
   const { equipment, specs } = captionFor(photo);
   const description = photo.alt;
   const location = typeof photo.location === 'string' ? photo.location.trim() : '';
@@ -47,59 +52,78 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
         keywords={[photo.title, location].filter(Boolean)}
         jsonLd={jsonLd}
       />
-      <article className={styles.photoPage}>
-        <div className={styles.photoFrame} style={{ backgroundColor: photo.color }}>
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            width={photo.width}
-            height={photo.height}
-            sizes="(max-width: 1024px) 100vw, 1200px"
-            priority
-            unoptimized
-            className={styles.photoImg}
-          />
-          <ShareButton
-            title={photo.title}
-            url={photo.href}
-            className={styles.share}
-            toastClassName={styles.toast}
-            wrapperClassName={styles.shareWrap}
-          />
+      <article className={`${styles.photoPage} ${styles.photoLayout}`}>
+        {/* Left third: title, gear, map, buy, prev/next. Right two-thirds: the
+            photo, capped to the viewport so the page never becomes a scroll
+            wall on portrait frames; click opens the lightbox. */}
+        <div className={styles.photoAside}>
+          <PhotoMap coords={photo.coords} location={location} title={photo.title} stacked>
+            <h1 className={styles.photoTitle}>{photo.title}</h1>
+            {(equipment || specs) && (
+              <div className={styles.photoMeta}>
+                {equipment && <p className={styles.meta}>{equipment}</p>}
+                {specs && <p className={styles.meta}>{specs}</p>}
+              </div>
+            )}
+            {!photo.coords && location ? <p className={styles.location}>{location}</p> : null}
+          </PhotoMap>
+
+          <BuyButton photoNumber={photoNumber} tiers={tiers} licence={LICENCE_SUMMARY} />
+
+          <nav className={styles.photoNav} aria-label="Adjacent photographs">
+            <Link href={prev.href} rel="prev" className={styles.photoNavLink}>
+              <span className={styles.photoNavDir}>Previous</span>
+              <span>{prev.title}</span>
+            </Link>
+            <Link href={next.href} rel="next" className={`${styles.photoNavLink} ${styles.photoNavNext}`}>
+              <span className={styles.photoNavDir}>Next</span>
+              <span>{next.title}</span>
+            </Link>
+          </nav>
+
+          <p className={styles.back}>
+            <Link href="/gallery">Back to gallery</Link>
+          </p>
         </div>
 
-        {/* Title + gear on the left; square map card on the right, vertically
-            centred against them. The card carries the place name, so there is
-            no separate location line. Expanded, the map spans the full width. */}
-        <PhotoMap coords={photo.coords} location={location} title={photo.title}>
-          <h1 className={styles.photoTitle}>{photo.title}</h1>
-          {(equipment || specs) && (
-            <div className={styles.photoMeta}>
-              {equipment && <p className={styles.meta}>{equipment}</p>}
-              {specs && <p className={styles.meta}>{specs}</p>}
-            </div>
-          )}
-          {!photo.coords && location ? <p className={styles.location}>{location}</p> : null}
-        </PhotoMap>
-
-        <BuyButton photoNumber={photoNumber} tiers={tiers} licence={LICENCE_SUMMARY} />
-
-        <nav className={styles.photoNav} aria-label="Adjacent photographs">
-          <Link href={prev.href} rel="prev" className={styles.photoNavLink}>
-            <span className={styles.photoNavDir}>Previous</span>
-            <span>{prev.title}</span>
-          </Link>
-          <Link href={next.href} rel="next" className={`${styles.photoNavLink} ${styles.photoNavNext}`}>
-            <span className={styles.photoNavDir}>Next</span>
-            <span>{next.title}</span>
-          </Link>
-        </nav>
-
-        <p className={styles.back}>
-          <Link href="/gallery">Back to gallery</Link>
-        </p>
-
+        <div className={styles.photoStage}>
+          <div className={styles.photoFrame} style={{ backgroundColor: photo.color }}>
+            <button
+              type="button"
+              className={styles.photoOpen}
+              onClick={() => setLbOpen(true)}
+              aria-label={`View ${photo.title} full screen`}
+              title="View full screen"
+            >
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                width={photo.width}
+                height={photo.height}
+                sizes="(max-width: 900px) 100vw, 66vw"
+                priority
+                unoptimized
+                className={styles.photoImg}
+              />
+            </button>
+            <ShareButton
+              title={photo.title}
+              url={photo.href}
+              className={styles.share}
+              toastClassName={styles.toast}
+              wrapperClassName={styles.shareWrap}
+            />
+          </div>
+        </div>
       </article>
+
+      <Lightbox
+        isOpen={lbOpen}
+        photo={photo}
+        onClose={() => setLbOpen(false)}
+        onPrev={() => router.push(prev.href)}
+        onNext={() => router.push(next.href)}
+      />
     </>
   );
 }

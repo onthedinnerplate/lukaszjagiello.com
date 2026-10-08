@@ -10,10 +10,11 @@ import styles from '@/styles/Page.module.css';
  *
  * With no coordinates it renders just the children (no card).
  */
-export default function PhotoMap({ coords, location, title, children }) {
+export default function PhotoMap({ coords, location, title, children, stacked = false }) {
   const [open, setOpen] = useState(false);
   const has = coords && typeof coords.lat === 'number' && typeof coords.lng === 'number';
-  if (!has) return <header className={styles.photoHeader}>{children ? <div className={styles.photoHeaderText}>{children}</div> : null}</header>;
+  const headerClass = `${styles.photoHeader} ${stacked ? styles.photoHeaderStacked : ''}`;
+  if (!has) return <header className={headerClass}>{children ? <div className={styles.photoHeaderText}>{children}</div> : null}</header>;
 
   const { lat, lng } = coords;
   const zoom = coords.zoom || 13;
@@ -23,11 +24,11 @@ export default function PhotoMap({ coords, location, title, children }) {
 
   return (
     <>
-      <header className={styles.photoHeader}>
+      <header className={headerClass}>
         <div className={styles.photoHeaderText}>{children}</div>
         <button
           type="button"
-          className={`${styles.mapCard} ${open ? styles.mapCardOpen : ''}`}
+          className={`${styles.mapCard} ${stacked ? styles.mapCardWide : ''} ${open ? styles.mapCardOpen : ''}`}
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls="photo-map-panel"
