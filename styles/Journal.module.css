@@ -1,0 +1,128 @@
+.index,
+.article {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3.5rem var(--gutter) 1rem;
+}
+
+.pageHeader { margin-bottom: 2.5rem; }
+.lede {
+  margin: 0;
+  font-size: 1.1875rem;
+  color: var(--muted);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 1.15rem;
+  align-items: center;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+  color: inherit;
+  text-decoration: none;
+}
+.card:hover { border-color: var(--orange); }
+.card:hover .cardTitle { color: var(--orange); }
+
+.thumbWrap {
+  border-radius: 8px;
+  overflow: hidden;
+  line-height: 0;
+  background: var(--surface);
+}
+.thumb {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.cardBody { min-width: 0; }
+.cardTitle {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.2rem, 2.4vw, 1.45rem);
+  line-height: 1.25;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.cardDek {
+  margin: 0 0 0.55rem;
+  font-style: italic;
+  line-height: 1.45;
+}
+.cardMeta {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .card { grid-template-columns: 1fr; align-items: start; }
+}
+
+.hero {
+  margin: 0 0 1.75rem;
+  border-radius: 12px;
+  overflow: hidden;
+  line-height: 0;
+  background: var(--surface);
+}
+.heroImg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.kicker {
+  margin: 0 0 0.45rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.title { margin: 0 0 0.65rem; }
+.dek {
+  margin: 0 0 0.85rem;
+  font-size: 1.1875rem;
+  font-style: italic;
+  line-height: 1.45;
+}
+.byline {
+  margin: 0 0 2rem;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+.byline time { font-variant-numeric: tabular-nums; }
+
+.body p { margin: 0 0 1.15em; }
+
+.bag {
+  margin: 2.25rem 0 1.75rem;
+  padding: 1.25rem 1.25rem 0.35rem;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--orange);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.bag h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+}
+.settings {
+  margin: 0 0 0.75rem;
+  font-weight: 700;
+}
+
+.photoLink { margin: 0 0 0.5rem; }

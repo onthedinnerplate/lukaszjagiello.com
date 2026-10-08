@@ -7,6 +7,7 @@ import { SITE_URL, site } from '../lib/site.js';
 import { photos } from '../lib/photos.js';
 import { CATEGORIES, galleryPathFor, inCategory } from '../lib/categories.js';
 import { photoPath } from '../lib/slug.js';
+import { articlesNewestFirst } from '../lib/articles.js';
 
 const pub = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'public');
 const today = new Date().toISOString().slice(0, 10);
@@ -21,6 +22,20 @@ const photoPages = photos.map((p) => ({
   images: [{ src: p.src, title: p.title, caption: p.alt }],
 }));
 
+const journalArticles = articlesNewestFirst().map((article) => {
+  const photo = photos.find((p) => photoPath(p, photos) === `/photo/${article.photoSlug}`);
+  if (!photo) throw new Error(`sitemap: no gallery photo for /photo/${article.photoSlug}`);
+  if (`/${photo.src}` !== article.expectSrc) {
+    throw new Error(`sitemap: /photo/${article.photoSlug} is ${photo.src}, expected ${article.expectSrc}`);
+  }
+  return {
+    path: `/journal/${article.slug}`,
+    priority: '0.7',
+    freq: 'monthly',
+    images: [{ src: photo.src, title: article.title, caption: photo.alt }],
+  };
+});
+
 const pages = [
   { path: '/', priority: '1.0', freq: 'weekly' },
   { path: '/gallery', priority: '0.9', freq: 'weekly', images: photos.map((p) => ({ src: p.src })) },
@@ -30,6 +45,8 @@ const pages = [
     freq: 'weekly',
     images: photos.filter((p) => inCategory(p, c.slug)).map((p) => ({ src: p.src })),
   })),
+  { path: '/journal', priority: '0.8', freq: 'weekly', images: journalArticles.flatMap((a) => a.images) },
+  ...journalArticles,
   { path: '/about', priority: '0.6', freq: 'monthly' },
   { path: '/contact', priority: '0.5', freq: 'yearly' },
   ...photoPages,
@@ -73,5 +90,5 @@ Sitemap: ${SITE_URL}/sitemap.xml
 writeFileSync(path.join(pub, 'sitemap.xml'), xml);
 writeFileSync(path.join(pub, 'robots.txt'), robots);
 console.log(
-  `sitemap.xml (${pages.length} URLs, ${photos.length} gallery images, ${photoPages.length} photo pages) and robots.txt written for ${SITE_URL}`,
+  `sitemap.xml (${pages.length} URLs, ${photos.length} gallery images, ${photoPages.length} photo pages, ${journalArticles.length} journal articles) and robots.txt written for ${SITE_URL}`,
 );
