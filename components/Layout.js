@@ -14,7 +14,7 @@ function Nav() {
         </Link>
         <ul className={styles.links}>
           {site.nav.map(({ label, href }) => {
-            const current = pathname === href;
+            const current = pathname === href || (href === '/journal' && pathname.startsWith('/journal/'));
             return (
               <li key={href}>
                 <Link href={href} className={styles.link} aria-current={current ? 'page' : undefined}>
