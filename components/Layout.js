@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { site } from '@/lib/site';
 import styles from '@/styles/Layout.module.css';
+import BackToTop from './BackToTop';
 
 function Nav() {
   const { pathname } = useRouter();
@@ -72,6 +73,7 @@ export default function Layout({ children }) {
         {children}
       </main>
       <Footer />
+      <BackToTop />
     </>
   );
 }
