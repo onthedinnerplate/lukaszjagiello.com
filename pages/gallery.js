@@ -1,6 +1,6 @@
 import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
-import { getPhotos } from '@/lib/photo-data';
+import { getGalleryPhotos } from '@/lib/photo-data';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
 import styles from '@/styles/Page.module.css';
 
@@ -38,5 +38,5 @@ export default function Gallery({ photos }) {
 }
 
 export async function getStaticProps() {
-  return { props: { photos: await getPhotos() } };
+  return { props: { photos: await getGalleryPhotos() } };
 }

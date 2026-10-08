@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Seo from '@/components/Seo';
 import ShareButton from '@/components/ShareButton';
 import PhotoMap from '@/components/PhotoMap';
-import { getPhotos } from '@/lib/photo-data';
+import { getPhotos, getGalleryPhotos } from '@/lib/photo-data';
 import { captionFor, exifDataFor } from '@/lib/photoCaption';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
 import { ogImageSrc } from '@/lib/slug';
@@ -107,7 +107,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const photos = await getPhotos();
+  // Gallery order, so prev/next walk the same sequence the visitor just saw.
+  const photos = await getGalleryPhotos();
   const index = photos.findIndex((p) => p.href === `/photo/${params.slug}`);
   if (index < 0) return { notFound: true };
 
