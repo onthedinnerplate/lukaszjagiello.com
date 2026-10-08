@@ -1,7 +1,8 @@
 import { photos } from '@/lib/photos';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { photoPath, ogImageSrc } from '@/lib/slug';
-import { tierById, downloadFileFor, CURRENCY, LICENCE_SUMMARY } from '@/lib/store';
+import { tierById, CURRENCY, LICENCE_SUMMARY } from '@/lib/store';
+import { downloadFileFor } from '@/lib/store-server';
 import { createCheckoutSession } from '@/lib/stripe';
 import { SITE_URL, site } from '@/lib/site';
 

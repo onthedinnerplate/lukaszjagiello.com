@@ -2,7 +2,8 @@ import { createReadStream, statSync } from 'node:fs';
 import { photos } from '@/lib/photos';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { slugFor } from '@/lib/slug';
-import { tierById, downloadFileFor } from '@/lib/store';
+import { tierById } from '@/lib/store';
+import { downloadFileFor } from '@/lib/store-server';
 import { retrieveCheckoutSession } from '@/lib/stripe';
 
 export const config = { api: { responseLimit: false } };
