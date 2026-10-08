@@ -233,58 +233,58 @@ from the new fulls.
 
 Each entry in `lib/photos.js` now has a `location` field. **Where it is an
 empty string, omit the location line and `contentLocation` on the page — do
-not guess.** 21 are confirmed by the photographer; 25 are blank
+not guess.** 45 are confirmed by the photographer; 1 are blank
 and for Łukasz to fill in (edit the string in `lib/photos.js`; no other change
 needed).
 
 | NN | Title | Location |
 |---|---|---|
-| 01 | Flag Bearer | Jamaica |
-| 02 | Jamaican Dance Troupe | Jamaica |
+| 01 | Flag Bearer | Bloody Bay, Negril, Jamaica |
+| 02 | Jamaican Dance Troupe | Bloody Bay, Negril, Jamaica |
 | 03 | Negril Lighthouse | Negril, Jamaica |
 | 04 | Negril Lighthouse at Dusk | Negril, Jamaica |
-| 05 | Lone Boat Under Storm Clouds | **— fill in —** |
-| 06 | After the Storm | **— fill in —** |
-| 07 | Anchorage at Sunset | **— fill in —** |
+| 05 | Lone Boat Under Storm Clouds | Seven Mile Beach, Negril, Jamaica |
+| 06 | After the Storm | Seven Mile Beach, Negril, Jamaica |
+| 07 | Anchorage at Sunset | Bloody Bay, Negril, Jamaica |
 | 08 | Alcatraz Water Tower | Alcatraz Island, San Francisco |
-| 09 | Streetcar 1057 | San Francisco |
-| 10 | Cable Car on the Hill | San Francisco |
+| 09 | Streetcar 1057 | The Embarcadero at Pier 39, San Francisco |
+| 10 | Cable Car on the Hill | Hyde Street, San Francisco |
 | 11 | Golden Gate Surf | Golden Gate Bridge, San Francisco |
 | 12 | Golden Gate Long Exposure | Golden Gate Bridge, San Francisco |
-| 13 | Powell–Market Cable Car | San Francisco |
+| 13 | Powell–Market Cable Car | Fisherman |
 | 14 | Painted Ladies | Alamo Square, San Francisco |
 | 15 | Golden Gate from Fort Point | Golden Gate Bridge, San Francisco |
 | 16 | Looking Up the Tower | Golden Gate Bridge, San Francisco |
 | 17 | Redwood Highway | **— fill in —** |
-| 18 | Elk in Tall Grass | **— fill in —** |
-| 19 | Smith River Canyon | Smith River, Highway 199, Northern California |
-| 20 | Green Iguana in the Reeds | **— fill in —** |
-| 21 | Iguana in the Palms | **— fill in —** |
-| 22 | Iguana Foraging | **— fill in —** |
-| 23 | Slot Canyon Light | **— fill in —** |
-| 24 | Beached Boat | **— fill in —** |
-| 25 | Swim Line at Sunset | **— fill in —** |
-| 26 | Bear Among the Logs | **— fill in —** |
-| 27 | Aspen Canopy | **— fill in —** |
-| 28 | Forgotten Homestead | **— fill in —** |
-| 29 | Squirrel Monkey | **— fill in —** |
-| 30 | Rainbow Umbrellas | **— fill in —** |
-| 31 | Black Oystercatcher | **— fill in —** |
+| 18 | Elk in Tall Grass | Near Crescent City, California |
+| 19 | Smith River Canyon | Smith River, Highway 199 near Gasquet, California |
+| 20 | Green Iguana in the Reeds | Puerto Los Cabos, San José del Cabo, Mexico |
+| 21 | Iguana in the Palms | Puerto Los Cabos, San José del Cabo, Mexico |
+| 22 | Iguana Foraging | Puerto Los Cabos, San José del Cabo, Mexico |
+| 23 | Slot Canyon Light | Lower Antelope Canyon, Page, Arizona |
+| 24 | Beached Boat | Bloody Bay, Negril, Jamaica |
+| 25 | Swim Line at Sunset | Bloody Bay, Negril, Jamaica |
+| 26 | Bear Among the Logs | Bearizona Wildlife Park, Williams, Arizona |
+| 27 | Aspen Canopy | San Francisco Peaks, Flagstaff, Arizona |
+| 28 | Forgotten Homestead | San Tan Valley, Arizona |
+| 29 | Squirrel Monkey | Punta Cana, Dominican Republic |
+| 30 | Rainbow Umbrellas | Punta Cana, Dominican Republic |
+| 31 | Black Oystercatcher | Monterey Bay Aquarium, Monterey, California |
 | 32 | Seattle Skyline | Seattle, Washington |
-| 33 | Under Full Sail | **— fill in —** |
+| 33 | Under Full Sail | Anacortes, Washington |
 | 34 | Myrtle Falls | Mount Rainier National Park, Washington |
-| 35 | Steller's Jay | **— fill in —** |
+| 35 | Steller's Jay | Paradise, Mount Rainier National Park, Washington |
 | 36 | Christine Falls | Mount Rainier National Park, Washington |
 | 37 | Snoqualmie Falls | Snoqualmie Falls, Washington |
 | 38 | Snoqualmie Falls from Above | Snoqualmie Falls, Washington |
 | 39 | Ruby Beach | Ruby Beach, Washington |
-| 40 | Mossy Rainforest | **— fill in —** |
+| 40 | Mossy Rainforest | Marymere Falls Trail, Olympic National Park, Washington |
 | 41 | Marymere Falls | Marymere Falls, Olympic National Park, Washington |
-| 42 | Bighorn in the Shadows | **— fill in —** |
-| 43 | Phainopepla | **— fill in —** |
-| 44 | Burrowing Owl on a Log | **— fill in —** |
-| 45 | Owl at the Burrow | **— fill in —** |
-| 46 | Bald Eagle | **— fill in —** |
+| 42 | Bighorn in the Shadows | Bearizona Wildlife Park, Williams, Arizona |
+| 43 | Phainopepla | Bearizona Wildlife Park, Williams, Arizona |
+| 44 | Burrowing Owl on a Log | Wildlife World Zoo, Litchfield Park, Arizona |
+| 45 | Owl at the Burrow | Wildlife World Zoo, Litchfield Park, Arizona |
+| 46 | Bald Eagle | Wildlife World Zoo, Litchfield Park, Arizona |
 
 ---
 
