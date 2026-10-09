@@ -208,7 +208,7 @@
 .mapCardWide .mapHint { margin-left: auto; }
 .mapPanel {
   margin: 0.75rem 0 0;
-  border-radius: var(--card-radius, 12px);
+  border-radius: var(--radius-photo, var(--card-radius, 12px));
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--surface, #f3f3f3);
@@ -230,7 +230,7 @@
 /* Article and featured-story maps sit in a parent that sets the width.
    Photo pages do not pass `bare`, so these rules never apply there. */
 .mapBare { width: 100%; }
-.mapCardBare { border-radius: 8px; }
+.mapCardBare { border-radius: var(--radius-photo, 8px); }
 .mapPanelBare { margin-top: 0.45rem; }
 .mapPanelBare iframe { height: 200px; }
 @media (max-width: 640px) {

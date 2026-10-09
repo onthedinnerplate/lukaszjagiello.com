@@ -86,7 +86,7 @@
 }
 .hero {
   margin: 0 0 1.75rem;
-  border-radius: 12px;
+  border-radius: var(--radius-photo);
   overflow: hidden;
   line-height: 0;
   background: var(--surface);
@@ -131,7 +131,8 @@
   padding: 1.25rem 1.25rem 0.35rem;
   border: 1px solid var(--border);
   border-left: 4px solid var(--orange);
-  border-radius: var(--radius);
+  border-radius: var(--radius-photo);
+  overflow: hidden;
   background: var(--surface);
 }
 .bag h2 {
@@ -416,7 +417,7 @@
     padding: 1.15rem 0 0;
     border: 0;
     border-top: 1px solid var(--border);
-    border-radius: 0;
+    border-radius: var(--radius-photo);
     background: transparent;
   }
   .bag h2 {
