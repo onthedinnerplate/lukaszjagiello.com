@@ -183,6 +183,8 @@
 .catLink:hover { border-bottom-color: rgba(26, 26, 26, 0.3); }
 .catLink:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; border-radius: 2px; }
 .catActive { font-weight: 600; border-bottom-color: var(--orange); }
+.catDisabled { color: var(--muted); cursor: default; }
+.catDisabled:hover { border-bottom-color: transparent; color: var(--muted); }
 .catCount { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
 
 /* Legacy filter bar — rendered only when NEXT_PUBLIC_GALLERY_FILTERS=true. */

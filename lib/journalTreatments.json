@@ -1,0 +1,302 @@
+{
+  "where-the-forest-walks-into-the-sea": {
+    "template": "sideBars",
+    "portrait": false,
+    "subject": {
+      "x": 0.531,
+      "y": 0.458
+    },
+    "palette": [
+      "#2b211d",
+      "#493c34",
+      "#68504d",
+      "#5c7272",
+      "#a08e92"
+    ],
+    "overlay": "#493c34",
+    "blocks": [
+      {
+        "x": -0.04,
+        "y": 0.4,
+        "w": 0.1,
+        "h": 0.16,
+        "color": "#493c34"
+      },
+      {
+        "x": 0.92,
+        "y": 0.18,
+        "w": 0.1,
+        "h": 0.22,
+        "color": "#68504d"
+      }
+    ],
+    "panels": [
+      {
+        "x": 0.408,
+        "y": 0,
+        "w": 0.26,
+        "h": 1,
+        "shape": "rect",
+        "hero": true
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "w": 0.408,
+        "h": 1,
+        "shape": "rect",
+        "hero": false
+      },
+      {
+        "x": 0.668,
+        "y": 0,
+        "w": 0.333,
+        "h": 0.36,
+        "shape": "rect",
+        "hero": false,
+        "overlay": true
+      },
+      {
+        "x": 0.668,
+        "y": 0.36,
+        "w": 0.206,
+        "h": 0.4,
+        "shape": "rect",
+        "hero": false
+      },
+      {
+        "x": 0.874,
+        "y": 0.36,
+        "w": 0.126,
+        "h": 0.4,
+        "shape": "square",
+        "hero": false
+      },
+      {
+        "x": 0.668,
+        "y": 0.76,
+        "w": 0.333,
+        "h": 0.24,
+        "shape": "circle",
+        "hero": false
+      }
+    ]
+  },
+  "a-thin-line-of-light-in-a-green-room": {
+    "template": "centerStrip",
+    "portrait": false,
+    "subject": {
+      "x": 0.656,
+      "y": 0.542
+    },
+    "palette": [
+      "#050e0b",
+      "#102013",
+      "#23361e",
+      "#44562a",
+      "#858478"
+    ],
+    "overlay": "#44562a",
+    "blocks": [
+      {
+        "x": -0.06,
+        "y": 0.04,
+        "w": 0.16,
+        "h": 0.13,
+        "color": "#102013"
+      },
+      {
+        "x": 0.9,
+        "y": 0.78,
+        "w": 0.12,
+        "h": 0.16,
+        "color": "#23361e"
+      }
+    ],
+    "panels": [
+      {
+        "x": 0.46,
+        "y": 0,
+        "w": 0.28,
+        "h": 1,
+        "shape": "rect",
+        "hero": true
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "w": 0.46,
+        "h": 0.44,
+        "shape": "rect",
+        "hero": false
+      },
+      {
+        "x": 0,
+        "y": 0.44,
+        "w": 0.46,
+        "h": 0.56,
+        "shape": "rect",
+        "hero": false
+      },
+      {
+        "x": 0.74,
+        "y": 0,
+        "w": 0.26,
+        "h": 0.38,
+        "shape": "rect",
+        "hero": false
+      },
+      {
+        "x": 0.74,
+        "y": 0.38,
+        "w": 0.26,
+        "h": 0.62,
+        "shape": "circle",
+        "hero": false,
+        "overlay": true
+      }
+    ]
+  },
+  "the-lighthouse-at-the-end-of-the-island": {
+    "template": "stackedRight",
+    "portrait": false,
+    "subject": {
+      "x": 0.719,
+      "y": 0.625
+    },
+    "palette": [
+      "#2e3313",
+      "#665e32",
+      "#027aaa",
+      "#59939f",
+      "#cfa667"
+    ],
+    "overlay": "#027aaa",
+    "blocks": [
+      {
+        "x": -0.05,
+        "y": 0.72,
+        "w": 0.14,
+        "h": 0.18,
+        "color": "#665e32"
+      },
+      {
+        "x": 0.86,
+        "y": -0.04,
+        "w": 0.12,
+        "h": 0.12,
+        "color": "#027aaa"
+      }
+    ],
+    "panels": [
+      {
+        "x": 0.619,
+        "y": 0,
+        "w": 0.267,
+        "h": 1,
+        "shape": "rect",
+        "hero": true
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "w": 0.619,
+        "h": 0.3,
+        "shape": "rect",
+        "hero": false
+      },
+      {
+        "x": 0,
+        "y": 0.3,
+        "w": 0.359,
+        "h": 0.7,
+        "shape": "rect",
+        "hero": false
+      },
+      {
+        "x": 0.359,
+        "y": 0.3,
+        "w": 0.26,
+        "h": 0.7,
+        "shape": "square",
+        "hero": false
+      },
+      {
+        "x": 0.886,
+        "y": 0.06,
+        "w": 0.114,
+        "h": 0.88,
+        "shape": "rect",
+        "hero": false,
+        "overlay": true
+      }
+    ]
+  },
+  "inside-the-stone": {
+    "template": "portraitStrips",
+    "portrait": true,
+    "subject": {
+      "x": 0.594,
+      "y": 0.542
+    },
+    "palette": [
+      "#061701",
+      "#281c0b",
+      "#392b24",
+      "#702c11",
+      "#b66331"
+    ],
+    "overlay": "#702c11",
+    "blocks": [
+      {
+        "x": 0.78,
+        "y": -0.05,
+        "w": 0.16,
+        "h": 0.1,
+        "color": "#281c0b"
+      },
+      {
+        "x": -0.06,
+        "y": 0.84,
+        "w": 0.14,
+        "h": 0.12,
+        "color": "#392b24"
+      }
+    ],
+    "panels": [
+      {
+        "x": 0.47,
+        "y": 0,
+        "w": 0.32,
+        "h": 1,
+        "shape": "rect",
+        "hero": true
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "w": 0.47,
+        "h": 1,
+        "shape": "rect",
+        "hero": false,
+        "overlay": true
+      },
+      {
+        "x": 0.79,
+        "y": 0,
+        "w": 0.21,
+        "h": 0.58,
+        "shape": "rect",
+        "hero": false
+      },
+      {
+        "x": 0.79,
+        "y": 0.58,
+        "w": 0.21,
+        "h": 0.42,
+        "shape": "circle",
+        "hero": false
+      }
+    ]
+  }
+}
