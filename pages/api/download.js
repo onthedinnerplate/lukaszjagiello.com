@@ -1,14 +1,18 @@
-import { createReadStream, statSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
+import { Readable } from 'node:stream';
+import { pipeline } from 'node:stream/promises';
 import { photos } from '@/lib/photos';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { slugFor } from '@/lib/slug';
 import { tierById } from '@/lib/store';
+import { decryptDownload, downloadKey } from '@/lib/download-crypto';
 import { downloadFileFor } from '@/lib/store-server';
 import { retrieveCheckoutSession } from '@/lib/stripe';
 
 export const config = { api: { responseLimit: false } };
 
 const LINK_TTL_DAYS = 7;
+const UNAVAILABLE = 'Downloads are temporarily unavailable';
 
 /**
  * GET /api/download?session_id=cs_…   → streams the purchased file
@@ -17,9 +21,19 @@ const LINK_TTL_DAYS = 7;
  * Stateless fulfilment: the Checkout Session is the receipt. We re-check it
  * with Stripe on every request (paid? which photo/tier? how old?), so there is
  * no database and nothing to get out of sync. Session IDs are unguessable.
+ *
+ * The bytes on disk are AES-256-GCM ciphertext (.jpg.enc). They are decrypted
+ * with DOWNLOAD_FILES_KEY and the JPEG is streamed with the same headers as
+ * before. The tag is checked before any byte is sent. A missing key is a 503
+ * with a generic message; the build does not need the key.
  */
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
+  if (!downloadKey()) {
+    console.error('[download] DOWNLOAD_FILES_KEY is not set');
+    return res.status(503).json({ ok: false, reason: UNAVAILABLE });
+  }
+
   const id = String(req.query.session_id || '');
   if (!/^cs_(live|test)_[A-Za-z0-9]+$/.test(id)) return res.status(400).json({ ok: false, reason: 'Invalid link' });
 
@@ -47,16 +61,19 @@ export default async function handler(req, res) {
   if (req.query.info) return res.status(info.ok ? 200 : 403).json(info);
   if (!info.ok) return res.status(403).json(info);
 
-  const { size } = statSync(file);
+  let plain;
+  try {
+    plain = decryptDownload(await readFile(file));
+  } catch {
+    console.error('[download] could not decrypt the file');
+    return res.status(503).json({ ok: false, reason: UNAVAILABLE });
+  }
+
   const name = `${slugFor(photo, photos)}-${tier.id}-lukasz-jagiello.jpg`;
   res.setHeader('Content-Type', 'image/jpeg');
-  res.setHeader('Content-Length', String(size));
+  res.setHeader('Content-Length', String(plain.length));
   res.setHeader('Content-Disposition', `attachment; filename="${name}"`);
   res.setHeader('X-Content-Type-Options', 'nosniff');
-  await new Promise((resolve, reject) => {
-    const stream = createReadStream(file);
-    stream.on('error', reject);
-    stream.on('end', resolve);
-    stream.pipe(res);
-  });
+  // One-element iterable so the Buffer is one chunk, not a byte iterator.
+  await pipeline(Readable.from([plain]), res);
 }

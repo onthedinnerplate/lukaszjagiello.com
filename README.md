@@ -59,6 +59,11 @@ service with its build/start commands, health check, env vars and custom domains
 Set `RESEND_API_KEY` in the dashboard when contact delivery is wired up
 (it's declared `sync: false`, so it's never stored in git).
 
+Paid downloads in `private/downloads/` are AES-256-GCM ciphertext. Set
+`DOWNLOAD_FILES_KEY` (also `sync: false`) before deploying a build that
+expects it. Until that variable is present, `/api/download` returns 503.
+Never put the key in the repo.
+
 **Domain:** add `lukaszjagiello.com` and `www.lukaszjagiello.com` under the
 service's Custom Domains, then create the DNS records Render shows you. Render
 issues and renews TLS certificates. The app 308-redirects `www` to the apex domain

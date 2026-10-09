@@ -1,6 +1,7 @@
 // Homepage hero banner, a bottom crop of photo 41 (DSC05293, Marymere Falls).
 //
-// The committed 1200×550 file matches private/downloads/41/full.jpg cropped to
+// The committed 1200×550 file matches photo 41's full-resolution JPEG (plaintext
+// full.jpg, or full.jpg.enc decrypted with DOWNLOAD_FILES_KEY) cropped to
 // the bottom at the same 1200:550 aspect (mean error ~2.6/255). These variants
 // are downscales of that JPEG — never an upscale of the 1200px file.
 //
@@ -15,11 +16,12 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { readDownloadPlaintext } from '../lib/download-crypto.js';
 import { bestUnder, encodeAvif, encodeWebp, renderPixels } from './encode-utils.mjs';
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = path.join(root, 'public', 'images', 'hero');
-const source = path.join(root, 'private', 'downloads', '41', 'full.jpg');
+const sourcePath = path.join(root, 'private', 'downloads', '41', 'full.jpg');
 const reportPath = path.join(root, 'lib', 'encode-report-hero.json');
 
 // Same aspect as the historical 1200×550 banner.
@@ -29,8 +31,16 @@ const CAP = 700 * 1024;
 
 const kb = (bytes) => `${(bytes / 1024).toFixed(0)} KB`;
 
-if (!existsSync(source)) {
-  console.error(`✗ hero: needs the original from the owner (missing ${path.relative(root, source)})`);
+let source;
+try {
+  source = readDownloadPlaintext(sourcePath);
+} catch (err) {
+  const why = err.code === 'NO_KEY' ? 'DOWNLOAD_FILES_KEY is not set' : 'could not read the paid original';
+  console.error(`✗ hero: ${why}`);
+  process.exit(1);
+}
+if (!source) {
+  console.error(`✗ hero: needs the original from the owner (missing ${path.relative(root, sourcePath)})`);
   process.exit(1);
 }
 
@@ -68,7 +78,7 @@ for (const width of WIDTHS) {
 }
 
 writeFileSync(reportPath, JSON.stringify({
-  source: 'private/downloads/41/full.jpg',
+  source: existsSync(sourcePath) ? 'private/downloads/41/full.jpg' : 'private/downloads/41/full.jpg.enc',
   originalFile: 'DSC05293-Enhanced-NR.jpg',
   crop: 'cover, position south, aspect 1200/550 (matches the previous banner)',
   sizes: '(max-width: 1400px) 100vw, 1400px',

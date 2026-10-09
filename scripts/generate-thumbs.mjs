@@ -1,4 +1,5 @@
-// Gallery thumbnails from the committed camera JPEGs (not the lightbox WebPs,
+// Gallery thumbnails from the paid camera JPEGs (plaintext or decrypted
+// .jpg.enc — not the lightbox WebPs,
 // which are already compressed — the foliage fulls especially).
 //
 // Long-edge variants, served directly because next/image stays unoptimized:
@@ -21,6 +22,7 @@
 import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { readDownloadPlaintext } from '../lib/download-crypto.js';
 import { photos } from '../lib/photos.js';
 import { encodeWebp, renderPixels } from './encode-utils.mjs';
 
@@ -53,14 +55,33 @@ let after = 0;
 for (const p of photos) {
   const nn = p.src.match(/(\d+)-full/)[1];
   if (only && !only.has(nn)) continue;
-  const jpeg = path.join(downloads, nn, 'full.jpg');
-  const source = existsSync(jpeg) ? jpeg : path.join(pub, p.src);
-  if (!existsSync(source)) {
+  const jpegPath = path.join(downloads, nn, 'full.jpg');
+  let source;
+  let sourceLabel;
+  let fromOriginal = false;
+  try {
+    const plain = readDownloadPlaintext(jpegPath);
+    if (plain) {
+      source = plain;
+      fromOriginal = true;
+      sourceLabel = path.relative(root, existsSync(jpegPath) ? jpegPath : `${jpegPath}.enc`);
+    }
+  } catch (err) {
     failed++;
-    console.error(`✗ ${nn}: no JPEG and no full`);
+    const why = err.code === 'NO_KEY' ? 'DOWNLOAD_FILES_KEY is not set' : 'could not read the paid original';
+    console.error(`✗ ${nn}: ${why}`);
     continue;
   }
-  const fromOriginal = source === jpeg;
+  if (!source) {
+    const fallback = path.join(pub, p.src);
+    if (!existsSync(fallback)) {
+      failed++;
+      console.error(`✗ ${nn}: no JPEG and no full`);
+      continue;
+    }
+    source = fallback;
+    sourceLabel = path.relative(root, fallback);
+  }
 
   for (const variant of variantsFor(p.thumb)) {
     const out = path.join(pub, variant.rel);
@@ -82,7 +103,7 @@ for (const p of photos) {
       writeFileSync(out, buf);
       after += buf.length;
       ok++;
-      if (!report[nn]) report[nn] = { source: path.relative(root, source), fromOriginal, variants: {} };
+      if (!report[nn]) report[nn] = { source: sourceLabel, fromOriginal, variants: {} };
       report[nn].variants[variant.edge] = {
         quality,
         width: raw.info.width,
