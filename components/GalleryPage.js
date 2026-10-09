@@ -250,7 +250,6 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
                       </li>
                     ))}
                   </ul>
-                  <a href="#all-photographs" className={styles.saleLink}>All photographs</a>
                 </aside>
               ) : null}
             </div>

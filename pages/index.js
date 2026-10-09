@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Seo from '@/components/Seo';
 import JourneysHero from '@/components/JourneysHero';
 import MasonryGallery from '@/components/MasonryGallery';
@@ -63,14 +62,6 @@ export default function Home({ photos, selected, navCounts }) {
         />
       </section>
 
-      <section className={styles.cta} aria-labelledby="cta-heading">
-        <h2 id="cta-heading" className={styles.ctaTitle}>
-          Stories from the terrain
-        </h2>
-        <Link href="/gallery" className="button">
-          See our journeys
-        </Link>
-      </section>
     </>
   );
 }

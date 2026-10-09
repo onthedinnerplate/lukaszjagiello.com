@@ -9,7 +9,7 @@ import ShapeMosaic from '@/components/ShapeMosaic';
 import AccentTitle from '@/components/AccentTitle';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import Swatches from '@/components/Swatches';
-import { ArticleShare, PhotoCardActions } from '@/components/ShareButtons';
+import { PhotoCardActions } from '@/components/ShareButtons';
 import { getPhotos } from '@/lib/photo-data';
 import {
   articlesInCategory,
@@ -124,12 +124,6 @@ function JourneyCard({ article, compactSwatches = true }) {
         </Link>
         <TrailBadge trail={article.trail} />
       </div>
-      <ArticleShare
-        title={article.title}
-        excerpt={article.dek}
-        articlePath={href}
-        mediaPath={article.photo.ogSrc || article.photo.src}
-      />
     </article>
   );
 }
@@ -252,13 +246,6 @@ export default function JournalIndex({ articles, counts }) {
                     <span className={styles.goldRule} aria-hidden="true" />
                     <p className={styles.featuredDek}>{featured.dek}</p>
                     <TrailBadge trail={featured.trail} />
-                    <Link href={`/journal/${featured.slug}`} className={styles.storyLink}>Read the story</Link>
-                    <ArticleShare
-                      title={featured.title}
-                      excerpt={featured.dek}
-                      articlePath={`/journal/${featured.slug}`}
-                      mediaPath={featured.photo.ogSrc || featured.photo.src}
-                    />
                   </div>
                 </div>
                 <aside className={styles.more} aria-labelledby="more-stories">
@@ -274,17 +261,10 @@ export default function JournalIndex({ articles, counts }) {
                         <li key={article.slug}>
                           {article.location ? <p className={styles.morePlace}>{article.location}</p> : null}
                           <Link href={`/journal/${article.slug}`}>{article.title}</Link>
-                          <ArticleShare
-                            title={article.title}
-                            excerpt={article.dek}
-                            articlePath={`/journal/${article.slug}`}
-                            mediaPath={article.photo.ogSrc || article.photo.src}
-                          />
                         </li>
                       ))}
                     </ul>
                   </div>
-                  <a href="#all-journeys" className={styles.storyLink}>All journeys</a>
                 </aside>
               </div>
             </section>
@@ -376,12 +356,6 @@ export default function JournalIndex({ articles, counts }) {
                             title={article.photo.title}
                           />
                         </div>
-                        <ArticleShare
-                          title={article.title}
-                          excerpt={article.dek}
-                          articlePath={href}
-                          mediaPath={article.photo.ogSrc || article.photo.src}
-                        />
                       </div>
                     </li>
                   );
@@ -396,7 +370,6 @@ export default function JournalIndex({ articles, counts }) {
             <p className={styles.earthKicker}>Journeys</p>
             <h2 id="earth-title" className={styles.earthTitle}>Mother Earth gives us journeys</h2>
             <p>Every coastline, canyon and trail here began as a walk. These are the stories they gave back.</p>
-            <Link href="/gallery" className={styles.storyLink}>Browse the gallery</Link>
           </div>
           <ul className={styles.cluster} aria-hidden="true">
             {cluster.map((article) => (
