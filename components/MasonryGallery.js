@@ -31,6 +31,7 @@ export default function MasonryGallery({
   layout = 'masonry',
   anchor = true,
   grayscale = true,
+  equalCards = false,
 }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -84,7 +85,7 @@ export default function MasonryGallery({
   return (
     <div className={styles.wrap}>
       <ul
-        className={listClass}
+        className={equalCards ? `${listClass} ${styles.equalCards}` : listClass}
         aria-labelledby={headingId}
       >
         {photos.map((photo, i) => {
