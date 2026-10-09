@@ -9,7 +9,6 @@ import PhotoMap from '@/components/PhotoMap';
 import ShapeMosaic from '@/components/ShapeMosaic';
 import HeadlinePhrase from '@/components/HeadlinePhrase';
 import Swatches from '@/components/Swatches';
-import { ArticleShare, PhotoCardActions } from '@/components/ShareButtons';
 import { getPhotos } from '@/lib/photo-data';
 import { mentionsGear, photoNumberFromSrc } from '@/lib/photoCaption';
 import { AffiliateDisclosure, GearLine, gearLineClass } from '@/components/GearStoreLinks';
@@ -111,13 +110,6 @@ export default function JournalArticle({ article }) {
             unoptimized
             className={styles.heroImg}
           />
-          <PhotoCardActions
-            title={article.title}
-            shareUrl={photo.href}
-            pinUrl={path}
-            mediaUrl={photo.og.src}
-            photo={photo}
-          />
         </figure>
         <div className={styles.spread}>
           <div className={styles.visual}>
@@ -128,13 +120,6 @@ export default function JournalArticle({ article }) {
                 onClick={openLightbox}
                 expanded={lbOpen}
                 controlsId={lightboxId}
-              />
-              <PhotoCardActions
-                title={article.title}
-                shareUrl={photo.href}
-                pinUrl={path}
-                mediaUrl={photo.og.src}
-                photo={photo}
               />
             </div>
             <div className={styles.under}>
@@ -216,16 +201,11 @@ export default function JournalArticle({ article }) {
             </div>
           </div>
         </div>
-        <ArticleShare
-          title={article.title}
-          excerpt={article.dek}
-          articlePath={path}
-          mediaPath={photo.og.src}
-        />
       </article>
       <Lightbox
         id={lightboxId}
         isOpen={lbOpen}
+        actions={false}
         photo={{ src: photo.src, alt: photo.alt, title: photo.title, href: photo.href, forSale: photo.forSale }}
         onClose={closeLightbox}
         onPrev={() => {}}

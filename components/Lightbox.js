@@ -13,7 +13,7 @@ const SIZES = '(max-width: 768px) calc(100vw - 32px), min(1600px, calc(100vw - 8
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-export default function Lightbox({ id, isOpen, photo, onClose, onPrev, onNext }) {
+export default function Lightbox({ id, isOpen, photo, onClose, onPrev, onNext, actions = true }) {
   const overlayRef = useRef(null);
   const closeRef = useRef(null);
   const titleId = useId();
@@ -164,13 +164,15 @@ export default function Lightbox({ id, isOpen, photo, onClose, onPrev, onNext })
             fetchPriority="high"
             style={{ objectFit: 'contain' }}
           />
-          <PhotoCardActions
-            title={photo.title}
-            shareUrl={shareUrl}
-            pinUrl={shareUrl}
-            mediaUrl={ogImageSrc(photo.src) || photo.src}
-            photo={photo}
-          />
+          {actions ? (
+            <PhotoCardActions
+              title={photo.title}
+              shareUrl={shareUrl}
+              pinUrl={shareUrl}
+              mediaUrl={ogImageSrc(photo.src) || photo.src}
+              photo={photo}
+            />
+          ) : null}
         </div>
 
         <div className={styles.caption}>
