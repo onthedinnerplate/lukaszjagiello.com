@@ -21,7 +21,14 @@ function Nav() {
     <header className={styles.header}>
       <nav className={styles.nav} aria-label="Main">
         <Link href="/" className={styles.brand} aria-current={path === '/' ? 'page' : undefined}>
-          {site.name}
+          <img
+            className={styles.brandMark}
+            src="/icon-192.png"
+            alt=""
+            width={192}
+            height={192}
+          />
+          <span className={styles.brandName}>{site.name}</span>
         </Link>
         <ul className={styles.links}>
           {site.nav.map(({ label, href }) => {
