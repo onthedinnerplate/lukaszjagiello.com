@@ -59,22 +59,29 @@
 }
 .brand:hover { background: none; }
 .brand:hover .brandName { text-decoration: underline; }
-/* Both words are Poppins Light. The given name stays the header charcoal.
-   "Photography" is Poppins Light 300, non-italic, at 2em, in the site gold. */
+/* Given name stays Poppins Light. Photography is Allura, gold, about 1.35×
+   the name optically (Allura draws small in the em box, so 1.7em). */
 .brand .brandGiven {
   font-weight: 300;
   font-style: normal;
 }
+.brandSep {
+  flex: none;
+  align-self: center;
+  width: 1px;
+  height: 0.9em;
+  background: #c4a35a;
+}
 .brand .brandScript {
-  font-family: Poppins, system-ui, sans-serif;
-  font-weight: 300;
+  font-family: Allura, "Allura Fallback", cursive;
+  font-weight: 400;
   font-style: normal;
   font-synthesis: none;
   -webkit-font-synthesis: none;
   color: #c4a35a;
-  /* Twice the header brand size (2em), not the article accent ratio (1.45em). */
-  font-size: 2em;
-  line-height: 1.05;
+  font-size: 1.7em;
+  line-height: 1;
+  margin: 0;
 }
 .brandName,
 .brandGiven,
@@ -86,8 +93,8 @@
 }
 .brandName {
   display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
+  align-items: baseline;
+  gap: 10px;
   min-width: 0;
   max-width: 100%;
   text-align: left;
@@ -171,10 +178,29 @@
   .brandMark { width: 24px; height: 24px; }
 }
 
+/* Homepage only: the bar sits on the photograph. White type, solid gold rule. */
+.headerOnHero {
+  background: transparent;
+  border-bottom: 2px solid #c4a35a;
+}
+.headerOnHero .brand,
+.headerOnHero .brandGiven,
+.headerOnHero .link {
+  color: #fff;
+}
+.headerOnHero .link:hover {
+  color: #fff;
+  border-bottom-color: rgba(255, 255, 255, 0.35);
+}
+.headerOnHero.headerScrolled {
+  background: rgba(2, 10, 10, 0.92);
+}
+
 .main {
   padding-top: var(--nav-h);
   min-height: 70vh;
 }
+.mainUnderHero { padding-top: 0; }
 
 .footer {
   margin-top: 4rem;

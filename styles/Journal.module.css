@@ -471,6 +471,37 @@
 .landing { --radius-photo: 12px; padding-bottom: 0; }
 .landingCats { display: none; padding: 1.1rem var(--gutter) 0; }
 .heroSlot { padding-top: 1.5rem; }
+/* Homepage: the band is the viewport, tall enough that the nav covers only
+   the extra strip and the 1440/612 stage below it stays intact. */
+.heroSlotBleed {
+  width: 100%;
+  padding-top: 0;
+  container-type: inline-size;
+}
+.heroBleed {
+  border-radius: 0;
+  aspect-ratio: auto;
+  height: calc(100cqw * 612 / 1440 + var(--nav-h));
+}
+.heroBleed .portrait {
+  top: calc(var(--nav-h) + (100% - var(--nav-h)) * 0.059);
+  height: calc((100% - var(--nav-h)) * 0.881);
+}
+.heroBleed .heroCopy {
+  left: max(var(--gutter), calc((100% - var(--container-max)) / 2 + var(--gutter)));
+  right: auto;
+  top: calc(var(--nav-h) + (100% - var(--nav-h)) / 2);
+  max-width: calc(var(--hero-frame-left, 62%) - max(var(--gutter), (100% - var(--container-max)) / 2 + var(--gutter)) - 1.5rem);
+}
+.heroBleed .heroLine,
+.heroBleed .heroLine2 { display: block; }
+.heroBleed .heroLine2 { white-space: nowrap; line-height: 1; }
+.heroBleed .heroTitle .headlineAccent {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  vertical-align: baseline;
+}
 .heroBand {
   position: relative;
   width: 100%;
@@ -489,6 +520,34 @@
   inset: 0;
   z-index: 1;
   background: linear-gradient(to right, rgba(2, 10, 10, 0.70), rgba(2, 10, 10, 0) 65%);
+}
+/* Worn film sits on the photograph and under the frame, type, and nav. */
+.heroWear,
+.heroVignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  animation: heroWearIn 1s ease forwards;
+}
+.heroWear {
+  background-image: url('/images/textures/hero-wear.webp');
+  background-size: 420px;
+  mix-blend-mode: overlay;
+  -webkit-mask-image: radial-gradient(ellipse 62% 70% at 46% 68%, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0.9) 68%, #000 100%);
+  mask-image: radial-gradient(ellipse 62% 70% at 46% 68%, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0.9) 68%, #000 100%);
+}
+.heroVignette {
+  background: radial-gradient(ellipse 78% 85% at 50% 58%, transparent 28%, rgba(2, 10, 10, 0.28) 72%, rgba(2, 10, 10, 0.5) 100%);
+}
+@keyframes heroWearIn { to { opacity: 1; } }
+@media (max-width: 768px) {
+  .heroWear { background-size: 260px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroWear,
+  .heroVignette { animation: none; opacity: 1; }
 }
 /* Moss 9:16 frame on the waterfall. Percentages are the visible band of the
    2.35 crop: center 66.1% x 46.8% of the source lands at 55.55% / 5.9%. */
@@ -537,7 +596,8 @@
   pointer-events: auto;
   line-height: 0;
 }
-.portraitPin:hover { color: #fff; }
+.portraitPin:hover,
+.portraitPlace:hover { color: #fff; opacity: 0.75; }
 .portraitPlace {
   flex: 1 1 0;
   min-width: 0;
@@ -547,6 +607,9 @@
   line-height: 1.15;
   text-transform: uppercase;
   overflow-wrap: anywhere;
+  color: #fff;
+  text-decoration: none;
+  pointer-events: auto;
 }
 .heroCopy {
   position: absolute;
@@ -1084,6 +1147,11 @@
     overflow: hidden;
   }
   .heroShade { display: none; }
+  .heroBleed .heroMedia {
+    height: calc(100cqw * 612 / 1440 + var(--nav-h));
+    aspect-ratio: auto;
+    border-radius: 0;
+  }
   .portrait { --band: 20px; --rim: 7px; }
   .heroCopy {
     position: relative;
@@ -1093,6 +1161,17 @@
     transform: none;
     max-width: 40em;
     padding: 1.15rem 0 0;
+  }
+  .heroBleed .heroCopy {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    width: auto;
+    max-width: 40em;
+    transform: none;
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
   }
   .heroKicker { color: #334824; }
   .heroTitle,
