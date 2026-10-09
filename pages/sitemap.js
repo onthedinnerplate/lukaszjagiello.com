@@ -36,7 +36,7 @@ export default function Sitemap({ photos, navCounts }) {
             </ul>
           </section>
           <section className={styles.block}>
-            <h2>Gallery</h2>
+            <h2>Future Photography</h2>
             <ul className={styles.sitemapList}>
               <li><Link href="/gallery">All photographs</Link></li>
               {CATEGORIES.map((c) => <li key={c.slug}><Link href={galleryPathFor(c.slug)}>{categoryMenuLabel(c)}</Link></li>)}

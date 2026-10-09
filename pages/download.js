@@ -53,7 +53,7 @@ export default function Download({ navCounts }) {
             <p className={styles.formNote}>{LICENCE_SUMMARY}</p>
             {state.slug && (
               <p style={{ marginTop: '1.5rem' }}>
-                <Link href={`/photo/${state.slug}`}>Back to the photograph</Link> · <Link href="/gallery">Gallery</Link>
+                <Link href={`/photo/${state.slug}`}>Back to the photograph</Link> · <Link href="/gallery">Future Photography</Link>
               </p>
             )}
           </section>
