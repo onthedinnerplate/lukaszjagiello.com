@@ -61,13 +61,13 @@ export default function About({ navCounts }) {
             My photography takes me across North America and beyond. I&rsquo;ve documented the landscapes of:
           </p>
           <div style={{ marginTop: '1.5rem' }}>
-            <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>Arizona</h3>
+            <h3 style={{ fontSize: '1rem', fontWeight: 300, fontFamily: 'Poppins, system-ui, sans-serif', marginBottom: '0.5rem' }}>Arizona</h3>
             <p style={{ marginBottom: '1.5rem' }}>Williams • Prescott • Flagstaff • Page</p>
 
-            <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>California</h3>
+            <h3 style={{ fontSize: '1rem', fontWeight: 300, fontFamily: 'Poppins, system-ui, sans-serif', marginBottom: '0.5rem' }}>California</h3>
             <p style={{ marginBottom: '1.5rem' }}>Monterey Bay • San Francisco • Fort Bragg • Redwood National Park</p>
 
-            <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>Other Destinations</h3>
+            <h3 style={{ fontSize: '1rem', fontWeight: 300, fontFamily: 'Poppins, system-ui, sans-serif', marginBottom: '0.5rem' }}>Other Destinations</h3>
             <p>
               Zion National Park • Bryce Canyon • Olympic National Park (Washington) • Seattle • Port Angeles (Washington) •
               San Antonio (Texas) • Playa del Carmen (Mexico) • Puerto Los Cabos (Mexico) • Jamaica • Dominican Republic

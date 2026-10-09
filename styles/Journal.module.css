@@ -7,7 +7,9 @@
 .pageHeader { margin-bottom: 2.5rem; }
 .lede {
   margin: 0;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: 1.1875rem;
+  font-weight: 300;
   color: var(--muted);
 }
 
@@ -49,7 +51,9 @@
 .cardBody { min-width: 0; }
 .cardTitle {
   margin: 0 0 0.35rem;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: clamp(1.2rem, 2.4vw, 1.45rem);
+  font-weight: 300;
   line-height: 1.25;
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -57,7 +61,9 @@
 }
 .cardDek {
   margin: 0 0 0.55rem;
-  font-style: italic;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
+  font-style: normal;
   line-height: 1.45;
 }
 .cardMeta {
@@ -115,8 +121,10 @@
 .title { margin: 0 0 0.65rem; }
 .dek {
   margin: 0 0 0.85rem;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: 1.1875rem;
-  font-style: italic;
+  font-weight: 300;
+  font-style: normal;
   line-height: 1.45;
 }
 .byline {
@@ -138,7 +146,9 @@
 }
 .bag h2 {
   margin: 0 0 0.75rem;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: 1.25rem;
+  font-weight: 300;
 }
 .settings {
   margin: 0 0 0.75rem;
@@ -405,7 +415,7 @@
     max-width: 34em;
     margin: 0 0 0.85rem;
     font-size: 1.02rem;
-    font-weight: 400;
+    font-weight: 300;
     color: var(--muted);
   }
   .byline {
@@ -450,7 +460,7 @@
   .bag h2 {
     margin: 0 0 0.7rem;
     font-size: 0.8125rem;
-    font-weight: 500;
+    font-weight: 300;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--muted);
@@ -650,13 +660,14 @@
   align-items: center;
   gap: 0.75rem;
   margin: 0 0 1.15rem;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 300;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #4a4a4a;
 }
-.sectionLabel span { color: #8a8a8a; font-weight: 400; }
+.sectionLabel span { color: #8a8a8a; font-weight: 300; }
 .sectionLabel::after { content: ""; flex: 1; height: 1px; background: #dedad2; }
 .latestGrid,
 .inspireGrid {
@@ -730,7 +741,13 @@
   font-size: clamp(1.7rem, 2.5vw, 2.15rem);
   line-height: 1.08;
 }
-.featuredDek { margin: 0.35rem 0 0.85rem; font-style: italic; color: var(--muted); }
+.featuredDek {
+  margin: 0.35rem 0 0.85rem;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  color: var(--muted);
+}
 .storyLink { color: var(--charcoal); font-weight: 600; text-decoration: none; }
 .storyLink:hover { text-decoration: underline; }
 .featuredPhoto {
@@ -751,8 +768,9 @@
 }
 .moreLabel {
   margin: 0 0 0.4rem;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 300;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #f0e2c4;
@@ -896,7 +914,7 @@
   max-width: 100%;
   overflow-wrap: break-word;
   font-family: Poppins, system-ui, sans-serif;
-  font-weight: 400;
+  font-weight: 300;
   font-size: 1.02rem;
   line-height: 1.22;
   letter-spacing: -0.02em;

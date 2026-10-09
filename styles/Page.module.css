@@ -21,7 +21,17 @@
 }
 .pageHeader { margin-bottom: 2.5rem; }
 .galleryHeading { margin-bottom: 0.15rem; }
-.lede { font-size: 1.1875rem; color: var(--muted); }
+.lede {
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 1.1875rem;
+  font-weight: 300;
+  color: var(--muted);
+}
+/* Short note that sits directly under a section heading (Camera gear). */
+.block > h2 + .formNote {
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
+}
 
 .block { margin-bottom: 3rem; }
 
@@ -225,6 +235,8 @@
 }
 .location {
   margin: 0.25rem 0 0;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
   color: var(--muted);
 }
 /* Photo-page header: title + gear left, square map card right, centred. */
@@ -423,8 +435,9 @@
 }
 .buyHeading {
   margin: 0 0 0.625rem;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: 0.9375rem;
-  font-weight: 600;
+  font-weight: 300;
   letter-spacing: 0.01em;
 }
 .buyTiers {
