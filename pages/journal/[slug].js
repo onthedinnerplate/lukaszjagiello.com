@@ -50,6 +50,20 @@ function circleBox(panel, ar) {
   return { ...panel, y: panel.y + (panel.h - h) / 2, h };
 }
 
+// Sentences already in the essays. Rendered only when the paragraph still contains them.
+const PULL_QUOTES = {
+  'where-the-forest-walks-into-the-sea': "Here, it feels like it's still being made.",
+  'a-thin-line-of-light-in-a-green-room': 'The waterfall, though, seemed to carry its own light.',
+  'the-lighthouse-at-the-end-of-the-island': 'The lighthouse just stood in it, glowing.',
+  'inside-the-stone': "By the time it reaches you, it's no longer sunlight in any ordinary sense.",
+};
+
+function quoteFor(article) {
+  const quote = PULL_QUOTES[article.slug];
+  if (!quote || !article.paragraphs.some((paragraph) => paragraph.includes(quote))) return '';
+  return quote;
+}
+
 function ExpandIcon() {
   return (
     <svg className={styles.expandIcon} width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
@@ -65,6 +79,8 @@ export default function JournalArticle({ article, counts }) {
   const [lbOpen, setLbOpen] = useState(false);
   const openerRef = useRef(null);
   const ar = photo.width / photo.height;
+  const quote = quoteFor(article);
+  const placeName = article.location.split(',')[0].trim();
 
   const openLightbox = (event) => {
     openerRef.current = event.currentTarget;
@@ -133,8 +149,10 @@ export default function JournalArticle({ article, counts }) {
           />
         </figure>
         <div className={styles.spread}>
+          <p className={styles.ghost} aria-hidden="true">{placeName}</p>
           <div className={styles.visual}>
             <div className={styles.stage}>
+              <span className={styles.edgeLabel}>{placeName}</span>
               {treatment.blocks.map((block, i) => (
                 <span
                   key={`block-${i}`}
@@ -208,6 +226,11 @@ export default function JournalArticle({ article, counts }) {
               ))}
             </div>
             <div className={styles.column}>
+              {quote ? (
+                <blockquote className={styles.pull}>
+                  <p>{quote}</p>
+                </blockquote>
+              ) : null}
               {article.paragraphs.slice(2).map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -246,6 +269,10 @@ export async function getStaticProps({ params }) {
   if (!record) return { notFound: true };
   if (!treatments[record.slug]) {
     throw new Error(`No journal treatment for ${record.slug}.`);
+  }
+  const quote = PULL_QUOTES[record.slug];
+  if (!quote || !record.paragraphs.some((paragraph) => paragraph.includes(quote))) {
+    throw new Error(`Pull quote for ${record.slug} is not verbatim article text.`);
   }
   const photos = await getPhotos();
   const articles = hydrateArticles(photos);
