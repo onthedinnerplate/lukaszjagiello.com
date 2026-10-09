@@ -2,7 +2,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import CategoryNav from '@/components/CategoryNav';
-import { headlineAccentClassName } from '@/components/headlineAccent';
+import { heroAccentClassName } from '@/components/headlineAccent';
+import { articleTitleFont } from '@/lib/fonts';
 import { photos } from '@/lib/photos';
 import styles from '@/styles/Journal.module.css';
 
@@ -23,7 +24,7 @@ function titleWithAccents(title) {
   return nodes;
 }
 
-const POPPINS = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap';
+const POPPINS = 'https://fonts.googleapis.com/css2?family=Allura&family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap';
 
 /** Same sentence as the Journeys page description, so every reuse stays in lockstep. */
 export const JOURNEYS_HERO_DESCRIPTION =
@@ -126,11 +127,11 @@ export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
           </div>
           <div className={styles.heroCopy}>
             <p className={styles.heroKicker}>{HERO.kicker}</p>
-            <Title className={styles.heroTitle}>
+            <Title className={`${styles.heroTitle} ${articleTitleFont.className}`}>
               {titleNodes
                 ? titleNodes.map((node, i) =>
                     node.accent ? (
-                      <span key={`${node.text}-${i}`} className={headlineAccentClassName}>
+                      <span key={`${node.text}-${i}`} className={heroAccentClassName}>
                         {node.text}
                       </span>
                     ) : (
