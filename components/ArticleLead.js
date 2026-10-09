@@ -11,8 +11,8 @@ function photoSrc(src) {
 }
 
 /**
- * The article's only photograph: a 9:16 moss frame with the trail pin and
- * place name in the band. Every journal story uses this.
+ * The article's only photograph: full width of its column, with the trail
+ * pin and place name along the bottom. Every journal story uses this.
  */
 export default function ArticleLead({
   photo,

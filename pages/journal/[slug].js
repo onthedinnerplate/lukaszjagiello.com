@@ -18,7 +18,6 @@ import {
 } from '@/lib/articles';
 import shapes from '@/lib/journalShapes.json';
 import { accentScriptFromPalette } from '@/lib/accentInk';
-import { accentScriptFont } from '@/lib/fonts';
 import { graph, personNode, websiteNode, pageNode, articleNode } from '@/lib/seo';
 import styles from '@/styles/Journal.module.css';
 
@@ -154,10 +153,7 @@ export default function JournalArticle({ article, navCounts }) {
             </p>
             <div className={styles.lead}>
               {article.paragraphs.slice(0, 2).map((paragraph, index) => (
-                <p
-                  key={paragraph}
-                  className={index === 0 ? `${accentScriptFont.className} ${styles.dropCap}` : undefined}
-                >
+                <p key={paragraph} className={index === 0 ? styles.dropCap : undefined}>
                   {paragraph}
                 </p>
               ))}
