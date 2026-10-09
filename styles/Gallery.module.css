@@ -632,3 +632,25 @@
 }
 .futureBand { margin-bottom: 0; }
 .futureBand .uniform { margin: 0; }
+
+/* Phones: every category row, including Inspirations, stays on one line. */
+@media (max-width: 767px) {
+  .catNav { margin-top: 0.2rem; }
+  .catList {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: clamp(2px, 0.5vw, 6px);
+    width: 100%;
+    overflow: hidden;
+  }
+  .catLink {
+    white-space: nowrap;
+    font-size: clamp(7px, 2.05vw, 12px);
+    letter-spacing: -0.03em;
+    padding: 0.55rem 0 0.25rem;
+    min-height: 44px;
+  }
+  .catSep { margin: 0 0.16em; height: 0.7em; }
+  .catCount { font-size: 0.85em; }
+}

@@ -180,6 +180,7 @@ export default function JournalIndex({ articles, counts }) {
         jsonLd={graph(websiteNode(), personNode(), pageNode('CollectionPage', meta))}
       />
       <article className={styles.landing}>
+        <h1 className={`sr-only ${styles.phoneTitle}`}>Journeys</h1>
         <JourneysHero
           nav={{
             active: category,
