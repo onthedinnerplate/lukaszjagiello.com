@@ -70,7 +70,8 @@
   align-self: center;
   width: 1px;
   height: 0.9em;
-  background: #c4a35a;
+  /* Same gold as Photography, at 60% so the line stays thinner than the word. */
+  background: rgba(196, 163, 90, 0.6);
 }
 .brand .brandScript {
   font-weight: 400;
