@@ -1,13 +1,13 @@
 import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
-import CategoryNav from '@/components/CategoryNav';
+import JourneysHeader from '@/components/JourneysHeader';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
 import { galleryPathFor } from '@/lib/categories';
 import { site } from '@/lib/site';
 import styles from '@/styles/Page.module.css';
 
 /** Shared by /gallery (all) and /gallery/[category]. */
-export default function GalleryPage({ photos, category, counts }) {
+export default function GalleryPage({ photos, category, counts, heroSrc }) {
   const isAll = !category || category.slug === 'all';
   const meta = isAll
     ? {
@@ -35,6 +35,16 @@ export default function GalleryPage({ photos, category, counts }) {
         keywords={isAll ? ['photo gallery', 'landscape prints', 'wildlife photos'] : [`${category.label.toLowerCase()} photography`, `${category.label.toLowerCase()} prints`]}
         jsonLd={jsonLd}
       />
+      <JourneysHeader
+        src={heroSrc}
+        titleAs="p"
+        categories={{
+          active: isAll ? 'all' : category.slug,
+          counts,
+          label: 'Gallery categories',
+          showOnMobile: true,
+        }}
+      />
       <section className={styles.galleryPage} aria-labelledby="gallery-heading">
         <header className={styles.pageHeader}>
           <h1 id="gallery-heading">{isAll ? 'Gallery' : category.label}</h1>
@@ -42,7 +52,6 @@ export default function GalleryPage({ photos, category, counts }) {
             {photos.length} {photos.length === 1 ? 'photograph' : 'photographs'}
             {isAll ? '.' : ` — ${category.description.toLowerCase()}.`}
           </p>
-          <CategoryNav active={isAll ? 'all' : category.slug} counts={counts} />
         </header>
         <MasonryGallery photos={photos} wide headingId="gallery-heading" />
       </section>

@@ -1,5 +1,6 @@
 import GalleryPage from '@/components/GalleryPage';
-import { getGalleryPhotos, categoryCounts } from '@/lib/photo-data';
+import { getPhotos, getGalleryPhotos, categoryCounts } from '@/lib/photo-data';
+import { journeysHeroSrc } from '@/lib/journeysHero';
 import { CATEGORIES, categoryBySlug, inCategory } from '@/lib/categories';
 
 export default function GalleryCategory(props) {
@@ -13,7 +14,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const category = categoryBySlug(params.category);
   if (!category) return { notFound: true };
-  const all = await getGalleryPhotos();
-  const photos = all.filter((p) => inCategory(p, category.slug));
-  return { props: { photos, category, counts: categoryCounts(all) } };
+  const [listed, all] = await Promise.all([getGalleryPhotos(), getPhotos()]);
+  const photos = listed.filter((p) => inCategory(p, category.slug));
+  return { props: { photos, category, counts: categoryCounts(listed), heroSrc: journeysHeroSrc(all) } };
 }

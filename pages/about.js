@@ -1,5 +1,8 @@
 import Link from 'next/link';
 import Seo from '@/components/Seo';
+import JourneysHeader from '@/components/JourneysHeader';
+import { getPhotos } from '@/lib/photo-data';
+import { journeysHeroSrc } from '@/lib/journeysHero';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
 import { gearFromMetadata } from '@/lib/photoCaption';
@@ -15,7 +18,7 @@ const meta = {
   description: `About ${site.photographer}, a landscape and wildlife photographer shooting on the ${mainCamera} with the ${lensList.slice(0, 2).join(' and ') || site.gear.lens}.`,
 };
 
-export default function About() {
+export default function About({ heroSrc }) {
   return (
     <>
       <Seo
@@ -25,6 +28,7 @@ export default function About() {
         keywords={['about the photographer', ...gear.cameras.map((c) => c.name), ...lensList]}
         jsonLd={graph(websiteNode(), { ...pageNode('ProfilePage', meta), mainEntity: { '@id': personNode()['@id'] } }, personNode())}
       />
+      <JourneysHeader src={heroSrc} titleAs="p" />
       <article className={styles.page}>
         <header className={styles.pageHeader}>
           <h1>About</h1>
@@ -100,4 +104,9 @@ export default function About() {
       </article>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const photos = await getPhotos();
+  return { props: { heroSrc: journeysHeroSrc(photos) } };
 }
