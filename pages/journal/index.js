@@ -16,7 +16,8 @@ import {
   journalCategoryCounts,
   journalCategoryPath,
 } from '@/lib/articles';
-import { CATEGORIES } from '@/lib/categories';
+import CategoryNav from '@/components/CategoryNav';
+import { CATEGORIES, galleryPathFor } from '@/lib/categories';
 import { byNumber, CLUSTER_NUMBERS, inspirationsFrom, LATEST_SLUGS, MORE_NUMBERS, shapeFor } from '@/lib/journeys';
 import { spreadBySubject } from '@/lib/subjectOrder';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
@@ -123,7 +124,25 @@ export default function JournalIndex({ articles, counts }) {
   const visible = articlesInCategory(articles, category);
   const latest = LATEST_SLUGS.map((slug) => visible.find((article) => article.photoSlug === slug)).filter(Boolean);
   const featured = visible.find((article) => article.photoSlug === 'ruby-beach') || null;
-  const inspirations = inspirationsFrom(visible);
+  const inspirationPool = inspirationsFrom(visible);
+  const inspirationCounts = {};
+  for (const article of inspirationPool) {
+    for (const slug of article.photo.categories || []) {
+      inspirationCounts[slug] = (inspirationCounts[slug] || 0) + 1;
+    }
+  }
+  const [inspireCategory, setInspireCategory] = useState('');
+  const inspireActive = inspirationCounts[inspireCategory] > 0 ? inspireCategory : '';
+  const inspirations = inspireActive
+    ? inspirationPool.filter((article) => (article.photo.categories || []).includes(inspireActive))
+    : inspirationPool;
+  const filterInspirations = (slug) => {
+    const y = window.scrollY;
+    setInspireCategory(slug);
+    requestAnimationFrame(() => {
+      if (window.scrollY !== y) window.scrollTo(0, y);
+    });
+  };
   const more = byNumber(visible, MORE_NUMBERS);
   const catalogue = spreadBySubject(visible, (article) => article.photoNumber);
   const cluster = byNumber(articles, CLUSTER_NUMBERS);
@@ -252,11 +271,22 @@ export default function JournalIndex({ articles, counts }) {
             </section>
           ) : null}
 
-          {inspirations.length > 0 ? (
+          {inspirationPool.length > 0 ? (
             <section className={styles.band} aria-labelledby="inspirations">
-              <h2 id="inspirations" className={styles.sectionLabel}>
+              <h2 id="inspirations" className={`${styles.sectionLabel} ${styles.inspireLabel}`}>
                 Inspirations <span>{inspirations.length}</span>
               </h2>
+              <div className={styles.inspireNav}>
+                <CategoryNav
+                  active={inspireActive}
+                  counts={inspirationCounts}
+                  hrefFor={galleryPathFor}
+                  includeAll={false}
+                  hideEmpty
+                  label="Inspirations categories"
+                  onSelect={filterInspirations}
+                />
+              </div>
               <ul className={styles.inspireGrid}>
                 {inspirations.map((article) => (
                   <li key={article.slug}>
