@@ -1,12 +1,14 @@
 .page {
-  max-width: 760px;
+  max-width: var(--container-max);
   margin: 0 auto;
   padding: 3.5rem var(--gutter) 1rem;
 }
+/* Reading column stays 760px and lines up with the container's left edge. */
+.page > * { max-width: 760px; }
 /* Horizontal frame shared with the site header (.nav composes this).
    Vertical padding stays on .galleryPage so the bar height does not change. */
 .contentFrame {
-  max-width: var(--max-wide);
+  max-width: var(--container-max);
   margin-left: auto;
   margin-right: auto;
   padding-left: var(--gutter);
@@ -168,7 +170,7 @@
 
 /* Per-photo page. Same type scale and muted caption colour as the gallery cards. */
 .photoPage {
-  max-width: var(--max-wide, 1600px);
+  max-width: var(--container-max);
   margin: 0 auto;
   padding: 2rem var(--gutter) 4rem;
 }
@@ -469,7 +471,7 @@
 }
 
 /* ---- Legal pages and HTML sitemap ---- */
-.legal { max-width: 760px; }
+.legal { max-width: var(--container-max); }
 .legal h2 { margin: 0 0 0.6rem; font-size: 1.25rem; }
 .legal h3 { margin: 1rem 0 0.35rem; font-size: 1rem; }
 .legal p, .legal li { line-height: 1.6; }

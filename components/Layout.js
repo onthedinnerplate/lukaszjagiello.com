@@ -1,3 +1,4 @@
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { site, isPlaceholderSocial } from '@/lib/site';
@@ -6,6 +7,8 @@ import { articleTitleFont } from '@/lib/fonts';
 import { accentScriptFont } from '@/components/headlineAccent';
 import styles from '@/styles/Layout.module.css';
 import BackToTop from './BackToTop';
+
+const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 function currentPath(asPath) {
   return (asPath || '/').split('?')[0].split('#')[0];
@@ -16,20 +19,75 @@ function sectionCurrent(path, href) {
   return path === href || path.startsWith(`${href}/`);
 }
 
-/** Pages whose first screen is a photograph running under the fixed bar. */
-function heroBehindNav(path) {
-  if (path === '/' || path === '/about' || path === '/contact' || path === '/gallery' || path === '/journal') return true;
-  if (path.startsWith('/gallery/') || path.startsWith('/journal/')) return true;
-  return false;
-}
-
 function Nav() {
   const { asPath } = useRouter();
   const path = currentPath(asPath);
-  const onHero = heroBehindNav(path);
+  const listRef = useRef(null);
+  const [box, setBox] = useState(null);
+  const [ready, setReady] = useState(false);
+  const [instant, setInstant] = useState(true);
+
+  const measure = (el) => {
+    const list = listRef.current;
+    if (!list || !el || !list.contains(el)) {
+      setBox(null);
+      return;
+    }
+    const listRect = list.getBoundingClientRect();
+    const rect = el.getBoundingClientRect();
+    if (rect.width < 1) {
+      setBox(null);
+      return;
+    }
+    setBox({
+      x: rect.left - listRect.left + list.scrollLeft,
+      y: rect.bottom - listRect.top + list.scrollTop - 2,
+      w: rect.width,
+    });
+  };
+
+  const activeItem = () => listRef.current?.querySelector('[aria-current="page"]') || null;
+
+  const rest = () => {
+    const list = listRef.current;
+    const focused = list?.contains(document.activeElement) ? document.activeElement : null;
+    if (focused && focused.matches('a')) {
+      measure(focused);
+      return;
+    }
+    measure(activeItem());
+  };
+
+  useIsoLayoutEffect(() => {
+    measure(activeItem());
+    setReady(true);
+    const frame = requestAnimationFrame(() => setInstant(false));
+    const list = listRef.current;
+    if (!list || typeof ResizeObserver === 'undefined') {
+      return () => cancelAnimationFrame(frame);
+    }
+    const observer = new ResizeObserver(() => rest());
+    observer.observe(list);
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, [path]);
+
+  const indicatorStyle = box
+    ? { '--x': `${box.x}px`, '--y': `${box.y}px`, '--w': box.w, opacity: 1 }
+    : { '--x': '0px', '--y': '0px', '--w': 0, opacity: 0 };
+
   return (
-    <header className={`${styles.header} ${onHero ? styles.headerOnHero : ''}`}>
-      <nav className={styles.nav} aria-label="Main">
+    <header className={styles.header}>
+      <nav
+        className={`${styles.nav} container${ready ? ` ${styles.navReady}` : ''}`}
+        aria-label="Main"
+        onMouseLeave={rest}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) rest();
+        }}
+      >
         <Link href="/" className={styles.brand} aria-current={path === '/' ? 'page' : undefined}>
           <img
             className={styles.brandMark}
@@ -40,21 +98,31 @@ function Nav() {
           />
           <span className={styles.brandName}>
             <span className={`${styles.brandGiven} ${articleTitleFont.className}`}>Łukasz Jagiełło</span>
-            {' '}
             <span className={`${styles.brandScript} ${accentScriptFont.className}`}>Photography</span>
           </span>
         </Link>
-        <ul className={styles.links}>
+        <ul className={styles.links} ref={listRef}>
           {site.nav.map(({ label, href }) => {
             const current = sectionCurrent(path, href);
             return (
               <li key={href}>
-                <Link href={href} className={styles.link} aria-current={current ? 'page' : undefined}>
+                <Link
+                  href={href}
+                  className={styles.link}
+                  aria-current={current ? 'page' : undefined}
+                  onMouseEnter={(event) => measure(event.currentTarget)}
+                  onFocus={(event) => measure(event.currentTarget)}
+                >
                   {label}
                 </Link>
               </li>
             );
           })}
+          <li
+            className={`${styles.indicator} ${instant ? styles.indicatorInstant : ''}`}
+            style={indicatorStyle}
+            aria-hidden="true"
+          />
         </ul>
       </nav>
     </header>

@@ -14,16 +14,34 @@
   --success-bg: #ecffe6;
 
   --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
-  /* One row: name on the left, links on the right, sitting on the hero. */
-  --nav-h: 76px;
+  /* One horizontal row: logo, name, Photography, and the links share the bar.
+     960px and under wrap the links onto a second row; 720px uses the smaller name. */
+  --nav-h: 72px;
   --gutter: clamp(16px, 4vw, 40px);
+  --container-max: 1400px;
   --max: 1200px;
   --max-wide: 1600px;
   --radius: 4px;
+  /* Hero category menu and the header nav share this 2px rule. */
+  --menu-underline: #A3AD62;
 }
 
+/* Shared frame: header, hero, and page sections use this so their
+   content edges line up. Horizontal padding is the same gutter. */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+@media (max-width: 960px) {
+  :root { --nav-h: 108px; }
+}
 @media (max-width: 720px) {
-  :root { --nav-h: 64px; }
+  :root { --nav-h: 88px; }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
