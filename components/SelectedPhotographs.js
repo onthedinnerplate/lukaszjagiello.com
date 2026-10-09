@@ -5,6 +5,7 @@ import ResponsiveImage from '@/components/ResponsiveImage';
 import Swatches from '@/components/Swatches';
 import { GearLine } from '@/components/GearStoreLinks';
 import { captionFor, photoNumberFromSrc } from '@/lib/photoCaption';
+import { cardObjectPosition, PHONE_CARD_RATIO } from '@/lib/photoFocus';
 import { ogImageSrc } from '@/lib/slug';
 import palettes from '@/lib/photoPalettes.json';
 import styles from '@/styles/Gallery.module.css';
@@ -74,7 +75,10 @@ export default function SelectedPhotographs({ photos }) {
                     sizes="(max-width: 767px) 50vw, 20vw"
                     srcSet={photo.thumbSrcSet}
                     className={styles.selectedImg}
-                    style={{ objectPosition: cropPosition(photo) }}
+                    style={{
+                      '--focus': cropPosition(photo),
+                      '--focus-phone': cardObjectPosition(photo, PHONE_CARD_RATIO),
+                    }}
                     loading={i < 2 ? 'eager' : 'lazy'}
                   />
                 </button>

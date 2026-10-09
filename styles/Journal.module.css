@@ -1180,6 +1180,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: var(--focus, center);
   display: block;
   transition: transform 0.4s ease;
 }
@@ -1615,13 +1616,30 @@
   }
 
   .featuredMap { display: none; }
+  .latestGrid,
+  .inspireGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.85rem;
+    row-gap: 1.35rem;
+  }
+  /* One portrait frame per card. flex-grow would stretch the photo to the
+     tallest caption in the row, so the image box is not allowed to grow. */
+  .journeyCard > .frameWrap,
+  .journeyCard .cardPhotoLink,
+  .journeyCard .stage,
   .stage,
   .allFrame,
   .featuredPhoto .stage {
-    aspect-ratio: 3 / 4;
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
   }
   .portraitImg,
-  .allThumb { object-position: var(--focus, center); }
+  .allThumb {
+    object-fit: cover;
+    object-position: var(--focus-phone, var(--focus, center));
+  }
   .featured { --card-inset: 1.2rem; }
   .featuredPanel {
     padding-left: var(--card-inset, 1.2rem);
