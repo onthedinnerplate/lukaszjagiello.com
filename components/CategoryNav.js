@@ -20,7 +20,7 @@ export default function CategoryNav({
   active = 'all',
   counts = {},
   hrefFor = galleryPathFor,
-  label = 'Future Photography categories',
+  label = 'Gallery categories',
   disableEmpty = false,
   includeAll = true,
   allLabel = 'All',

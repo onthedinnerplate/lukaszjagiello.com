@@ -100,7 +100,7 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber, seque
           </nav>
 
           <p className={styles.back}>
-            <Link href="/gallery">Back to future photography</Link>
+            <Link href="/gallery">Back to gallery</Link>
           </p>
         </div>
 
