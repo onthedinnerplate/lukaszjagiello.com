@@ -26,6 +26,9 @@
   --radius: 4px;
   /* Hero category menu and the header nav share this 2px rule. */
   --menu-underline: #A3AD62;
+  /* One gap for every gallery grid, both axes. This is the larger row gap
+     the All photographs grid already used. */
+  --gallery-gap: 1.35rem;
 }
 
 /* Phone cards share one side inset: title, location, swatches, and icons. */
@@ -54,6 +57,12 @@
 @media (max-width: 767px) {
   :root { --nav-row: 64px; --cat-bar: 52px; }
   body { overflow-x: clip; }
+}
+@media (min-width: 769px) {
+  :root { --gallery-gap: 1.5rem; }
+}
+@media (min-width: 1100px) {
+  :root { --gallery-gap: 1.6rem; }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
