@@ -1,5 +1,4 @@
-.index,
-.article {
+.index {
   max-width: 760px;
   margin: 0 auto;
   padding: 3.5rem var(--gutter) 1rem;
@@ -66,11 +65,24 @@
   font-size: 0.875rem;
   color: var(--muted);
 }
+.empty { margin: 0; color: var(--muted); }
 
 @media (max-width: 640px) {
   .card { grid-template-columns: 1fr; align-items: start; }
 }
 
+/* Category row is desktop and tablet only. Hidden outright below 768px. */
+.journalCats { display: none; }
+
+/*
+ * Article pages. Base rules match the stacked article on main so phones
+ * under 768px stay pixel-equivalent. Magazine rules live in the 769px query.
+ */
+.article {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3.5rem var(--gutter) 1rem;
+}
 .hero {
   margin: 0 0 1.75rem;
   border-radius: 12px;
@@ -83,7 +95,12 @@
   height: auto;
   display: block;
 }
-
+.visual { display: none; }
+.spread,
+.panel,
+.lead,
+.column { display: contents; }
+.accent { display: none; }
 .kicker {
   margin: 0 0 0.45rem;
   font-size: 0.8125rem;
@@ -92,6 +109,7 @@
   text-transform: uppercase;
   color: var(--muted);
 }
+.desktopOnly { display: none; }
 .title { margin: 0 0 0.65rem; }
 .dek {
   margin: 0 0 0.85rem;
@@ -105,9 +123,8 @@
   color: var(--muted);
 }
 .byline time { font-variant-numeric: tabular-nums; }
-
-.body p { margin: 0 0 1.15em; }
-
+.lead > p,
+.column > p:not(.photoLink) { margin: 0 0 1.15em; }
 .bag {
   margin: 2.25rem 0 1.75rem;
   padding: 1.25rem 1.25rem 0.35rem;
@@ -124,5 +141,228 @@
   margin: 0 0 0.75rem;
   font-weight: 700;
 }
-
 .photoLink { margin: 0 0 0.5rem; }
+
+@media (min-width: 769px) {
+  .journalCats { display: block; margin-bottom: 0.25rem; }
+
+  .article {
+    max-width: 1180px;
+    padding: 2.25rem var(--gutter) 5rem;
+  }
+  .hero { display: none; }
+
+  .spread {
+    display: grid;
+    grid-template-columns: minmax(312px, 42%) minmax(0, 1fr);
+    align-items: start;
+    container-type: inline-size;
+    margin-top: 1.2rem;
+  }
+  .visual {
+    display: block;
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    min-width: 0;
+  }
+  .stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--ar);
+    z-index: 1;
+  }
+  .block {
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .mosaicBtn {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+    display: block;
+  }
+  .mosaicBtn:focus-visible {
+    outline: 3px solid var(--orange);
+    outline-offset: 3px;
+  }
+  .slice {
+    position: absolute;
+    display: block;
+    overflow: hidden;
+    background-repeat: no-repeat;
+  }
+  .circle { border-radius: 50%; }
+  .veil {
+    position: absolute;
+    inset: 0;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .under {
+    position: relative;
+    z-index: 5;
+    background: var(--white);
+    padding-top: 0.7rem;
+  }
+  .swatches {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 7px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: max-content;
+    max-width: 100%;
+  }
+  .swatchItem { margin: 0; padding: 0; }
+  .swatch {
+    display: block;
+    width: 54px;
+    height: 21px;
+  }
+  .hex {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.5625rem;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    color: var(--muted);
+    text-align: left;
+  }
+  .viewRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 0.4rem;
+    margin: 0.45rem 0 0;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .viewFull {
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: var(--accent);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .viewFull:hover { color: var(--orange); }
+  .expandIcon { display: block; flex: none; }
+  .viewRow a { font-size: inherit; }
+
+  .panel {
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
+    position: relative;
+    z-index: 2;
+    align-self: start;
+    --overlap: 104px;
+    margin-top: calc(max(312px, 100cqi * 0.42) / var(--ar) * 0.56);
+    margin-left: calc(var(--overlap) * -1);
+    padding: 1.4rem 0.15rem 0.2rem var(--overlap);
+    background: var(--white);
+    box-shadow: 0 10px 28px rgba(26, 26, 26, 0.06);
+  }
+  .lead,
+  .column { display: block; }
+  .accent {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4.25rem;
+    height: 2px;
+    background: #c4a35a;
+  }
+  .kicker { display: none; }
+  .desktopOnly { display: inline; }
+  .place { color: var(--accent); }
+
+  .title {
+    max-width: 11em;
+    margin: 0.15rem 0 0.8rem;
+    font-size: clamp(2.25rem, 3.3vw, 3rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .dek {
+    max-width: 34em;
+    margin: 0 0 0.85rem;
+    font-size: 1.02rem;
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .byline {
+    margin: 0 0 1.35rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .lead p {
+    max-width: 38em;
+    margin: 0 0 1.2em;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .lead p:first-child::first-letter {
+    float: left;
+    font-size: 3.35rem;
+    line-height: 0.75;
+    font-weight: 400;
+    padding: 0.08em 0.1em 0 0;
+    color: var(--charcoal);
+  }
+  .column { width: auto; margin: 0; padding: 0.35rem 0 0; }
+  .column > p:not(.photoLink) {
+    max-width: 40em;
+    margin: 0 0 1.45em;
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: var(--charcoal);
+  }
+  .bag {
+    max-width: 40em;
+    margin: 2.5rem 0 1.5rem;
+    padding: 1.15rem 0 0;
+    border: 0;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+    background: transparent;
+  }
+  .bag h2 {
+    margin: 0 0 0.7rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+}
