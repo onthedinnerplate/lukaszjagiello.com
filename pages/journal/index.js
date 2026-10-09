@@ -55,6 +55,9 @@ function cardPhoto(article) {
     href: article.photo.href,
     src: article.photo.src,
     forSale: article.photo.forSale,
+    location: article.location,
+    coords: article.photo.coords,
+    focus: article.photo.focus,
   };
 }
 
@@ -89,7 +92,13 @@ function JourneyCard({ article, compactSwatches = true }) {
   const accentScript = accentScriptFromPalette(shape?.palette)?.used;
   const href = `/journal/${article.slug}`;
   return (
-    <article className={styles.journeyCard} style={accentScript ? { '--accent-script': accentScript } : undefined}>
+    <article
+      className={styles.journeyCard}
+      style={{
+        '--focus': article.photo.focus || 'center',
+        ...(accentScript ? { '--accent-script': accentScript } : {}),
+      }}
+    >
       <div className={styles.frameWrap}>
         <Link href={href} className={styles.cardPhotoLink} aria-label={`Read ${article.title}`}>
           <ShapeMosaic src={article.photo.src} alt="" />
@@ -212,7 +221,7 @@ export default function JournalIndex({ articles, counts }) {
               <h2 id="featured-story" className={styles.sectionLabel}>Featured story</h2>
               <div className={styles.featured}>
                 <div className={styles.featuredMain}>
-                  <div className={`${styles.featuredPhoto} ${styles.frameWrap}`}>
+                  <div className={`${styles.featuredPhoto} ${styles.frameWrap}`} style={{ '--focus': featured.photo.focus || 'center' }}>
                     <ShapeMosaic src={featured.photo.src} alt={featured.photo.alt} />
                     <PhotoCardActions
                       title={featured.title}
@@ -323,7 +332,7 @@ export default function JournalIndex({ articles, counts }) {
                   return (
                     <li key={article.slug}>
                       <div className={styles.allTile} style={accentScript ? { '--accent-script': accentScript } : undefined}>
-                        <div className={`${styles.allFrame} ${article.photo.thumb ? '' : styles.allThumbPlaceholder}`}>
+                        <div className={`${styles.allFrame} ${article.photo.thumb ? '' : styles.allThumbPlaceholder}`} style={{ '--focus': article.photo.focus || 'center' }}>
                           <Link href={href} className={styles.allPhotoLink} aria-label={`Read ${article.title}`}>
                             <JourneyThumb photo={article.photo} />
                           </Link>

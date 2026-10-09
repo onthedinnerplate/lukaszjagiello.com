@@ -1548,4 +1548,30 @@
   .heroBleed .heroNav :global(span) { color: #C9D1B4; }
   .heroBleed .heroLine2 { white-space: normal; }
   .heroBleed .goldRule { background: #A3AD62; }
+
+  .featuredMap { display: none; }
+  .stage,
+  .allFrame,
+  .featuredPhoto .stage {
+    aspect-ratio: 3 / 4;
+  }
+  .portraitImg,
+  .allThumb { object-position: var(--focus, center); }
+  .journeyCard,
+  .allTile,
+  .featured { --card-inset: 0.7rem; }
+  .journeyBody,
+  .allCopy,
+  .allLocRow,
+  .featured .swatches {
+    padding-left: var(--card-inset, 0.7rem);
+    padding-right: var(--card-inset, 0.7rem);
+  }
+  .featured .swatches { margin-top: 0.45rem; }
+  .allTile { padding: 0 0 0.7rem; }
+  .allFrame {
+    width: 100%;
+    margin: 0;
+    border-radius: 12px 12px 0 0;
+  }
 }

@@ -36,6 +36,7 @@ export default function MasonryGallery({
   grayscale = true,
   equalCards = false,
   palettes = null,
+  swatchesMode = 'always',
 }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -143,13 +144,14 @@ export default function MasonryGallery({
                       sizes={sizes}
                       srcSet={photo.thumbSrcSet}
                       className={grayscale ? styles.img : `${styles.img} ${styles.imgColor}`}
+                      style={{ '--focus': photo.focus || 'center' }}
                       loading={prioritized ? 'eager' : 'lazy'}
                       fetchPriority={prioritized ? 'high' : undefined}
                     />
                   </Link>
                 </div>
                 {Array.isArray(palette) && palette.length ? (
-                  <div className={styles.cardSwatches}>
+                  <div className={swatchesMode === 'phone' ? `${styles.cardSwatches} ${styles.cardSwatchesPhone}` : styles.cardSwatches}>
                     <Swatches shape={{ palette }} compact />
                   </div>
                 ) : null}

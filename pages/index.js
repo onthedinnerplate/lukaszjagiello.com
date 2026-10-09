@@ -4,6 +4,7 @@ import JourneysHero from '@/components/JourneysHero';
 import MasonryGallery from '@/components/MasonryGallery';
 import SelectedPhotographs, { selectedPhotos } from '@/components/SelectedPhotographs';
 import { getPhotos, heroNavCounts } from '@/lib/photo-data';
+import palettes from '@/lib/photoPalettes.json';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
@@ -57,6 +58,8 @@ export default function Home({ photos, selected, navCounts }) {
           layout="uniform"
           grayscale={false}
           equalCards
+          palettes={palettes}
+          swatchesMode="phone"
         />
       </section>
 
