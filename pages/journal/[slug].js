@@ -23,6 +23,20 @@ import styles from '@/styles/Journal.module.css';
 
 const POPPINS = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap';
 
+// Sentences already in the essays. Rendered only when the paragraph still contains them.
+const PULL_QUOTES = {
+  'where-the-forest-walks-into-the-sea': "Here, it feels like it's still being made.",
+  'a-thin-line-of-light-in-a-green-room': 'The waterfall, though, seemed to carry its own light.',
+  'the-lighthouse-at-the-end-of-the-island': 'The lighthouse just stood in it, glowing.',
+  'inside-the-stone': "By the time it reaches you, it's no longer sunlight in any ordinary sense.",
+};
+
+function quoteFor(article) {
+  const quote = PULL_QUOTES[article.slug];
+  if (!quote || !article.paragraphs.some((paragraph) => paragraph.includes(quote))) return '';
+  return quote;
+}
+
 function ExpandIcon() {
   return (
     <svg className={styles.expandIcon} width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
@@ -40,6 +54,8 @@ export default function JournalArticle({ article, navCounts }) {
   const lightboxId = useId();
   const openerRef = useRef(null);
   const hasMap = photo.coords && typeof photo.coords.lat === 'number';
+  const quote = quoteFor(article);
+  const placeName = String(article.location || '').split(',')[0].trim();
 
   const openLightbox = (event) => {
     openerRef.current = event.currentTarget;
@@ -119,6 +135,7 @@ export default function JournalArticle({ article, navCounts }) {
             </div>
           </div>
           <div className={styles.panel}>
+            {placeName ? <p className={styles.ghost} aria-hidden="true">{placeName}</p> : null}
             <span className={styles.accent} aria-hidden="true" />
             {article.location ? <p className={styles.kicker}>{article.location}</p> : null}
             <HeadlinePhrase
@@ -142,6 +159,7 @@ export default function JournalArticle({ article, navCounts }) {
               <span>{article.author}</span>
             </p>
             <div className={styles.lead}>
+              {placeName ? <span className={styles.edgeLabel}>{placeName}</span> : null}
               <ArticleLead
                 photo={photo}
                 location={article.location}
@@ -157,6 +175,11 @@ export default function JournalArticle({ article, navCounts }) {
               ))}
             </div>
             <div className={styles.column}>
+              {quote ? (
+                <blockquote className={styles.pull}>
+                  <p>{quote}</p>
+                </blockquote>
+              ) : null}
               {article.paragraphs.slice(2).map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -202,6 +225,10 @@ export async function getStaticProps({ params }) {
   const shape = shapes[String(number)];
   if (!shape?.palette?.[2]) {
     throw new Error(`No swatch 3 for ${record.slug}.`);
+  }
+  const quote = PULL_QUOTES[record.slug];
+  if (quote && !record.paragraphs.some((paragraph) => paragraph.includes(quote))) {
+    throw new Error(`Pull quote for ${record.slug} is not verbatim article text.`);
   }
   const photos = await getPhotos();
   const article = hydrateArticle(record, photos);
