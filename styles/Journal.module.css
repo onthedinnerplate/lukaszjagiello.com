@@ -504,22 +504,24 @@
   container-type: inline-size;
 }
 .heroBleed {
+  --hero-drop: clamp(4rem, 9vh, 7rem);
   border-radius: 0;
   aspect-ratio: auto;
 }
 /* Wins over the shared hero's height, which uses --hero-bleed and would
-   otherwise compute to auto and collapse this band. */
+   otherwise compute to auto and collapse this band. The drop is empty
+   photograph between the nav and the title, menu, and frame. */
 .heroSlotBleed > .heroBand {
-  height: calc(100cqw * 612 / 1440 + var(--nav-h));
+  height: calc(100cqw * 612 / 1440 + var(--nav-h) + var(--hero-drop, 0px));
 }
 .heroBleed .portrait {
-  top: var(--nav-h);
-  height: calc((100% - var(--nav-h)) * 0.881);
+  top: calc(var(--nav-h) + var(--hero-drop, 0px));
+  height: calc((100% - var(--nav-h) - var(--hero-drop, 0px)) * 0.881);
 }
 .heroBleed .heroCopy {
   left: max(var(--gutter), calc((100% - var(--container-max)) / 2 + var(--gutter)));
   right: auto;
-  top: calc(var(--nav-h) + (100% - var(--nav-h)) / 2);
+  top: calc(var(--nav-h) + var(--hero-drop, 0px) + (100% - var(--nav-h) - var(--hero-drop, 0px)) / 2);
   max-width: calc(var(--hero-frame-left, 62%) - max(var(--gutter), (100% - var(--container-max)) / 2 + var(--gutter)) - 1.5rem);
 }
 .heroBleed .heroLine,
@@ -1383,7 +1385,7 @@
   .heroShade { display: none; }
   .heroSlotBleed > .heroBand { height: auto; }
   .heroBleed .heroMedia {
-    height: calc(100cqw * 612 / 1440 + var(--nav-h));
+    height: calc(100cqw * 612 / 1440 + var(--nav-h) + var(--hero-drop, 0px));
     aspect-ratio: auto;
     border-radius: 0;
   }

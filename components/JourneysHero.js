@@ -120,18 +120,20 @@ export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = fal
         setAlign((prev) => (prev === null ? prev : null));
         return;
       }
+      const bandEl = media.parentElement;
       const band = media.getBoundingClientRect();
       const homeRect = home.getBoundingClientRect();
       const bw = band.width;
       const bh = band.height;
       if (bw < 1 || bh < 1) return;
       const navH = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 0;
-      const stageH = Math.max(bh - navH, 0);
+      const drop = bandEl ? Number.parseFloat(getComputedStyle(bandEl).getPropertyValue('--hero-drop')) || 0 : 0;
+      const stageH = Math.max(bh - navH - drop, 0);
       const frameH = stageH * 0.881;
       const frameW = (frameH * 9) / 16;
       const frameLeft = homeRect.left - band.left;
-      /* Top of the frame sits on the nav's moss line. */
-      const frameTop = navH;
+      /* Room of photograph between the nav and the frame. */
+      const frameTop = navH + drop;
       const cx = frameLeft + frameW / 2;
       const cy = frameTop + frameH / 2;
       let dw = Math.max(cx / FALLS_X, (bw - cx) / (1 - FALLS_X), bw);
