@@ -45,9 +45,10 @@ const HERO_SRC = '/images/gallery/lightbox/lukasz-jagiello-41-full.webp';
 // Photo 41 middle swatch (journalShapes "41".palette[2]). The hero has no
 // swatch row, so the handwritten words take this photograph's middle color.
 const HERO_MIDDLE = '#182a17';
-// Lightest patch under those words: 95th percentile of the homepage
-// "the terrain" box at 800px, Marymere photograph plus the left scrim.
-const HERO_PHOTO_SURFACE = '#2c5332';
+// Lightest patch under those words: 95th percentile of "the terrain"
+// on the full-width Journeys hero at 1440px. Gallery, About, and Contact
+// match it. Marymere photograph plus the left scrim.
+const HERO_PHOTO_SURFACE = '#2a5430';
 const heroOnPhoto = accentScriptInk(HERO_MIDDLE, HERO_PHOTO_SURFACE);
 const heroOnPage = accentScriptInk(HERO_MIDDLE, '#ffffff');
 const heroAccentStyle = {
