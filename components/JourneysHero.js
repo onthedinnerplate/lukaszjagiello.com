@@ -76,7 +76,6 @@ function heroNavProps(nav) {
   if (!nav) return null;
   return {
     ...nav,
-    separateCount: true,
     leading: Array.isArray(nav.leading) ? nav.leading : [],
   };
 }

@@ -14,7 +14,7 @@ const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayout
  * the row lists only Landscape, Animals, Architecture and People.
  *
  * `leading` is optional links before the categories. Heroes do not pass any.
- * `separateCount` renders each count as "Name | count".
+ * A count is always "Name | count": a muted 1px rule, hidden from assistive tech.
  */
 export default function CategoryNav({
   active = 'all',
@@ -27,7 +27,6 @@ export default function CategoryNav({
   hideEmpty = false,
   onSelect = null,
   leading = [],
-  separateCount = false,
 }) {
   const items = (includeAll ? [{ slug: 'all', label: allLabel }, ...CATEGORIES] : CATEGORIES)
     .map((item) => ({ ...item, label: item.slug === 'all' ? item.label : categoryMenuLabel(item) }))
@@ -123,7 +122,7 @@ export default function CategoryNav({
           const empty = disableEmpty && c.slug !== 'all' && !(n > 0);
           const count = typeof n === 'number' ? (
             <span className={styles.catMeta}>
-              {separateCount ? <span className={styles.catSep} aria-hidden="true">|</span> : null}
+              <span className={styles.catSep} aria-hidden="true" />
               <span className={styles.catCount}>{n}</span>
             </span>
           ) : null;

@@ -191,8 +191,8 @@
 }
 .catLink {
   display: inline-flex;
-  align-items: baseline;
-  gap: 0.4rem;
+  align-items: center;
+  gap: 0;
   padding: 0.35rem 0;
   color: var(--charcoal);
   font-family: Poppins, system-ui, sans-serif;
@@ -210,8 +210,16 @@
 .catNavReady .catActive { border-bottom-color: transparent; }
 .catDisabled { color: var(--muted); cursor: default; }
 .catDisabled:hover { border-bottom-color: transparent; color: var(--muted); }
-.catMeta { display: inline-flex; align-items: baseline; gap: 0.35rem; }
-.catSep { font-weight: 300; opacity: 0.55; }
+.catMeta { display: inline-flex; align-items: center; }
+.catSep {
+  display: block;
+  flex: 0 0 auto;
+  width: 1px;
+  height: 0.8em;
+  margin: 0 0.4em;
+  background: currentColor;
+  color: var(--muted);
+}
 .catCount { font-size: 0.75rem; color: var(--muted); font-weight: 300; }
 /* One orange rule for the whole row. translate + scaleX so only transform moves. */
 .catIndicator {
@@ -529,6 +537,7 @@
 .sectionNavOnDark .catLink,
 .sectionNavOnDark .catLink:hover,
 .sectionNavOnDark .catDisabled { color: #f4f1ea; }
+.sectionNavOnDark .catSep,
 .sectionNavOnDark .catCount { color: #c8c8c2; }
 
 /* Golden Gate hero: half the old portrait (2:3 -> 4:3), bridge kept, rocks cropped. */
