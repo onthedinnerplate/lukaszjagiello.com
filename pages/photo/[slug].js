@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Lightbox from '@/components/Lightbox';
 import Seo from '@/components/Seo';
 import { PhotoCardActions } from '@/components/ShareButtons';
+import Swatches from '@/components/Swatches';
 import PhotoMap from '@/components/PhotoMap';
 import BuyButton from '@/components/BuyButton';
 import { LICENCE_SUMMARY } from '@/lib/store';
@@ -15,6 +16,7 @@ import { captionFor, exifDataFor, mentionsGear, photoNumberFromSrc } from '@/lib
 import { AffiliateDisclosure, GearLine, gearLineClass } from '@/components/GearStoreLinks';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
 import { ogImageSrc } from '@/lib/slug';
+import palettes from '@/lib/photoPalettes.json';
 import styles from '@/styles/Page.module.css';
 
 function neighbourPair(list, index) {
@@ -105,6 +107,7 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber, seque
         </div>
 
         <div className={styles.photoStage}>
+          <div className={styles.photoColumn}>
           <div className={styles.photoFrame} style={{ backgroundColor: photo.color }}>
             <button
               type="button"
@@ -142,6 +145,12 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber, seque
               mediaUrl={og.src}
               photo={photo}
             />
+          </div>
+          <Swatches
+            shape={{ palette: palettes[String(photoNumber)] }}
+            compact
+            phoneOnly
+          />
           </div>
         </div>
       </article>

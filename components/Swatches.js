@@ -22,12 +22,13 @@ export function pantoneFinderHref(value) {
  * equal columns, a square chip, and the uppercase hex centred beneath it.
  * `background` is the palette string unchanged.
  */
-export default function Swatches({ shape, compact = false, featured = false }) {
+export default function Swatches({ shape, compact = false, featured = false, phoneOnly = false }) {
   if (!shape?.palette?.length) return null;
   const className = [
     styles.swatches,
     compact ? styles.swatchesCompact : '',
     featured ? styles.swatchesFeatured : '',
+    phoneOnly ? styles.swatchesPhone : '',
   ].filter(Boolean).join(' ');
   return (
     <ul

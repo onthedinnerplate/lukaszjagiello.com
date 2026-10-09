@@ -1276,6 +1276,10 @@
 .cluster { list-style: none; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; margin: 0; padding: 0; }
 .cluster li { width: 88px; }
 .swatchesCompact { margin-top: 0.45rem; }
+/* Phone cards can opt into the same row without showing it on wider screens. */
+@media (min-width: 768px) {
+  .swatchesPhone { display: none; }
+}
 /* Space between the featured portrait and the palette under it. */
 .swatchesFeatured { margin-top: 2rem; }
 /* Map stays a fixed box. The open embed overlays the portrait instead of
