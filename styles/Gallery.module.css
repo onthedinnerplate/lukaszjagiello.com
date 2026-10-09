@@ -507,7 +507,7 @@
 }
 .equalCards .caption { flex: 0 0 auto; }
 .equalCards .metaBlock {
-  flex: 0 0 auto;
+  flex: 1 1 auto;
   min-width: 0;
   max-width: 100%;
 }
