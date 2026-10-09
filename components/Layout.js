@@ -162,7 +162,7 @@ function Footer() {
   const year = new Date().getFullYear();
   const columns = [
     { heading: 'Explore', links: site.nav.map(({ label, href }) => ({ label, href })) },
-    { heading: 'Gallery', links: [{ label: 'All photographs', href: '/gallery' }, ...CATEGORIES.map((c) => ({ label: categoryMenuLabel(c), href: galleryPathFor(c.slug) }))] },
+    { heading: 'Future Photography', links: [{ label: 'All photographs', href: '/gallery' }, ...CATEGORIES.map((c) => ({ label: categoryMenuLabel(c), href: galleryPathFor(c.slug) }))] },
     {
       heading: 'Shop',
       links: [

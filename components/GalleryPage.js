@@ -53,7 +53,7 @@ function slugFromPath(path) {
   return parts[1] || 'all';
 }
 
-function GallerySectionNav({ active, counts, onSelect, onDark = false, label = 'Gallery categories' }) {
+function GallerySectionNav({ active, counts, onSelect, onDark = false, label = 'Future Photography categories' }) {
   return (
     <div className={`${styles.sectionNav} ${onDark ? styles.sectionNavOnDark : ''}`}>
       <CategoryNav
@@ -74,7 +74,7 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
   const meta = isAll
     ? {
         path: '/gallery',
-        title: 'Gallery',
+        title: 'Future Photography',
         description: 'Full portfolio of landscape, coastal and wildlife photographs by Łukasz Jagiełło.',
       }
     : {
@@ -180,7 +180,7 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
       />
       <section className={pageStyles.galleryPage} aria-labelledby="gallery-heading">
         <header className={pageStyles.pageHeader}>
-          <h1 id="gallery-heading" className={pageStyles.galleryHeading}>{isAll ? 'Gallery' : category.label}</h1>
+          <h1 id="gallery-heading" className={pageStyles.galleryHeading}>{isAll ? 'Future Photography' : category.label}</h1>
           {isAll ? null : (
             <p className={pageStyles.lede}>
               {listed.length} {listed.length === 1 ? 'photograph' : 'photographs'}
@@ -287,7 +287,7 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
               active={gridCategory}
               counts={counts}
               onSelect={filterGrid}
-              label={isAll ? 'Gallery categories' : `${category.label} gallery categories`}
+              label={isAll ? 'Future Photography categories' : `${category.label} future photography categories`}
             />
           </div>
           <MasonryGallery
