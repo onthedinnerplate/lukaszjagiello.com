@@ -586,6 +586,7 @@
 .allList { list-style: none; margin: 0; padding: 0; }
 .allList a {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
   padding: 0.72rem 0;
@@ -594,7 +595,25 @@
   text-decoration: none;
 }
 .allList a:hover .allTitle { color: var(--orange); }
-.allTitle { font-family: Poppins, system-ui, sans-serif; font-weight: 300; font-size: 1.05rem; }
+.allThumb {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  border-radius: var(--radius);
+  object-fit: cover;
+  background: var(--surface);
+  display: block;
+}
+.allThumbPlaceholder {
+  border: 1px solid var(--border);
+}
+.allTitle {
+  flex: 1;
+  min-width: 0;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 1.05rem;
+}
 .allPlace { color: var(--muted); font-size: 0.82rem; text-align: right; }
 .earth {
   display: grid;
@@ -629,6 +648,7 @@
   .latestGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .inspireGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .allList { display: grid; grid-template-columns: 1fr 1fr; column-gap: 2rem; }
+  .allThumb { width: 80px; height: 80px; flex-basis: 80px; }
   .featuredPanel { margin-top: -4.5rem; margin-left: auto; }
 }
 @media (min-width: 1000px) {
