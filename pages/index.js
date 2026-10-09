@@ -30,7 +30,7 @@ export default function Home({ photos, selected, navCounts }) {
       <JourneysHero
         headingAs="p"
         nav={{
-          active: '',
+          active: 'home',
           counts: navCounts,
           hrefFor: journeysThenGalleryPath,
           allLabel: 'Journeys',

@@ -50,6 +50,20 @@ const MAP_HREF = MARYMERE?.coords
   ? `https://www.google.com/maps/search/?api=1&query=${MARYMERE.coords.lat},${MARYMERE.coords.lng}`
   : 'https://www.google.com/maps/search/?api=1&query=48.0533,-123.7895';
 
+/** Home and About sit in front of the category row on every hero that has one. */
+function heroNavProps(nav) {
+  if (!nav) return null;
+  return {
+    ...nav,
+    separateCount: true,
+    leading: [
+      { slug: 'home', label: 'Home', href: '/' },
+      { slug: 'about', label: 'About', href: '/about' },
+      ...(Array.isArray(nav.leading) ? nav.leading : []),
+    ],
+  };
+}
+
 /**
  * The Journeys landing hero: Marymere photograph, kicker, headline, subline,
  * gold rule and photo credit.
@@ -64,9 +78,10 @@ const MAP_HREF = MARYMERE?.coords
  */
 export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
   const Title = headingAs;
+  const menu = heroNavProps(nav);
   const titleNodes = titleWithAccents(HERO.title);
   const credit = (
-    <p className={nav ? `${styles.heroCap} ${styles.heroCapFlush}` : styles.heroCap}>
+    <p className={menu ? `${styles.heroCap} ${styles.heroCapFlush}` : styles.heroCap}>
       <Link href={HERO.creditHref}>{HERO.credit}</Link>
     </p>
   );
@@ -124,16 +139,16 @@ export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
                   )
                 : HERO.title}
             </Title>
-            {nav ? (
+            {menu ? (
               <div className={styles.heroNav}>
-                <CategoryNav {...nav} />
+                <CategoryNav {...menu} />
               </div>
             ) : null}
-            {nav ? credit : null}
+            {menu ? credit : null}
             <p className={styles.heroSub}>{JOURNEYS_HERO_DESCRIPTION}</p>
             <span className={styles.goldRule} aria-hidden="true" />
           </div>
-          {nav ? null : credit}
+          {menu ? null : credit}
         </section>
       </div>
     </>

@@ -10,7 +10,7 @@ import ResponsiveImage from '@/components/ResponsiveImage';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { ogImageSrc } from '@/lib/slug';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
-import { galleryPathFor, inCategory } from '@/lib/categories';
+import { galleryPathFor, inCategory, journeysThenGalleryPath } from '@/lib/categories';
 import { site } from '@/lib/site';
 import SelectedPhotographs, { selectedPhotos } from '@/components/SelectedPhotographs';
 import pageStyles from '@/styles/Page.module.css';
@@ -67,7 +67,7 @@ function GallerySectionNav({ active, counts, onSelect, onDark = false, label = '
 }
 
 /** Shared by /gallery (all) and /gallery/[category]. */
-export default function GalleryPage({ photos, category, counts }) {
+export default function GalleryPage({ photos, category, counts, navCounts }) {
   const isAll = !category || category.slug === 'all';
   const meta = isAll
     ? {
@@ -148,7 +148,17 @@ export default function GalleryPage({ photos, category, counts }) {
         keywords={isAll ? ['photo gallery', 'landscape prints', 'wildlife photos'] : [`${category.label.toLowerCase()} photography`, `${category.label.toLowerCase()} prints`]}
         jsonLd={jsonLd}
       />
-      <JourneysHero headingAs="p" />
+      <JourneysHero
+        headingAs="p"
+        nav={navCounts ? {
+          active: isAll ? '' : category.slug,
+          counts: navCounts,
+          hrefFor: journeysThenGalleryPath,
+          allLabel: 'Journeys',
+          label: 'Hero categories',
+          disableEmpty: true,
+        } : null}
+      />
       <section className={pageStyles.galleryPage} aria-labelledby="gallery-heading">
         <header className={pageStyles.pageHeader}>
           <h1 id="gallery-heading" className={pageStyles.galleryHeading}>{isAll ? 'Gallery' : category.label}</h1>

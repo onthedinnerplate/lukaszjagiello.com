@@ -33,7 +33,7 @@ export default function About({ navCounts }) {
       <JourneysHero
         headingAs="p"
         nav={{
-          active: '',
+          active: 'about',
           counts: navCounts,
           hrefFor: journeysThenGalleryPath,
           allLabel: 'Journeys',
