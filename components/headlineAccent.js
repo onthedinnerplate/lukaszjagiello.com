@@ -1,7 +1,7 @@
 import { Allura, Caveat } from 'next/font/google';
 import styles from '@/styles/Journal.module.css';
 
-// Lightest Caveat face. One instance for every headline accent and the header word.
+// Lightest Caveat face. Article headline accents only.
 // font-display: block plus preload so the script does not flash a fallback.
 export const accentScriptFont = Caveat({
   weight: '400',
@@ -12,7 +12,7 @@ export const accentScriptFont = Caveat({
   adjustFontFallback: true,
 });
 
-/** Hero title phrases only. Header "Photography" and article accents stay Caveat. */
+/** Hero title phrases only. Article accents stay Caveat. */
 export const heroScriptFont = Allura({
   weight: '400',
   subsets: ['latin'],

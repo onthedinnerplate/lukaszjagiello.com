@@ -59,15 +59,15 @@
 }
 .brand:hover { background: none; }
 .brand:hover .brandName { text-decoration: underline; }
-/* Poppins 300 matches the article h1; Caveat 400 is the accent script.
-   Two classes so these beat the next/font class if it also sets weight.
-   Colour stays the header link colour (inherit). */
+/* Both words are Poppins. The given name stays 300 at the brand size.
+   "Photography" is Poppins Light 300, non-italic, at 2em. Colour stays
+   the header link colour (inherit). Specificity beats the next/font class. */
 .brand .brandGiven {
   font-weight: 300;
   font-style: normal;
 }
 .brand .brandScript {
-  font-weight: 400;
+  font-weight: 300;
   font-style: normal;
   font-synthesis: none;
   -webkit-font-synthesis: none;
