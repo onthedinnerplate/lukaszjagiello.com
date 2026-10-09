@@ -98,7 +98,12 @@ function JourneyCard({ article, compactSwatches = true }) {
       </div>
       <Link href={href} className={styles.journeyBody}>
         <Swatches shape={shape} compact={compactSwatches} />
-        <AccentTitle title={article.title} color={shape.accent} className={styles.journeyTitle} />
+        <AccentTitle
+          title={article.title}
+          phrase={article.headlinePhrase}
+          color={shape.palette[2]}
+          className={styles.journeyTitle}
+        />
         <p className={styles.cardDek}>{article.dek}</p>
       </Link>
       <ArticleShare
@@ -199,7 +204,13 @@ export default function JournalIndex({ articles, counts }) {
                   </div>
                   <div className={styles.featuredPanel}>
                     <p className={styles.featuredKicker}>Featured · Ruby Beach · Washington</p>
-                    <AccentTitle title={featured.title} color={featuredShape.accent} as="h3" className={styles.featuredTitle} />
+                    <AccentTitle
+                      title={featured.title}
+                      phrase={featured.headlinePhrase}
+                      color={featuredShape.palette[2]}
+                      as="h3"
+                      className={styles.featuredTitle}
+                    />
                     <span className={styles.goldRule} aria-hidden="true" />
                     <p className={styles.featuredDek}>{featured.dek}</p>
                     <Link href={`/journal/${featured.slug}`} className={styles.storyLink}>Read the story</Link>
@@ -284,7 +295,13 @@ export default function JournalIndex({ articles, counts }) {
                         </div>
                         <Link href={href} className={styles.allCopy}>
                           <span className={styles.allGold} aria-hidden="true" />
-                          <AccentTitle title={article.title} color={shape?.accent} as="span" className={styles.allTitle} />
+                          <AccentTitle
+                            title={article.title}
+                            phrase={article.headlinePhrase}
+                            color={shape?.palette?.[2]}
+                            as="span"
+                            className={styles.allTitle}
+                          />
                           <span className={styles.allSwatches}>
                             <Swatches shape={shape} compact />
                           </span>
@@ -353,6 +370,7 @@ export async function getStaticProps() {
     return {
       slug: article.slug,
       title: article.title,
+      headlinePhrase: article.headlinePhrase,
       dek: article.dek,
       location: article.location,
       photoSlug: article.photoSlug,
