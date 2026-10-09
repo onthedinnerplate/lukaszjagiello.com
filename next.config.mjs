@@ -53,6 +53,9 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   trailingSlash: false,
+  // The built-in slash redirect is priority:true and would 308 the retired
+  // slug to itself before the 301. We replace that rule below, after the 301.
+  skipTrailingSlashRedirect: true,
   images: {
     formats: ['image/avif', 'image/webp'],
     // Photos are immutable once published; cache optimised variants for 30 days.
@@ -91,6 +94,12 @@ const nextConfig = {
         source: '/photo/negril-lighthouse-at-dusk/',
         destination: '/photo/negril-lighthouse-in-daylight',
         statusCode: 301,
+      },
+      // Same permanent slash cleanup Next adds when skipTrailingSlashRedirect is off (308).
+      {
+        source: '/:path+/',
+        destination: '/:path+',
+        permanent: true,
       },
     ];
   },
