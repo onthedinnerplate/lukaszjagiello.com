@@ -128,7 +128,8 @@ export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = fal
       const frameH = stageH * 0.881;
       const frameW = (frameH * 9) / 16;
       const frameLeft = homeRect.left - band.left;
-      const frameTop = navH + stageH * 0.059;
+      /* Top of the frame sits on the nav's moss line. */
+      const frameTop = navH;
       const cx = frameLeft + frameW / 2;
       const cy = frameTop + frameH / 2;
       let dw = Math.max(cx / FALLS_X, (bw - cx) / (1 - FALLS_X), bw);

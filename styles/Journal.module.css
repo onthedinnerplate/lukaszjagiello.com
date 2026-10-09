@@ -520,7 +520,7 @@
   height: calc(100cqw * 612 / 1440 + var(--nav-h));
 }
 .heroBleed .portrait {
-  top: calc(var(--nav-h) + (100% - var(--nav-h)) * 0.059);
+  top: var(--nav-h);
   height: calc((100% - var(--nav-h)) * 0.881);
 }
 .heroBleed .heroCopy {
