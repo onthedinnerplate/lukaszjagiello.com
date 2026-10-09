@@ -1,10 +1,10 @@
 import { useEffect, useId, useState } from 'react';
 import Link from 'next/link';
 import Lightbox from './Lightbox';
-import ShareButton from './ShareButton';
-import BuyIcon from './BuyIcon';
+import { PhotoCardActions } from './ShareButtons';
 import ResponsiveImage from './ResponsiveImage';
 import { captionFor, photoNumberFromSrc } from '@/lib/photoCaption';
+import { ogImageSrc } from '@/lib/slug';
 import styles from '@/styles/Gallery.module.css';
 
 // Slot width at the column breakpoints in Gallery.module.css.
@@ -74,10 +74,13 @@ export default function MasonryGallery({ photos, wide = false, priorityCount = 0
             <li key={photo.src} id={`photo-${num}`} className={styles.item}>
               <figure className={styles.figure}>
                 <div className={styles.frame} style={{ backgroundColor: photo.color }}>
-                  <span className={styles.cardActions}>
-                    <BuyIcon photo={photo} className={styles.share} />
-                    <ShareButton title={photo.title} url={shareUrl} className={styles.share} toastClassName={styles.toast} wrapperClassName={styles.shareWrap} />
-                  </span>
+                  <PhotoCardActions
+                    title={photo.title}
+                    shareUrl={shareUrl}
+                    pinUrl={shareUrl}
+                    mediaUrl={ogImageSrc(photo.src) || photo.src}
+                    photo={photo}
+                  />
                   <Link
                     href={photo.href || `/gallery#photo-${num}`}
                     className={styles.imgBtn}

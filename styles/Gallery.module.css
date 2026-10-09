@@ -127,6 +127,11 @@
 }
 .share:hover { background: rgba(255, 255, 255, 1); transform: scale(1.05); }
 .share:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+@media (max-width: 640px) {
+  .cardActions { gap: 8px; }
+  .share { width: 44px; height: 44px; }
+  .share svg { width: 18px; height: 18px; }
+}
 .toast {
   position: absolute;
   right: 0;

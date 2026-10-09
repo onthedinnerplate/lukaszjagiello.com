@@ -9,6 +9,7 @@ import PhotoMap from '@/components/PhotoMap';
 import ShapeMosaic from '@/components/ShapeMosaic';
 import HeadlinePhrase from '@/components/HeadlinePhrase';
 import Swatches from '@/components/Swatches';
+import { ArticleShare, PhotoCardActions } from '@/components/ShareButtons';
 import { getPhotos } from '@/lib/photo-data';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
 import {
@@ -108,16 +109,32 @@ export default function JournalArticle({ article }) {
             unoptimized
             className={styles.heroImg}
           />
+          <PhotoCardActions
+            title={article.title}
+            shareUrl={photo.href}
+            pinUrl={path}
+            mediaUrl={photo.og.src}
+            photo={photo}
+          />
         </figure>
         <div className={styles.spread}>
           <div className={styles.visual}>
-            <ShapeMosaic
-              src={photo.src}
-              alt={photo.alt}
-              onClick={openLightbox}
-              expanded={lbOpen}
-              controlsId={lightboxId}
-            />
+            <div className={styles.frameWrap}>
+              <ShapeMosaic
+                src={photo.src}
+                alt={photo.alt}
+                onClick={openLightbox}
+                expanded={lbOpen}
+                controlsId={lightboxId}
+              />
+              <PhotoCardActions
+                title={article.title}
+                shareUrl={photo.href}
+                pinUrl={path}
+                mediaUrl={photo.og.src}
+                photo={photo}
+              />
+            </div>
             <div className={styles.under}>
               {article.taken ? (
                 <p className={styles.taken}>
@@ -195,11 +212,17 @@ export default function JournalArticle({ article }) {
             </div>
           </div>
         </div>
+        <ArticleShare
+          title={article.title}
+          excerpt={article.dek}
+          articlePath={path}
+          mediaPath={photo.og.src}
+        />
       </article>
       <Lightbox
         id={lightboxId}
         isOpen={lbOpen}
-        photo={{ src: photo.src, alt: photo.alt, title: photo.title, href: photo.href }}
+        photo={{ src: photo.src, alt: photo.alt, title: photo.title, href: photo.href, forSale: photo.forSale }}
         onClose={closeLightbox}
         onPrev={() => {}}
         onNext={() => {}}

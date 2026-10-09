@@ -1,7 +1,8 @@
 import { useEffect, useId, useRef } from 'react';
-import ShareButton from './ShareButton';
+import { PhotoCardActions } from './ShareButtons';
 import ResponsiveImage from './ResponsiveImage';
 import { captionFor } from '@/lib/photoCaption';
+import { ogImageSrc } from '@/lib/slug';
 import styles from '@/styles/Lightbox.module.css';
 
 // Overlay padding is the gutter (40px from 768px up, 16px below). The panel
@@ -162,6 +163,13 @@ export default function Lightbox({ id, isOpen, photo, onClose, onPrev, onNext })
             fetchPriority="high"
             style={{ objectFit: 'contain' }}
           />
+          <PhotoCardActions
+            title={photo.title}
+            shareUrl={shareUrl}
+            pinUrl={shareUrl}
+            mediaUrl={ogImageSrc(photo.src) || photo.src}
+            photo={photo}
+          />
         </div>
 
         <div className={styles.caption}>
@@ -172,7 +180,6 @@ export default function Lightbox({ id, isOpen, photo, onClose, onPrev, onNext })
               {specs && <p className={styles.meta}>{specs}</p>}
             </div>
           )}
-          <ShareButton title={photo.title} url={shareUrl} className={styles.share} toastClassName={styles.toast} />
         </div>
       </div>
 
