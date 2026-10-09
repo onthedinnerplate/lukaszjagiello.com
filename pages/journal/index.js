@@ -1,9 +1,7 @@
-import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Seo from '@/components/Seo';
-import CategoryNav from '@/components/CategoryNav';
+import JourneysHero, { JOURNEYS_HERO_DESCRIPTION } from '@/components/JourneysHero';
 import PhotoMap from '@/components/PhotoMap';
 import ShapeMosaic from '@/components/ShapeMosaic';
 import AccentTitle from '@/components/AccentTitle';
@@ -18,12 +16,10 @@ import { byNumber, CLUSTER_NUMBERS, inspirationsFrom, LATEST_SLUGS, MORE_NUMBERS
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import styles from '@/styles/Journal.module.css';
 
-const POPPINS = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap';
-
 const meta = {
   path: '/journal',
   title: 'Journeys',
-  description: 'Essays from the trail, the coast and the canyon, told around a single photograph.',
+  description: JOURNEYS_HERO_DESCRIPTION,
 };
 
 function Swatches({ shape, compact = false }) {
@@ -51,7 +47,7 @@ function JourneyCard({ article, compactSwatches = true }) {
   );
 }
 
-export default function JournalIndex({ articles, counts, hero }) {
+export default function JournalIndex({ articles, counts }) {
   const { query } = useRouter();
   const category = typeof query.category === 'string' ? query.category : 'all';
   const visible = articlesInCategory(articles, category);
@@ -72,45 +68,16 @@ export default function JournalIndex({ articles, counts, hero }) {
         keywords={['photography journal', 'journeys', ...articles.map((a) => a.location).filter(Boolean)]}
         jsonLd={graph(websiteNode(), personNode(), pageNode('CollectionPage', meta))}
       />
-      <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="stylesheet" href={POPPINS} />
-      </Head>
       <article className={styles.landing}>
-        <div className={styles.landingCats}>
-          <CategoryNav
-            active={category}
-            counts={counts}
-            hrefFor={journalCategoryPath}
-            label="Journal categories"
-            disableEmpty
-          />
-        </div>
-
-        <section className={styles.heroBand} aria-label="Marymere Falls">
-          <Image
-            src={hero.src}
-            alt=""
-            fill
-            priority
-            unoptimized
-            sizes="100vw"
-            className={styles.heroPhoto}
-          />
-          <div className={styles.heroShade} aria-hidden="true" />
-          <div className={styles.heroCopy}>
-            <p className={styles.heroKicker}>Journeys · Stories from the terrain</p>
-            <h1 className={styles.heroTitle}>Always look for the story in the terrain.</h1>
-            <p className={styles.heroSub}>{meta.description}</p>
-            <span className={styles.goldRule} aria-hidden="true" />
-          </div>
-          <p className={styles.heroCap}>
-            <Link href="/journal/a-thin-line-of-light-in-a-green-room">
-              Marymere Falls · Olympic National Park, Washington
-            </Link>
-          </p>
-        </section>
+        <JourneysHero
+          nav={{
+            active: category,
+            counts,
+            hrefFor: journalCategoryPath,
+            label: 'Journal categories',
+            disableEmpty: true,
+          }}
+        />
 
         <div className={styles.landingWrap}>
           {latest.length > 0 ? (
@@ -226,7 +193,10 @@ export default function JournalIndex({ articles, counts, hero }) {
 export async function getStaticProps() {
   const photos = await getPhotos();
   const articles = hydrateArticles(photos);
-  const hero = articles.find((article) => article.photoSlug === 'marymere-falls');
+  const marymere = articles.find((article) => article.photoSlug === 'marymere-falls');
+  if (!marymere || marymere.photo.src !== '/images/gallery/lightbox/lukasz-jagiello-41-full.webp') {
+    throw new Error('Journeys hero is pinned to the Marymere Falls photograph.');
+  }
   const cards = articles.map((article) => ({
     slug: article.slug,
     title: article.title,
@@ -246,7 +216,6 @@ export async function getStaticProps() {
     props: {
       articles: cards,
       counts: journalCategoryCounts(articles),
-      hero: { src: hero.photo.src, alt: hero.photo.alt },
     },
   };
 }
