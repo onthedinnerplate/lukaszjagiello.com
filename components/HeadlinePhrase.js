@@ -1,13 +1,8 @@
-import { Caveat } from 'next/font/google';
 import { phraseSpan } from '@/lib/headlinePhrase';
+import { accentScriptFont as caveat } from '@/lib/fonts';
 
-// Lightest Caveat face. Applied only to the one headline phrase.
-const caveat = Caveat({
-  weight: '400',
-  subsets: ['latin'],
-  display: 'swap',
-  style: 'normal',
-});
+// Caveat 400, the site's handwritten accent face. Shared with the header
+// so the same self-hosted file is preloaded once (font-display: block).
 
 /**
  * Article h1 with one noun or noun phrase in Caveat 400.
