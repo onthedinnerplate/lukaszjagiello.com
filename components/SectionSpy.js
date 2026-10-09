@@ -69,7 +69,7 @@ export default function SectionSpy({ path }) {
         if (!el) continue;
         if (el.getBoundingClientRect().top <= line) chosen = item.id;
       }
-      setActive(chosen);
+      setActive((prev) => (prev === chosen ? prev : chosen));
     };
 
     const observer = new IntersectionObserver(choose, {
@@ -78,7 +78,13 @@ export default function SectionSpy({ path }) {
     });
     nodes.forEach((node) => observer.observe(node));
     choose();
-    return () => observer.disconnect();
+    window.addEventListener('scroll', choose, { passive: true });
+    window.addEventListener('resize', choose);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', choose);
+      window.removeEventListener('resize', choose);
+    };
   }, [items]);
 
   useLayoutEffect(() => {
