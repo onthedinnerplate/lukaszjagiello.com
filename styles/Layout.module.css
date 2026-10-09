@@ -59,19 +59,19 @@
 }
 .brand:hover { background: none; }
 .brand:hover .brandName { text-decoration: underline; }
-/* Both words are Poppins. The given name stays 300 at the brand size.
-   "Photography" is Poppins Light 300, non-italic, at 2em. Colour stays
-   the header link colour (inherit). Specificity beats the next/font class. */
+/* Both words are Poppins Light. The given name stays the header charcoal.
+   "Photography" is Poppins Light 300, non-italic, at 2em, in the site gold. */
 .brand .brandGiven {
   font-weight: 300;
   font-style: normal;
 }
 .brand .brandScript {
+  font-family: Poppins, system-ui, sans-serif;
   font-weight: 300;
   font-style: normal;
   font-synthesis: none;
   -webkit-font-synthesis: none;
-  color: inherit;
+  color: #c4a35a;
   /* Twice the header brand size (2em), not the article accent ratio (1.45em). */
   font-size: 2em;
   line-height: 1.05;

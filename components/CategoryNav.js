@@ -13,7 +13,7 @@ const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayout
  * `includeAll` stays on for Journeys. Gallery section rows turn it off so
  * the row lists only Landscape, Animals, Architecture and People.
  *
- * `leading` is extra links before the categories (Home and About on heroes).
+ * `leading` is optional links before the categories. Heroes do not pass any.
  * `separateCount` renders each count as "Name | count".
  */
 export default function CategoryNav({
