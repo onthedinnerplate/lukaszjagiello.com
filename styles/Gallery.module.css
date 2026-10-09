@@ -112,15 +112,18 @@
   overflow-wrap: anywhere;
   text-align: right;
 }
-/* Share and Buy: round circles, bottom-right, no strip. The whole button is half opacity until hover or focus. */
+/* Share and Buy: round circles, bottom-right, no strip. The whole button is half opacity until hover or focus.
+   --share-size is 65% of the previous 40px disc. The glyph scales with it. */
 .cardActions {
+  --share-size: calc(40px * 0.65);
+  --share-gap: 8px;
   position: absolute;
   right: 8px;
   bottom: 8px;
   z-index: 4;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--share-gap);
   width: auto;
   margin: 0;
   padding: 0;
@@ -129,11 +132,12 @@
 }
 .shareWrap { position: relative; display: inline-flex; }
 .share {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: var(--share-size);
+  height: var(--share-size);
   padding: 0;
   border: none;
   border-radius: 50%;
@@ -144,7 +148,20 @@
   box-shadow: none;
   transition: opacity 0.15s ease;
 }
-.share svg { width: 16px; height: 16px; }
+/* Invisible hit area. The painted circle stays --share-size.
+   44px tall. Width grows halfway into the gap so the two circles do not share a tap. */
+.share::after {
+  content: "";
+  position: absolute;
+  top: calc((var(--share-size) - 44px) / 2);
+  bottom: calc((var(--share-size) - 44px) / 2);
+  left: calc(var(--share-gap) / -2);
+  right: calc(var(--share-gap) / -2);
+}
+.share svg {
+  width: calc(var(--share-size) * 0.4);
+  height: calc(var(--share-size) * 0.4);
+}
 .share:hover,
 .share:focus,
 .share:focus-visible {
