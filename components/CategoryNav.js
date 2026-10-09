@@ -20,8 +20,9 @@ export default function CategoryNav({
   label = 'Gallery categories',
   disableEmpty = false,
   includeAll = true,
+  allLabel = 'All',
 }) {
-  const items = includeAll ? [{ slug: 'all', label: 'All' }, ...CATEGORIES] : CATEGORIES;
+  const items = includeAll ? [{ slug: 'all', label: allLabel }, ...CATEGORIES] : CATEGORIES;
   const activeSet = new Set(Array.isArray(active) ? active : [active]);
   const countKey = items.map((item) => counts[item.slug] ?? '').join(',');
   const listRef = useRef(null);

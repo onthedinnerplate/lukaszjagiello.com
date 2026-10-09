@@ -2,8 +2,8 @@ import Link from 'next/link';
 import Seo from '@/components/Seo';
 import JourneysHero from '@/components/JourneysHero';
 import MasonryGallery from '@/components/MasonryGallery';
-import { getPhotos } from '@/lib/photo-data';
-import { hydrateArticles, journalCategoryCounts, journalCategoryPath } from '@/lib/articles';
+import { getPhotos, heroNavCounts } from '@/lib/photo-data';
+import { journeysThenGalleryPath } from '@/lib/categories';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
@@ -15,7 +15,7 @@ const meta = {
   description: site.description,
 };
 
-export default function Home({ photos, journalCounts }) {
+export default function Home({ photos, navCounts }) {
   return (
     <>
       <Seo
@@ -29,9 +29,10 @@ export default function Home({ photos, journalCounts }) {
       <JourneysHero
         nav={{
           active: '',
-          counts: journalCounts,
-          hrefFor: journalCategoryPath,
-          label: 'Home Journeys categories',
+          counts: navCounts,
+          hrefFor: journeysThenGalleryPath,
+          allLabel: 'Journeys',
+          label: 'Home categories',
           disableEmpty: true,
         }}
       />
@@ -64,5 +65,5 @@ export async function getStaticProps() {
     .map((n) => byNumber.get(n))
     .filter(Boolean);
   const photos = curated.length ? curated : all.slice(0, site.homeFeaturedCount);
-  return { props: { photos, journalCounts: journalCategoryCounts(hydrateArticles(all)) } };
+  return { props: { photos, navCounts: heroNavCounts(all) } };
 }

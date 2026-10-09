@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Seo from '@/components/Seo';
 import JourneysHero from '@/components/JourneysHero';
-import { getPhotos } from '@/lib/photo-data';
-import { hydrateArticles, journalCategoryCounts, journalCategoryPath } from '@/lib/articles';
+import { getPhotos, heroNavCounts } from '@/lib/photo-data';
+import { journeysThenGalleryPath } from '@/lib/categories';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
 import { gearFromMetadata } from '@/lib/photoCaption';
@@ -18,7 +18,7 @@ const meta = {
   description: `About ${site.photographer}, a landscape and wildlife photographer shooting on the ${mainCamera} with the ${lensList.slice(0, 2).join(' and ') || site.gear.lens}.`,
 };
 
-export default function About({ journalCounts }) {
+export default function About({ navCounts }) {
   return (
     <>
       <Seo
@@ -33,9 +33,10 @@ export default function About({ journalCounts }) {
         headingAs="p"
         nav={{
           active: '',
-          counts: journalCounts,
-          hrefFor: journalCategoryPath,
-          label: 'About Journeys categories',
+          counts: navCounts,
+          hrefFor: journeysThenGalleryPath,
+          allLabel: 'Journeys',
+          label: 'About categories',
           disableEmpty: true,
         }}
       />
@@ -118,5 +119,5 @@ export default function About({ journalCounts }) {
 
 export async function getStaticProps() {
   const photos = await getPhotos();
-  return { props: { journalCounts: journalCategoryCounts(hydrateArticles(photos)) } };
+  return { props: { navCounts: heroNavCounts(photos) } };
 }

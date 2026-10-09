@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Seo from '@/components/Seo';
 import JourneysHero from '@/components/JourneysHero';
-import { getPhotos } from '@/lib/photo-data';
-import { hydrateArticles, journalCategoryCounts, journalCategoryPath } from '@/lib/articles';
+import { getPhotos, heroNavCounts } from '@/lib/photo-data';
+import { journeysThenGalleryPath } from '@/lib/categories';
 import { validateContact, LIMITS } from '@/lib/contact';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
@@ -17,7 +17,7 @@ const meta = {
 
 const FIELDS = ['name', 'email', 'message'];
 
-export default function Contact({ journalCounts }) {
+export default function Contact({ navCounts }) {
   const { query } = useRouter();
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
@@ -101,9 +101,10 @@ export default function Contact({ journalCounts }) {
         headingAs="p"
         nav={{
           active: '',
-          counts: journalCounts,
-          hrefFor: journalCategoryPath,
-          label: 'Contact Journeys categories',
+          counts: navCounts,
+          hrefFor: journeysThenGalleryPath,
+          allLabel: 'Journeys',
+          label: 'Contact categories',
           disableEmpty: true,
         }}
       />
@@ -159,5 +160,5 @@ export default function Contact({ journalCounts }) {
 
 export async function getStaticProps() {
   const photos = await getPhotos();
-  return { props: { journalCounts: journalCategoryCounts(hydrateArticles(photos)) } };
+  return { props: { navCounts: heroNavCounts(photos) } };
 }
