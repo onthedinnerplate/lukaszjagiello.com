@@ -614,6 +614,7 @@
   color: #fff;
   pointer-events: auto;
   line-height: 0;
+  text-decoration: none;
 }
 .portraitPin:hover,
 .portraitPlace:hover { color: #fff; opacity: 0.75; }
