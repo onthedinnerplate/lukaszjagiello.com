@@ -10,13 +10,13 @@ import styles from '@/styles/Page.module.css';
  *
  * With no coordinates it renders just the children (no card).
  */
-export default function PhotoMap({ coords, location, title, children, stacked = false, bare = false }) {
+export default function PhotoMap({ coords, location, title, children, stacked = false, bare = false, square = false }) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const has = coords && typeof coords.lat === 'number' && typeof coords.lng === 'number';
   const headerClass = `${styles.photoHeader} ${stacked ? styles.photoHeaderStacked : ''}`;
   if (!has) {
-    if (bare) return null;
+    if (bare || square) return null;
     return <header className={headerClass}>{children ? <div className={styles.photoHeaderText}>{children}</div> : null}</header>;
   }
 
@@ -25,13 +25,17 @@ export default function PhotoMap({ coords, location, title, children, stacked = 
   const embed = `https://www.google.com/maps?q=${lat},${lng}&z=${zoom}&hl=en&output=embed`;
   const external = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
   const label = location || title;
-  const wide = stacked || bare;
+  const wide = !square && (stacked || bare);
 
   const button = (
     <button
       type="button"
-      className={`${styles.mapCard} ${wide ? styles.mapCardWide : ''} ${bare ? styles.mapCardBare : ''} ${open ? styles.mapCardOpen : ''}`}
-      onClick={() => setOpen((v) => !v)}
+      className={`${styles.mapCard} ${wide ? styles.mapCardWide : ''} ${bare ? styles.mapCardBare : ''} ${square ? styles.mapCardSquare : ''} ${open ? styles.mapCardOpen : ''}`}
+      onClick={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        setOpen((v) => !v);
+      }}
       aria-expanded={open}
       aria-controls={panelId}
       title={open ? 'Hide map' : 'View on map'}
@@ -69,9 +73,9 @@ export default function PhotoMap({ coords, location, title, children, stacked = 
     </div>
   );
 
-  if (bare) {
+  if (bare || square) {
     return (
-      <div className={styles.mapBare}>
+      <div className={square ? styles.mapSquare : styles.mapBare}>
         {button}
         {panel}
       </div>
