@@ -1,6 +1,7 @@
 import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
 import JourneysHero from '@/components/JourneysHero';
+import CategoryNav from '@/components/CategoryNav';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
 import { galleryPathFor } from '@/lib/categories';
 import { site } from '@/lib/site';
@@ -35,20 +36,20 @@ export default function GalleryPage({ photos, category, counts }) {
         keywords={isAll ? ['photo gallery', 'landscape prints', 'wildlife photos'] : [`${category.label.toLowerCase()} photography`, `${category.label.toLowerCase()} prints`]}
         jsonLd={jsonLd}
       />
-      {/* Page title stays the only h1. The bar is the Journeys category row,
-          with gallery counts and /gallery links, sitting above the same hero. */}
-      <JourneysHero
-        headingAs="p"
-        nav={{
-          active: isAll ? 'all' : category.slug,
-          counts,
-          hrefFor: galleryPathFor,
-          label: 'Gallery categories',
-        }}
-      />
+      {/* Page title stays the only h1. The hero has no filter bar; the
+          Journeys-style category row sits directly under this heading. */}
+      <JourneysHero headingAs="p" />
       <section className={styles.galleryPage} aria-labelledby="gallery-heading">
         <header className={styles.pageHeader}>
-          <h1 id="gallery-heading">{isAll ? 'Gallery' : category.label}</h1>
+          <h1 id="gallery-heading" className={styles.galleryHeading}>{isAll ? 'Gallery' : category.label}</h1>
+          <div className={styles.gallerySubnav}>
+            <CategoryNav
+              active={isAll ? 'all' : category.slug}
+              counts={counts}
+              hrefFor={galleryPathFor}
+              label="Gallery categories"
+            />
+          </div>
           {isAll ? null : (
             <p className={styles.lede}>
               {photos.length} {photos.length === 1 ? 'photograph' : 'photographs'}
