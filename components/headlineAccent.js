@@ -1,13 +1,16 @@
 import { Caveat } from 'next/font/google';
 import styles from '@/styles/Journal.module.css';
 
-// Lightest Caveat face. One instance for every headline accent.
-const caveat = Caveat({
+// Lightest Caveat face. One instance for every headline accent and the header word.
+// font-display: block plus preload so the script does not flash a fallback.
+export const accentScriptFont = Caveat({
   weight: '400',
   subsets: ['latin'],
-  display: 'swap',
+  display: 'block',
+  preload: true,
   style: 'normal',
+  adjustFontFallback: true,
 });
 
 /** Font family, weight, style, size, spacing, and hero white. */
-export const headlineAccentClassName = `${caveat.className} ${styles.headlineAccent}`;
+export const headlineAccentClassName = `${accentScriptFont.className} ${styles.headlineAccent}`;
