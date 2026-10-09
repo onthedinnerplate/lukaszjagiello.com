@@ -238,6 +238,7 @@
   .hero { display: none; }
 
   .spread {
+    --overlap: 104px;
     display: grid;
     grid-template-columns: minmax(312px, 42%) minmax(0, 1fr);
     align-items: start;
@@ -301,6 +302,12 @@
     padding-top: 0.7rem;
   }
   .swatches { margin: 0; }
+  /* The copy panel overlaps the portrait by --overlap and covers that strip.
+     This row paints above the panel, so it stops at the visible photo edge. */
+  .article .swatches {
+    width: calc(100% - var(--overlap));
+    max-width: calc(100% - var(--overlap));
+  }
   .viewRow {
     display: flex;
     flex-direction: row;
@@ -340,7 +347,6 @@
     position: relative;
     z-index: 2;
     align-self: start;
-    --overlap: 104px;
     margin-top: calc(max(312px, 100cqi * 0.42) / var(--ar) * 0.56);
     margin-left: calc(var(--overlap) * -1);
     /* Right and bottom match the left inset. Top stays 1.4rem. Mobile never hits this rule. */
