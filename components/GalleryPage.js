@@ -5,11 +5,11 @@ import MasonryGallery from '@/components/MasonryGallery';
 import JourneysHero from '@/components/JourneysHero';
 import CategoryNav from '@/components/CategoryNav';
 import BuyButton from '@/components/BuyButton';
-import BuyIcon from '@/components/BuyIcon';
-import ShareButton from '@/components/ShareButton';
+import { PhotoCardActions } from '@/components/ShareButtons';
 import Lightbox from '@/components/Lightbox';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import { captionFor, photoNumberFromSrc } from '@/lib/photoCaption';
+import { ogImageSrc } from '@/lib/slug';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
 import { galleryPathFor } from '@/lib/categories';
 import { site } from '@/lib/site';
@@ -38,16 +38,13 @@ function FeaturedPhotograph({ photo, more }) {
         <div className={styles.saleMain}>
           <figure className={styles.figure}>
             <div className={styles.frame} style={{ backgroundColor: photo.color }}>
-              <span className={styles.cardActions}>
-                <BuyIcon photo={photo} className={styles.share} />
-                <ShareButton
-                  title={photo.title}
-                  url={photo.href}
-                  className={styles.share}
-                  toastClassName={styles.toast}
-                  wrapperClassName={styles.shareWrap}
-                />
-              </span>
+              <PhotoCardActions
+                title={photo.title}
+                shareUrl={photo.href}
+                pinUrl={photo.href}
+                mediaUrl={ogImageSrc(photo.src) || photo.src}
+                photo={photo}
+              />
               <button
                 type="button"
                 className={styles.featuredOpen}
