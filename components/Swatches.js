@@ -8,8 +8,9 @@ export function swatchLabel(value) {
 }
 
 /**
- * Palette chips. `background` is the palette string unchanged.
- * The label is that same value, uppercased, beside the chip.
+ * Palette chips under the photograph. The row is as wide as that image:
+ * equal columns, a square chip, and the uppercase hex centred beneath it.
+ * `background` is the palette string unchanged.
  */
 export default function Swatches({ shape, compact = false, featured = false }) {
   if (!shape?.palette?.length) return null;
@@ -19,7 +20,10 @@ export default function Swatches({ shape, compact = false, featured = false }) {
     featured ? styles.swatchesFeatured : '',
   ].filter(Boolean).join(' ');
   return (
-    <ul className={className}>
+    <ul
+      className={className}
+      style={{ gridTemplateColumns: `repeat(${shape.palette.length}, minmax(0, 1fr))` }}
+    >
       {shape.palette.map((hex, i) => (
         <li key={`${hex}-${i}`} className={styles.swatchItem}>
           <span className={styles.swatch} style={{ background: hex }} aria-hidden="true" />
