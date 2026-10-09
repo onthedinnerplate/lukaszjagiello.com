@@ -1,8 +1,18 @@
 import ShareButton from './ShareButton';
 import BuyIcon from './BuyIcon';
+import { alltrailsHref } from '@/lib/affiliate';
 import { pinDescription, pinterestPinHref, toAbsoluteUrl } from '@/lib/shareUrls';
 import gallery from '@/styles/Gallery.module.css';
 import styles from '@/styles/ShareButtons.module.css';
+
+function TrailMark() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M3 19h18" />
+      <path d="M5 19l5.2-9.2a1 1 0 0 1 1.75 0L14.5 15l1.7-2.8a1 1 0 0 1 1.72 0L21 19" />
+    </svg>
+  );
+}
 
 function PinMark() {
   return (
@@ -14,7 +24,7 @@ function PinMark() {
 }
 
 /**
- * Pinterest, Share, and Buy, in that order, in the bottom-right corner of a photo.
+ * Pinterest, Share, Buy, then AllTrails when the photo is a hike, in the bottom-right corner.
  * Share and Buy are the Gallery controls. Pinterest is the same disc, and pins
  * this image. `pinUrl` is the photo page, or the article when the card belongs
  * to one. The description is the card title.
@@ -23,6 +33,7 @@ export function PhotoCardActions({ title, shareUrl, pinUrl, mediaUrl, photo }) {
   const pageUrl = toAbsoluteUrl(pinUrl || shareUrl);
   const media = toAbsoluteUrl(mediaUrl || shareUrl);
   const href = pinterestPinHref({ pageUrl, mediaUrl: media, description: title || '' });
+  const trailHref = alltrailsHref(photo);
   const stop = (event) => event.stopPropagation();
 
   return (
@@ -46,6 +57,19 @@ export function PhotoCardActions({ title, shareUrl, pinUrl, mediaUrl, photo }) {
         wrapperClassName={gallery.shareWrap}
       />
       <BuyIcon photo={photo} className={gallery.share} />
+      {trailHref ? (
+        <a
+          className={gallery.share}
+          href={trailHref}
+          target="_blank"
+          rel="sponsored noopener noreferrer"
+          aria-label="Find this trail on AllTrails"
+          title="Find this trail on AllTrails"
+          onClick={stop}
+        >
+          <TrailMark />
+        </a>
+      ) : null}
     </span>
   );
 }
