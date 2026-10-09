@@ -14,10 +14,21 @@ export function selectedPhotos(photos) {
   return SELECTED_NUMBERS.map((n) => byNumber.get(n)).filter(Boolean);
 }
 
-/** Marymere's falls sit in a narrow column at 63.5–67.6% of the 1600×1000 frame. */
+/**
+ * Marymere's falls are a narrow column at 66% of the 1600×1000 frame.
+ * A 3/4 cover crop shows 46.9% of that width. object-position is not
+ * "put this source point here": 66% pins the falls at 65% of the card.
+ * This percentage places the 66% column at the center of the card.
+ */
+const MARYMERE_FALLS_X = 0.66;
+const SELECTED_ASPECT = 3 / 4;
+
 function cropPosition(photo) {
-  if (photoNumberFromSrc(photo.src) === 41) return '66% 50%';
-  return 'center';
+  if (photoNumberFromSrc(photo.src) !== 41) return 'center';
+  const imageAspect = (photo.width > 0 && photo.height > 0) ? photo.width / photo.height : 1.6;
+  const ratio = imageAspect / SELECTED_ASPECT;
+  const x = ((0.5 - MARYMERE_FALLS_X * ratio) / (1 - ratio)) * 100;
+  return `${Math.round(x * 100) / 100}% 50%`;
 }
 
 /** Gallery "Selected photographs" row. Homepage uses this same component. */
