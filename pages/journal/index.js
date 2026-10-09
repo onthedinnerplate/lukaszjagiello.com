@@ -6,6 +6,7 @@ import JourneysHero, { JOURNEYS_HERO_DESCRIPTION } from '@/components/JourneysHe
 import PhotoMap from '@/components/PhotoMap';
 import ShapeMosaic from '@/components/ShapeMosaic';
 import AccentTitle from '@/components/AccentTitle';
+import Swatches from '@/components/Swatches';
 import { getPhotos } from '@/lib/photo-data';
 import {
   articlesInCategory,
@@ -23,22 +24,6 @@ const meta = {
   title: 'Journeys',
   description: JOURNEYS_HERO_DESCRIPTION,
 };
-
-function Swatches({ shape, compact = false }) {
-  return (
-    <ul
-      className={`${styles.swatches} ${compact ? styles.swatchesCompact : ''}`}
-      aria-hidden={compact ? 'true' : undefined}
-    >
-      {shape.palette.map((hex, i) => (
-        <li key={`${hex}-${i}`} className={styles.swatchItem}>
-          <span className={styles.swatch} style={{ background: hex }} aria-hidden="true" />
-          {compact ? null : <span className={styles.hex}>{hex}</span>}
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 /** Longest-edge 400px gallery thumb. The unsuffixed `-thumb.webp` file is the 800px variant. */
 function smallThumbSrc(thumb, fileExists) {
@@ -146,8 +131,8 @@ export default function JournalIndex({ articles, counts }) {
               <div className={styles.featured}>
                 <div className={styles.featuredMain}>
                   <ShapeMosaic src={featured.photo.src} alt={featured.photo.alt} />
-                  <Swatches shape={featuredShape} />
-                  <div className={styles.mapSlot}>
+                  <Swatches shape={featuredShape} featured />
+                  <div className={styles.featuredMap}>
                     <PhotoMap
                       bare
                       coords={featured.photo.coords}

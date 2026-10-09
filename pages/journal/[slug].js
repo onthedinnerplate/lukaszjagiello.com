@@ -8,6 +8,7 @@ import Lightbox from '@/components/Lightbox';
 import PhotoMap from '@/components/PhotoMap';
 import ShapeMosaic from '@/components/ShapeMosaic';
 import HeadlinePhrase from '@/components/HeadlinePhrase';
+import Swatches from '@/components/Swatches';
 import { getPhotos } from '@/lib/photo-data';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
 import {
@@ -125,14 +126,7 @@ export default function JournalArticle({ article }) {
                   <time dateTime={article.taken}>{formatArticleDate(article.taken)}</time>
                 </p>
               ) : null}
-              <ul className={styles.swatches}>
-                {shape.palette.map((hex, i) => (
-                  <li key={`${hex}-${i}`} className={styles.swatchItem}>
-                    <span className={styles.swatch} style={{ background: hex }} aria-hidden="true" />
-                    <span className={styles.hex}>{hex}</span>
-                  </li>
-                ))}
-              </ul>
+              <Swatches shape={shape} />
               {hasMap ? (
                 <div className={styles.mapSlot}>
                   <PhotoMap bare coords={photo.coords} location={article.location} title={photo.title} />
