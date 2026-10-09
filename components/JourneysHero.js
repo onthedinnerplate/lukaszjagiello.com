@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import CategoryNav from '@/components/CategoryNav';
+import SiteCategoryNav from '@/components/SiteCategoryNav';
 import { heroAccentClassName } from '@/components/headlineAccent';
 import { accentScriptInk } from '@/lib/accentInk';
 import { articleTitleFont } from '@/lib/fonts';
@@ -71,12 +71,14 @@ const HERO = {
 const ALLTRAILS_HREF = 'https://www.alltrails.com/trail/us/washington/marymere-falls-trail';
 const MAPS_HREF = 'https://www.google.com/maps/search/?api=1&query=Marymere+Falls+Olympic+National+Park';
 
-/** Category row only: Journeys, Landscape, Animals, Architecture, People. */
+/** Same row on every hero: Journey, Landscape, Animal, Architecture, People. */
 function heroNavProps(nav) {
   if (!nav) return null;
   return {
-    ...nav,
-    leading: Array.isArray(nav.leading) ? nav.leading : [],
+    counts: nav.counts,
+    active: nav.active ?? '',
+    label: nav.label || 'Categories',
+    hrefFor: nav.hrefFor,
   };
 }
 
@@ -268,7 +270,7 @@ export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = fal
             </Title>
             {menu ? (
               <div className={styles.heroNav}>
-                <CategoryNav {...menu} />
+                <SiteCategoryNav {...menu} />
               </div>
             ) : null}
             {menu ? credit : null}

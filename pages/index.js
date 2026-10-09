@@ -4,7 +4,6 @@ import JourneysHero from '@/components/JourneysHero';
 import MasonryGallery from '@/components/MasonryGallery';
 import SelectedPhotographs, { selectedPhotos } from '@/components/SelectedPhotographs';
 import { getPhotos, heroNavCounts } from '@/lib/photo-data';
-import { JOURNEY_MENU_LABEL, journeysThenGalleryPath } from '@/lib/categories';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
@@ -33,10 +32,7 @@ export default function Home({ photos, selected, navCounts }) {
         nav={{
           active: 'home',
           counts: navCounts,
-          hrefFor: journeysThenGalleryPath,
-          allLabel: JOURNEY_MENU_LABEL,
           label: 'Home categories',
-          disableEmpty: true,
         }}
       />
 

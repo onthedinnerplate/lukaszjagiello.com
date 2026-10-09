@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Seo from '@/components/Seo';
 import JourneysHero from '@/components/JourneysHero';
 import { getPhotos, heroNavCounts } from '@/lib/photo-data';
-import { JOURNEY_MENU_LABEL, journeysThenGalleryPath } from '@/lib/categories';
 import { validateContact, LIMITS } from '@/lib/contact';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
@@ -102,10 +101,7 @@ export default function Contact({ navCounts }) {
         nav={{
           active: '',
           counts: navCounts,
-          hrefFor: journeysThenGalleryPath,
-          allLabel: JOURNEY_MENU_LABEL,
           label: 'Contact categories',
-          disableEmpty: true,
         }}
       />
       <article className={styles.page}>

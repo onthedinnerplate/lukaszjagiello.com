@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Seo from '@/components/Seo';
+import SiteCategoryNav from '@/components/SiteCategoryNav';
+import { categoryNavProps } from '@/lib/photo-data';
 import { LICENCE_SUMMARY } from '@/lib/store';
 import styles from '@/styles/Page.module.css';
 
 /** Stripe sends the buyer here after payment: /download?session_id=cs_… */
-export default function Download() {
+export default function Download({ navCounts }) {
   const { query, isReady } = useRouter();
   const [state, setState] = useState({ loading: true });
 
@@ -26,6 +28,9 @@ export default function Download() {
     <>
       <Seo title="Your download" description="Download your purchased photograph." path="/download" noindex />
       <article className={styles.page}>
+        <div className={styles.pageCats}>
+          <SiteCategoryNav counts={navCounts} label="Download categories" />
+        </div>
         <header className={styles.pageHeader}>
           <h1>{state.ok ? 'Thank you' : 'Your download'}</h1>
           {state.loading && <p className={styles.lede}>Checking your order…</p>}
@@ -65,4 +70,8 @@ export default function Download() {
       </article>
     </>
   );
+}
+
+export async function getStaticProps() {
+  return { props: await categoryNavProps() };
 }

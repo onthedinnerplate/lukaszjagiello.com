@@ -20,6 +20,9 @@
   padding-bottom: 1rem;
 }
 .pageHeader { margin-bottom: 2.5rem; }
+/* Pages with no photograph hero. Same category row, in the top of the column. */
+.pageCats { margin: 0 0 1.5rem; }
+.pageCats :global(nav) { margin-top: 0; }
 .galleryHeading { margin-bottom: 0.15rem; }
 .lede {
   font-family: Poppins, system-ui, sans-serif;

@@ -1,13 +1,15 @@
 import Link from 'next/link';
 import LegalPage from '@/components/LegalPage';
+import { categoryNavProps } from '@/lib/photo-data';
 import { site } from '@/lib/site';
 import styles from '@/styles/Page.module.css';
 
 const UPDATED = 'October 8, 2026';
 
-export default function Terms() {
+export default function Terms({ navCounts }) {
   return (
     <LegalPage
+      navCounts={navCounts}
       path="/terms"
       title="Terms & Conditions"
       description={`The terms that apply when you use ${site.name} or buy from it.`}
@@ -119,4 +121,8 @@ export default function Terms() {
       </section>
     </LegalPage>
   );
+}
+
+export async function getStaticProps() {
+  return { props: await categoryNavProps() };
 }
