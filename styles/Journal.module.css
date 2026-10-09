@@ -218,6 +218,21 @@
   padding: 0;
   container-type: inline-size;
 }
+.swatchLink {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+.swatchLink:hover,
+.swatchLink:focus,
+.swatchLink:visited {
+  color: inherit;
+  text-decoration: none;
+}
 .swatch {
   display: block;
   width: 100%;
@@ -824,6 +839,20 @@
   color: inherit;
   text-decoration: none;
 }
+.journeyTextLink {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+.journeyTextLink:hover,
+.journeyTextLink:focus,
+.journeyTextLink:visited {
+  color: inherit;
+  text-decoration: none;
+}
 .journeyCard:hover .journeyTitle,
 .journeyBody:hover .journeyTitle { color: var(--orange); }
 .journeyTitle {
@@ -990,7 +1019,8 @@
   color: inherit;
 }
 .allPhotoLink,
-.allCopy {
+.allCopy,
+.allCopyLink {
   color: inherit;
   text-decoration: none;
 }
@@ -1001,10 +1031,23 @@
   display: block;
 }
 .allPhotoLink:focus-visible,
-.allCopy:focus-visible {
+.allCopyLink:focus-visible {
   outline: 3px solid var(--orange);
   outline-offset: 3px;
   border-radius: 10px;
+}
+.allCopyLink {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+}
+.allCopyLink:hover,
+.allCopyLink:focus,
+.allCopyLink:visited {
+  color: inherit;
+  text-decoration: none;
 }
 .allCopy:hover .allTitle,
 .allTile:hover .allTitle { color: var(--orange); }
