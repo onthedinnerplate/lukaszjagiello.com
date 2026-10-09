@@ -181,13 +181,13 @@
   letter-spacing: 0.04em;
   color: var(--muted);
 }
+/* Same width as the photo above: N equal columns, square chip, hex underneath. */
 .swatches {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0.4rem 0.65rem;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(4px, 2%, 10px);
+  align-items: start;
+  justify-items: stretch;
   margin: 0.55rem 0 0;
   padding: 0;
   list-style: none;
@@ -196,19 +196,33 @@
 }
 .swatchItem {
   display: flex;
-  align-items: center;
-  gap: 0.28rem;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
   margin: 0;
   padding: 0;
+  container-type: inline-size;
 }
-.swatch { display: block; width: 54px; height: 21px; flex: none; }
+.swatch {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
 .hex {
-  font-size: 0.6875rem;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 0.28rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.625rem;
+  font-size: clamp(6.5px, 20cqi, 11px);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  text-align: center;
   color: var(--muted);
   white-space: nowrap;
-  font-variant-numeric: tabular-nums;
 }
 .mapSlot { width: 298px; max-width: 100%; margin-top: 0.55rem; }
 
@@ -284,40 +298,7 @@
     background: var(--white);
     padding-top: 0.7rem;
   }
-  .swatches {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 0.4rem 0.65rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    width: 100%;
-    max-width: 100%;
-  }
-  .swatchItem {
-    display: flex;
-    align-items: center;
-    gap: 0.28rem;
-    margin: 0;
-    padding: 0;
-  }
-  .swatch {
-    display: block;
-    width: 54px;
-    height: 21px;
-    flex: none;
-  }
-  .hex {
-    font-size: 0.6875rem;
-    line-height: 1.2;
-    letter-spacing: 0.02em;
-    color: var(--muted);
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
-  }
+  .swatches { margin: 0; }
   .viewRow {
     display: flex;
     flex-direction: row;
@@ -717,8 +698,6 @@
 .cluster { list-style: none; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; margin: 0; padding: 0; }
 .cluster li { width: 88px; }
 .swatchesCompact { margin-top: 0.45rem; }
-.swatchesCompact .swatch { width: 28px; height: 12px; }
-.swatchesCompact .hex { font-size: 0.625rem; }
 /* Space between the featured portrait and the palette under it. */
 .swatchesFeatured { margin-top: 2rem; }
 /* Map stays a fixed box. The open embed overlays the portrait instead of
