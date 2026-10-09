@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import CategoryNav from '@/components/CategoryNav';
 import { heroAccentClassName } from '@/components/headlineAccent';
+import { accentScriptInk } from '@/lib/accentInk';
 import { articleTitleFont } from '@/lib/fonts';
 import { photos } from '@/lib/photos';
 import styles from '@/styles/Journal.module.css';
@@ -41,6 +42,18 @@ export const JOURNEYS_HERO_DESCRIPTION =
 // Marymere Falls (photo 41, slug marymere-falls). Kept as literals so this
 // component does not pull the essay catalogue into every page bundle.
 const HERO_SRC = '/images/gallery/lightbox/lukasz-jagiello-41-full.webp';
+// Photo 41 middle swatch (journalShapes "41".palette[2]). The hero has no
+// swatch row, so the handwritten words take this photograph's middle color.
+const HERO_MIDDLE = '#182a17';
+// Lightest patch under those words: 95th percentile of the homepage
+// "the terrain" box at 800px, Marymere photograph plus the left scrim.
+const HERO_PHOTO_SURFACE = '#2c5332';
+const heroOnPhoto = accentScriptInk(HERO_MIDDLE, HERO_PHOTO_SURFACE);
+const heroOnPage = accentScriptInk(HERO_MIDDLE, '#ffffff');
+const heroAccentStyle = {
+  '--hero-accent': heroOnPhoto?.used,
+  '--hero-accent-mobile': heroOnPage?.used,
+};
 // Same description as photo 41 in lib/photos.js — do not paraphrase.
 const HERO_ALT = photos.find((p) => `/${p.src}` === HERO_SRC)?.alt || '';
 if (!HERO_ALT) throw new Error('Journeys hero is missing the Marymere Falls alt text from lib/photos.js.');
@@ -176,7 +189,11 @@ export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = fal
         <link rel="stylesheet" href={POPPINS} />
       </Head>
       <div className={bleed ? styles.heroSlotBleed : `container ${styles.heroSlot}`}>
-        <section className={bleed ? `${styles.heroBand} ${styles.heroBleed}` : styles.heroBand} aria-label="Marymere Falls">
+        <section
+          className={bleed ? `${styles.heroBand} ${styles.heroBleed}` : styles.heroBand}
+          style={heroAccentStyle}
+          aria-label="Marymere Falls"
+        >
           <div className={styles.heroMedia} ref={mediaRef}>
             <Image
               src={HERO.src}
