@@ -17,7 +17,8 @@
   inset: 0 0 auto 0;
   z-index: 50;
   height: var(--nav-h);
-  background: rgba(255, 255, 255, 0.97);
+  /* 25% white, not element opacity, so the mark, name and links stay solid. */
+  background: rgba(255, 255, 255, 0.25);
   border-bottom: 1px solid var(--border);
 }
 
@@ -46,6 +47,8 @@
   width: 28px;
   height: 28px;
   flex: none;
+  /* Light halo so the black mark stays visible on a dark photograph. */
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
 }
 .brand:hover { background: none; }
 .brand:hover .brandName { text-decoration: underline; }
@@ -60,6 +63,14 @@
   font-weight: 400;
   font-style: normal;
   color: inherit;
+}
+/* Halo only. The glyphs stay fully opaque charcoal over bright or dark hero areas. */
+.brandName,
+.link {
+  text-shadow:
+    0 0 1px rgba(255, 255, 255, 0.95),
+    0 1px 2px rgba(255, 255, 255, 0.9),
+    0 0 8px rgba(255, 255, 255, 0.7);
 }
 
 .links {
