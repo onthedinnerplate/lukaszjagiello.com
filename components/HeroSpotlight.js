@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import ShareButton from './ShareButton';
-import BuyIcon from './BuyIcon';
+import { PhotoCardActions } from './ShareButtons';
 import ResponsiveImage from './ResponsiveImage';
+import { ogImageSrc } from '@/lib/slug';
 import styles from '@/styles/Home.module.css';
 
 // The 2×2 block inside the 1400px hero. Cover-crop draws a landscape about
@@ -92,16 +92,13 @@ export default function HeroSpotlight({ photos, hoverIndex, onHover, onSelect })
           srcSet={photo.thumbSrcSet}
           style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
         />
-        <span className={styles.cardActions}>
-          <BuyIcon photo={photo} className={styles.share} />
-          <ShareButton
-            title={photo.title}
-            url={shareUrl}
-            className={styles.share}
-            toastClassName={styles.toast}
-            wrapperClassName={styles.shareWrap}
-          />
-        </span>
+        <PhotoCardActions
+          title={photo.title}
+          shareUrl={shareUrl}
+          pinUrl={shareUrl}
+          mediaUrl={ogImageSrc(photo.src) || photo.src}
+          photo={photo}
+        />
       </div>
     </div>
   );

@@ -3,10 +3,19 @@
   margin: 0 auto;
   padding: 3.5rem var(--gutter) 1rem;
 }
-.galleryPage {
+/* Horizontal frame shared with the site header (.nav composes this).
+   Vertical padding stays on .galleryPage so the bar height does not change. */
+.contentFrame {
   max-width: var(--max-wide);
-  margin: 0 auto;
-  padding: 3rem var(--gutter) 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+.galleryPage {
+  composes: contentFrame;
+  padding-top: 3rem;
+  padding-bottom: 1rem;
 }
 .pageHeader { margin-bottom: 2.5rem; }
 .galleryHeading { margin-bottom: 0.15rem; }
@@ -279,7 +288,7 @@
 .mapCardWide .mapHint { margin-left: auto; }
 .mapPanel {
   margin: 0.75rem 0 0;
-  border-radius: var(--card-radius, 12px);
+  border-radius: var(--radius-photo, var(--card-radius, 12px));
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--surface, #f3f3f3);
@@ -301,9 +310,33 @@
 /* Article and featured-story maps sit in a parent that sets the width.
    Photo pages do not pass `bare`, so these rules never apply there. */
 .mapBare { width: 100%; }
-.mapCardBare { border-radius: 8px; }
+.mapCardBare { border-radius: var(--radius-photo, 8px); }
 .mapPanelBare { margin-top: 0.45rem; }
 .mapPanelBare iframe { height: 200px; }
+/* Same square map card, sized to sit beside a one-line place name.
+   The place name and hint stay in the button for its accessible name. */
+.mapSquare { position: static; flex: none; }
+.mapCard.mapCardSquare {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  padding: 0;
+  gap: 0;
+  border-radius: 10px;
+}
+.mapCardSquare .mapPin svg { width: 22px; height: 22px; }
+.mapCardSquare .mapLabel,
+.mapCardSquare .mapHint {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 @media (max-width: 640px) {
   .photoHeader { align-items: flex-start; gap: 1rem; }
   .mapCard { width: 108px; height: 108px; }
