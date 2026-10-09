@@ -250,7 +250,7 @@ export default function JournalIndex({ articles, counts }) {
             </section>
           ) : null}
 
-          {inspirationPool.length > 0 ? (
+          {inspirations.length > 0 ? (
             <section className={styles.band} aria-labelledby="inspirations">
               <h2 id="inspirations" className={`${styles.sectionLabel} ${styles.inspireLabel}`}>
                 Inspirations <span>{inspirations.length}</span>
