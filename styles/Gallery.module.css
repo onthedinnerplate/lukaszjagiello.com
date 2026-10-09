@@ -182,15 +182,39 @@
   color: var(--charcoal);
   font-weight: 500;
   text-decoration: none;
+  /* The 2px border holds the space. Colour comes from the sliding indicator once it is measured. */
   border-bottom: 2px solid transparent;
-  transition: border-color 0.15s ease, color 0.15s ease;
+  transition: color 0.15s ease;
 }
 .catLink:hover { border-bottom-color: rgba(26, 26, 26, 0.3); }
 .catLink:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; border-radius: 2px; }
 .catActive { font-weight: 600; border-bottom-color: var(--orange); }
+.catNavReady .catLink,
+.catNavReady .catLink:hover,
+.catNavReady .catActive { border-bottom-color: transparent; }
 .catDisabled { color: var(--muted); cursor: default; }
 .catDisabled:hover { border-bottom-color: transparent; color: var(--muted); }
 .catCount { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+/* One orange rule for the whole row. translate + scaleX so only transform moves. */
+.catIndicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 2px;
+  margin: 0;
+  padding: 0;
+  background: var(--orange);
+  transform-origin: left center;
+  transform: translate3d(var(--x, 0px), var(--y, 0px), 0) scaleX(var(--w, 0));
+  transition: transform 220ms ease;
+  pointer-events: none;
+}
+.catIndicatorInstant { transition: none; }
+.catList { position: relative; }
+@media (prefers-reduced-motion: reduce) {
+  .catIndicator { transition: none; }
+}
 
 /* Legacy filter bar — rendered only when NEXT_PUBLIC_GALLERY_FILTERS=true. */
 .filters {
@@ -232,4 +256,137 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Sales layout around the existing cards. Card chrome (title, camera block, share, buy) is unchanged. */
+.band { margin: 2.75rem 0; }
+.band:first-of-type { margin-top: 0; }
+.sectionLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.15rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #4a4a4a;
+}
+.sectionLabel span { color: #8a8a8a; font-weight: 400; }
+.sectionLabel::after { content: ""; flex: 1; height: 1px; background: #dedad2; }
+.gridLabel { margin-bottom: 0.45rem; }
+.gridNav { margin: 0 0 0.35rem; }
+.gridNav :global(nav) { margin: 0; }
+
+.saleRow,
+.saleTrio {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.75rem 1.25rem;
+}
+.saleRow { grid-template-columns: minmax(0, 1fr); }
+.saleTrio { grid-template-columns: minmax(0, 1fr); }
+.saleRow .item,
+.saleTrio .item { margin-bottom: 0; }
+
+.saleFeatured { display: grid; gap: 1.25rem; }
+.saleMain { min-width: 0; }
+.featuredOpen {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  line-height: 0;
+  color: inherit;
+}
+.featuredOpen:focus-visible { outline: 3px solid var(--orange); outline-offset: -3px; }
+.featuredImg { width: 100%; height: auto; display: block; }
+
+.saleMore { background: #1f2121; color: #f5f3ee; padding: 1.5rem 1.35rem 1.35rem; }
+.saleMoreLabel {
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #f0e2c4;
+}
+.saleMore ul { list-style: none; margin: 0; padding: 0; }
+.saleMore li { padding: 0.8rem 0; border-bottom: 1px solid #3c3e3e; }
+.saleMorePlace {
+  margin: 0 0 0.2rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c8c8c2;
+}
+.saleMore a {
+  color: #f5f3ee;
+  text-decoration: none;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 1.2rem;
+}
+.saleMore a:hover { color: #fff; text-decoration: underline; }
+.saleMore .saleLink {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #f0e2c4;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.saleLink { color: var(--charcoal); font-weight: 600; text-decoration: none; }
+.saleLink:hover { text-decoration: underline; }
+
+.saleClose {
+  display: grid;
+  gap: 1.5rem;
+  padding: 3.25rem var(--gutter);
+  background: #efebe3;
+}
+.saleKicker {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #5c4a28;
+}
+.saleCloseTitle {
+  margin: 0.35rem 0 0.75rem;
+  max-width: 12em;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 2.85rem);
+  line-height: 1.05;
+}
+.saleTiers { margin: 0 0 1rem; padding: 0; list-style: none; }
+.saleTiers li { margin: 0.35rem 0; max-width: 40em; }
+.saleTierLabel { font-weight: 600; }
+.saleLicence { margin: 0 0 1rem; max-width: 40em; color: #3a3a3a; }
+.saleCluster {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-end;
+  margin: 0;
+  padding: 0;
+}
+.saleCluster li { width: 88px; }
+.saleCluster img { width: 100%; height: auto; display: block; }
+
+@media (min-width: 769px) {
+  .saleRow { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .saleTrio { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1000px) {
+  .saleFeatured { grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.72fr); align-items: start; }
+  .saleClose { grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); align-items: center; }
 }

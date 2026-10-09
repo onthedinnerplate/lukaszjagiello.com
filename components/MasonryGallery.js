@@ -22,7 +22,14 @@ const SIZES_WIDE = '(max-width: 640px) 100vw, (max-width: 1024px) 48vw, 32vw';
  *   focal | shutter | aperture | ISO
  * Click any photo for the lightbox (Esc closes, arrows navigate).
  */
-export default function MasonryGallery({ photos, wide = false, priorityCount = 0, headingId }) {
+export default function MasonryGallery({
+  photos,
+  wide = false,
+  priorityCount = 0,
+  headingId,
+  layout = 'masonry',
+  anchor = true,
+}) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const lightboxId = useId();
@@ -30,6 +37,7 @@ export default function MasonryGallery({ photos, wide = false, priorityCount = 0
   // Shared links look like /gallery#photo-12 — open that photo on arrival,
   // including when the hash changes without a full reload.
   useEffect(() => {
+    if (!anchor) return undefined;
     const openFromHash = () => {
       const m = window.location.hash.match(/^#photo-(\d+)$/);
       if (!m) return;
@@ -43,7 +51,7 @@ export default function MasonryGallery({ photos, wide = false, priorityCount = 0
     openFromHash();
     window.addEventListener('hashchange', openFromHash);
     return () => window.removeEventListener('hashchange', openFromHash);
-  }, [photos]);
+  }, [photos, anchor]);
 
   const handleImageClick = (index) => {
     setSelectedIndex(index);
@@ -63,15 +71,22 @@ export default function MasonryGallery({ photos, wide = false, priorityCount = 0
 
   return (
     <div className={styles.wrap}>
-      <ul className={styles.masonry} aria-labelledby={headingId}>
+      <ul
+        className={layout === 'row' ? styles.saleRow : layout === 'trio' ? styles.saleTrio : styles.masonry}
+        aria-labelledby={headingId}
+      >
         {photos.map((photo, i) => {
           const { equipment, specs } = captionFor(photo);
           const num = photoNumberFromSrc(photo.src);
           const shareUrl = photo.href;
-          const sizes = wide ? SIZES_WIDE : SIZES;
+          const sizes = layout === 'row'
+            ? '(max-width: 768px) 100vw, 25vw'
+            : layout === 'trio'
+              ? '(max-width: 768px) 100vw, 33vw'
+              : (wide ? SIZES_WIDE : SIZES);
           const prioritized = i < priorityCount;
           return (
-            <li key={photo.src} id={`photo-${num}`} className={styles.item}>
+            <li key={photo.src} id={anchor ? `photo-${num}` : undefined} className={styles.item}>
               <figure className={styles.figure}>
                 <div className={styles.frame} style={{ backgroundColor: photo.color }}>
                   <PhotoCardActions

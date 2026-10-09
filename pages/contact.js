@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Seo from '@/components/Seo';
 import JourneysHero from '@/components/JourneysHero';
+import { getPhotos, heroNavCounts } from '@/lib/photo-data';
+import { journeysThenGalleryPath } from '@/lib/categories';
 import { validateContact, LIMITS } from '@/lib/contact';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
@@ -15,7 +17,7 @@ const meta = {
 
 const FIELDS = ['name', 'email', 'message'];
 
-export default function Contact() {
+export default function Contact({ navCounts }) {
   const { query } = useRouter();
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
@@ -95,7 +97,17 @@ export default function Contact() {
         jsonLd={graph(websiteNode(), personNode(), { ...pageNode('ContactPage', meta), mainEntity: { '@id': personNode()['@id'] } })}
       />
       {/* Slogan stays a paragraph: "Contact" remains the only h1. */}
-      <JourneysHero headingAs="p" />
+      <JourneysHero
+        headingAs="p"
+        nav={{
+          active: '',
+          counts: navCounts,
+          hrefFor: journeysThenGalleryPath,
+          allLabel: 'Journeys',
+          label: 'Contact categories',
+          disableEmpty: true,
+        }}
+      />
       <article className={styles.page}>
         <header className={styles.pageHeader}>
           <h1>Contact</h1>
@@ -144,4 +156,9 @@ export default function Contact() {
       </article>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const photos = await getPhotos();
+  return { props: { navCounts: heroNavCounts(photos) } };
 }

@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Seo from '@/components/Seo';
 import JourneysHero from '@/components/JourneysHero';
+import { getPhotos, heroNavCounts } from '@/lib/photo-data';
+import { journeysThenGalleryPath } from '@/lib/categories';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
 import { gearFromMetadata } from '@/lib/photoCaption';
@@ -16,7 +18,7 @@ const meta = {
   description: `About ${site.photographer}, a landscape and wildlife photographer shooting on the ${mainCamera} with the ${lensList.slice(0, 2).join(' and ') || site.gear.lens}.`,
 };
 
-export default function About() {
+export default function About({ navCounts }) {
   return (
     <>
       <Seo
@@ -27,7 +29,17 @@ export default function About() {
         jsonLd={graph(websiteNode(), { ...pageNode('ProfilePage', meta), mainEntity: { '@id': personNode()['@id'] } }, personNode())}
       />
       {/* Slogan stays a paragraph: "About" remains the only h1. */}
-      <JourneysHero headingAs="p" />
+      <JourneysHero
+        headingAs="p"
+        nav={{
+          active: '',
+          counts: navCounts,
+          hrefFor: journeysThenGalleryPath,
+          allLabel: 'Journeys',
+          label: 'About categories',
+          disableEmpty: true,
+        }}
+      />
       <article className={styles.page}>
         <header className={styles.pageHeader}>
           <h1>About</h1>
@@ -103,4 +115,9 @@ export default function About() {
       </article>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const photos = await getPhotos();
+  return { props: { navCounts: heroNavCounts(photos) } };
 }
