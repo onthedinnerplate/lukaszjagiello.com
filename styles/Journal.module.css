@@ -458,7 +458,7 @@
 }
 
 /* Journeys landing. Single column until tablet. */
-.landing { padding-bottom: 0; }
+.landing { --radius-photo: 12px; padding-bottom: 0; }
 .landingCats { display: none; padding: 1.1rem var(--gutter) 0; }
 .heroSlot { padding-top: 1.5rem; }
 .heroBand {
@@ -679,7 +679,8 @@
   display: block;
   color: inherit;
   text-decoration: none;
-  border-radius: 12px;
+  border-radius: var(--radius-photo, 12px);
+  overflow: hidden;
 }
 .cardPhotoLink:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
 .journeyBody {
@@ -732,7 +733,11 @@
 .featuredDek { margin: 0.35rem 0 0.85rem; font-style: italic; color: var(--muted); }
 .storyLink { color: var(--charcoal); font-weight: 600; text-decoration: none; }
 .storyLink:hover { text-decoration: underline; }
-.featuredPhoto { min-width: 0; }
+.featuredPhoto {
+  min-width: 0;
+  border-radius: var(--radius-photo, 12px);
+  overflow: hidden;
+}
 .more {
   display: flex;
   flex-direction: column;
@@ -741,6 +746,7 @@
   background: #1f2121;
   color: #f5f3ee;
   padding: 1.5rem 1.35rem 1.35rem;
+  border-radius: var(--radius-photo, 12px);
   overflow: hidden;
 }
 .moreLabel {
