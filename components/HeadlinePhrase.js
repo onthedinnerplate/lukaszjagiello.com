@@ -1,17 +1,9 @@
-import { Caveat } from 'next/font/google';
 import { phraseSpan } from '@/lib/headlinePhrase';
-
-// Lightest Caveat face. Applied only to the one headline phrase.
-const caveat = Caveat({
-  weight: '400',
-  subsets: ['latin'],
-  display: 'swap',
-  style: 'normal',
-});
+import { headlineAccentClassName } from '@/components/headlineAccent';
 
 /**
- * Article h1 with one noun or noun phrase in Caveat 400.
- * `color` is that article's swatch 3. Size, spacing, and weight stay on the span.
+ * Article h1 with one noun or noun phrase in the shared Caveat accent.
+ * `color` is that article's swatch 3 and overrides the accent's hero white.
  */
 export default function HeadlinePhrase({ title, phrase, color, as: Tag = 'h1', className }) {
   const span = color ? phraseSpan(title, phrase) : null;
@@ -19,19 +11,7 @@ export default function HeadlinePhrase({ title, phrase, color, as: Tag = 'h1', c
   return (
     <Tag className={className}>
       {span.before}
-      <span
-        className={caveat.className}
-        style={{
-          color,
-          fontSize: '1.45em',
-          lineHeight: 1,
-          fontWeight: 400,
-          letterSpacing: '0.02em',
-          wordSpacing: '0.06em',
-          marginLeft: '0.1em',
-          marginRight: '0.1em',
-        }}
-      >
+      <span className={headlineAccentClassName} style={{ color }}>
         {span.phrase}
       </span>
       {span.after}
