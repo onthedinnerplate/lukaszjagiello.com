@@ -72,6 +72,13 @@ function JourneyThumb({ photo }) {
   );
 }
 
+/** Owner-written location, split on the commas already in the string. Nothing is added. */
+function locationLines(location) {
+  const parts = String(location || '').split(',').map((part) => part.trim()).filter(Boolean);
+  if (!parts.length) return null;
+  return { lead: parts[0], rest: parts.slice(1).join(', ') };
+}
+
 function JourneyCard({ article, compactSwatches = true }) {
   const shape = shapeFor(article);
   const href = `/journal/${article.slug}`;
@@ -256,35 +263,58 @@ export default function JournalIndex({ articles, counts }) {
               <p className={styles.empty}>No essays in this category.</p>
             ) : (
               <ul className={styles.allList}>
-                {catalogue.map((article) => (
-                  <li key={article.slug}>
-                    <div className={styles.allTile}>
-                      <div className={`${styles.allFrame} ${article.photo.thumb ? '' : styles.allThumbPlaceholder}`}>
-                        <Link href={`/journal/${article.slug}`} className={styles.allPhotoLink} aria-label={`Read ${article.title}`}>
-                          <JourneyThumb photo={article.photo} />
+                {catalogue.map((article) => {
+                  const place = locationLines(article.location);
+                  const shape = shapeFor(article);
+                  const href = `/journal/${article.slug}`;
+                  return (
+                    <li key={article.slug}>
+                      <div className={styles.allTile}>
+                        <div className={`${styles.allFrame} ${article.photo.thumb ? '' : styles.allThumbPlaceholder}`}>
+                          <Link href={href} className={styles.allPhotoLink} aria-label={`Read ${article.title}`}>
+                            <JourneyThumb photo={article.photo} />
+                          </Link>
+                          <PhotoCardActions
+                            title={article.title}
+                            shareUrl={article.photo.href || article.photo.src}
+                            pinUrl={href}
+                            mediaUrl={article.photo.ogSrc || article.photo.src}
+                            photo={cardPhoto(article)}
+                          />
+                        </div>
+                        <Link href={href} className={styles.allCopy}>
+                          <span className={styles.allGold} aria-hidden="true" />
+                          <AccentTitle title={article.title} color={shape?.accent} as="span" className={styles.allTitle} />
+                          <span className={styles.allSwatches}>
+                            <Swatches shape={shape} compact />
+                          </span>
                         </Link>
-                        <PhotoCardActions
+                        <div className={styles.allLocRow}>
+                          {place ? (
+                            <span className={styles.allPlace}>
+                              <span className={styles.allPlaceLead}>{place.lead}</span>
+                              {place.rest ? <span className={styles.allPlaceRest}>{place.rest}</span> : null}
+                            </span>
+                          ) : (
+                            <span className={styles.allPlace}> </span>
+                          )}
+                          <PhotoMap
+                            square
+                            coords={article.photo.coords}
+                            location={article.location}
+                            title={article.photo.title}
+                          />
+                        </div>
+                        <ArticleShare
                           title={article.title}
-                          shareUrl={article.photo.href || article.photo.src}
-                          pinUrl={`/journal/${article.slug}`}
-                          mediaUrl={article.photo.ogSrc || article.photo.src}
-                          photo={cardPhoto(article)}
+                          excerpt={article.dek}
+                          articlePath={href}
+                          mediaPath={article.photo.ogSrc || article.photo.src}
                         />
                       </div>
-                      <Link href={`/journal/${article.slug}`} className={styles.allCopy}>
-                        <span className={styles.allGold} aria-hidden="true" />
-                        <AccentTitle title={article.title} color={shapeFor(article).accent} as="span" className={styles.allTitle} />
-                        {article.location ? <span className={styles.allPlace}>{article.location}</span> : <span className={styles.allPlace}> </span>}
-                      </Link>
-                      <ArticleShare
-                        title={article.title}
-                        excerpt={article.dek}
-                        articlePath={`/journal/${article.slug}`}
-                        mediaPath={article.photo.ogSrc || article.photo.src}
-                      />
-                    </div>
-                  </li>
-                ))}
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </section>
