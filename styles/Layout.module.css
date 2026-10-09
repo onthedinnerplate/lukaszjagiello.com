@@ -185,7 +185,7 @@
   .brandMark { width: 24px; height: 24px; }
 }
 
-/* Phones only. One row: wordmark centered, menu button pinned to the right. */
+/* Phones only. Wordmark on the left, menu button on the right. */
 .menuButton {
   display: none;
 }
@@ -215,16 +215,18 @@
   .nav {
     position: relative;
     flex-wrap: nowrap;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
   }
   .brand {
     flex: 0 1 auto;
-    justify-content: center;
+    justify-content: flex-start;
+    margin-right: auto;
     flex-wrap: nowrap;
     white-space: nowrap;
-    max-width: calc(100% - 2.75rem);
-    font-size: clamp(0.7rem, 3.4vw, 0.95rem);
+    text-align: left;
+    max-width: calc(100% - 3rem);
+    font-size: clamp(0.72rem, 3.2vw, 0.95rem);
   }
   .brandName { flex-wrap: nowrap; gap: 0.4rem; }
   .brand .brandScript { font-size: 1.45em; }
@@ -234,7 +236,7 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    right: 0;
+    right: var(--gutter);
     top: 50%;
     width: 44px;
     height: 44px;
@@ -249,30 +251,35 @@
   .links {
     display: none;
     position: absolute;
-    top: 100%;
-    left: calc(var(--gutter) * -1);
-    right: calc(var(--gutter) * -1);
+    top: calc(100% + 6px);
+    right: var(--gutter);
+    left: auto;
     flex: none;
     flex-direction: column;
     flex-wrap: nowrap;
     align-items: stretch;
     justify-content: flex-start;
     gap: 0;
-    width: auto;
-    max-width: none;
+    width: max-content;
+    max-width: calc(100vw - (var(--gutter) * 2));
     margin: 0;
-    padding: 0.25rem var(--gutter) 0.6rem;
+    padding: 0.3rem 0;
     background: #fff;
-    box-shadow: 0 14px 28px rgba(26, 26, 26, 0.08);
+    border-radius: 10px;
+    box-shadow: 0 10px 28px rgba(26, 26, 26, 0.16);
     z-index: 60;
   }
   .navOpen .links { display: flex; }
   .link {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    width: 100%;
     min-height: 44px;
-    padding: 0.35rem 0;
+    padding: 0.35rem 0.85rem;
+    text-align: right;
   }
+  .link[aria-current='page'] { color: #c4a35a; }
   .indicator { display: none; }
   .footerGrid { gap: 1.25rem 1rem; }
   .footerInner { padding: 1.75rem var(--gutter) 1.5rem; }
