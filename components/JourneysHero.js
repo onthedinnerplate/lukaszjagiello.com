@@ -2,8 +2,26 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import CategoryNav from '@/components/CategoryNav';
+import { headlineAccentClassName } from '@/components/headlineAccent';
 import { photos } from '@/lib/photos';
 import styles from '@/styles/Journal.module.css';
+
+const HERO_ACCENTS = ['the story', 'the terrain'];
+
+/** Split the hero sentence so only the two stored phrases take the accent. */
+function titleWithAccents(title) {
+  const nodes = [];
+  let rest = title;
+  for (const phrase of HERO_ACCENTS) {
+    const at = rest.indexOf(phrase);
+    if (at < 0) return null;
+    if (at > 0) nodes.push({ text: rest.slice(0, at), accent: false });
+    nodes.push({ text: phrase, accent: true });
+    rest = rest.slice(at + phrase.length);
+  }
+  if (rest) nodes.push({ text: rest, accent: false });
+  return nodes;
+}
 
 const POPPINS = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap';
 
@@ -29,8 +47,11 @@ const HERO = {
 
 /**
  * The Journeys landing hero: Marymere photograph, kicker, headline, subline,
- * gold rule and photo credit. Optional `nav` renders the same category bar
- * Journeys uses, directly above the photograph.
+ * gold rule and photo credit.
+ *
+ * Optional `nav` is the category bar. It sits directly under the headline,
+ * and the photo credit sits flush against that bar. Pages without `nav`
+ * keep the credit in the lower corner of the photograph.
  *
  * `headingAs` is `h1` where this headline is the page's only heading (Home,
  * Journeys). Pass `p` on pages that already have their own h1 so the slogan
@@ -38,6 +59,12 @@ const HERO = {
  */
 export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
   const Title = headingAs;
+  const titleNodes = titleWithAccents(HERO.title);
+  const credit = (
+    <p className={nav ? `${styles.heroCap} ${styles.heroCapFlush}` : styles.heroCap}>
+      <Link href={HERO.creditHref}>{HERO.credit}</Link>
+    </p>
+  );
   return (
     <>
       <Head>
@@ -45,11 +72,6 @@ export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href={POPPINS} />
       </Head>
-      {nav ? (
-        <div className={styles.landingCats}>
-          <CategoryNav {...nav} />
-        </div>
-      ) : null}
       <section className={styles.heroBand} aria-label="Marymere Falls">
         <Image
           src={HERO.src}
@@ -63,13 +85,29 @@ export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
         <div className={styles.heroShade} aria-hidden="true" />
         <div className={styles.heroCopy}>
           <p className={styles.heroKicker}>{HERO.kicker}</p>
-          <Title className={styles.heroTitle}>{HERO.title}</Title>
+          <Title className={styles.heroTitle}>
+            {titleNodes
+              ? titleNodes.map((node, i) =>
+                  node.accent ? (
+                    <span key={`${node.text}-${i}`} className={headlineAccentClassName}>
+                      {node.text}
+                    </span>
+                  ) : (
+                    node.text
+                  ),
+                )
+              : HERO.title}
+          </Title>
+          {nav ? (
+            <div className={styles.heroNav}>
+              <CategoryNav {...nav} />
+            </div>
+          ) : null}
+          {nav ? credit : null}
           <p className={styles.heroSub}>{JOURNEYS_HERO_DESCRIPTION}</p>
           <span className={styles.goldRule} aria-hidden="true" />
         </div>
-        <p className={styles.heroCap}>
-          <Link href={HERO.creditHref}>{HERO.credit}</Link>
-        </p>
+        {nav ? null : credit}
       </section>
     </>
   );

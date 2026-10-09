@@ -9,6 +9,9 @@
   padding: 3rem var(--gutter) 1rem;
 }
 .pageHeader { margin-bottom: 2.5rem; }
+.galleryHeading { margin-bottom: 0.15rem; }
+.gallerySubnav { margin: 0 0 0.85rem; }
+.gallerySubnav :global(nav) { margin-top: 0; }
 .lede { font-size: 1.1875rem; color: var(--muted); }
 
 .block { margin-bottom: 3rem; }

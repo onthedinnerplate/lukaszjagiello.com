@@ -181,28 +181,48 @@
   letter-spacing: 0.04em;
   color: var(--muted);
 }
+/* Same width as the photo above: N equal columns, square chip, hex underneath. */
 .swatches {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 7px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(4px, 2%, 10px);
+  align-items: start;
+  justify-items: stretch;
   margin: 0.55rem 0 0;
   padding: 0;
   list-style: none;
-  width: max-content;
+  width: 100%;
   max-width: 100%;
 }
-.swatchItem { margin: 0; padding: 0; }
-.swatch { display: block; width: 54px; height: 21px; }
+.swatchItem {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  container-type: inline-size;
+}
+.swatch {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}
 .hex {
   display: block;
-  margin-top: 3px;
-  font-size: 0.5625rem;
-  line-height: 1.2;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 0.28rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.625rem;
+  font-size: clamp(6.5px, 20cqi, 11px);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  text-align: center;
   color: var(--muted);
-  text-align: left;
+  white-space: nowrap;
 }
 .mapSlot { width: 298px; max-width: 100%; margin-top: 0.55rem; }
 
@@ -278,34 +298,7 @@
     background: var(--white);
     padding-top: 0.7rem;
   }
-  .swatches {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 7px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    width: max-content;
-    max-width: 100%;
-  }
-  .swatchItem { margin: 0; padding: 0; }
-  .swatch {
-    display: block;
-    width: 54px;
-    height: 21px;
-  }
-  .hex {
-    display: block;
-    margin-top: 3px;
-    font-size: 0.5625rem;
-    line-height: 1.2;
-    letter-spacing: 0.01em;
-    color: var(--muted);
-    text-align: left;
-  }
+  .swatches { margin: 0; }
   .viewRow {
     display: flex;
     flex-direction: row;
@@ -477,6 +470,39 @@
   letter-spacing: -0.03em;
   color: #fff;
 }
+/* Caveat accent shared by article headlines and the Journeys hero phrases.
+   Family comes from the next/font class paired with this one.
+   Color is the hero white (#fff). Article pages override it inline with their swatch. */
+.headlineAccent {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.45em;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  word-spacing: 0.06em;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+  color: #fff;
+}
+/* Category bar lives under the headline, on the dark photograph. */
+.heroTitle:has(+ .heroNav) { margin-bottom: 0; }
+.heroNav { margin: 0.45rem 0 0; max-width: 100%; }
+.heroNav :global(nav) { margin: 0; }
+.heroNav :global(a),
+.heroNav :global(span) {
+  color: #f4f1ea;
+  padding-top: 0.15rem;
+  padding-bottom: 0;
+}
+.heroNav :global(a:hover) { color: #fff; }
+.heroCap.heroCapFlush {
+  position: static;
+  right: auto;
+  bottom: auto;
+  margin: 0;
+  padding: 0;
+}
+.heroCapFlush + .heroSub { margin-top: 0.7rem; }
 .heroSub {
   margin: 0;
   max-width: 36em;
@@ -562,7 +588,17 @@
 .featuredDek { margin: 0.35rem 0 0.85rem; font-style: italic; color: var(--muted); }
 .storyLink { color: var(--charcoal); font-weight: 600; text-decoration: none; }
 .storyLink:hover { text-decoration: underline; }
-.more { background: #1f2121; color: #f5f3ee; padding: 1.5rem 1.35rem 1.35rem; }
+.featuredPhoto { min-width: 0; }
+.more {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 70vh;
+  background: #1f2121;
+  color: #f5f3ee;
+  padding: 1.5rem 1.35rem 1.35rem;
+  overflow: hidden;
+}
 .moreLabel {
   margin: 0 0 0.4rem;
   font-size: 0.72rem;
@@ -571,7 +607,34 @@
   text-transform: uppercase;
   color: #f0e2c4;
 }
-.more ul { list-style: none; margin: 0; padding: 0; }
+.moreScroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(240, 226, 196, 0.45) transparent;
+}
+.moreScroll:focus-visible {
+  outline: 2px solid #f0e2c4;
+  outline-offset: -2px;
+}
+.moreScroll::-webkit-scrollbar { width: 8px; }
+.moreScroll::-webkit-scrollbar-track { background: transparent; }
+.moreScroll::-webkit-scrollbar-thumb {
+  background: rgba(240, 226, 196, 0.4);
+  border-radius: 999px;
+}
+.moreScroll ul { list-style: none; margin: 0; padding: 0 0.35rem 1.75rem 0; }
+.moreScroll::after {
+  content: "";
+  position: sticky;
+  bottom: 0;
+  display: block;
+  height: 1.75rem;
+  margin-top: -1.75rem;
+  background: linear-gradient(to bottom, rgba(31, 33, 33, 0), #1f2121);
+  pointer-events: none;
+}
 .more li { padding: 0.8rem 0; border-bottom: 1px solid #3c3e3e; }
 .morePlace {
   margin: 0 0 0.2rem;
@@ -583,38 +646,83 @@
 .more a { color: #f5f3ee; text-decoration: none; font-family: Poppins, system-ui, sans-serif; font-weight: 300; font-size: 1.2rem; }
 .more a:hover { text-decoration: underline; }
 .more .storyLink { display: inline-block; margin-top: 1rem; color: #f0e2c4; }
-.allList { list-style: none; margin: 0; padding: 0; }
-.allList a {
+.allList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 0.85rem;
+  row-gap: 1.35rem;
+}
+.allList > li { min-width: 0; }
+.allTile {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.72rem 0;
-  border-bottom: 1px solid var(--border);
+  flex-direction: column;
+  gap: 0.65rem;
+  min-width: 0;
+  height: 100%;
   color: inherit;
   text-decoration: none;
 }
-.allList a:hover .allTitle { color: var(--orange); }
-.allThumb {
-  width: 56px;
-  height: 56px;
-  flex: 0 0 56px;
-  border-radius: var(--radius);
-  object-fit: cover;
+.allTile:hover .allTitle,
+.allTile:focus-visible .allTitle { color: var(--orange); }
+.allTile:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+.allFrame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
   background: var(--surface);
+  line-height: 0;
+}
+.allPicture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.allThumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
-.allThumbPlaceholder {
-  border: 1px solid var(--border);
+.allThumbPlaceholder { border: 1px solid var(--border); }
+.allCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+.allGold {
+  display: block;
+  width: 28px;
+  height: 2px;
+  margin: 0 0 0.4rem;
+  background: #c4a35a;
 }
 .allTitle {
-  flex: 1;
-  min-width: 0;
   font-family: Poppins, system-ui, sans-serif;
   font-weight: 300;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
+  line-height: 1.25;
 }
-.allPlace { color: var(--muted); font-size: 0.82rem; text-align: right; }
+.allPlace {
+  display: block;
+  margin-top: 0.22rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  line-height: 1.35;
+  text-align: left;
+}
 .earth {
   display: grid;
   gap: 1.5rem;
@@ -641,19 +749,62 @@
 .cluster { list-style: none; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; margin: 0; padding: 0; }
 .cluster li { width: 88px; }
 .swatchesCompact { margin-top: 0.45rem; }
-.swatchesCompact .swatch { width: 28px; height: 12px; }
+/* Space between the featured portrait and the palette under it. */
+.swatchesFeatured { margin-top: 2rem; }
+/* Map stays a fixed box. The open embed overlays the portrait instead of
+   growing the column, so the story card and everything below stay put. */
+.featuredMap {
+  position: relative;
+  z-index: 5;
+  width: min(320px, 100%);
+  margin-top: 0.85rem;
+  padding: 0.7rem 0.15rem 0.45rem;
+  min-height: 3.4rem;
+}
+.featuredMap :global([class*="mapPanelBare"]) {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% - 0.15rem);
+  width: min(340px, calc(100vw - 2rem));
+  margin: 0;
+  z-index: 6;
+  box-shadow: 0 14px 32px rgba(26, 26, 26, 0.22);
+}
 
 @media (min-width: 769px) {
   .landingCats { display: block; }
   .latestGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .inspireGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .allList { display: grid; grid-template-columns: 1fr 1fr; column-gap: 2rem; }
-  .allThumb { width: 80px; height: 80px; flex-basis: 80px; }
+  .allList { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 1rem; row-gap: 1.5rem; }
+  .allTitle { font-size: 1.02rem; }
   .featuredPanel { margin-top: -4.5rem; margin-left: auto; }
 }
 @media (min-width: 1000px) {
-  .featured { grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.72fr); align-items: start; }
+  .featured {
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.72fr);
+    column-gap: 1.25rem;
+    row-gap: 0;
+    align-items: start;
+  }
+  /* The portrait and the stories column share one row. A zero height keeps
+     the column from stretching that row; min-height fills it to the photo. */
+  .featuredMain { display: contents; }
+  .featuredPhoto { grid-column: 1; grid-row: 1; }
+  .featured .swatches { grid-column: 1; grid-row: 2; }
+  .featuredMap { grid-column: 1; grid-row: 3; }
+  .featuredPanel { grid-column: 1; grid-row: 4; }
+  .more {
+    grid-column: 2;
+    grid-row: 1;
+    height: 0;
+    min-height: 100%;
+    max-height: none;
+    align-self: stretch;
+  }
   .earth { grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); align-items: center; }
+}
+@media (min-width: 1100px) {
+  .allList { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 1.15rem; row-gap: 1.6rem; }
 }
 @media (max-width: 768px) {
   .heroShade { background: linear-gradient(180deg, rgba(8, 14, 12, 0.15) 0%, rgba(8, 14, 12, 0.72) 100%); }
