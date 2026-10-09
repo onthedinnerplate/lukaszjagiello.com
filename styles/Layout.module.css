@@ -185,10 +185,11 @@
   .brandMark { width: 24px; height: 24px; }
 }
 
-/* Homepage only: the bar sits on the photograph. White type, solid gold rule. */
+/* Homepage only: the bar sits on the photograph. White type, and a moss
+   line the portrait frame's top edge meets. */
 .headerOnHero {
   background: transparent;
-  border-bottom: 2px solid #c4a35a;
+  border-bottom: 2px solid #B9C27A;
 }
 .headerOnHero .brand,
 .headerOnHero .brandGiven,
