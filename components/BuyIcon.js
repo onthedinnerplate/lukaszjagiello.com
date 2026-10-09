@@ -1,13 +1,14 @@
 import Link from 'next/link';
 
-/** Round "buy a download" shortcut shown beside Share on cards. Links to the photo page's buy box. */
+/** Round "buy a download" shortcut shown beside Share on every image card. */
 export default function BuyIcon({ photo, className }) {
-  if (!photo?.forSale || !photo.href) return null;
+  const href = photo?.forSale && photo?.href ? `${photo.href}#buy` : '/contact';
+  const label = photo?.title ? `Buy a download of ${photo.title}` : 'Buy a download';
   return (
     <Link
-      href={`${photo.href}#buy`}
+      href={href}
       className={className}
-      aria-label={`Buy a download of ${photo.title}`}
+      aria-label={label}
       title="Buy a download"
       onClick={(event) => event.stopPropagation()}
     >
