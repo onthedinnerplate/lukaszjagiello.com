@@ -91,7 +91,7 @@ export default function MasonryGallery({
   const showDisclosure = photos.some((photo) => mentionsGear(captionFor(photo).equipment));
   const tiled = layout === 'uniform' || layout === 'tight';
   const listClass = tiled
-    ? `${styles.uniform} ${layout === 'tight' ? styles.tight : ''}`
+    ? styles.uniform
     : layout === 'row'
       ? styles.saleRow
       : layout === 'trio'
