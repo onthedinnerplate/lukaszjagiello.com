@@ -100,6 +100,17 @@ function nearly(a, b) {
     && Math.abs(a.width - b.width) < 0.5 && Math.abs(a.height - b.height) < 0.5;
 }
 
+/* Custom properties keep the clamp() text. A probe resolves it to pixels. */
+function readHeroDrop(el) {
+  if (!el) return 0;
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none;height:var(--hero-drop, 0px)';
+  el.appendChild(probe);
+  const px = probe.getBoundingClientRect().height;
+  probe.remove();
+  return Number.isFinite(px) ? px : 0;
+}
+
 export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = false }) {
   const Title = headingAs;
   const menu = heroNavProps(nav);
@@ -127,7 +138,7 @@ export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = fal
       const bh = band.height;
       if (bw < 1 || bh < 1) return;
       const navH = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 0;
-      const drop = bandEl ? Number.parseFloat(getComputedStyle(bandEl).getPropertyValue('--hero-drop')) || 0 : 0;
+      const drop = readHeroDrop(bandEl);
       const stageH = Math.max(bh - navH - drop, 0);
       const frameH = stageH * 0.881;
       const frameW = (frameH * 9) / 16;
