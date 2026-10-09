@@ -3,15 +3,16 @@ import { headlineAccentClassName } from '@/components/headlineAccent';
 
 /**
  * Card title using the same accent phrase and Caveat treatment as the article h1.
- * `color` overrides the accent's hero white so the word stays readable on the card.
+ * `color` is that card's middle swatch (adjusted for contrast), passed as
+ * --accent-script. Without a swatch the accent keeps its current color.
  */
 export default function AccentTitle({ title, phrase, color, as: Tag = 'h2', className }) {
   const span = phrase ? phraseSpan(title, phrase) : null;
   if (!span) return <Tag className={className}>{title}</Tag>;
   return (
-    <Tag className={className}>
+    <Tag className={className} style={color ? { '--accent-script': color } : undefined}>
       {span.before}
-      <span className={headlineAccentClassName} style={color ? { color } : undefined}>
+      <span className={headlineAccentClassName}>
         {span.phrase}
       </span>
       {span.after}

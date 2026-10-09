@@ -22,6 +22,7 @@ import {
   journalCategoryPath,
 } from '@/lib/articles';
 import shapes from '@/lib/journalShapes.json';
+import { accentScriptFromPalette } from '@/lib/accentInk';
 import { graph, personNode, websiteNode, pageNode, articleNode } from '@/lib/seo';
 import styles from '@/styles/Journal.module.css';
 
@@ -39,6 +40,7 @@ export default function JournalArticle({ article }) {
   const path = `/journal/${article.slug}`;
   const { photo } = article;
   const shape = shapes[String(article.photoNumber)];
+  const accentScript = accentScriptFromPalette(shape?.palette)?.used;
   const [lbOpen, setLbOpen] = useState(false);
   const lightboxId = useId();
   const openerRef = useRef(null);
@@ -89,7 +91,7 @@ export default function JournalArticle({ article }) {
         <meta property="article:modified_time" content={article.date} />
         <meta property="article:author" content={article.author} />
       </Head>
-      <article className={styles.article} style={{ '--ar': ar, '--accent': shape.accent }}>
+      <article className={styles.article} style={{ '--ar': ar, '--accent': shape.accent, '--accent-script': accentScript }}>
         <div className={styles.journalCats}>
           <CategoryNav
             active={photo.categories}
@@ -158,7 +160,7 @@ export default function JournalArticle({ article }) {
             <HeadlinePhrase
               title={article.title}
               phrase={article.headlinePhrase}
-              color={shape.palette[2]}
+              color={accentScript}
               as="h1"
               className={styles.title}
             />

@@ -670,9 +670,10 @@
   letter-spacing: 0;
   word-spacing: 0;
 }
-/* Caveat accent shared by article headlines and the Journeys hero phrases.
+/* Caveat accent on article headlines and Journeys cards.
    Family comes from the next/font class paired with this one.
-   Color is the hero white (#fff). Article pages override it inline with their swatch. */
+   --accent-script is that item's middle swatch, darkened on white when it
+   would fall under 3:1. Hero phrases set their own color and do not use this. */
 .headlineAccent {
   font-weight: 400;
   font-synthesis: none;
@@ -684,7 +685,7 @@
   word-spacing: 0.06em;
   margin-left: 0.1em;
   margin-right: 0.1em;
-  color: #fff;
+  color: var(--accent-script, #fff);
 }
 /* Category bar lives under the headline, on the dark photograph. */
 .heroTitle:has(+ .heroNav) { margin-bottom: 0; }
