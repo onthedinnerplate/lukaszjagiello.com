@@ -25,6 +25,8 @@ const SIZES_WIDE = '(max-width: 640px) 100vw, (max-width: 1024px) 48vw, 32vw';
  */
 export default function MasonryGallery({
   photos,
+  sequence = null,
+  linkCategory = '',
   wide = false,
   priorityCount = 0,
   headingId,
@@ -36,6 +38,15 @@ export default function MasonryGallery({
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const lightboxId = useId();
+  // Display order can differ from the order next/prev walks. `sequence` is the
+  // catalog order for the active category; the grid itself uses `photos`.
+  const viewing = sequence && sequence.length ? sequence : photos;
+
+  const cardHref = (photo, num) => {
+    const base = photo.href || `/gallery#photo-${num}`;
+    if (!linkCategory || linkCategory === 'all' || !photo.href) return base;
+    return `${photo.href}?category=${encodeURIComponent(linkCategory)}`;
+  };
 
   // Shared links look like /gallery#photo-12 — open that photo on arrival,
   // including when the hash changes without a full reload.
@@ -45,7 +56,7 @@ export default function MasonryGallery({
       const m = window.location.hash.match(/^#photo-(\d+)$/);
       if (!m) return;
       const n = parseInt(m[1], 10);
-      const idx = photos.findIndex((p) => photoNumberFromSrc(p.src) === n);
+      const idx = viewing.findIndex((p) => photoNumberFromSrc(p.src) === n);
       if (idx >= 0) {
         setSelectedIndex(idx);
         setLightboxOpen(true);
@@ -54,10 +65,12 @@ export default function MasonryGallery({
     openFromHash();
     window.addEventListener('hashchange', openFromHash);
     return () => window.removeEventListener('hashchange', openFromHash);
-  }, [photos, anchor]);
+  }, [viewing, anchor]);
 
   const handleImageClick = (index) => {
-    setSelectedIndex(index);
+    const photo = photos[index];
+    const seqIndex = viewing.findIndex((p) => p.src === photo?.src);
+    setSelectedIndex(seqIndex >= 0 ? seqIndex : 0);
     setLightboxOpen(true);
   };
   // Cards are real links to /photo/<slug> so crawlers (and middle-click,
@@ -69,8 +82,8 @@ export default function MasonryGallery({
     handleImageClick(index);
   };
   const handleCloseLightbox = () => setLightboxOpen(false);
-  const handleNextImage = () => setSelectedIndex((prev) => (prev + 1) % photos.length);
-  const handlePrevImage = () => setSelectedIndex((prev) => (prev - 1 + photos.length) % photos.length);
+  const handleNextImage = () => setSelectedIndex((prev) => (prev + 1) % viewing.length);
+  const handlePrevImage = () => setSelectedIndex((prev) => (prev - 1 + viewing.length) % viewing.length);
 
   const showDisclosure = photos.some((photo) => mentionsGear(captionFor(photo).equipment));
   const tiled = layout === 'uniform' || layout === 'tight';
@@ -92,6 +105,7 @@ export default function MasonryGallery({
           const { equipment, specs } = captionFor(photo);
           const num = photoNumberFromSrc(photo.src);
           const shareUrl = photo.href;
+          const href = cardHref(photo, num);
           const sizes = layout === 'row'
             ? '(max-width: 768px) 100vw, 25vw'
             : layout === 'trio'
@@ -110,7 +124,7 @@ export default function MasonryGallery({
                     photo={photo}
                   />
                   <Link
-                    href={photo.href || `/gallery#photo-${num}`}
+                    href={href}
                     className={styles.imgBtn}
                     onClick={(e) => onCardClick(e, i)}
                     aria-expanded={lightboxOpen && selectedIndex === i}
@@ -133,7 +147,7 @@ export default function MasonryGallery({
                 </div>
                 <figcaption className={styles.caption}>
                   <span className={styles.title}>
-                    {photo.href ? <Link href={photo.href} className={styles.titleLink}>{photo.title}</Link> : photo.title}
+                    {photo.href ? <Link href={href} className={styles.titleLink}>{photo.title}</Link> : photo.title}
                     {photo.location ? <span className={styles.location}>{photo.location}</span> : null}
                   </span>
                   {(equipment || specs) && (
@@ -157,7 +171,7 @@ export default function MasonryGallery({
       <Lightbox
         id={lightboxId}
         isOpen={lightboxOpen}
-        photo={photos[selectedIndex]}
+        photo={viewing[selectedIndex]}
         onClose={handleCloseLightbox}
         onNext={handleNextImage}
         onPrev={handlePrevImage}
