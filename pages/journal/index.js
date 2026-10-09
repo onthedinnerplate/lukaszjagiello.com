@@ -18,6 +18,7 @@ import {
 } from '@/lib/articles';
 import { CATEGORIES } from '@/lib/categories';
 import { byNumber, CLUSTER_NUMBERS, inspirationsFrom, LATEST_SLUGS, MORE_NUMBERS, shapeFor } from '@/lib/journeys';
+import { spreadBySubject } from '@/lib/subjectOrder';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import styles from '@/styles/Journal.module.css';
 
@@ -124,7 +125,7 @@ export default function JournalIndex({ articles, counts }) {
   const featured = visible.find((article) => article.photoSlug === 'ruby-beach') || null;
   const inspirations = inspirationsFrom(visible);
   const more = byNumber(visible, MORE_NUMBERS);
-  const catalogue = [...visible].sort((a, b) => a.photoNumber - b.photoNumber);
+  const catalogue = spreadBySubject(visible, (article) => article.photoNumber);
   const cluster = byNumber(articles, CLUSTER_NUMBERS);
   const featuredShape = featured ? shapeFor(featured) : null;
   const [filterNote, setFilterNote] = useState('');
