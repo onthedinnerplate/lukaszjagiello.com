@@ -28,6 +28,11 @@
   --menu-underline: #A3AD62;
 }
 
+/* Phone cards share one side inset: title, location, swatches, and icons. */
+@media (max-width: 767px) {
+  :root { --card-inset: 0.7rem; }
+}
+
 /* Shared frame: header, hero, and page sections use this so their
    content edges line up. Horizontal padding is the same gutter. */
 .container {

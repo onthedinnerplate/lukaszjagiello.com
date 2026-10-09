@@ -1622,9 +1622,11 @@
   }
   .portraitImg,
   .allThumb { object-position: var(--focus, center); }
-  .journeyCard,
-  .allTile,
-  .featured { --card-inset: 0.7rem; }
+  .featured { --card-inset: 1.2rem; }
+  .featuredPanel {
+    padding-left: var(--card-inset, 1.2rem);
+    padding-right: var(--card-inset, 1.2rem);
+  }
   .journeyBody,
   .allCopy,
   .allLocRow,

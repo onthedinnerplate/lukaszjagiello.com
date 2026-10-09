@@ -129,6 +129,10 @@
   align-items: flex-start;
 }
 .photoColumn { width: 100%; min-width: 0; }
+@media (max-width: 767px) {
+  /* The title under the photo is flush with the photo, so the icons are too. */
+  .photoColumn { --card-inset: 0px; }
+}
 @media (max-width: 900px) {
   .photoLayout { grid-template-columns: 1fr; gap: 1.5rem; }
   .photoStage { order: -1; }
