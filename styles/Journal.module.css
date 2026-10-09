@@ -481,6 +481,10 @@
 .heroBleed {
   border-radius: 0;
   aspect-ratio: auto;
+}
+/* Wins over the shared hero's height, which uses --hero-bleed and would
+   otherwise compute to auto and collapse this band. */
+.heroSlotBleed > .heroBand {
   height: calc(100cqw * 612 / 1440 + var(--nav-h));
 }
 .heroBleed .portrait {
@@ -1162,6 +1166,7 @@
     height: calc(0.881 * 100cqw * 612 / 1440);
   }
   .heroShade { display: none; }
+  .heroSlotBleed > .heroBand { height: auto; }
   .heroBleed .heroMedia {
     height: calc(100cqw * 612 / 1440 + var(--nav-h));
     aspect-ratio: auto;
