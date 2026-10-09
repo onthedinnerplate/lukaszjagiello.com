@@ -2,8 +2,26 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import CategoryNav from '@/components/CategoryNav';
+import { headlineAccentClassName } from '@/components/headlineAccent';
 import { photos } from '@/lib/photos';
 import styles from '@/styles/Journal.module.css';
+
+const HERO_ACCENTS = ['the story', 'the terrain'];
+
+/** Split the hero sentence so only the two stored phrases take the accent. */
+function titleWithAccents(title) {
+  const nodes = [];
+  let rest = title;
+  for (const phrase of HERO_ACCENTS) {
+    const at = rest.indexOf(phrase);
+    if (at < 0) return null;
+    if (at > 0) nodes.push({ text: rest.slice(0, at), accent: false });
+    nodes.push({ text: phrase, accent: true });
+    rest = rest.slice(at + phrase.length);
+  }
+  if (rest) nodes.push({ text: rest, accent: false });
+  return nodes;
+}
 
 const POPPINS = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap';
 
@@ -41,6 +59,7 @@ const HERO = {
  */
 export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
   const Title = headingAs;
+  const titleNodes = titleWithAccents(HERO.title);
   const credit = (
     <p className={nav ? `${styles.heroCap} ${styles.heroCapFlush}` : styles.heroCap}>
       <Link href={HERO.creditHref}>{HERO.credit}</Link>
@@ -66,7 +85,19 @@ export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
         <div className={styles.heroShade} aria-hidden="true" />
         <div className={styles.heroCopy}>
           <p className={styles.heroKicker}>{HERO.kicker}</p>
-          <Title className={styles.heroTitle}>{HERO.title}</Title>
+          <Title className={styles.heroTitle}>
+            {titleNodes
+              ? titleNodes.map((node, i) =>
+                  node.accent ? (
+                    <span key={`${node.text}-${i}`} className={headlineAccentClassName}>
+                      {node.text}
+                    </span>
+                  ) : (
+                    node.text
+                  ),
+                )
+              : HERO.title}
+          </Title>
           {nav ? (
             <div className={styles.heroNav}>
               <CategoryNav {...nav} />
