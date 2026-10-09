@@ -6,6 +6,7 @@ import { CATEGORIES, categoryMenuLabel, galleryPathFor } from '@/lib/categories'
 import { photos } from '@/lib/photos';
 import { articles } from '@/lib/articles';
 import SiteCategoryNav from '@/components/SiteCategoryNav';
+import SectionSpy from '@/components/SectionSpy';
 import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
 import styles from '@/styles/Layout.module.css';
 import BackToTop from './BackToTop';
@@ -49,6 +50,7 @@ function Nav() {
   const [instant, setInstant] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const headerRef = useRef(null);
 
   const measure = (el) => {
     const list = listRef.current;
@@ -92,6 +94,19 @@ function Nav() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useIsoLayoutEffect(() => {
+    const el = headerRef.current;
+    if (!el) return undefined;
+    const apply = () => {
+      document.documentElement.style.setProperty('--nav-h', `${Math.ceil(el.getBoundingClientRect().height)}px`);
+    };
+    apply();
+    if (typeof ResizeObserver === 'undefined') return undefined;
+    const observer = new ResizeObserver(apply);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [path]);
+
   useEffect(() => {
     if (!menuOpen) return undefined;
     const onKey = (event) => {
@@ -122,7 +137,7 @@ function Nav() {
     : { '--x': '0px', '--y': '0px', '--w': 0, opacity: 0 };
 
   return (
-    <header className={scrolled ? `${styles.header} ${styles.headerScrolled}` : styles.header}>
+    <header ref={headerRef} className={scrolled ? `${styles.header} ${styles.headerScrolled}` : styles.header}>
       <nav
         className={`${styles.nav} container${ready ? ` ${styles.navReady}` : ''}${menuOpen ? ` ${styles.navOpen}` : ''}`}
         aria-label="Main"
@@ -187,6 +202,7 @@ function Nav() {
           label="Categories"
         />
       </div>
+      <SectionSpy path={path} />
     </header>
   );
 }
