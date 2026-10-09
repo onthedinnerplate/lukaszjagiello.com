@@ -18,7 +18,7 @@ const COPY = {
  * The Journeys landing header: optional category row, then the Marymere hero.
  * `titleAs` is `h1` on Journeys and Home. Other pages pass `p` so their own
  * page title stays the single h1. The class is the same either way.
- * `categories.showOnMobile` keeps the row visible under 769px. Journeys hides it.
+ * The category row uses the Journeys landing wrapper, so it is hidden below 769px.
  */
 export default function JourneysHeader({ src, titleAs = 'h1', categories = null }) {
   const Title = titleAs;
@@ -30,7 +30,7 @@ export default function JourneysHeader({ src, titleAs = 'h1', categories = null 
         <link rel="stylesheet" href={POPPINS} />
       </Head>
       {categories ? (
-        <div className={`${styles.landingCats} ${categories.showOnMobile ? styles.showCats : ''}`}>
+        <div className={styles.landingCats}>
           <CategoryNav
             active={categories.active}
             counts={categories.counts}

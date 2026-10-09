@@ -41,8 +41,8 @@ export default function GalleryPage({ photos, category, counts, heroSrc }) {
         categories={{
           active: isAll ? 'all' : category.slug,
           counts,
+          hrefFor: galleryPathFor,
           label: 'Gallery categories',
-          showOnMobile: true,
         }}
       />
       <section className={styles.galleryPage} aria-labelledby="gallery-heading">
