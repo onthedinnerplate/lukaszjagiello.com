@@ -565,7 +565,7 @@
   letter-spacing: -0.03em;
   color: #EEF0E6;
 }
-.heroTitle .headlineAccent { color: #B9C27A; }
+.heroTitle .headlineAccent { color: #182A17; }
 /* Caveat accent shared by article headlines and the Journeys hero phrases.
    Family comes from the next/font class paired with this one.
    Color is the hero white (#fff). Article pages override it inline with their swatch. */
@@ -1028,7 +1028,7 @@
   .heroTitle,
   .heroSub,
   .heroCap a { color: #020A0A; }
-  .heroTitle .headlineAccent { color: #6C724A; }
+  .heroTitle .headlineAccent { color: #182A17; }
   .heroNav :global(a),
   .heroNav :global(a:hover) { color: #020A0A; }
   .heroNav :global(span) { color: #334824; }
