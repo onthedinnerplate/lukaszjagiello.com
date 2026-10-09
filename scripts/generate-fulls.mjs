@@ -1,95 +1,142 @@
-// Option A — re-encode the existing 1600px lightbox WebPs in place.
+// Lightbox fulls, regenerated from the committed camera JPEGs.
 //
-// The fulls are already capped at 1600px on the long edge, so this script does
-// not resize them and does not need the RAW/JPEG originals (that would be
-// option B). Each file is decoded and written back as WebP quality 80, effort 6.
-// If the result is over 500 KB, quality steps down until it fits. Pixel
-// dimensions are checked and left unchanged.
-//
-// Files already under 500 KB are left untouched, so running the script again
-// does not recompress them.
+// Source: private/downloads/NN/full.jpg (q92, original pixel size). The published
+// full keeps its current pixel size (1600px wide) so layout does not move.
+// WebP quality starts at 80. Files that fit under 500 KB stay there. Frames that
+// cannot hold quality 50 under 500 KB — the detailed foliage outliers — are
+// allowed up to 700 KB and also get an AVIF sibling for browsers that send
+// Accept: image/avif (everything in our browserslist).
 //
 //   npm run fulls
+//   npm run fulls -- --only=28,34
 //
-// Run this locally, then `npm run thumbs` so thumbnails derive from the new fulls.
+// Then `npm run thumbs` (thumbs read the same JPEGs, not these WebPs) and
+// `npm run manifest`.
 
-import { existsSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { photos } from '../lib/photos.js';
+import { bestUnder, encodeAvif, encodeWebp, renderPixels } from './encode-utils.mjs';
 
-const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'public');
-const MAX_BYTES = 500 * 1024;
-const START_QUALITY = 80;
-// A few foliage frames stay large even at moderate quality. The floor is low
-// so every 1600px full can land under 500 KB without resizing (option A).
-const MIN_QUALITY = 10;
+const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+const pub = path.join(root, 'public');
+const downloads = path.join(root, 'private', 'downloads');
+const reportPath = path.join(root, 'lib', 'encode-report-fulls.json');
+
+const CAP = 500 * 1024;
+const OUTLIER_CAP = 700 * 1024;
+const START_Q = 80;
+const FLOOR_Q = 50;
+const ABS_FLOOR = 24;
+const AVIF_MAX = 55;
+const AVIF_MIN = 40;
+
+const onlyArg = process.argv.find((a) => a.startsWith('--only='));
+const only = onlyArg ? new Set(onlyArg.split('=')[1].split(',').map((s) => s.padStart(2, '0'))) : null;
 
 const kb = (bytes) => `${(bytes / 1024).toFixed(0)} KB`;
 
-async function encode(input, quality) {
-  return sharp(input).rotate().webp({ quality, effort: 6 }).toBuffer();
+function writeAtomic(file, buf) {
+  const tmp = `${file}.tmp`;
+  writeFileSync(tmp, buf);
+  renameSync(tmp, file);
 }
 
+function mergeReport(fulls) {
+  const prev = existsSync(reportPath) && only ? JSON.parse(readFileSync(reportPath, 'utf8')) : {};
+  const prevFulls = prev.fulls || {};
+  const next = {
+    fulls: only ? { ...prevFulls, ...fulls } : fulls,
+    fullSettings: {
+      webp: { startQuality: START_Q, cap: CAP, outlierCap: OUTLIER_CAP, effort: 6, smartSubsample: true },
+      avif: { minQuality: AVIF_MIN, maxQuality: AVIF_MAX, cap: OUTLIER_CAP, effort: 4 },
+      sharpen: 'sigma 0.5 on downscale',
+      color: 'sRGB, metadata stripped',
+    },
+  };
+  writeFileSync(reportPath, JSON.stringify(next, null, 2) + '\n');
+}
+
+const report = {};
 let ok = 0;
-let kept = 0;
 let failed = 0;
 
 for (const p of photos) {
-  const file = path.join(root, p.src);
-  const name = path.basename(file);
+  const nn = p.src.match(/(\d+)-full/)[1];
+  if (only && !only.has(nn)) continue;
+  const dest = path.join(pub, p.src);
+  const name = path.basename(dest);
+  const jpeg = path.join(downloads, nn, 'full.jpg');
 
-  if (!existsSync(file)) {
-    console.error(`✗ ${name}: source missing (${p.src})`);
+  if (!existsSync(jpeg)) {
     failed++;
+    console.error(`✗ ${name}: needs the original from the owner (missing ${path.relative(root, jpeg)})`);
+    report[nn] = { error: 'missing-original', source: path.relative(root, jpeg) };
+    continue;
+  }
+  if (!existsSync(dest)) {
+    failed++;
+    console.error(`✗ ${name}: current full missing, so the target pixel size is unknown`);
     continue;
   }
 
   try {
-    const original = readFileSync(file);
-    const before = await sharp(original).metadata();
-
-    // Already under the budget: leave the bytes alone so a second run does not
-    // recompress an image that was encoded on a previous pass.
-    if (original.length < MAX_BYTES) {
-      kept++;
-      console.log(`• ${name}  kept ${before.width}×${before.height}  ${kb(original.length)}`);
-      continue;
+    const current = await sharp(dest).metadata();
+    const raw = await renderPixels(jpeg, {
+      width: current.width,
+      height: current.height,
+      fit: 'fill',
+    });
+    if (raw.info.width !== current.width || raw.info.height !== current.height) {
+      throw new Error(`dimensions ${raw.info.width}×${raw.info.height}, expected ${current.width}×${current.height}`);
     }
 
-    let quality = START_QUALITY;
-    let buf = await encode(original, quality);
-    while (buf.length >= MAX_BYTES && quality > MIN_QUALITY) {
-      const ratio = buf.length / MAX_BYTES;
-      const drop = ratio > 1.6 ? 8 : ratio > 1.25 ? 4 : 2;
-      quality = Math.max(MIN_QUALITY, quality - drop);
-      buf = await encode(original, quality);
+    let webp = await bestUnder((q) => encodeWebp(raw, q), CAP, FLOOR_Q, START_Q);
+    let outlier = false;
+    if (!webp) {
+      outlier = true;
+      webp = await bestUnder((q) => encodeWebp(raw, q), OUTLIER_CAP, ABS_FLOOR, START_Q);
     }
-
-    const after = await sharp(buf).metadata();
-    if (after.width !== before.width || after.height !== before.height) {
-      console.error(`✗ ${name}: dimensions changed ${before.width}×${before.height} → ${after.width}×${after.height}; not written`);
+    if (!webp) {
       failed++;
+      console.error(`✗ ${name}: could not fit under ${kb(OUTLIER_CAP)} even at q${ABS_FLOOR}`);
       continue;
     }
 
-    if (buf.length >= MAX_BYTES) {
-      console.error(`✗ ${name}: still ${kb(buf.length)} at q${quality} (limit 500 KB)`);
-      failed++;
-      continue;
+    let avif = null;
+    const avifPath = dest.replace(/\.webp$/, '.avif');
+    if (outlier || webp.quality < 60) {
+      avif = await bestUnder((q) => encodeAvif(raw, q), OUTLIER_CAP, AVIF_MIN, AVIF_MAX);
+      if (avif) writeAtomic(avifPath, avif.buf);
+    } else if (existsSync(avifPath)) {
+      // A previous outlier pass may have left an AVIF that this frame no longer needs.
+      unlinkSync(avifPath);
     }
 
-    const tmp = `${file}.tmp`;
-    writeFileSync(tmp, buf);
-    renameSync(tmp, file);
+    writeAtomic(dest, webp.buf);
     ok++;
-    console.log(`✓ ${name}  q${quality}  ${after.width}×${after.height}  ${kb(original.length)} → ${kb(buf.length)}`);
+    report[nn] = {
+      title: p.title,
+      source: path.relative(root, jpeg),
+      width: raw.info.width,
+      height: raw.info.height,
+      webpQuality: webp.quality,
+      webpBytes: webp.buf.length,
+      avifQuality: avif ? avif.quality : null,
+      avifBytes: avif ? avif.buf.length : null,
+      outlier,
+    };
+    const avifNote = avif ? `  avif q${avif.quality} ${kb(avif.buf.length)}` : '';
+    const flag = outlier ? '  outlier cap 700KB' : '';
+    console.log(`✓ ${name}  webp q${webp.quality}  ${raw.info.width}×${raw.info.height}  ${kb(webp.buf.length)}${avifNote}${flag}`);
   } catch (err) {
     failed++;
     console.error(`✗ ${name}: ${err.message}`);
   }
 }
 
-console.log(`\nOption A: ${ok} fulls re-encoded, ${kept} kept (already under 500 KB), ${failed} failed.`);
+mergeReport(report);
+console.log(`\n${ok} fulls written, ${failed} failed.`);
 if (failed) process.exitCode = 1;

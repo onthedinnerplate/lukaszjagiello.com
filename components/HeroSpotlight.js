@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import ShareButton from './ShareButton';
 import BuyIcon from './BuyIcon';
+import ResponsiveImage from './ResponsiveImage';
 import styles from '@/styles/Home.module.css';
+
+// The 2×2 block inside the 1400px hero. Cover-crop draws a landscape about
+// 520px wide; 2× needs the 1200px thumb, not the 800.
+const SPOTLIGHT_SIZES = '(min-width: 901px) 520px, 100vw';
 
 /**
  * Hover reveal over the hero's 2×2 block. Nothing moves on its own.
@@ -77,13 +81,15 @@ export default function HeroSpotlight({ photos, hoverIndex, onHover, onSelect })
         onMouseMove={onMove}
         style={{ cursor: open ? 'pointer' : 'default' }}
       >
-        <Image
+        <ResponsiveImage
           key={photo.src}
+          pictureClassName={styles.heroPicture}
           src={photo.thumb || photo.src}
           alt=""
-          fill
-          sizes="(max-width: 900px) 100vw, 45vw"
-          unoptimized
+          width={photo.thumbWidth || photo.width}
+          height={photo.thumbHeight || photo.height}
+          sizes={SPOTLIGHT_SIZES}
+          srcSet={photo.thumbSrcSet}
           style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
         />
         <span className={styles.cardActions}>

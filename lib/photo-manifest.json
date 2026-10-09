@@ -5,327 +5,1164 @@
       "height": 2399,
       "color": "#080808",
       "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 534,
+          "height": 800
+        },
+        "1200": {
+          "width": 801,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1281,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-02-full.webp": {
       "width": 1600,
       "height": 1067,
       "color": "#080808",
       "thumbWidth": 800,
-      "thumbHeight": 534
+      "thumbHeight": 534,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 267
+        },
+        "800": {
+          "width": 800,
+          "height": 534
+        },
+        "1200": {
+          "width": 1200,
+          "height": 801
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1281
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-03-full.webp": {
       "width": 1600,
       "height": 1067,
       "color": "#0878a8",
       "thumbWidth": 800,
-      "thumbHeight": 534
+      "thumbHeight": 533,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 266
+        },
+        "800": {
+          "width": 800,
+          "height": 533
+        },
+        "1200": {
+          "width": 1200,
+          "height": 799
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1280
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-04-full.webp": {
       "width": 1600,
       "height": 2399,
       "color": "#080808",
-      "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbWidth": 533,
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 533,
+          "height": 800
+        },
+        "1200": {
+          "width": 801,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1281,
+          "height": 1920
+        }
+      },
+      "fullAvif": "images/gallery/lightbox/lukasz-jagiello-04-full.avif"
     },
     "images/gallery/lightbox/lukasz-jagiello-05-full.webp": {
       "width": 1600,
       "height": 2399,
       "color": "#080808",
       "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 534,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1280,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-06-full.webp": {
       "width": 1600,
       "height": 1067,
       "color": "#082838",
       "thumbWidth": 800,
-      "thumbHeight": 534
+      "thumbHeight": 533,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 267
+        },
+        "800": {
+          "width": 800,
+          "height": 533
+        },
+        "1200": {
+          "width": 1200,
+          "height": 800
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1280
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-07-full.webp": {
       "width": 1600,
       "height": 1067,
-      "color": "#081818",
+      "color": "#081828",
       "thumbWidth": 800,
-      "thumbHeight": 534
+      "thumbHeight": 534,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 267
+        },
+        "800": {
+          "width": 800,
+          "height": 534
+        },
+        "1200": {
+          "width": 1200,
+          "height": 800
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1281
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-08-full.webp": {
       "width": 1600,
       "height": 2399,
       "color": "#a8c8e8",
       "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 534,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1281,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-09-full.webp": {
       "width": 1600,
       "height": 2399,
       "color": "#081808",
-      "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbWidth": 533,
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 533,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1280,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-10-full.webp": {
       "width": 1600,
       "height": 2399,
       "color": "#081808",
-      "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbWidth": 533,
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 533,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1280,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-11-full.webp": {
       "width": 1600,
       "height": 900,
       "color": "#085868",
       "thumbWidth": 800,
-      "thumbHeight": 450
+      "thumbHeight": 450,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 225
+        },
+        "800": {
+          "width": 800,
+          "height": 450
+        },
+        "1200": {
+          "width": 1200,
+          "height": 675
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-12-full.webp": {
       "width": 1600,
       "height": 2400,
       "color": "#08a8c8",
       "thumbWidth": 533,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 533,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1280,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-13-full.webp": {
       "width": 1600,
       "height": 2399,
       "color": "#282828",
       "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 534,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1281,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-14-full.webp": {
       "width": 1600,
       "height": 900,
       "color": "#080808",
       "thumbWidth": 800,
-      "thumbHeight": 450
+      "thumbHeight": 450,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 225
+        },
+        "800": {
+          "width": 800,
+          "height": 450
+        },
+        "1200": {
+          "width": 1200,
+          "height": 675
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-15-full.webp": {
       "width": 1600,
       "height": 1067,
       "color": "#084888",
       "thumbWidth": 800,
-      "thumbHeight": 534
+      "thumbHeight": 533,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 266
+        },
+        "800": {
+          "width": 800,
+          "height": 533
+        },
+        "1200": {
+          "width": 1200,
+          "height": 800
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1280
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-16-full.webp": {
       "width": 1600,
       "height": 2400,
       "color": "#0858a8",
       "thumbWidth": 533,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 533,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1280,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-17-full.webp": {
       "width": 1600,
       "height": 2070,
       "color": "#080808",
       "thumbWidth": 618,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 309,
+          "height": 400
+        },
+        "800": {
+          "width": 618,
+          "height": 800
+        },
+        "1200": {
+          "width": 927,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1483,
+          "height": 1920
+        }
+      },
+      "fullAvif": "images/gallery/lightbox/lukasz-jagiello-17-full.avif"
     },
     "images/gallery/lightbox/lukasz-jagiello-18-full.webp": {
       "width": 1600,
       "height": 1000,
       "color": "#080818",
       "thumbWidth": 800,
-      "thumbHeight": 500
+      "thumbHeight": 500,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 250
+        },
+        "800": {
+          "width": 800,
+          "height": 500
+        },
+        "1200": {
+          "width": 1200,
+          "height": 750
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1200
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-19-full.webp": {
       "width": 1600,
       "height": 2399,
       "color": "#788898",
-      "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbWidth": 533,
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 533,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1281,
+          "height": 1920
+        }
+      },
+      "fullAvif": "images/gallery/lightbox/lukasz-jagiello-19-full.avif"
     },
     "images/gallery/lightbox/lukasz-jagiello-20-full.webp": {
       "width": 1600,
       "height": 2399,
       "color": "#081808",
       "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 534,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1281,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-21-full.webp": {
       "width": 1600,
       "height": 2399,
       "color": "#084808",
-      "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbWidth": 533,
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 266,
+          "height": 400
+        },
+        "800": {
+          "width": 533,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1280,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-22-full.webp": {
       "width": 1600,
       "height": 1143,
       "color": "#080808",
       "thumbWidth": 800,
-      "thumbHeight": 572
+      "thumbHeight": 572,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 286
+        },
+        "800": {
+          "width": 800,
+          "height": 572
+        },
+        "1200": {
+          "width": 1200,
+          "height": 857
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1371
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-23-full.webp": {
       "width": 1600,
       "height": 2399,
       "color": "#081808",
       "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 534,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1281,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-24-full.webp": {
       "width": 1600,
       "height": 1067,
       "color": "#e8b888",
       "thumbWidth": 800,
-      "thumbHeight": 534
+      "thumbHeight": 534,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 267
+        },
+        "800": {
+          "width": 800,
+          "height": 534
+        },
+        "1200": {
+          "width": 1200,
+          "height": 800
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1281
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-25-full.webp": {
       "width": 1600,
       "height": 1067,
       "color": "#080808",
       "thumbWidth": 800,
-      "thumbHeight": 534
+      "thumbHeight": 534,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 266
+        },
+        "800": {
+          "width": 800,
+          "height": 534
+        },
+        "1200": {
+          "width": 1200,
+          "height": 800
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1280
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-26-full.webp": {
       "width": 1600,
       "height": 1060,
       "color": "#080808",
       "thumbWidth": 800,
-      "thumbHeight": 530
+      "thumbHeight": 530,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 265
+        },
+        "800": {
+          "width": 800,
+          "height": 530
+        },
+        "1200": {
+          "width": 1200,
+          "height": 795
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1272
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-27-full.webp": {
       "width": 1600,
       "height": 1067,
       "color": "#080808",
       "thumbWidth": 800,
-      "thumbHeight": 534
+      "thumbHeight": 534,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 267
+        },
+        "800": {
+          "width": 800,
+          "height": 534
+        },
+        "1200": {
+          "width": 1200,
+          "height": 800
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1281
+        }
+      },
+      "fullAvif": "images/gallery/lightbox/lukasz-jagiello-27-full.avif"
     },
     "images/gallery/lightbox/lukasz-jagiello-28-full.webp": {
       "width": 1600,
       "height": 2399,
       "color": "#080808",
       "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 534,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1281,
+          "height": 1920
+        }
+      },
+      "fullAvif": "images/gallery/lightbox/lukasz-jagiello-28-full.avif"
     },
     "images/gallery/lightbox/lukasz-jagiello-29-full.webp": {
       "width": 1600,
       "height": 1067,
       "color": "#181808",
       "thumbWidth": 800,
-      "thumbHeight": 534
+      "thumbHeight": 534,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 267
+        },
+        "800": {
+          "width": 800,
+          "height": 534
+        },
+        "1200": {
+          "width": 1200,
+          "height": 800
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1281
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-30-full.webp": {
       "width": 1600,
       "height": 1230,
       "color": "#f8e8e8",
       "thumbWidth": 800,
-      "thumbHeight": 615
+      "thumbHeight": 615,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 307
+        },
+        "800": {
+          "width": 800,
+          "height": 615
+        },
+        "1200": {
+          "width": 1200,
+          "height": 923
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1476
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-31-full.webp": {
       "width": 1600,
       "height": 2845,
-      "color": "#081818",
-      "thumbWidth": 450,
-      "thumbHeight": 800
+      "color": "#080808",
+      "thumbWidth": 449,
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 224,
+          "height": 400
+        },
+        "800": {
+          "width": 449,
+          "height": 800
+        },
+        "1200": {
+          "width": 675,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1080,
+          "height": 1920
+        }
+      },
+      "fullAvif": "images/gallery/lightbox/lukasz-jagiello-31-full.avif"
     },
     "images/gallery/lightbox/lukasz-jagiello-32-full.webp": {
       "width": 1600,
       "height": 900,
       "color": "#0888b8",
       "thumbWidth": 800,
-      "thumbHeight": 450
+      "thumbHeight": 450,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 225
+        },
+        "800": {
+          "width": 800,
+          "height": 450
+        },
+        "1200": {
+          "width": 1200,
+          "height": 675
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1080
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-33-full.webp": {
       "width": 1600,
       "height": 2845,
       "color": "#f8f8f8",
       "thumbWidth": 450,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 225,
+          "height": 400
+        },
+        "800": {
+          "width": 450,
+          "height": 800
+        },
+        "1200": {
+          "width": 675,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1080,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-34-full.webp": {
       "width": 1600,
       "height": 2272,
       "color": "#f8f8f8",
       "thumbWidth": 563,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 282,
+          "height": 400
+        },
+        "800": {
+          "width": 563,
+          "height": 800
+        },
+        "1200": {
+          "width": 845,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1352,
+          "height": 1920
+        }
+      },
+      "fullAvif": "images/gallery/lightbox/lukasz-jagiello-34-full.avif"
     },
     "images/gallery/lightbox/lukasz-jagiello-35-full.webp": {
       "width": 1600,
       "height": 2036,
       "color": "#382808",
       "thumbWidth": 629,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 315,
+          "height": 400
+        },
+        "800": {
+          "width": 629,
+          "height": 800
+        },
+        "1200": {
+          "width": 943,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1509,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-36-full.webp": {
       "width": 1600,
       "height": 2399,
       "color": "#181808",
       "thumbWidth": 534,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 534,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1280,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-37-full.webp": {
       "width": 1600,
       "height": 2473,
       "color": "#080808",
       "thumbWidth": 518,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 259,
+          "height": 400
+        },
+        "800": {
+          "width": 518,
+          "height": 800
+        },
+        "1200": {
+          "width": 776,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1242,
+          "height": 1920
+        }
+      },
+      "fullAvif": "images/gallery/lightbox/lukasz-jagiello-37-full.avif"
     },
     "images/gallery/lightbox/lukasz-jagiello-38-full.webp": {
       "width": 1600,
       "height": 1067,
       "color": "#180808",
       "thumbWidth": 800,
-      "thumbHeight": 534
+      "thumbHeight": 533,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 266
+        },
+        "800": {
+          "width": 800,
+          "height": 533
+        },
+        "1200": {
+          "width": 1200,
+          "height": 800
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1280
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-39-full.webp": {
       "width": 1600,
       "height": 1000,
       "color": "#281818",
       "thumbWidth": 800,
-      "thumbHeight": 500
+      "thumbHeight": 500,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 250
+        },
+        "800": {
+          "width": 800,
+          "height": 500
+        },
+        "1200": {
+          "width": 1200,
+          "height": 750
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1200
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-40-full.webp": {
       "width": 1600,
       "height": 2071,
       "color": "#080808",
       "thumbWidth": 618,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 309,
+          "height": 400
+        },
+        "800": {
+          "width": 618,
+          "height": 800
+        },
+        "1200": {
+          "width": 927,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1483,
+          "height": 1920
+        }
+      },
+      "fullAvif": "images/gallery/lightbox/lukasz-jagiello-40-full.avif"
     },
     "images/gallery/lightbox/lukasz-jagiello-41-full.webp": {
       "width": 1600,
       "height": 1000,
       "color": "#080808",
       "thumbWidth": 800,
-      "thumbHeight": 500
+      "thumbHeight": 500,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 250
+        },
+        "800": {
+          "width": 800,
+          "height": 500
+        },
+        "1200": {
+          "width": 1200,
+          "height": 750
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1200
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-42-full.webp": {
       "width": 1600,
       "height": 1067,
       "color": "#080808",
       "thumbWidth": 800,
-      "thumbHeight": 534
+      "thumbHeight": 534,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 267
+        },
+        "800": {
+          "width": 800,
+          "height": 534
+        },
+        "1200": {
+          "width": 1200,
+          "height": 800
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1281
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-43-full.webp": {
       "width": 1600,
       "height": 1067,
       "color": "#382818",
       "thumbWidth": 800,
-      "thumbHeight": 534
+      "thumbHeight": 534,
+      "variants": {
+        "400": {
+          "width": 400,
+          "height": 267
+        },
+        "800": {
+          "width": 800,
+          "height": 534
+        },
+        "1200": {
+          "width": 1200,
+          "height": 800
+        },
+        "1920": {
+          "width": 1920,
+          "height": 1281
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-44-full.webp": {
       "width": 1600,
       "height": 2400,
       "color": "#080808",
       "thumbWidth": 533,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 533,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1280,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-45-full.webp": {
       "width": 1600,
       "height": 2400,
       "color": "#080808",
       "thumbWidth": 533,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 533,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1280,
+          "height": 1920
+        }
+      }
     },
     "images/gallery/lightbox/lukasz-jagiello-46-full.webp": {
       "width": 1600,
       "height": 2400,
       "color": "#080808",
       "thumbWidth": 533,
-      "thumbHeight": 800
+      "thumbHeight": 800,
+      "variants": {
+        "400": {
+          "width": 267,
+          "height": 400
+        },
+        "800": {
+          "width": 533,
+          "height": 800
+        },
+        "1200": {
+          "width": 800,
+          "height": 1200
+        },
+        "1920": {
+          "width": 1280,
+          "height": 1920
+        }
+      }
     }
   },
   "hero": {
-    "width": 1200,
-    "height": 550,
+    "width": 1920,
+    "height": 880,
     "color": "#080808"
   }
 }

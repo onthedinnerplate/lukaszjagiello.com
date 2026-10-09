@@ -9,7 +9,7 @@
 //
 //   npm run manifest
 
-import { writeFileSync } from 'node:fs';
+import { existsSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -30,13 +30,34 @@ async function measure(rel, withColor) {
   return { width, height, color: toHex(dominant) };
 }
 
+// Long-edge thumb variants. 800 keeps the historical `-thumb.webp` name.
+const THUMB_EDGES = [400, 800, 1200, 1920];
+
+function thumbVariantRel(thumb, edge) {
+  if (edge === 800) return thumb;
+  return thumb.replace(/-thumb\.webp$/, `-thumb-${edge}.webp`);
+}
+
 const manifest = { photos: {}, hero: null };
 let failed = 0;
 for (const p of photos) {
   try {
     const full = await measure(p.src, true);
     const thumb = await measure(p.thumb, false);
-    manifest.photos[p.src] = { ...full, thumbWidth: thumb.width, thumbHeight: thumb.height };
+    const variants = {};
+    for (const edge of THUMB_EDGES) {
+      const rel = thumbVariantRel(p.thumb, edge);
+      if (!existsSync(path.join(pub, rel))) continue;
+      variants[String(edge)] = await measure(rel, false);
+    }
+    const avifRel = p.src.replace(/\.webp$/, '.avif');
+    manifest.photos[p.src] = {
+      ...full,
+      thumbWidth: thumb.width,
+      thumbHeight: thumb.height,
+      variants,
+      ...(existsSync(path.join(pub, avifRel)) ? { fullAvif: avifRel } : {}),
+    };
   } catch (err) {
     failed++;
     console.error(`✗ ${p.src}: ${err.message}`);
