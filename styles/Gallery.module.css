@@ -493,13 +493,19 @@
   flex-direction: column;
   width: 100%;
 }
-.equalCards .frameCover { flex: 0 0 auto; }
+/* The square is the minimum. Leftover row height goes to the photo, not an empty caption. */
+.equalCards .frameCover {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}
 .cardSwatches {
   flex: 0 0 auto;
   width: 100%;
   min-width: 0;
 }
-.equalCards .caption { flex: 1 0 auto; }
+.equalCards .caption { flex: 0 0 auto; }
 .equalCards .metaBlock {
   flex: 1 1 auto;
   min-width: 0;
