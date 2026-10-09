@@ -191,7 +191,7 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
 
         {gate ? (
           <section className={styles.band} aria-labelledby="gate-hero-title">
-            <h2 id="gate-hero-title" className={styles.sectionLabel}>Featured photograph</h2>
+            <h2 id="gate-hero-title" className={styles.sectionLabel}>Featured photography</h2>
             <GallerySectionNav
               active={gridCategory}
               counts={counts}
