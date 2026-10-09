@@ -34,16 +34,9 @@ export default function Home({ selected, navCounts }) {
         }}
       />
 
-      <section className={`${styles.section} ${styles.sectionFirst}`} aria-labelledby="selected-photos">
+      <section className={`${styles.section} ${styles.sectionFirst}`} aria-labelledby="featured-heading">
         <div className={styles.sectionHead}>
-          <h1 id="selected-photos">Selected photographs</h1>
-        </div>
-        <SelectedPhotographs photos={selected} />
-      </section>
-
-      <section className={styles.section} aria-labelledby="featured-heading">
-        <div className={styles.sectionHead}>
-          <h2 id="featured-heading">Featured Collections</h2>
+          <h1 id="featured-heading">Featured Collections</h1>
           <p>A selection of curated photography from diverse locations and subjects.</p>
         </div>
         <SelectedPhotographs photos={selected} />
