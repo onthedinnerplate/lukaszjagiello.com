@@ -233,10 +233,30 @@
   .journalCats { display: block; margin-bottom: 0.25rem; }
 
   .article {
+    position: relative;
     max-width: 1180px;
     padding: 2.25rem var(--gutter) 5rem;
   }
-  .hero { display: none; }
+  /* The in-flow photo is the mosaic below. This copy only fills the bar
+     so the fixed nav can sit on the photograph without moving the article. */
+  .hero {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-h);
+    margin: 0;
+    border-radius: 0;
+    z-index: 40;
+    pointer-events: none;
+  }
+  .heroImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+  }
 
   .spread {
     --overlap: 104px;
@@ -442,9 +462,12 @@
 .landingCats { display: none; padding: 1.1rem var(--gutter) 0; }
 .heroBand {
   position: relative;
-  height: 68vh;
-  min-height: 420px;
-  max-height: 640px;
+  /* Sit under the fixed nav. The extra height cancels the pull, so the
+     band's bottom edge — and everything after it — stays put. */
+  margin-top: calc(-1 * var(--nav-h));
+  height: calc(68vh + var(--nav-h));
+  min-height: calc(420px + var(--nav-h));
+  max-height: calc(640px + var(--nav-h));
   overflow: hidden;
   color: #fff;
   background: #102013;
@@ -459,7 +482,8 @@
   position: absolute;
   left: clamp(20px, 6vw, 88px);
   right: 8%;
-  top: 46%;
+  /* 46% of the taller band, plus the pull, lands on the old 46% line. */
+  top: calc(46% + 0.54 * var(--nav-h));
   transform: translateY(-50%);
   max-width: 680px;
 }
@@ -910,4 +934,26 @@
 @media (max-width: 768px) {
   .heroShade { background: linear-gradient(180deg, rgba(8, 14, 12, 0.15) 0%, rgba(8, 14, 12, 0.72) 100%); }
   .heroCopy { top: auto; bottom: 3.2rem; transform: none; }
+  /* Stacked article photo: grow it upward under the nav. The extra height
+     keeps the photo's bottom, and the title under it, where they were. */
+  .article { padding-top: 0; }
+  .article > .hero {
+    position: relative;
+    margin-top: calc(-1 * var(--nav-h));
+    margin-bottom: 1.75rem;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    width: 100vw;
+    height: calc((100vw - 2 * var(--gutter)) / var(--ar) + var(--nav-h) + 3.5rem);
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .article > .hero .heroImg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
 }
