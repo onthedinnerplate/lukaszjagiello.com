@@ -67,6 +67,13 @@ function JourneyThumb({ photo }) {
   );
 }
 
+/** Owner-written location, split on the commas already in the string. Nothing is added. */
+function locationLines(location) {
+  const parts = String(location || '').split(',').map((part) => part.trim()).filter(Boolean);
+  if (!parts.length) return null;
+  return { lead: parts[0], rest: parts.slice(1).join(', ') };
+}
+
 function JourneyCard({ article, compactSwatches = true }) {
   const shape = shapeFor(article);
   return (
@@ -203,18 +210,42 @@ export default function JournalIndex({ articles, counts }) {
               <p className={styles.empty}>No essays in this category.</p>
             ) : (
               <ul className={styles.allList}>
-                {catalogue.map((article) => (
-                  <li key={article.slug}>
-                    <Link href={`/journal/${article.slug}`} className={styles.allTile}>
-                      <JourneyThumb photo={article.photo} />
-                      <span className={styles.allCopy}>
-                        <span className={styles.allGold} aria-hidden="true" />
-                        <AccentTitle title={article.title} color={shapeFor(article).accent} as="span" className={styles.allTitle} />
-                        {article.location ? <span className={styles.allPlace}>{article.location}</span> : <span className={styles.allPlace}> </span>}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
+                {catalogue.map((article) => {
+                  const place = locationLines(article.location);
+                  const shape = shapeFor(article);
+                  return (
+                    <li key={article.slug}>
+                      <div className={styles.allTile}>
+                        <Link href={`/journal/${article.slug}`} className={styles.allTileLink}>
+                          <JourneyThumb photo={article.photo} />
+                          <span className={styles.allCopy}>
+                            <span className={styles.allGold} aria-hidden="true" />
+                            <AccentTitle title={article.title} color={shape?.accent} as="span" className={styles.allTitle} />
+                            <span className={styles.allSwatches}>
+                              <Swatches shape={shape} compact />
+                            </span>
+                          </span>
+                        </Link>
+                        <div className={styles.allLocRow}>
+                          {place ? (
+                            <span className={styles.allPlace}>
+                              <span className={styles.allPlaceLead}>{place.lead}</span>
+                              {place.rest ? <span className={styles.allPlaceRest}>{place.rest}</span> : null}
+                            </span>
+                          ) : (
+                            <span className={styles.allPlace}> </span>
+                          )}
+                          <PhotoMap
+                            square
+                            coords={article.photo.coords}
+                            location={article.location}
+                            title={article.photo.title}
+                          />
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </section>
