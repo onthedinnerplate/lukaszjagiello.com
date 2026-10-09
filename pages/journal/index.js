@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import TrailBadge from '@/components/TrailBadge';
 import { useRouter } from 'next/router';
 import Seo from '@/components/Seo';
 import JourneysHero, { JOURNEYS_HERO_DESCRIPTION } from '@/components/JourneysHero';
@@ -111,6 +112,7 @@ function JourneyCard({ article, compactSwatches = true }) {
           />
           <p className={styles.cardDek}>{article.dek}</p>
         </Link>
+        <TrailBadge trail={article.trail} />
       </div>
       <ArticleShare
         title={article.title}
@@ -238,6 +240,7 @@ export default function JournalIndex({ articles, counts }) {
                     />
                     <span className={styles.goldRule} aria-hidden="true" />
                     <p className={styles.featuredDek}>{featured.dek}</p>
+                    <TrailBadge trail={featured.trail} />
                     <Link href={`/journal/${featured.slug}`} className={styles.storyLink}>Read the story</Link>
                     <ArticleShare
                       title={featured.title}
@@ -341,6 +344,7 @@ export default function JournalIndex({ articles, counts }) {
                               className={styles.allTitle}
                             />
                           </Link>
+                          <TrailBadge trail={article.trail} />
                           <span className={styles.allSwatches}>
                             <Swatches shape={shape} compact />
                           </span>
@@ -414,6 +418,7 @@ export async function getStaticProps() {
       location: article.location,
       photoSlug: article.photoSlug,
       photoNumber: article.photoNumber,
+      trail: article.trail || null,
       companion: article.companion ? { src: article.companion.src } : null,
       photo: {
         src: article.photo.src,
