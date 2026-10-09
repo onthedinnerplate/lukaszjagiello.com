@@ -175,7 +175,7 @@ export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = fal
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href={POPPINS} />
       </Head>
-      <div className={bleed ? styles.heroSlotBleed : `container ${styles.heroSlot}`}>
+      <div className={bleed ? styles.heroSlotBleed : styles.heroSlot}>
         <section className={bleed ? `${styles.heroBand} ${styles.heroBleed}` : styles.heroBand} aria-label="Marymere Falls">
           <div className={styles.heroMedia} ref={mediaRef}>
             <Image
@@ -184,7 +184,7 @@ export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = fal
               fill
               priority
               unoptimized
-              sizes={bleed ? '100vw' : '(max-width: 1400px) 100vw, 1400px'}
+              sizes="100vw"
               className={styles.heroPhoto}
               style={photoStyle}
             />

@@ -249,18 +249,17 @@
     max-width: var(--container-max);
     padding: 2.25rem var(--gutter) 5rem;
   }
-  /* The in-flow photo is the mosaic below. This copy only fills the bar
-     so the fixed nav can sit on the photograph without moving the article. */
+  /* Lead photograph spans the viewport. The story below stays in the
+     1400px column. */
   .hero {
     display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: var(--nav-h);
-    margin: 0;
+    position: relative;
+    width: 100vw;
+    height: calc(100vw * 612 / 1440);
+    margin: 0.35rem calc(50% - 50vw) 1.75rem;
     border-radius: 0;
-    z-index: 40;
+    z-index: 0;
+    overflow: hidden;
     pointer-events: none;
   }
   .heroImg {
@@ -472,7 +471,11 @@
 /* Journeys landing. Single column until tablet. */
 .landing { --radius-photo: 12px; padding-bottom: 0; }
 .landingCats { display: none; padding: 1.1rem var(--gutter) 0; }
-.heroSlot { padding-top: 1.5rem; }
+.heroSlot {
+  width: 100%;
+  padding-top: 1.5rem;
+  container-type: inline-size;
+}
 /* Homepage: the band is the viewport, tall enough that the nav covers only
    the extra strip and the 1440/612 stage below it stays intact. */
 .heroSlotBleed {
@@ -513,7 +516,7 @@
   width: 100%;
   margin: 0;
   aspect-ratio: 1440 / 612;
-  border-radius: 12px;
+  border-radius: 0;
   overflow: hidden;
   color: #EEF0E6;
   background: #020A0A;
@@ -634,7 +637,7 @@
 .heroCopy {
   position: absolute;
   z-index: 3;
-  left: var(--gutter);
+  left: max(var(--gutter), calc((100% - var(--container-max)) / 2 + var(--gutter)));
   right: 46%;
   top: 50%;
   transform: translateY(-50%);
@@ -739,7 +742,7 @@
 .heroCap {
   position: absolute;
   z-index: 3;
-  left: var(--gutter);
+  left: max(var(--gutter), calc((100% - var(--container-max)) / 2 + var(--gutter)));
   bottom: 18px;
   margin: 0;
   font-size: 0.75rem;
@@ -1207,7 +1210,7 @@
     position: relative;
     aspect-ratio: auto;
     height: calc(100cqw * 612 / 1440 + var(--hero-bleed));
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
   }
   .heroPhoto { object-position: center calc(var(--hero-bleed) - 8cqw); }
@@ -1223,6 +1226,7 @@
     border-radius: 0;
   }
   .portrait { --band: 20px; --rim: 7px; }
+  .heroSlot .heroCopy,
   .heroCopy {
     position: relative;
     top: auto;
@@ -1230,7 +1234,7 @@
     left: auto;
     transform: none;
     max-width: 40em;
-    padding: 1.15rem 0 0;
+    padding: 1.15rem var(--gutter) 0;
   }
   .heroBleed .heroCopy {
     position: relative;

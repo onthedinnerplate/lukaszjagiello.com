@@ -107,7 +107,7 @@ export default function JournalArticle({ article }) {
             alt={photo.alt}
             width={photo.width}
             height={photo.height}
-            sizes="(max-width: 760px) 100vw, 760px"
+            sizes="100vw"
             priority
             unoptimized
             className={styles.heroImg}
