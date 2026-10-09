@@ -23,8 +23,8 @@ const MENUS = [
     items: [
       { id: 'latest-journeys', label: 'Latest' },
       { id: 'featured-story', label: 'Featured' },
-      { id: 'inspirations', label: 'Inspirations' },
       { id: 'more-stories', label: 'More stories' },
+      { id: 'inspirations', label: 'Inspirations' },
       { id: 'all-journeys-title', label: 'All journeys' },
     ],
   },
@@ -63,12 +63,17 @@ export default function SectionSpy({ path }) {
 
     const choose = () => {
       const line = headerOffset() + 8;
-      let chosen = items[0].id;
-      for (const item of items) {
-        const el = document.getElementById(item.id);
-        if (!el) continue;
+      const ranked = items
+        .map((item) => ({ item, el: document.getElementById(item.id) }))
+        .filter((entry) => entry.el)
+        .sort((a, b) => a.el.getBoundingClientRect().top - b.el.getBoundingClientRect().top);
+      if (!ranked.length) return;
+      let chosen = ranked[0].item.id;
+      for (const { item, el } of ranked) {
         if (el.getBoundingClientRect().top <= line) chosen = item.id;
       }
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (atBottom) chosen = ranked[ranked.length - 1].item.id;
       setActive((prev) => (prev === chosen ? prev : chosen));
     };
 
