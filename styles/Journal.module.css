@@ -480,7 +480,7 @@
   z-index: 1;
   background: linear-gradient(to right, rgba(2, 10, 10, 0.70), rgba(2, 10, 10, 0) 65%);
 }
-/* Moss 9:16 frame on the waterfall. Percentages are the visible band of the
+/* White 9:16 frame on the waterfall. Percentages are the visible band of the
    2.35 crop: center 66.1% x 46.8% of the source lands at 55.55% / 5.9%. */
 .portrait {
   --band: 32px;
@@ -499,7 +499,7 @@
   right: 0;
   left: 0;
   bottom: var(--band);
-  border: var(--rim) solid #B9C27A;
+  border: var(--rim) solid #fff;
   border-bottom: 0;
   border-radius: 16px 16px 0 0;
 }
@@ -514,7 +514,7 @@
   gap: 4px;
   min-height: var(--band);
   padding: 2px 6px 2px 5px;
-  background: #B9C27A;
+  background: #fff;
   border-radius: 0 0 16px 16px;
   color: #182A17;
 }
@@ -566,7 +566,7 @@
   color: #EEF0E6;
 }
 .heroTitle .headlineAccent {
-  color: #B9C27A;
+  color: #182A17;
   /* Allura draws small in its em box. 1.7em makes the phrase about 1.35× the Poppins words. */
   font-size: 1.7em;
   letter-spacing: 0;
@@ -1075,7 +1075,7 @@
   .heroTitle,
   .heroSub,
   .heroCap a { color: #020A0A; }
-  .heroTitle .headlineAccent { color: #B9C27A; }
+  .heroTitle .headlineAccent { color: #182A17; }
   .heroNav :global(a),
   .heroNav :global(a:hover) { color: #020A0A; }
   .heroNav :global(span) { color: #334824; }
