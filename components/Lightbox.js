@@ -1,7 +1,8 @@
 import { useEffect, useId, useRef } from 'react';
 import { PhotoCardActions } from './ShareButtons';
 import ResponsiveImage from './ResponsiveImage';
-import { captionFor } from '@/lib/photoCaption';
+import { captionFor, mentionsGear } from '@/lib/photoCaption';
+import { AffiliateDisclosure, GearLine, gearLineClass } from './GearStoreLinks';
 import { ogImageSrc } from '@/lib/slug';
 import styles from '@/styles/Lightbox.module.css';
 
@@ -176,8 +177,9 @@ export default function Lightbox({ id, isOpen, photo, onClose, onPrev, onNext })
           {photo.title && <h2 id={titleId} className={styles.title}>{photo.title}</h2>}
           {(equipment || specs) && (
             <div className={styles.metaBlock}>
-              {equipment && <p className={styles.meta}>{equipment}</p>}
+              {equipment && <p className={`${styles.meta} ${gearLineClass}`}><GearLine text={equipment} /></p>}
               {specs && <p className={styles.meta}>{specs}</p>}
+              {mentionsGear(equipment) ? <AffiliateDisclosure /> : null}
             </div>
           )}
         </div>

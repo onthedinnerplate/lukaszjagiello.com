@@ -5,7 +5,8 @@ import { getPhotos, heroNavCounts } from '@/lib/photo-data';
 import { journeysThenGalleryPath } from '@/lib/categories';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
-import { gearFromMetadata } from '@/lib/photoCaption';
+import { gearFromMetadata, mentionsGear } from '@/lib/photoCaption';
+import { AffiliateDisclosure, GearLine } from '@/components/GearStoreLinks';
 import styles from '@/styles/Page.module.css';
 
 const gear = gearFromMetadata();
@@ -98,7 +99,7 @@ export default function About({ navCounts }) {
               <dt>{gear.cameras.length === 1 ? 'Camera' : 'Cameras'}</dt>
               {gear.cameras.map((c) => (
                 <dd key={c.name}>
-                  {c.name} <span className={styles.gearCount}>{c.count} {c.count === 1 ? 'photo' : 'photos'}</span>
+                  <GearLine text={c.name} /> <span className={styles.gearCount}>{c.count} {c.count === 1 ? 'photo' : 'photos'}</span>
                 </dd>
               ))}
             </div>
@@ -106,11 +107,14 @@ export default function About({ navCounts }) {
               <dt>{gear.lenses.length === 1 ? 'Lens' : 'Lenses'}</dt>
               {gear.lenses.map((l) => (
                 <dd key={l.name}>
-                  {l.name} <span className={styles.gearCount}>{l.count} {l.count === 1 ? 'photo' : 'photos'}</span>
+                  <GearLine text={l.name} /> <span className={styles.gearCount}>{l.count} {l.count === 1 ? 'photo' : 'photos'}</span>
                 </dd>
               ))}
             </div>
           </dl>
+          {(gear.cameras.some((c) => mentionsGear(c.name)) || gear.lenses.some((l) => mentionsGear(l.name))) && (
+            <AffiliateDisclosure />
+          )}
         </section>
       </article>
     </>

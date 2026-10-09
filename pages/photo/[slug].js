@@ -9,9 +9,9 @@ import PhotoMap from '@/components/PhotoMap';
 import BuyButton from '@/components/BuyButton';
 import { LICENCE_SUMMARY } from '@/lib/store';
 import { availableTiers } from '@/lib/store-server';
-import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { getPhotos, getGalleryPhotos } from '@/lib/photo-data';
-import { captionFor, exifDataFor } from '@/lib/photoCaption';
+import { captionFor, exifDataFor, mentionsGear, photoNumberFromSrc } from '@/lib/photoCaption';
+import { AffiliateDisclosure, GearLine, gearLineClass } from '@/components/GearStoreLinks';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
 import { ogImageSrc } from '@/lib/slug';
 import styles from '@/styles/Page.module.css';
@@ -61,8 +61,9 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
             <h1 className={styles.photoTitle}>{photo.title}</h1>
             {(equipment || specs) && (
               <div className={styles.photoMeta}>
-                {equipment && <p className={styles.meta}>{equipment}</p>}
+                {equipment && <p className={`${styles.meta} ${gearLineClass}`}><GearLine text={equipment} /></p>}
                 {specs && <p className={styles.meta}>{specs}</p>}
+                {mentionsGear(equipment) ? <AffiliateDisclosure /> : null}
               </div>
             )}
             {!photo.coords && location ? <p className={styles.location}>{location}</p> : null}
