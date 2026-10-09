@@ -641,25 +641,26 @@
 .selectedItem { display: contents; }
 .selectedDetails { display: none; }
 
-/* Phones: every category row, including Inspirations, stays on one line. */
+/* Phones: five labels on one line. 11px is the largest size that fits at 360px. */
 @media (max-width: 767px) {
-  .catNav { margin-top: 0.2rem; }
+  .catNav { margin-top: 0.2rem; max-width: 100%; }
   .catList {
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: baseline;
-    gap: clamp(2px, 0.5vw, 6px);
+    gap: 0.25rem;
     width: 100%;
     overflow: hidden;
   }
+  .catList > li { flex: 0 0 auto; }
   .catLink {
     white-space: nowrap;
-    font-size: clamp(7px, 2.05vw, 12px);
+    font-size: clamp(11px, 3.05vw, 13px);
     letter-spacing: -0.03em;
     padding: 0.55rem 0 0.25rem;
     min-height: 44px;
   }
-  .catSep { margin: 0 0.16em; height: 0.7em; }
+  .catSep { margin: 0 0.28em; height: 0.7em; }
   .catCount { font-size: 0.85em; }
 
   .cardSwatchesPhone { display: block; }
