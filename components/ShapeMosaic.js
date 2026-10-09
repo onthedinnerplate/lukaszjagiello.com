@@ -14,8 +14,15 @@ import styles from '@/styles/Journal.module.css';
  * The image keeps its own alt; the visually hidden "View full image" text
  * names the action without an aria-label that would replace the alt.
  */
-export default function ShapeMosaic({ src, alt = '', onClick, expanded = false, controlsId }) {
-  const image = <img className={styles.portraitImg} src={src} alt={alt} />;
+export default function ShapeMosaic({ src, alt = '', onClick, expanded = false, controlsId, objectPosition }) {
+  const image = (
+    <img
+      className={styles.portraitImg}
+      src={src}
+      alt={alt}
+      style={objectPosition ? { objectPosition } : undefined}
+    />
+  );
 
   if (onClick) {
     return (

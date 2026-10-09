@@ -23,6 +23,7 @@ import {
 } from '@/lib/articles';
 import shapes from '@/lib/journalShapes.json';
 import { accentScriptFromPalette } from '@/lib/accentInk';
+import { articleHeroObjectPosition, portraitObjectPosition } from '@/lib/photoFocus';
 import { graph, personNode, websiteNode, pageNode, articleNode } from '@/lib/seo';
 import styles from '@/styles/Journal.module.css';
 
@@ -45,6 +46,7 @@ export default function JournalArticle({ article }) {
   const lightboxId = useId();
   const openerRef = useRef(null);
   const ar = photo.width / photo.height;
+  const heroPosition = articleHeroObjectPosition(photo);
   const hasMap = photo.coords && typeof photo.coords.lat === 'number';
 
   const openLightbox = (event) => {
@@ -111,6 +113,7 @@ export default function JournalArticle({ article }) {
             priority
             unoptimized
             className={styles.heroImg}
+            style={heroPosition ? { objectPosition: heroPosition } : undefined}
           />
         </figure>
         <div className={styles.spread}>
@@ -119,6 +122,7 @@ export default function JournalArticle({ article }) {
               <ShapeMosaic
                 src={photo.src}
                 alt={photo.alt}
+                objectPosition={portraitObjectPosition(photo)}
                 onClick={openLightbox}
                 expanded={lbOpen}
                 controlsId={lightboxId}
