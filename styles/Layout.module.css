@@ -185,25 +185,6 @@
   .brandMark { width: 24px; height: 24px; }
 }
 
-/* Homepage only: the bar sits on the photograph. White type, no rule under the bar. */
-.headerOnHero {
-  background: transparent;
-  border-bottom: none;
-  box-shadow: none;
-}
-.headerOnHero .brand,
-.headerOnHero .brandGiven,
-.headerOnHero .link {
-  color: #fff;
-}
-.headerOnHero .link:hover {
-  color: #fff;
-  border-bottom-color: rgba(255, 255, 255, 0.35);
-}
-.headerOnHero.headerScrolled {
-  background: rgba(2, 10, 10, 0.92);
-}
-
 .main {
   padding-top: var(--nav-h);
   min-height: 70vh;

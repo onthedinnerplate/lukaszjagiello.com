@@ -21,12 +21,10 @@ function sectionCurrent(path, href) {
 function Nav() {
   const { asPath } = useRouter();
   const path = currentPath(asPath);
-  const onHero = path === '/';
   const listRef = useRef(null);
   const [box, setBox] = useState(null);
   const [ready, setReady] = useState(false);
   const [instant, setInstant] = useState(true);
-  const [scrolled, setScrolled] = useState(false);
 
   const measure = (el) => {
     const list = listRef.current;
@@ -59,14 +57,6 @@ function Nav() {
     measure(activeItem());
   };
 
-  useEffect(() => {
-    if (!onHero) return undefined;
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [onHero]);
-
   useIsoLayoutEffect(() => {
     measure(activeItem());
     setReady(true);
@@ -87,14 +77,8 @@ function Nav() {
     ? { '--x': `${box.x}px`, '--y': `${box.y}px`, '--w': box.w, opacity: 1 }
     : { '--x': '0px', '--y': '0px', '--w': 0, opacity: 0 };
 
-  const headerClass = [
-    styles.header,
-    onHero ? styles.headerOnHero : '',
-    onHero && scrolled ? styles.headerScrolled : '',
-  ].filter(Boolean).join(' ');
-
   return (
-    <header className={headerClass}>
+    <header className={styles.header}>
       <nav
         className={`${styles.nav} container${ready ? ` ${styles.navReady}` : ''}`}
         aria-label="Main"
