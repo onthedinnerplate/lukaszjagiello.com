@@ -679,7 +679,7 @@
   font-family: Allura, "Allura Fallback", cursive;
   font-weight: 400;
   font-style: normal;
-  color: #B9C27A;
+  color: var(--hero-accent, #B9C27A);
   /* Allura draws small in its em box. 1.7em makes the phrase about 1.35× the Poppins words. */
   font-size: 1.7em;
   letter-spacing: 0;
@@ -689,7 +689,7 @@
    Family is named here as well as on the next/font class, so a parent Poppins
    rule cannot leave these words in a fallback face.
    --accent-script is that item's middle swatch, darkened on white when it
-   would fall under 3:1. Hero phrases set their own color and do not use this.
+   would fall under 3:1. Hero phrases set --hero-accent and do not use this.
    Allura draws small in its em box. 1.65em is about 1.3× the Poppins words.
    Hero phrases stay at 1.7em (about 1.35×) in .heroTitle .headlineAccent. */
 .headlineAccent {
@@ -1263,7 +1263,7 @@
   .heroTitle,
   .heroSub,
   .heroCap a { color: #020A0A; }
-  .heroTitle .headlineAccent { color: #B9C27A; }
+  .heroTitle .headlineAccent { color: var(--hero-accent-mobile, #B9C27A); }
   .heroNav :global(a),
   .heroNav :global(a:hover) { color: #020A0A; }
   .heroNav :global(span) { color: #334824; }
