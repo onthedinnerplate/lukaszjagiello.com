@@ -51,17 +51,13 @@ const MAP_HREF = MARYMERE?.coords
   ? `https://www.google.com/maps/search/?api=1&query=${MARYMERE.coords.lat},${MARYMERE.coords.lng}`
   : 'https://www.google.com/maps/search/?api=1&query=48.0533,-123.7895';
 
-/** Home and About sit in front of the category row on every hero that has one. */
+/** Category row only: Journeys, Landscape, Animals, Architecture, People. */
 function heroNavProps(nav) {
   if (!nav) return null;
   return {
     ...nav,
     separateCount: true,
-    leading: [
-      { slug: 'home', label: 'Home', href: '/' },
-      { slug: 'about', label: 'About', href: '/about' },
-      ...(Array.isArray(nav.leading) ? nav.leading : []),
-    ],
+    leading: Array.isArray(nav.leading) ? nav.leading : [],
   };
 }
 
