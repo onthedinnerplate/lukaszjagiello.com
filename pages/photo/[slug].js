@@ -14,6 +14,7 @@ import { getPhotos, getGalleryPhotos } from '@/lib/photo-data';
 import { captionFor, exifDataFor } from '@/lib/photoCaption';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
 import { ogImageSrc } from '@/lib/slug';
+import SubjectTitle from '@/components/SubjectTitle';
 import styles from '@/styles/Page.module.css';
 
 export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
@@ -57,7 +58,9 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
             photo at full column width; click opens the lightbox. */}
         <div className={styles.photoAside}>
           <PhotoMap coords={photo.coords} location={location} title={photo.title} stacked>
-            <h1 className={styles.photoTitle}>{photo.title}</h1>
+            <h1 className={styles.photoTitle}>
+              <SubjectTitle title={photo.title} subject={photo.subject} color={photo.subjectColor} />
+            </h1>
             {(equipment || specs) && (
               <div className={styles.photoMeta}>
                 {equipment && <p className={styles.meta}>{equipment}</p>}
@@ -72,11 +75,15 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
           <nav className={styles.photoNav} aria-label="Adjacent photographs">
             <Link href={prev.href} rel="prev" className={styles.photoNavLink}>
               <span className={styles.photoNavDir}>Previous</span>
-              <span>{prev.title}</span>
+              <span>
+                <SubjectTitle title={prev.title} subject={prev.subject} color={prev.subjectColor} />
+              </span>
             </Link>
             <Link href={next.href} rel="next" className={`${styles.photoNavLink} ${styles.photoNavNext}`}>
               <span className={styles.photoNavDir}>Next</span>
-              <span>{next.title}</span>
+              <span>
+                <SubjectTitle title={next.title} subject={next.subject} color={next.subjectColor} />
+              </span>
             </Link>
           </nav>
 
@@ -153,7 +160,7 @@ export async function getStaticProps({ params }) {
   const photo = photos[index];
   const prev = photos[(index - 1 + photos.length) % photos.length];
   const next = photos[(index + 1) % photos.length];
-  const neighbour = ({ title, href }) => ({ title, href });
+  const neighbour = ({ title, href, subject, subjectColor }) => ({ title, href, subject, subjectColor });
 
   const photoNumber = photoNumberFromSrc(photo.src);
   // Only tiers whose file exists on the server are offered (see lib/store.js).

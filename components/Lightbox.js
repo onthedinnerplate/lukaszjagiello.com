@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import ShareButton from './ShareButton';
 import ResponsiveImage from './ResponsiveImage';
 import { captionFor } from '@/lib/photoCaption';
+import SubjectTitle from './SubjectTitle';
 import styles from '@/styles/Lightbox.module.css';
 
 // Overlay padding is the gutter (40px from 768px up, 16px below). The panel
@@ -103,7 +104,11 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
         </div>
 
         <div className={styles.caption}>
-          {photo.title && <h2 className={styles.title}>{photo.title}</h2>}
+          {photo.title && (
+            <h2 className={styles.title}>
+              <SubjectTitle title={photo.title} subject={photo.subject} color={photo.subjectColor} />
+            </h2>
+          )}
           {(equipment || specs) && (
             <div className={styles.metaBlock}>
               {equipment && <p className={styles.meta}>{equipment}</p>}

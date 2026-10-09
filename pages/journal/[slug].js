@@ -8,6 +8,7 @@ import Lightbox from '@/components/Lightbox';
 import PhotoMap from '@/components/PhotoMap';
 import ShapeMosaic from '@/components/ShapeMosaic';
 import AccentTitle from '@/components/AccentTitle';
+import SubjectTitle from '@/components/SubjectTitle';
 import { getPhotos } from '@/lib/photo-data';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
 import {
@@ -143,7 +144,9 @@ export default function JournalArticle({ article }) {
                   <ExpandIcon />
                 </button>
                 <span aria-hidden="true">·</span>
-                <Link href={photo.href}>{photo.title}</Link>
+                <Link href={photo.href}>
+                  <SubjectTitle title={photo.title} subject={photo.subject} color={photo.subjectColor} />
+                </Link>
               </p>
             </div>
           </div>
@@ -182,7 +185,9 @@ export default function JournalArticle({ article }) {
               </p>
               {article.companion ? (
                 <p className={styles.photoLink}>
-                  <Link href={article.companion.href}>{article.companion.title}</Link>
+                  <Link href={article.companion.href}>
+                    <SubjectTitle title={article.companion.title} subject={article.companion.subject} color={article.companion.subjectColor} />
+                  </Link>
                 </p>
               ) : null}
             </div>
@@ -191,7 +196,14 @@ export default function JournalArticle({ article }) {
       </article>
       <Lightbox
         isOpen={lbOpen}
-        photo={{ src: photo.src, alt: photo.alt, title: photo.title, href: photo.href }}
+        photo={{
+          src: photo.src,
+          alt: photo.alt,
+          title: photo.title,
+          href: photo.href,
+          subject: photo.subject,
+          subjectColor: photo.subjectColor,
+        }}
         onClose={closeLightbox}
         onPrev={() => {}}
         onNext={() => {}}

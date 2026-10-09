@@ -5,6 +5,7 @@ import ShareButton from './ShareButton';
 import BuyIcon from './BuyIcon';
 import ResponsiveImage from './ResponsiveImage';
 import { captionFor, photoNumberFromSrc } from '@/lib/photoCaption';
+import SubjectTitle from './SubjectTitle';
 import styles from '@/styles/Gallery.module.css';
 
 // Slot width at the column breakpoints in Gallery.module.css.
@@ -100,7 +101,13 @@ export default function MasonryGallery({ photos, wide = false, priorityCount = 0
                 </div>
                 <figcaption className={styles.caption}>
                   <span className={styles.title}>
-                    {photo.href ? <Link href={photo.href} className={styles.titleLink}>{photo.title}</Link> : photo.title}
+                    {photo.href ? (
+                      <Link href={photo.href} className={styles.titleLink}>
+                        <SubjectTitle title={photo.title} subject={photo.subject} color={photo.subjectColor} />
+                      </Link>
+                    ) : (
+                      <SubjectTitle title={photo.title} subject={photo.subject} color={photo.subjectColor} />
+                    )}
                     {photo.location ? <span className={styles.location}>{photo.location}</span> : null}
                   </span>
                   {(equipment || specs) && (
