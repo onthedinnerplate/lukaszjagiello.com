@@ -563,10 +563,10 @@
   font-size: clamp(2.05rem, 4.8vw, 4rem);
   line-height: 1.05;
   letter-spacing: -0.03em;
-  color: #EEF0E6;
+  color: #fff;
 }
 .heroTitle .headlineAccent {
-  color: #182A17;
+  color: #B9C27A;
   /* Allura draws small in its em box. 1.7em makes the phrase about 1.35× the Poppins words. */
   font-size: 1.7em;
   letter-spacing: 0;
@@ -1075,7 +1075,7 @@
   .heroTitle,
   .heroSub,
   .heroCap a { color: #020A0A; }
-  .heroTitle .headlineAccent { color: #182A17; }
+  .heroTitle .headlineAccent { color: #B9C27A; }
   .heroNav :global(a),
   .heroNav :global(a:hover) { color: #020A0A; }
   .heroNav :global(span) { color: #334824; }
