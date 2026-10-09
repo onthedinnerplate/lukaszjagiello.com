@@ -185,6 +185,16 @@
   .brandName { flex-wrap: wrap; }
   .brandMark { width: 24px; height: 24px; }
 }
+/* Future Photography is wider than Gallery. Keep the five links on one row
+   inside the existing second line, down to a 320px phone. */
+@media (max-width: 540px) {
+  .links { column-gap: 0.35rem; }
+  .link { font-size: 0.75rem; }
+}
+@media (max-width: 400px) {
+  .links { column-gap: 0.25rem; }
+  .link { font-size: 0.6875rem; }
+}
 
 /* Homepage only: the bar sits on the photograph. White type, and a moss
    line the portrait frame's top edge meets. */
