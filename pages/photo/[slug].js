@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Lightbox from '@/components/Lightbox';
 import Seo from '@/components/Seo';
-import ShareButton from '@/components/ShareButton';
+import { PhotoCardActions } from '@/components/ShareButtons';
 import PhotoMap from '@/components/PhotoMap';
 import BuyButton from '@/components/BuyButton';
 import { LICENCE_SUMMARY } from '@/lib/store';
@@ -117,12 +117,12 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
               </picture>
               <span className="sr-only">View full screen</span>
             </button>
-            <ShareButton
+            <PhotoCardActions
               title={photo.title}
-              url={photo.href}
-              className={styles.share}
-              toastClassName={styles.toast}
-              wrapperClassName={styles.shareWrap}
+              shareUrl={photo.href}
+              pinUrl={photo.href}
+              mediaUrl={og.src}
+              photo={photo}
             />
           </div>
         </div>

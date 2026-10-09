@@ -8,6 +8,7 @@ import ShapeMosaic from '@/components/ShapeMosaic';
 import AccentTitle from '@/components/AccentTitle';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import Swatches from '@/components/Swatches';
+import { ArticleShare, PhotoCardActions } from '@/components/ShareButtons';
 import { getPhotos } from '@/lib/photo-data';
 import {
   articlesInCategory,
@@ -44,43 +45,74 @@ function allTileSizes(width, height) {
   ].join(', ');
 }
 
+function cardPhoto(article) {
+  return {
+    title: article.photo.title || article.title,
+    href: article.photo.href,
+    forSale: article.photo.forSale,
+  };
+}
+
 function JourneyThumb({ photo }) {
-  if (!photo?.thumb) {
-    return <span className={`${styles.allFrame} ${styles.allThumbPlaceholder}`} aria-hidden="true" />;
-  }
+  if (!photo?.thumb) return null;
   return (
-    <span className={styles.allFrame}>
-      <ResponsiveImage
-        pictureClassName={styles.allPicture}
-        src={photo.thumb}
-        alt={photo.alt || ''}
-        width={photo.thumbWidth || 800}
-        height={photo.thumbHeight || 800}
-        sizes={allTileSizes(photo.thumbWidth, photo.thumbHeight)}
-        srcSet={photo.thumbSrcSet || undefined}
-        className={styles.allThumb}
-        style={photo.focus ? { objectPosition: photo.focus } : undefined}
-        loading="lazy"
-        decoding="async"
-      />
-    </span>
+    <ResponsiveImage
+      pictureClassName={styles.allPicture}
+      src={photo.thumb}
+      alt=""
+      width={photo.thumbWidth || 800}
+      height={photo.thumbHeight || 800}
+      sizes={allTileSizes(photo.thumbWidth, photo.thumbHeight)}
+      srcSet={photo.thumbSrcSet || undefined}
+      className={styles.allThumb}
+      style={photo.focus ? { objectPosition: photo.focus } : undefined}
+      loading="lazy"
+      decoding="async"
+    />
   );
+}
+
+/** Owner-written location, split on the commas already in the string. Nothing is added. */
+function locationLines(location) {
+  const parts = String(location || '').split(',').map((part) => part.trim()).filter(Boolean);
+  if (!parts.length) return null;
+  return { lead: parts[0], rest: parts.slice(1).join(', ') };
 }
 
 function JourneyCard({ article, compactSwatches = true }) {
   const shape = shapeFor(article);
+  const href = `/journal/${article.slug}`;
   return (
-    <Link href={`/journal/${article.slug}`} className={styles.journeyCard}>
-      <ShapeMosaic src={article.photo.src} alt={article.photo.alt} />
-      <Swatches shape={shape} compact={compactSwatches} />
-      <AccentTitle
+    <article className={styles.journeyCard}>
+      <div className={styles.frameWrap}>
+        <Link href={href} className={styles.cardPhotoLink} aria-label={`Read ${article.title}`}>
+          <ShapeMosaic src={article.photo.src} alt="" />
+        </Link>
+        <PhotoCardActions
+          title={article.title}
+          shareUrl={article.photo.href || article.photo.src}
+          pinUrl={href}
+          mediaUrl={article.photo.ogSrc || article.photo.src}
+          photo={cardPhoto(article)}
+        />
+      </div>
+      <Link href={href} className={styles.journeyBody}>
+        <Swatches shape={shape} compact={compactSwatches} />
+        <AccentTitle
+          title={article.title}
+          phrase={article.headlinePhrase}
+          color={shape.palette[2]}
+          className={styles.journeyTitle}
+        />
+        <p className={styles.cardDek}>{article.dek}</p>
+      </Link>
+      <ArticleShare
         title={article.title}
-        phrase={article.headlinePhrase}
-        color={shape.palette[2]}
-        className={styles.journeyTitle}
+        excerpt={article.dek}
+        articlePath={href}
+        mediaPath={article.photo.ogSrc || article.photo.src}
       />
-      <p className={styles.cardDek}>{article.dek}</p>
-    </Link>
+    </article>
   );
 }
 
@@ -151,8 +183,15 @@ export default function JournalIndex({ articles, counts }) {
               <h2 id="featured-story" className={styles.sectionLabel}>Featured story</h2>
               <div className={styles.featured}>
                 <div className={styles.featuredMain}>
-                  <div className={styles.featuredPhoto}>
+                  <div className={`${styles.featuredPhoto} ${styles.frameWrap}`}>
                     <ShapeMosaic src={featured.photo.src} alt={featured.photo.alt} />
+                    <PhotoCardActions
+                      title={featured.title}
+                      shareUrl={featured.photo.href || featured.photo.src}
+                      pinUrl={`/journal/${featured.slug}`}
+                      mediaUrl={featured.photo.ogSrc || featured.photo.src}
+                      photo={cardPhoto(featured)}
+                    />
                   </div>
                   <Swatches shape={featuredShape} featured />
                   <div className={styles.featuredMap}>
@@ -175,6 +214,12 @@ export default function JournalIndex({ articles, counts }) {
                     <span className={styles.goldRule} aria-hidden="true" />
                     <p className={styles.featuredDek}>{featured.dek}</p>
                     <Link href={`/journal/${featured.slug}`} className={styles.storyLink}>Read the story</Link>
+                    <ArticleShare
+                      title={featured.title}
+                      excerpt={featured.dek}
+                      articlePath={`/journal/${featured.slug}`}
+                      mediaPath={featured.photo.ogSrc || featured.photo.src}
+                    />
                   </div>
                 </div>
                 <aside className={styles.more} aria-labelledby="more-stories">
@@ -190,6 +235,12 @@ export default function JournalIndex({ articles, counts }) {
                         <li key={article.slug}>
                           {article.location ? <p className={styles.morePlace}>{article.location}</p> : null}
                           <Link href={`/journal/${article.slug}`}>{article.title}</Link>
+                          <ArticleShare
+                            title={article.title}
+                            excerpt={article.dek}
+                            articlePath={`/journal/${article.slug}`}
+                            mediaPath={article.photo.ogSrc || article.photo.src}
+                          />
                         </li>
                       ))}
                     </ul>
@@ -223,24 +274,64 @@ export default function JournalIndex({ articles, counts }) {
               <p className={styles.empty}>No essays in this category.</p>
             ) : (
               <ul className={styles.allList}>
-                {catalogue.map((article) => (
-                  <li key={article.slug}>
-                    <Link href={`/journal/${article.slug}`} className={styles.allTile}>
-                      <JourneyThumb photo={article.photo} />
-                      <span className={styles.allCopy}>
-                        <span className={styles.allGold} aria-hidden="true" />
-                        <AccentTitle
+                {catalogue.map((article) => {
+                  const place = locationLines(article.location);
+                  const shape = shapeFor(article);
+                  const href = `/journal/${article.slug}`;
+                  return (
+                    <li key={article.slug}>
+                      <div className={styles.allTile}>
+                        <div className={`${styles.allFrame} ${article.photo.thumb ? '' : styles.allThumbPlaceholder}`}>
+                          <Link href={href} className={styles.allPhotoLink} aria-label={`Read ${article.title}`}>
+                            <JourneyThumb photo={article.photo} />
+                          </Link>
+                          <PhotoCardActions
+                            title={article.title}
+                            shareUrl={article.photo.href || article.photo.src}
+                            pinUrl={href}
+                            mediaUrl={article.photo.ogSrc || article.photo.src}
+                            photo={cardPhoto(article)}
+                          />
+                        </div>
+                        <Link href={href} className={styles.allCopy}>
+                          <span className={styles.allGold} aria-hidden="true" />
+                          <AccentTitle
+                            title={article.title}
+                            phrase={article.headlinePhrase}
+                            color={shape?.palette?.[2]}
+                            as="span"
+                            className={styles.allTitle}
+                          />
+                          <span className={styles.allSwatches}>
+                            <Swatches shape={shape} compact />
+                          </span>
+                        </Link>
+                        <div className={styles.allLocRow}>
+                          {place ? (
+                            <span className={styles.allPlace}>
+                              <span className={styles.allPlaceLead}>{place.lead}</span>
+                              {place.rest ? <span className={styles.allPlaceRest}>{place.rest}</span> : null}
+                            </span>
+                          ) : (
+                            <span className={styles.allPlace}> </span>
+                          )}
+                          <PhotoMap
+                            square
+                            coords={article.photo.coords}
+                            location={article.location}
+                            title={article.photo.title}
+                          />
+                        </div>
+                        <ArticleShare
                           title={article.title}
-                          phrase={article.headlinePhrase}
-                          color={shapeFor(article).palette[2]}
-                          as="span"
-                          className={styles.allTitle}
+                          excerpt={article.dek}
+                          articlePath={href}
+                          mediaPath={article.photo.ogSrc || article.photo.src}
                         />
-                        {article.location ? <span className={styles.allPlace}>{article.location}</span> : <span className={styles.allPlace}> </span>}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </section>
@@ -289,6 +380,9 @@ export async function getStaticProps() {
         src: article.photo.src,
         alt: article.photo.alt || '',
         title: article.photo.title,
+        href: article.photo.href,
+        ogSrc: article.photo.og.src,
+        forSale: Boolean(article.photo.forSale),
         categories: article.photo.categories,
         coords: article.photo.coords,
         thumb: source?.thumb || null,
