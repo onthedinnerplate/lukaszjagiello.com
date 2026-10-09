@@ -161,27 +161,29 @@
     align-items: start;
     container-type: inline-size;
     position: relative;
+    z-index: 0;
+    isolation: isolate;
     margin-top: 1.2rem;
   }
   .ghost {
     display: block;
     position: absolute;
-    z-index: -1;
     top: 0;
     right: 0;
-    left: 34%;
+    left: 32%;
     margin: 0;
-    max-height: calc(max(300px, 100cqi * 0.35) / var(--ar) * 0.5);
+    max-height: calc(max(300px, 100cqi * 0.35) / var(--ar) * 0.52);
     overflow: hidden;
-    font-size: clamp(3.5rem, 7.4cqi, 5.6rem);
+    padding-top: 0.02em;
+    font-size: clamp(4rem, 8.6cqi, 6.75rem);
     font-weight: 200;
-    line-height: 0.9;
-    letter-spacing: -0.04em;
+    line-height: 0.95;
+    letter-spacing: -0.045em;
     text-align: right;
     text-transform: uppercase;
     text-wrap: balance;
-    color: color-mix(in srgb, var(--accent) 8%, transparent);
-    -webkit-text-stroke: 1px color-mix(in srgb, var(--accent) 46%, transparent);
+    color: color-mix(in srgb, var(--accent) 22%, #fff);
+    -webkit-text-stroke: 2px color-mix(in srgb, var(--accent) 70%, #fff);
     pointer-events: none;
     user-select: none;
   }
