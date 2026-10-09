@@ -2,10 +2,22 @@ import { useEffect, useState } from 'react';
 import styles from '@/styles/BackToTop.module.css';
 
 /**
- * Fixed round arrow button, bottom-right (20px up, 5px in). Appears after the
- * visitor has scrolled past roughly one screen; smooth-scrolls to the top
- * (instant for reduced-motion users). Hidden from the lightbox by z-index.
+ * Fixed round arrow, 10px from the viewport's right and bottom edges (plus
+ * the safe-area inset). On gallery pages it walks back to the future-photos
+ * section, then All photographs, then the top. Every other page goes to the top.
  */
+function headerOffset() {
+  const raw = getComputedStyle(document.documentElement).getPropertyValue('--nav-h');
+  const n = parseFloat(raw);
+  return Number.isFinite(n) ? n : 0;
+}
+
+/** True once the section's top has moved above the sticky header. */
+function scrolledPast(el) {
+  if (!el) return false;
+  return el.getBoundingClientRect().top < headerOffset() - 1;
+}
+
 export default function BackToTop() {
   const [show, setShow] = useState(false);
 
@@ -24,16 +36,24 @@ export default function BackToTop() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const toTop = () => {
+  const onClick = () => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    const behavior = reduce ? 'auto' : 'smooth';
+    const future = document.getElementById('future-photographs');
+    const all = document.getElementById('all-photographs');
+    const target = scrolledPast(future) ? future : scrolledPast(all) ? all : null;
+    if (!target) {
+      window.scrollTo({ top: 0, behavior });
+      return;
+    }
+    target.scrollIntoView({ behavior, block: 'start' });
   };
 
   return (
     <button
       type="button"
       className={`${styles.btn} ${show ? styles.show : ''}`}
-      onClick={toTop}
+      onClick={onClick}
       aria-label="Back to top"
       title="Back to top"
       tabIndex={show ? 0 : -1}

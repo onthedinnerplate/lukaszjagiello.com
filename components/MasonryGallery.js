@@ -29,6 +29,7 @@ export default function MasonryGallery({
   headingId,
   layout = 'masonry',
   anchor = true,
+  grayscale = true,
 }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -69,10 +70,19 @@ export default function MasonryGallery({
   const handleNextImage = () => setSelectedIndex((prev) => (prev + 1) % photos.length);
   const handlePrevImage = () => setSelectedIndex((prev) => (prev - 1 + photos.length) % photos.length);
 
+  const tiled = layout === 'uniform' || layout === 'tight';
+  const listClass = tiled
+    ? `${styles.uniform} ${layout === 'tight' ? styles.tight : ''}`
+    : layout === 'row'
+      ? styles.saleRow
+      : layout === 'trio'
+        ? styles.saleTrio
+        : styles.masonry;
+
   return (
     <div className={styles.wrap}>
       <ul
-        className={layout === 'row' ? styles.saleRow : layout === 'trio' ? styles.saleTrio : styles.masonry}
+        className={listClass}
         aria-labelledby={headingId}
       >
         {photos.map((photo, i) => {
@@ -87,8 +97,8 @@ export default function MasonryGallery({
           const prioritized = i < priorityCount;
           return (
             <li key={photo.src} id={anchor ? `photo-${num}` : undefined} className={styles.item}>
-              <figure className={styles.figure}>
-                <div className={styles.frame} style={{ backgroundColor: photo.color }}>
+              <figure className={`${styles.figure} ${tiled ? styles.tileFigure : ''}`}>
+                <div className={`${styles.frame} ${tiled ? styles.frameCover : ''}`} style={{ backgroundColor: photo.color }}>
                   <PhotoCardActions
                     title={photo.title}
                     shareUrl={shareUrl}
@@ -102,7 +112,7 @@ export default function MasonryGallery({
                     onClick={(e) => onCardClick(e, i)}
                     aria-expanded={lightboxOpen && selectedIndex === i}
                     aria-controls={lightboxId}
-                    style={{ display: 'block', width: '100%', cursor: 'pointer' }}
+                    style={{ display: 'block', width: '100%', height: tiled ? '100%' : undefined, cursor: 'pointer' }}
                   >
                     <ResponsiveImage
                       pictureClassName={styles.picture}
@@ -112,7 +122,7 @@ export default function MasonryGallery({
                       height={photo.thumbHeight || photo.height}
                       sizes={sizes}
                       srcSet={photo.thumbSrcSet}
-                      className={styles.img}
+                      className={grayscale ? styles.img : `${styles.img} ${styles.imgColor}`}
                       loading={prioritized ? 'eager' : 'lazy'}
                       fetchPriority={prioritized ? 'high' : undefined}
                     />
