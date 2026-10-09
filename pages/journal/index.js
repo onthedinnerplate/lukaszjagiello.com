@@ -386,7 +386,7 @@ export default function JournalIndex({ articles, counts }) {
             <p className={styles.earthKicker}>Journeys</p>
             <h2 id="earth-title" className={styles.earthTitle}>Mother Earth gives us journeys</h2>
             <p>Every coastline, canyon and trail here began as a walk. These are the stories they gave back.</p>
-            <Link href="/gallery" className={styles.storyLink}>Browse the future photography</Link>
+            <Link href="/gallery" className={styles.storyLink}>Browse the gallery</Link>
           </div>
           <ul className={styles.cluster} aria-hidden="true">
             {cluster.map((article) => (
