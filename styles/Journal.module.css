@@ -1557,23 +1557,6 @@
   .heroBleed .heroNav :global(a:hover) { color: #fff; }
   .heroBleed .heroNav :global(span) { color: #C9D1B4; }
   .heroBleed .goldRule { background: #A3AD62; }
-  .phoneTitle {
-    position: static !important;
-    width: auto !important;
-    height: auto !important;
-    margin: 0.2rem var(--gutter) 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    clip: auto !important;
-    white-space: normal !important;
-    border: 0 !important;
-    font-family: Poppins, system-ui, sans-serif;
-    font-weight: 300;
-    font-size: clamp(1.65rem, 7vw, 2rem);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    color: var(--charcoal, #1a1a1a);
-  }
   .article .title {
     max-width: none;
     font-size: clamp(1.65rem, 7.2vw, 2rem);

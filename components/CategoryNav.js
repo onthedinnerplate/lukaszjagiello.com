@@ -70,25 +70,10 @@ export default function CategoryNav({
   };
 
   useIsoLayoutEffect(() => {
-    const list = listRef.current;
-    const el = activeItem();
-    /* Phones scroll the row. Keep the current item in view without moving the page. */
-    if (
-      list
-      && el
-      && window.matchMedia('(max-width: 767px)').matches
-      && list.scrollWidth > list.clientWidth + 1
-    ) {
-      const left = el.offsetLeft;
-      const right = left + el.offsetWidth;
-      const viewRight = list.scrollLeft + list.clientWidth;
-      if (left < list.scrollLeft + 4 || right > viewRight - 4) {
-        list.scrollLeft = Math.max(0, left - 8);
-      }
-    }
-    measure(el);
+    measure(activeItem());
     setReady(true);
     const frame = requestAnimationFrame(() => setInstant(false));
+    const list = listRef.current;
     if (!list || typeof ResizeObserver === 'undefined') {
       return () => cancelAnimationFrame(frame);
     }
