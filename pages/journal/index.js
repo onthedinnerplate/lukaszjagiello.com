@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Seo from '@/components/Seo';
@@ -12,6 +13,7 @@ import {
   journalCategoryCounts,
   journalCategoryPath,
 } from '@/lib/articles';
+import { CATEGORIES } from '@/lib/categories';
 import { byNumber, CLUSTER_NUMBERS, inspirationsFrom, LATEST_SLUGS, MORE_NUMBERS, shapeFor } from '@/lib/journeys';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import styles from '@/styles/Journal.module.css';
@@ -24,10 +26,13 @@ const meta = {
 
 function Swatches({ shape, compact = false }) {
   return (
-    <ul className={`${styles.swatches} ${compact ? styles.swatchesCompact : ''}`}>
+    <ul
+      className={`${styles.swatches} ${compact ? styles.swatchesCompact : ''}`}
+      aria-hidden={compact ? 'true' : undefined}
+    >
       {shape.palette.map((hex, i) => (
         <li key={`${hex}-${i}`} className={styles.swatchItem}>
-          <span className={styles.swatch} style={{ background: hex }} />
+          <span className={styles.swatch} style={{ background: hex }} aria-hidden="true" />
           {compact ? null : <span className={styles.hex}>{hex}</span>}
         </li>
       ))}
@@ -65,7 +70,7 @@ function JourneyCard({ article, compactSwatches = true }) {
   const shape = shapeFor(article);
   return (
     <Link href={`/journal/${article.slug}`} className={styles.journeyCard}>
-      <ShapeMosaic shape={shape} src={article.photo.src} alt="" companionSrc={article.companion?.src} />
+      <ShapeMosaic src={article.photo.src} alt={article.photo.alt} />
       <Swatches shape={shape} compact={compactSwatches} />
       <AccentTitle title={article.title} color={shape.accent} className={styles.journeyTitle} />
       <p className={styles.cardDek}>{article.dek}</p>
@@ -84,6 +89,19 @@ export default function JournalIndex({ articles, counts }) {
   const catalogue = [...visible].sort((a, b) => a.photoNumber - b.photoNumber);
   const cluster = byNumber(articles, CLUSTER_NUMBERS);
   const featuredShape = featured ? shapeFor(featured) : null;
+  const [filterNote, setFilterNote] = useState('');
+  const skipFilterNote = useRef(true);
+  useEffect(() => {
+    if (skipFilterNote.current) {
+      skipFilterNote.current = false;
+      return;
+    }
+    const name = category === 'all'
+      ? 'All'
+      : (CATEGORIES.find((c) => c.slug === category)?.label || 'This category');
+    const n = catalogue.length;
+    setFilterNote(n === 0 ? `${name}: no essays.` : `${name}: ${n} ${n === 1 ? 'journey' : 'journeys'}.`);
+  }, [category, catalogue.length]);
 
   return (
     <>
@@ -104,6 +122,7 @@ export default function JournalIndex({ articles, counts }) {
             disableEmpty: true,
           }}
         />
+        <p className="sr-only" aria-live="polite" aria-atomic="true">{filterNote}</p>
 
         <div className={styles.landingWrap}>
           {latest.length > 0 ? (
@@ -126,7 +145,7 @@ export default function JournalIndex({ articles, counts }) {
               <h2 id="featured-story" className={styles.sectionLabel}>Featured story</h2>
               <div className={styles.featured}>
                 <div className={styles.featuredMain}>
-                  <ShapeMosaic shape={featuredShape} src={featured.photo.src} alt="" />
+                  <ShapeMosaic src={featured.photo.src} alt={featured.photo.alt} />
                   <Swatches shape={featuredShape} />
                   <div className={styles.mapSlot}>
                     <PhotoMap
@@ -207,7 +226,7 @@ export default function JournalIndex({ articles, counts }) {
           <ul className={styles.cluster} aria-hidden="true">
             {cluster.map((article) => (
               <li key={article.slug}>
-                <ShapeMosaic shape={shapeFor(article)} src={article.photo.src} alt="" />
+                <ShapeMosaic src={article.photo.src} alt="" />
               </li>
             ))}
           </ul>
@@ -235,8 +254,9 @@ export async function getStaticProps() {
     photoSlug: article.photoSlug,
     photoNumber: article.photoNumber,
     companion: article.companion ? { src: article.companion.src } : null,
-    photo: {
+      photo: {
       src: article.photo.src,
+      alt: article.photo.alt,
       title: article.photo.title,
       categories: article.photo.categories,
       coords: article.photo.coords,

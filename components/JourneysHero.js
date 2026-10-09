@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import CategoryNav from '@/components/CategoryNav';
+import { photos } from '@/lib/photos';
 import styles from '@/styles/Journal.module.css';
 
 const POPPINS = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap';
@@ -12,8 +13,14 @@ export const JOURNEYS_HERO_DESCRIPTION =
 
 // Marymere Falls (photo 41, slug marymere-falls). Kept as literals so this
 // component does not pull the essay catalogue into every page bundle.
+const HERO_SRC = '/images/gallery/lightbox/lukasz-jagiello-41-full.webp';
+// Same description as photo 41 in lib/photos.js — do not paraphrase.
+const HERO_ALT = photos.find((p) => `/${p.src}` === HERO_SRC)?.alt || '';
+if (!HERO_ALT) throw new Error('Journeys hero is missing the Marymere Falls alt text from lib/photos.js.');
+
 const HERO = {
-  src: '/images/gallery/lightbox/lukasz-jagiello-41-full.webp',
+  src: HERO_SRC,
+  alt: HERO_ALT,
   creditHref: '/journal/a-thin-line-of-light-in-a-green-room',
   kicker: 'Journeys · Stories from the terrain',
   title: 'Always look for the story in the terrain.',
@@ -46,7 +53,7 @@ export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
       <section className={styles.heroBand} aria-label="Marymere Falls">
         <Image
           src={HERO.src}
-          alt=""
+          alt={HERO.alt}
           fill
           priority
           unoptimized

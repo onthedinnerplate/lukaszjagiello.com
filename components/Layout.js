@@ -5,17 +5,27 @@ import { CATEGORIES, galleryPathFor } from '@/lib/categories';
 import styles from '@/styles/Layout.module.css';
 import BackToTop from './BackToTop';
 
+function currentPath(asPath) {
+  return (asPath || '/').split('?')[0].split('#')[0];
+}
+
+function sectionCurrent(path, href) {
+  if (href === '/') return path === '/';
+  return path === href || path.startsWith(`${href}/`);
+}
+
 function Nav() {
-  const { pathname } = useRouter();
+  const { asPath } = useRouter();
+  const path = currentPath(asPath);
   return (
     <header className={styles.header}>
-      <nav className={styles.nav} aria-label="Primary">
-        <Link href="/" className={styles.brand}>
+      <nav className={styles.nav} aria-label="Main">
+        <Link href="/" className={styles.brand} aria-current={path === '/' ? 'page' : undefined}>
           {site.name}
         </Link>
         <ul className={styles.links}>
           {site.nav.map(({ label, href }) => {
-            const current = pathname === href || (href === '/journal' && pathname.startsWith('/journal/'));
+            const current = sectionCurrent(path, href);
             return (
               <li key={href}>
                 <Link href={href} className={styles.link} aria-current={current ? 'page' : undefined}>
@@ -30,7 +40,19 @@ function Nav() {
   );
 }
 
+function footerCurrent(path, href) {
+  if (!href || href.startsWith('mailto:') || href.startsWith('http')) return false;
+  const target = href.split('#')[0].split('?')[0];
+  if (target === '/') return path === '/';
+  // "All photographs" is only the gallery index; a category has its own link.
+  if (target === '/gallery') return path === '/gallery';
+  if (target === '/journal') return path === '/journal' || path.startsWith('/journal/');
+  return path === target;
+}
+
 function Footer() {
+  const { asPath } = useRouter();
+  const path = currentPath(asPath);
   const year = new Date().getFullYear();
   const columns = [
     { heading: 'Explore', links: site.nav.map(({ label, href }) => ({ label, href })) },
@@ -73,7 +95,7 @@ function Footer() {
                         {l.label}
                       </a>
                     ) : (
-                      <Link href={l.href} className={styles.footerLink}>{l.label}</Link>
+                      <Link href={l.href} className={styles.footerLink} aria-current={footerCurrent(path, l.href) ? 'page' : undefined}>{l.label}</Link>
                     )}
                   </li>
                 ))}
@@ -83,11 +105,15 @@ function Footer() {
         </nav>
         <div className={styles.footerBottom}>
           <p className={styles.copyright}>© {year} {site.name}. All rights reserved. All photographs are the copyright of {site.photographer}.</p>
-          <ul className={styles.footerLegal} aria-label="Legal">
-            {legal.map((l) => (
-              <li key={l.href}><Link href={l.href} className={styles.footerLegalLink}>{l.label}</Link></li>
-            ))}
-          </ul>
+          <nav aria-label="Legal">
+            <ul className={styles.footerLegal}>
+              {legal.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className={styles.footerLegalLink} aria-current={footerCurrent(path, l.href) ? 'page' : undefined}>{l.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
     </footer>
