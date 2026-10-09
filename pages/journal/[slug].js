@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -37,6 +37,7 @@ export default function JournalArticle({ article }) {
   const { photo } = article;
   const shape = shapes[String(article.photoNumber)];
   const [lbOpen, setLbOpen] = useState(false);
+  const lightboxId = useId();
   const openerRef = useRef(null);
   const ar = photo.width / photo.height;
   const hasMap = photo.coords && typeof photo.coords.lat === 'number';
@@ -110,11 +111,11 @@ export default function JournalArticle({ article }) {
         <div className={styles.spread}>
           <div className={styles.visual}>
             <ShapeMosaic
-              shape={shape}
               src={photo.src}
               alt={photo.alt}
-              companionSrc={article.companion?.src}
               onClick={openLightbox}
+              expanded={lbOpen}
+              controlsId={lightboxId}
             />
             <div className={styles.under}>
               {article.taken ? (
@@ -127,7 +128,7 @@ export default function JournalArticle({ article }) {
               <ul className={styles.swatches}>
                 {shape.palette.map((hex, i) => (
                   <li key={`${hex}-${i}`} className={styles.swatchItem}>
-                    <span className={styles.swatch} style={{ background: hex }} />
+                    <span className={styles.swatch} style={{ background: hex }} aria-hidden="true" />
                     <span className={styles.hex}>{hex}</span>
                   </li>
                 ))}
@@ -138,7 +139,13 @@ export default function JournalArticle({ article }) {
                 </div>
               ) : null}
               <p className={styles.viewRow}>
-                <button type="button" className={styles.viewFull} onClick={openLightbox}>
+                <button
+                  type="button"
+                  className={styles.viewFull}
+                  onClick={openLightbox}
+                  aria-expanded={lbOpen}
+                  aria-controls={lightboxId}
+                >
                   View full image
                   <ExpandIcon />
                 </button>
@@ -196,6 +203,7 @@ export default function JournalArticle({ article }) {
         </div>
       </article>
       <Lightbox
+        id={lightboxId}
         isOpen={lbOpen}
         photo={{ src: photo.src, alt: photo.alt, title: photo.title, href: photo.href }}
         onClose={closeLightbox}

@@ -47,20 +47,27 @@ export default function PhotoMap({ coords, location, title, children, stacked = 
     </button>
   );
 
-  const panel = open ? (
-    <div id={panelId} className={`${styles.mapPanel} ${bare ? styles.mapPanelBare : ''}`}>
-      <iframe
-        title={`Map of ${label}`}
-        src={embed}
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        allowFullScreen
-      />
-      <a className={styles.mapExternal} href={external} target="_blank" rel="noopener noreferrer">
-        Open in Google Maps ↗
-      </a>
+  // The shell stays mounted so aria-controls always points at a real id.
+  // The embed itself is created only while open, so a closed card still
+  // loads nothing from Google.
+  const panel = (
+    <div id={panelId} className={`${styles.mapPanel} ${bare ? styles.mapPanelBare : ''}`} hidden={!open}>
+      {open ? (
+        <>
+          <iframe
+            title={`Map of ${label}`}
+            src={embed}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+          <a className={styles.mapExternal} href={external} target="_blank" rel="noopener noreferrer">
+            Open in Google Maps ↗
+          </a>
+        </>
+      ) : null}
     </div>
-  ) : null;
+  );
 
   if (bare) {
     return (

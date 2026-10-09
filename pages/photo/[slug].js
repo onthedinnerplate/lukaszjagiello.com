@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -19,6 +19,7 @@ import styles from '@/styles/Page.module.css';
 export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
   const router = useRouter();
   const [lbOpen, setLbOpen] = useState(false);
+  const lightboxId = useId();
   const { equipment, specs } = captionFor(photo);
   const description = photo.alt;
   const location = typeof photo.location === 'string' ? photo.location.trim() : '';
@@ -91,7 +92,8 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
               type="button"
               className={styles.photoOpen}
               onClick={() => setLbOpen(true)}
-              aria-label={`View ${photo.title} full screen`}
+              aria-expanded={lbOpen}
+              aria-controls={lightboxId}
               title="View full screen"
             >
               <picture style={{ display: 'block', width: '100%' }}>
@@ -113,6 +115,7 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
                   className={styles.photoImg}
                 />
               </picture>
+              <span className="sr-only">View full screen</span>
             </button>
             <ShareButton
               title={photo.title}
@@ -126,6 +129,7 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
       </article>
 
       <Lightbox
+        id={lightboxId}
         isOpen={lbOpen}
         photo={photo}
         onClose={() => setLbOpen(false)}

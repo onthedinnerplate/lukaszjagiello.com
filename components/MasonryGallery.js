@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import Link from 'next/link';
 import Lightbox from './Lightbox';
 import ShareButton from './ShareButton';
@@ -25,6 +25,7 @@ const SIZES_WIDE = '(max-width: 640px) 100vw, (max-width: 1024px) 48vw, 32vw';
 export default function MasonryGallery({ photos, wide = false, priorityCount = 0, headingId }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const lightboxId = useId();
 
   // Shared links look like /gallery#photo-12 — open that photo on arrival,
   // including when the hash changes without a full reload.
@@ -81,7 +82,8 @@ export default function MasonryGallery({ photos, wide = false, priorityCount = 0
                     href={photo.href || `/gallery#photo-${num}`}
                     className={styles.imgBtn}
                     onClick={(e) => onCardClick(e, i)}
-                    aria-label={`${photo.title || photo.alt} — view fullscreen`}
+                    aria-expanded={lightboxOpen && selectedIndex === i}
+                    aria-controls={lightboxId}
                     style={{ display: 'block', width: '100%', cursor: 'pointer' }}
                   >
                     <ResponsiveImage
@@ -117,6 +119,7 @@ export default function MasonryGallery({ photos, wide = false, priorityCount = 0
       </ul>
 
       <Lightbox
+        id={lightboxId}
         isOpen={lightboxOpen}
         photo={photos[selectedIndex]}
         onClose={handleCloseLightbox}

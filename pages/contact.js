@@ -61,7 +61,8 @@ export default function Contact() {
   const fieldProps = (name) => ({
     id: name,
     name,
-    'aria-invalid': errors[name] ? true : undefined,
+    'aria-required': true,
+    'aria-invalid': Boolean(errors[name]),
     'aria-describedby': errors[name] ? `${name}-error` : undefined,
     onInput: () => errors[name] && setErrors((e) => ({ ...e, [name]: undefined })),
   });
@@ -104,7 +105,8 @@ export default function Contact() {
           </p>
         </header>
 
-        <div role="status" aria-live="polite" className={styles.statusRegion}>
+        <div role="status" aria-live="polite" aria-atomic="true" className={styles.statusRegion}>
+          {status === 'sending' ? <p className="sr-only">Sending your message.</p> : null}
           {announce && <p className={announce.kind === 'success' ? styles.success : styles.errorBox}>{announce.text}</p>}
         </div>
 
