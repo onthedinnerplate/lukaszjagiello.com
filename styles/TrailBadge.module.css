@@ -1,0 +1,23 @@
+.row {
+  margin: 0 0 0.75rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.18rem 0.55rem;
+  border: 1px solid rgba(196, 163, 90, 0.55);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.badge:hover {
+  color: var(--charcoal);
+  text-decoration: none;
+}

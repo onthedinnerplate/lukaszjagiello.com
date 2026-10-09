@@ -261,7 +261,7 @@ export default function GalleryPage({ photos, category, counts }) {
               label={isAll ? 'Gallery categories' : `${category.label} gallery categories`}
             />
           </div>
-          <MasonryGallery photos={gridPhotos} layout="uniform" wide headingId="all-photos-title" />
+          <MasonryGallery photos={gridPhotos} layout="uniform" wide headingId="all-photos-title" equalCards />
         </section>
 
         <section className={`${styles.band} ${styles.anchor} ${styles.futureBand}`} id="future-photographs" aria-labelledby="future-photos-title">
@@ -279,6 +279,7 @@ export default function GalleryPage({ photos, category, counts }) {
             layout="tight"
             anchor={false}
             headingId="future-photos-title"
+            equalCards
           />
         </section>
       </section>

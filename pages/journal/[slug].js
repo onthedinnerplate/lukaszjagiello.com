@@ -13,6 +13,7 @@ import { ArticleShare, PhotoCardActions } from '@/components/ShareButtons';
 import { getPhotos } from '@/lib/photo-data';
 import { mentionsGear, photoNumberFromSrc } from '@/lib/photoCaption';
 import { AffiliateDisclosure, GearLine, gearLineClass } from '@/components/GearStoreLinks';
+import TrailBadge from '@/components/TrailBadge';
 import {
   articles as articleRecords,
   formatArticleDate,
@@ -176,6 +177,7 @@ export default function JournalArticle({ article }) {
               as="h1"
               className={styles.title}
             />
+            <TrailBadge trail={article.trail} />
             <p className={styles.dek}>{article.dek}</p>
             <p className={styles.byline}>
               {article.location ? (
