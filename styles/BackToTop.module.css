@@ -1,7 +1,7 @@
 .btn {
   position: fixed;
-  right: 5px;
-  bottom: 20px;
+  right: calc(10px + env(safe-area-inset-right, 0px));
+  bottom: calc(10px + env(safe-area-inset-bottom, 0px));
   z-index: 900; /* above content, below the lightbox (1000) */
   width: 44px;
   height: 44px;
@@ -29,10 +29,6 @@
 }
 .btn:hover { background: var(--orange); border-color: var(--orange); }
 .btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
-/* Keep clear of the iPhone home indicator. */
-@supports (padding: env(safe-area-inset-bottom)) {
-  .btn { bottom: calc(20px + env(safe-area-inset-bottom)); }
-}
 @media (prefers-reduced-motion: reduce) {
   .btn { transition: none; }
 }

@@ -42,7 +42,7 @@ export default function Home({ photos, navCounts }) {
           <h2 id="featured-heading">Featured Collections</h2>
           <p>A selection of curated photography from diverse locations and subjects.</p>
         </div>
-        <MasonryGallery photos={photos} headingId="featured-heading" />
+        <MasonryGallery photos={photos} headingId="featured-heading" layout="uniform" grayscale={false} />
       </section>
 
       <section className={styles.cta} aria-labelledby="cta-heading">

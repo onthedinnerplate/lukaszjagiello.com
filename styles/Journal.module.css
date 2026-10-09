@@ -209,8 +209,8 @@
 .swatch {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 1;
+  height: 8px;
+  aspect-ratio: auto;
 }
 .hex {
   display: block;
@@ -510,6 +510,8 @@
    Color is the hero white (#fff). Article pages override it inline with their swatch. */
 .headlineAccent {
   font-weight: 400;
+  font-synthesis: none;
+  -webkit-font-synthesis: none;
   font-style: normal;
   font-size: 1.45em;
   line-height: 1;

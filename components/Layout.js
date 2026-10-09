@@ -73,7 +73,9 @@ function Footer() {
     {
       heading: 'Shop',
       links: [
-        { label: 'Digital downloads', href: '/gallery' },
+        // The gallery page no longer carries a digital-download call to action.
+        // Other pages keep this footer link.
+        ...(path === '/gallery' || path.startsWith('/gallery/') ? [] : [{ label: 'Digital downloads', href: '/gallery' }]),
         { label: 'Licensing', href: '/licensing' },
         { label: 'Prints — coming soon', href: '/contact' },
       ],

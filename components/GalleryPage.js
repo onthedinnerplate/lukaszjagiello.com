@@ -1,135 +1,119 @@
-import { useId, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
 import JourneysHero from '@/components/JourneysHero';
 import CategoryNav from '@/components/CategoryNav';
-import BuyButton from '@/components/BuyButton';
 import { PhotoCardActions } from '@/components/ShareButtons';
 import Lightbox from '@/components/Lightbox';
 import ResponsiveImage from '@/components/ResponsiveImage';
-import { captionFor, photoNumberFromSrc } from '@/lib/photoCaption';
+import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { ogImageSrc } from '@/lib/slug';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
-import { galleryPathFor } from '@/lib/categories';
+import { galleryPathFor, inCategory } from '@/lib/categories';
 import { site } from '@/lib/site';
-import { LICENCE_SUMMARY, TIERS, formatPrice } from '@/lib/store';
 import pageStyles from '@/styles/Page.module.css';
 import styles from '@/styles/Gallery.module.css';
 
-const FEATURED_SIZES = '(max-width: 1000px) 100vw, 60vw';
+/**
+ * Twelve photographs for the future-photos block: three whose category data
+ * already matches each gallery category. Photo 13 is tagged people and
+ * architecture; it is used only for people. Nothing is relabelled.
+ */
+const FUTURE_PICKS = [
+  { n: 23, category: 'landscape' },
+  { n: 34, category: 'landscape' },
+  { n: 27, category: 'landscape' },
+  { n: 20, category: 'animals' },
+  { n: 26, category: 'animals' },
+  { n: 29, category: 'animals' },
+  { n: 8, category: 'architecture' },
+  { n: 9, category: 'architecture' },
+  { n: 14, category: 'architecture' },
+  { n: 1, category: 'people' },
+  { n: 2, category: 'people' },
+  { n: 13, category: 'people' },
+];
 
-function pickFeatured(photos) {
-  return photos.find((photo) => Array.isArray(photo.tiers) && photo.tiers.length) || photos[0] || null;
+function pickFuture(photos) {
+  const byNumber = new Map(photos.map((photo) => [photoNumberFromSrc(photo.src), photo]));
+  return FUTURE_PICKS.map((pick) => {
+    const photo = byNumber.get(pick.n);
+    if (!photo || !inCategory(photo, pick.category)) return null;
+    return photo;
+  }).filter(Boolean);
 }
 
-function FeaturedPhotograph({ photo, more }) {
-  const { equipment, specs } = captionFor(photo);
-  const slides = [photo, ...more];
+function slugFromPath(path) {
+  const parts = String(path || '').split('?')[0].split('/').filter(Boolean);
+  if (parts[0] !== 'gallery') return 'all';
+  return parts[1] || 'all';
+}
+
+function GallerySectionNav({ active, counts, onSelect, onDark = false, label = 'Gallery categories' }) {
+  return (
+    <div className={`${styles.sectionNav} ${onDark ? styles.sectionNavOnDark : ''}`}>
+      <CategoryNav
+        active={active}
+        counts={counts}
+        hrefFor={galleryPathFor}
+        includeAll={false}
+        label={label}
+        onSelect={onSelect}
+      />
+    </div>
+  );
+}
+
+function SelectedRow({ photos, height }) {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
   const lightboxId = useId();
-  const tiers = Array.isArray(photo.tiers) ? photo.tiers : [];
-
+  if (!photos.length) return null;
   return (
-    <section className={styles.band} aria-labelledby="featured-photograph">
-      <h2 id="featured-photograph" className={styles.sectionLabel}>Featured photograph</h2>
-      <div className={styles.saleFeatured}>
-        <div className={styles.saleMain}>
-          <figure className={styles.figure}>
-            <div className={styles.frame} style={{ backgroundColor: photo.color }}>
-              <PhotoCardActions
-                title={photo.title}
-                shareUrl={photo.href}
-                pinUrl={photo.href}
-                mediaUrl={ogImageSrc(photo.src) || photo.src}
-                photo={photo}
-              />
-              <button
-                type="button"
-                className={styles.featuredOpen}
-                onClick={() => { setIndex(0); setOpen(true); }}
-                aria-expanded={open}
-                aria-controls={lightboxId}
-              >
-                <ResponsiveImage
-                  pictureClassName={styles.picture}
-                  src={photo.src}
-                  alt={photo.alt}
-                  width={photo.width}
-                  height={photo.height}
-                  sizes={FEATURED_SIZES}
-                  srcSet={photo.width ? `${photo.src} ${photo.width}w` : undefined}
-                  avifSrcSet={photo.fullAvif && photo.width ? `${photo.fullAvif} ${photo.width}w` : undefined}
-                  className={styles.featuredImg}
-                  loading="eager"
-                  fetchPriority="high"
-                />
-              </button>
-            </div>
-            <figcaption className={styles.caption}>
-              <span className={styles.title}>
-                {photo.href ? <Link href={photo.href} className={styles.titleLink}>{photo.title}</Link> : photo.title}
-                {photo.location ? <span className={styles.location}>{photo.location}</span> : null}
-              </span>
-              {(equipment || specs) && (
-                <span className={styles.metaBlock}>
-                  {equipment && <span className={styles.meta}>{equipment}</span>}
-                  {specs && <span className={styles.meta}>{specs}</span>}
-                </span>
-              )}
-            </figcaption>
-          </figure>
-          {tiers.length > 0 ? (
-            <BuyButton
-              photoNumber={photoNumberFromSrc(photo.src)}
-              tiers={tiers}
-              licence={LICENCE_SUMMARY}
+    <>
+      <div className={styles.selectedRow} style={height ? { height: `${height}px` } : undefined}>
+        {photos.map((photo, i) => (
+          <div key={photo.src} className={styles.selectedCell} style={{ backgroundColor: photo.color }}>
+            <PhotoCardActions
+              title={photo.title}
+              shareUrl={photo.href}
+              pinUrl={photo.href}
+              mediaUrl={ogImageSrc(photo.src) || photo.src}
+              photo={photo}
             />
-          ) : null}
-        </div>
-        {more.length > 0 ? (
-          <aside className={styles.saleMore} aria-labelledby="more-photographs">
-            <h3 id="more-photographs" className={styles.saleMoreLabel}>More photographs</h3>
-            <ul>
-              {more.map((item) => (
-                <li key={item.src}>
-                  {item.location ? <p className={styles.saleMorePlace}>{item.location}</p> : null}
-                  <Link href={item.href}>{item.title}</Link>
-                </li>
-              ))}
-            </ul>
-            <a href="#gallery-grid" className={styles.saleLink}>All photographs</a>
-          </aside>
-        ) : null}
+            <button
+              type="button"
+              className={styles.selectedOpen}
+              onClick={() => { setIndex(i); setOpen(true); }}
+              aria-label={photo.title}
+              aria-expanded={open && index === i}
+              aria-controls={lightboxId}
+            >
+              <ResponsiveImage
+                pictureClassName={styles.selectedPicture}
+                src={photo.thumb || photo.src}
+                alt={photo.alt}
+                width={photo.thumbWidth || photo.width}
+                height={photo.thumbHeight || photo.height}
+                sizes="(max-width: 768px) 25vw, 20vw"
+                srcSet={photo.thumbSrcSet}
+                className={styles.selectedImg}
+                loading={i < 2 ? 'eager' : 'lazy'}
+              />
+            </button>
+          </div>
+        ))}
       </div>
       <Lightbox
         id={lightboxId}
         isOpen={open}
-        photo={slides[index]}
+        photo={photos[index]}
         onClose={() => setOpen(false)}
-        onPrev={() => setIndex((n) => (n - 1 + slides.length) % slides.length)}
-        onNext={() => setIndex((n) => (n + 1) % slides.length)}
+        onPrev={() => setIndex((n) => (n - 1 + photos.length) % photos.length)}
+        onNext={() => setIndex((n) => (n + 1) % photos.length)}
       />
-    </section>
-  );
-}
-
-function PhotoBand({ id, label, photos, layout }) {
-  if (!photos.length) return null;
-  return (
-    <section className={styles.band} aria-labelledby={id}>
-      <h2 id={id} className={styles.sectionLabel}>
-        {label} <span>{photos.length}</span>
-      </h2>
-      <MasonryGallery
-        photos={photos}
-        layout={layout}
-        anchor={false}
-        headingId={id}
-        priorityCount={layout === 'row' ? 2 : 0}
-      />
-    </section>
+    </>
   );
 }
 
@@ -148,16 +132,76 @@ export default function GalleryPage({ photos, category, counts }) {
         description: `${category.description} — ${category.label.toLowerCase()} photographs by ${site.photographer}.`,
       };
 
+  const listed = isAll ? photos : photos.filter((photo) => inCategory(photo, category.slug));
   const jsonLd = graph(websiteNode(), personNode(), {
     ...pageNode('ImageGallery', meta),
-    associatedMedia: photos.map(imageObject),
+    associatedMedia: listed.map(imageObject),
   });
 
-  const featured = pickFeatured(photos);
-  const more = featured ? photos.filter((photo) => photo.src !== featured.src).slice(0, 6) : [];
+  const gate = photos.find((photo) => photoNumberFromSrc(photo.src) === 12) || photos[0] || null;
+  const more = gate ? photos.filter((photo) => photo.src !== gate.src).slice(0, 6) : [];
   const selected = photos.slice(0, Math.min(4, photos.length));
-  const further = photos.slice(4, 16);
-  const cluster = photos.slice(0, 7);
+  const future = pickFuture(photos);
+
+  const [gridCategory, setGridCategory] = useState(isAll ? 'all' : category.slug);
+  const [futureCategory, setFutureCategory] = useState('all');
+  const [gateOpen, setGateOpen] = useState(false);
+  const gateLightboxId = useId();
+  const frameRef = useRef(null);
+  const [rowHeight, setRowHeight] = useState(0);
+
+  useLayoutEffect(() => {
+    const frame = frameRef.current;
+    if (!frame) return undefined;
+    const apply = () => setRowHeight(Math.round(frame.getBoundingClientRect().height));
+    apply();
+    if (typeof ResizeObserver === 'undefined') return undefined;
+    const observer = new ResizeObserver(apply);
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const onPop = () => setGridCategory(slugFromPath(window.location.pathname));
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  useEffect(() => {
+    if (isAll) return undefined;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const frame = requestAnimationFrame(() => {
+      document.getElementById('all-photographs')?.scrollIntoView({
+        behavior: reduce ? 'auto' : 'smooth',
+        block: 'start',
+      });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [isAll]);
+
+  const scrollToAll = (slug) => {
+    setGridCategory(slug);
+    const href = galleryPathFor(slug);
+    if (window.location.pathname !== href) {
+      window.history.pushState({ galleryCategory: slug }, '', href);
+    }
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById('all-photographs')?.scrollIntoView({
+      behavior: reduce ? 'auto' : 'smooth',
+      block: 'start',
+    });
+  };
+
+  const filterFuture = (slug) => {
+    setFutureCategory((current) => (current === slug ? 'all' : slug));
+  };
+
+  const gridPhotos = gridCategory === 'all'
+    ? photos
+    : photos.filter((photo) => inCategory(photo, gridCategory));
+  const futurePhotos = futureCategory === 'all'
+    ? future
+    : future.filter((photo) => inCategory(photo, futureCategory));
 
   return (
     <>
@@ -174,69 +218,133 @@ export default function GalleryPage({ photos, category, counts }) {
           <h1 id="gallery-heading" className={pageStyles.galleryHeading}>{isAll ? 'Gallery' : category.label}</h1>
           {isAll ? null : (
             <p className={pageStyles.lede}>
-              {photos.length} {photos.length === 1 ? 'photograph' : 'photographs'}
+              {listed.length} {listed.length === 1 ? 'photograph' : 'photographs'}
               {` — ${category.description.toLowerCase()}.`}
             </p>
           )}
         </header>
 
-        <PhotoBand id="selected-photos" label="Selected photographs" photos={selected} layout="row" />
-        {featured ? <FeaturedPhotograph photo={featured} more={more} /> : null}
-        <PhotoBand id="further-photos" label="Further photographs" photos={further.length >= 2 ? further : []} layout="trio" />
+        {gate ? (
+          <section className={styles.band} aria-labelledby="gate-hero-title">
+            <h2 id="gate-hero-title" className={styles.sectionLabel}>Featured photograph</h2>
+            <GallerySectionNav
+              active={gridCategory}
+              counts={counts}
+              onSelect={scrollToAll}
+              label="Featured photograph categories"
+            />
+            <div className={styles.saleFeatured}>
+              <div className={styles.saleMain}>
+                <div className={styles.gateFrame} ref={frameRef} style={{ backgroundColor: gate.color }}>
+                  <PhotoCardActions
+                    title={gate.title}
+                    shareUrl={gate.href}
+                    pinUrl={gate.href}
+                    mediaUrl={ogImageSrc(gate.src) || gate.src}
+                    photo={gate}
+                  />
+                  <button
+                    type="button"
+                    className={styles.gateOpen}
+                    onClick={() => setGateOpen(true)}
+                    aria-label={gate.title}
+                    aria-expanded={gateOpen}
+                    aria-controls={gateLightboxId}
+                  >
+                    <ResponsiveImage
+                      pictureClassName={styles.gatePicture}
+                      src={gate.src}
+                      alt={gate.alt}
+                      width={gate.width}
+                      height={gate.height}
+                      sizes="(max-width: 1000px) 100vw, 60vw"
+                      srcSet={gate.width ? `${gate.src} ${gate.width}w` : undefined}
+                      avifSrcSet={gate.fullAvif && gate.width ? `${gate.fullAvif} ${gate.width}w` : undefined}
+                      className={styles.gateImg}
+                      loading="eager"
+                      fetchPriority="high"
+                    />
+                  </button>
+                </div>
+              </div>
+              {more.length > 0 ? (
+                <aside className={styles.saleMore} aria-labelledby="more-photographs">
+                  <h3 id="more-photographs" className={styles.saleMoreLabel}>More photographs</h3>
+                  <GallerySectionNav
+                    active={gridCategory}
+                    counts={counts}
+                    onSelect={scrollToAll}
+                    onDark
+                    label="More photographs categories"
+                  />
+                  <ul>
+                    {more.map((item) => (
+                      <li key={item.src}>
+                        {item.location ? <p className={styles.saleMorePlace}>{item.location}</p> : null}
+                        <Link href={item.href}>{item.title}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                  <a href="#all-photographs" className={styles.saleLink}>All photographs</a>
+                </aside>
+              ) : null}
+            </div>
+            <Lightbox
+              id={gateLightboxId}
+              isOpen={gateOpen}
+              photo={gate}
+              onClose={() => setGateOpen(false)}
+              onPrev={() => {}}
+              onNext={() => {}}
+            />
+          </section>
+        ) : null}
 
-        <section className={styles.band} id="gallery-grid" aria-labelledby="all-photos-title">
+        <section className={styles.band} aria-labelledby="selected-photos">
+          <h2 id="selected-photos" className={styles.sectionLabel}>
+            Selected photographs <span>{selected.length}</span>
+          </h2>
+          <GallerySectionNav
+            active={gridCategory}
+            counts={counts}
+            onSelect={scrollToAll}
+            label="Selected photograph categories"
+          />
+          <SelectedRow photos={selected} height={rowHeight} />
+        </section>
+
+        <section className={`${styles.band} ${styles.anchor}`} id="all-photographs" aria-labelledby="all-photos-title">
           <h2 id="all-photos-title" className={`${styles.sectionLabel} ${styles.gridLabel}`}>
-            All photographs <span>{photos.length}</span>
+            All photographs <span>{gridPhotos.length}</span>
           </h2>
           <div className={styles.gridNav}>
-            <CategoryNav
-              active={isAll ? 'all' : category.slug}
+            <GallerySectionNav
+              active={gridCategory}
               counts={counts}
-              hrefFor={galleryPathFor}
+              onSelect={scrollToAll}
               label={isAll ? 'Gallery categories' : `${category.label} gallery categories`}
-              includeAll={false}
             />
           </div>
-          <MasonryGallery photos={photos} wide headingId="all-photos-title" />
+          <MasonryGallery photos={gridPhotos} layout="uniform" wide headingId="all-photos-title" />
         </section>
-      </section>
 
-      <section className={styles.saleClose} aria-labelledby="download-title">
-        <div className={styles.saleCloseCopy}>
-          <p className={styles.saleKicker}>Digital downloads</p>
-          <h2 id="download-title" className={styles.saleCloseTitle}>Buy a photograph</h2>
-          <ul className={styles.saleTiers}>
-            {TIERS.map((tier) => (
-              <li key={tier.id}>
-                <span className={styles.saleTierLabel}>{tier.label}</span>
-                {' — '}
-                {formatPrice(tier.priceCents)}
-                {'. '}
-                {tier.blurb}
-              </li>
-            ))}
-          </ul>
-          <p className={styles.saleLicence}>
-            {LICENCE_SUMMARY} <Link href="/licensing">Full licence terms</Link>
-          </p>
-          {featured?.href && featured.tiers?.length ? (
-            <a href="#buy" className={styles.saleLink}>Buy {featured.title}</a>
-          ) : null}
-        </div>
-        {cluster.length > 0 ? (
-          <ul className={styles.saleCluster} aria-hidden="true">
-            {cluster.map((photo) => (
-              <li key={photo.src}>
-                <img
-                  src={photo.thumb || photo.src}
-                  alt=""
-                  width={photo.thumbWidth || photo.width}
-                  height={photo.thumbHeight || photo.height}
-                />
-              </li>
-            ))}
-          </ul>
-        ) : null}
+        <section className={`${styles.band} ${styles.anchor} ${styles.futureBand}`} id="future-photographs" aria-labelledby="future-photos-title">
+          <h2 id="future-photos-title" className={styles.sectionLabel}>
+            Future photographs <span>{futurePhotos.length}</span>
+          </h2>
+          <GallerySectionNav
+            active={futureCategory}
+            counts={{}}
+            onSelect={filterFuture}
+            label="Future photograph categories"
+          />
+          <MasonryGallery
+            photos={futurePhotos}
+            layout="tight"
+            anchor={false}
+            headingId="future-photos-title"
+          />
+        </section>
       </section>
     </>
   );

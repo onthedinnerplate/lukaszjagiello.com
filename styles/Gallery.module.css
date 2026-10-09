@@ -307,7 +307,14 @@
 .featuredOpen:focus-visible { outline: 3px solid var(--orange); outline-offset: -3px; }
 .featuredImg { width: 100%; height: auto; display: block; }
 
-.saleMore { background: #1f2121; color: #f5f3ee; padding: 1.5rem 1.35rem 1.35rem; }
+.saleMore {
+  --radius-photo: 12px;
+  border-radius: var(--radius-photo);
+  overflow: hidden;
+  background: #1f2121;
+  color: #f5f3ee;
+  padding: 1.5rem 1.35rem 1.35rem;
+}
 .saleMoreLabel {
   margin: 0 0 0.4rem;
   font-size: 0.72rem;
@@ -390,3 +397,145 @@
   .saleFeatured { grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.72fr); align-items: start; }
   .saleClose { grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); align-items: center; }
 }
+
+/* Journeys-style equal tiles. All photographs keeps the column gaps.
+   Future photographs reuses the tile and sets gap to 0. */
+.uniform {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 0.85rem;
+  row-gap: 1.35rem;
+}
+.uniform .item { margin: 0; break-inside: auto; }
+.tileFigure {
+  border: 1px solid rgba(196, 163, 90, 0.38);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(26, 26, 26, 0.05);
+  background: #fff;
+}
+.frameCover {
+  aspect-ratio: 1 / 1;
+}
+.frameCover .imgBtn {
+  position: absolute;
+  inset: 0;
+}
+.frameCover .picture,
+.frameCover .img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.frameCover .picture { display: block; height: 100%; }
+.imgColor,
+.item:hover .imgColor { filter: none; }
+.item:hover .imgColor { transform: scale(1.05); }
+.tight {
+  column-gap: 0;
+  row-gap: 0;
+}
+@media (min-width: 769px) {
+  .uniform { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 1rem; row-gap: 1.5rem; }
+  .tight { column-gap: 0; row-gap: 0; }
+}
+@media (min-width: 1100px) {
+  .uniform { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 1.15rem; row-gap: 1.6rem; }
+  .tight { column-gap: 0; row-gap: 0; }
+}
+
+/* html already sets scroll-padding-top to the nav height, so the anchor
+   does not add a second offset. */
+.anchor { scroll-margin-top: 0; }
+.sectionNav { margin: 0 0 0.75rem; }
+.sectionNavOnDark .catLink,
+.sectionNavOnDark .catLink:hover,
+.sectionNavOnDark .catDisabled { color: #f4f1ea; }
+.sectionNavOnDark .catCount { color: #c8c8c2; }
+
+/* Golden Gate hero: half the old portrait (2:3 -> 4:3), bridge kept, rocks cropped. */
+.gateFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #00a6cd;
+  line-height: 0;
+}
+.gateOpen {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.gateOpen:focus-visible { outline: 3px solid var(--orange); outline-offset: -3px; }
+.gatePicture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.gateImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Top of the frame is the sky/bridge. Scale past the half-height cover
+     window so the crop ends at the bridge foot instead of the foreground rocks. */
+  object-position: center top;
+  transform: scale(2.8);
+  transform-origin: center top;
+  display: block;
+}
+.selectedRow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.4rem;
+  min-width: 0;
+}
+.selectedCell {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--surface);
+  line-height: 0;
+}
+.selectedOpen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.selectedOpen:focus-visible { outline: 3px solid var(--orange); outline-offset: -3px; }
+.selectedPicture,
+.selectedImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.selectedImg {
+  filter: grayscale(100%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .selectedImg { transition: filter 0.3s ease, transform 0.4s ease; }
+  .selectedCell:hover .selectedImg { filter: grayscale(0%); transform: scale(1.02); }
+}
+.futureBand { margin-bottom: 0; }
+.futureBand .uniform { margin: 0; }

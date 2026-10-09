@@ -14,7 +14,8 @@
   --success-bg: #ecffe6;
 
   --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --nav-h: 72px;
+  /* Two centered rows: brand, then links. Matches the stacked height used below 960px. */
+  --nav-h: 136px;
   --gutter: clamp(16px, 4vw, 40px);
   --max: 1200px;
   --max-wide: 1600px;
@@ -27,7 +28,8 @@
   :root { --nav-h: 136px; }
 }
 @media (max-width: 720px) {
-  :root { --nav-h: 104px; }
+  /* Smaller name, but the links wrap to a second line on a phone, so the bar stays tall enough to hold them. */
+  :root { --nav-h: 160px; }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -49,6 +51,7 @@ body {
   line-height: 1.6;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  text-shadow: none;
 }
 
 h1, h2, h3 { line-height: 1.2; margin: 0 0 0.5em; font-weight: 600; letter-spacing: -0.01em; }

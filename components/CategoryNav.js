@@ -21,6 +21,7 @@ export default function CategoryNav({
   disableEmpty = false,
   includeAll = true,
   allLabel = 'All',
+  onSelect = null,
 }) {
   const items = includeAll ? [{ slug: 'all', label: allLabel }, ...CATEGORIES] : CATEGORIES;
   const activeSet = new Set(Array.isArray(active) ? active : [active]);
@@ -114,6 +115,12 @@ export default function CategoryNav({
                 className={`${styles.catLink} ${isActive ? styles.catActive : ''}`}
                 aria-current={isActive ? 'page' : undefined}
                 onFocus={follow}
+                onClick={(event) => {
+                  if (!onSelect) return;
+                  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                  event.preventDefault();
+                  onSelect(c.slug);
+                }}
               >
                 {c.label}
                 {count}
