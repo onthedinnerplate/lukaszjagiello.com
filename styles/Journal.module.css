@@ -530,8 +530,6 @@
   padding: 0;
   line-height: 1;
   vertical-align: baseline;
-  /* Homepage phrases stay moss. Other heroes keep the per-page swatch. */
-  color: #B9C27A;
 }
 .heroBand {
   position: relative;
@@ -780,7 +778,7 @@
   font-family: Allura, "Allura Fallback", cursive;
   font-weight: 400;
   font-style: normal;
-  color: var(--hero-accent, #B9C27A);
+  color: var(--hero-accent, #539150);
   /* Allura draws small in its em box. 1.7em makes the phrase about 1.35× the Poppins words. */
   font-size: 1.7em;
   letter-spacing: 0;
@@ -1415,7 +1413,7 @@
   .heroTitle,
   .heroSub,
   .heroCap a { color: #020A0A; }
-  .heroTitle .headlineAccent { color: var(--hero-accent-mobile, #B9C27A); }
+  .heroTitle .headlineAccent { color: var(--hero-accent-mobile, #182a17); }
   .heroNav :global(a),
   .heroNav :global(a:hover) { color: #020A0A; }
   .heroNav :global(span) { color: #334824; }
