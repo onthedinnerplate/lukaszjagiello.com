@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { site, isPlaceholderSocial } from '@/lib/site';
 import { CATEGORIES, galleryPathFor } from '@/lib/categories';
 import { articleTitleFont } from '@/lib/fonts';
+import { heroScriptFont } from '@/components/headlineAccent';
 import styles from '@/styles/Layout.module.css';
 import BackToTop from './BackToTop';
 
@@ -21,10 +22,12 @@ function sectionCurrent(path, href) {
 function Nav() {
   const { asPath } = useRouter();
   const path = currentPath(asPath);
+  const onHero = path === '/';
   const listRef = useRef(null);
   const [box, setBox] = useState(null);
   const [ready, setReady] = useState(false);
   const [instant, setInstant] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
 
   const measure = (el) => {
     const list = listRef.current;
@@ -57,6 +60,14 @@ function Nav() {
     measure(activeItem());
   };
 
+  useEffect(() => {
+    if (!onHero) return undefined;
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [onHero]);
+
   useIsoLayoutEffect(() => {
     measure(activeItem());
     setReady(true);
@@ -77,8 +88,14 @@ function Nav() {
     ? { '--x': `${box.x}px`, '--y': `${box.y}px`, '--w': box.w, opacity: 1 }
     : { '--x': '0px', '--y': '0px', '--w': 0, opacity: 0 };
 
+  const headerClass = [
+    styles.header,
+    onHero ? styles.headerOnHero : '',
+    onHero && scrolled ? styles.headerScrolled : '',
+  ].filter(Boolean).join(' ');
+
   return (
-    <header className={styles.header}>
+    <header className={headerClass}>
       <nav
         className={`${styles.nav} container${ready ? ` ${styles.navReady}` : ''}`}
         aria-label="Main"
@@ -97,7 +114,8 @@ function Nav() {
           />
           <span className={styles.brandName}>
             <span className={`${styles.brandGiven} ${articleTitleFont.className}`}>Łukasz Jagiełło</span>
-            <span className={`${styles.brandScript} ${articleTitleFont.className}`}>Photography</span>
+            <span className={styles.brandSep} aria-hidden="true" />
+            <span className={`${styles.brandScript} ${heroScriptFont.className}`}>Photography</span>
           </span>
         </Link>
         <ul className={styles.links} ref={listRef}>
@@ -108,6 +126,7 @@ function Nav() {
                 <Link
                   href={href}
                   className={styles.link}
+                  data-nav-home={href === '/' ? '' : undefined}
                   aria-current={current ? 'page' : undefined}
                   onMouseEnter={(event) => measure(event.currentTarget)}
                   onFocus={(event) => measure(event.currentTarget)}
@@ -211,13 +230,15 @@ function Footer() {
 }
 
 export default function Layout({ children }) {
+  const { asPath } = useRouter();
+  const onHero = currentPath(asPath) === '/';
   return (
     <>
       <a href="#main" className={styles.skipLink}>
         Skip to main content
       </a>
       <Nav />
-      <main id="main" tabIndex={-1} className={styles.main}>
+      <main id="main" tabIndex={-1} className={onHero ? `${styles.main} ${styles.mainUnderHero}` : styles.main}>
         {children}
       </main>
       <Footer />

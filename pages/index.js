@@ -28,6 +28,7 @@ export default function Home({ photos, selected, navCounts }) {
       />
 
       <JourneysHero
+        bleed
         headingAs="p"
         nav={{
           active: 'home',

@@ -1,3 +1,4 @@
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,6 +7,13 @@ import { heroAccentClassName } from '@/components/headlineAccent';
 import { articleTitleFont } from '@/lib/fonts';
 import { photos } from '@/lib/photos';
 import styles from '@/styles/Journal.module.css';
+
+const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
+
+/* Waterfall in the current cover crop: frame center sits at 66.1% across
+   and 46.77% down the source. See the portrait comment in Journal.module.css. */
+const FALLS_X = 0.661;
+const FALLS_Y = 0.4677;
 
 const HERO_ACCENTS = ['the story', 'the terrain'];
 
@@ -46,10 +54,8 @@ const HERO = {
   credit: 'Marymere Falls · Olympic National Park, Washington',
 };
 
-const MARYMERE = photos.find((p) => p.title === 'Marymere Falls');
-const MAP_HREF = MARYMERE?.coords
-  ? `https://www.google.com/maps/search/?api=1&query=${MARYMERE.coords.lat},${MARYMERE.coords.lng}`
-  : 'https://www.google.com/maps/search/?api=1&query=48.0533,-123.7895';
+const ALLTRAILS_HREF = 'https://www.alltrails.com/trail/us/washington/marymere-falls-trail';
+const MAPS_HREF = 'https://www.google.com/maps/search/?api=1&query=Marymere+Falls+Olympic+National+Park';
 
 /** Category row only: Journeys, Landscape, Animals, Architecture, People. */
 function heroNavProps(nav) {
@@ -73,10 +79,90 @@ function heroNavProps(nav) {
  * (Journeys). Pass `p` on pages that already have their own h1 — Home uses
  * "Selected photographs" — so the slogan keeps the hero type without a second h1.
  */
-export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
+function nearly(a, b) {
+  return a && b && Math.abs(a.left - b.left) < 0.5 && Math.abs(a.top - b.top) < 0.5
+    && Math.abs(a.width - b.width) < 0.5 && Math.abs(a.height - b.height) < 0.5;
+}
+
+export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = false }) {
   const Title = headingAs;
   const menu = heroNavProps(nav);
-  const titleNodes = titleWithAccents(HERO.title);
+  const titleNodes = bleed ? null : titleWithAccents(HERO.title);
+  const mediaRef = useRef(null);
+  const [align, setAlign] = useState(null);
+
+  useIsoLayoutEffect(() => {
+    if (!bleed) return undefined;
+    const media = mediaRef.current;
+    if (!media) return undefined;
+
+    const place = () => {
+      const desktop = window.matchMedia('(min-width: 769px)').matches;
+      const home = document.querySelector('[data-nav-home]');
+      if (!desktop || !home) {
+        media.parentElement?.style.removeProperty('--hero-frame-left');
+        setAlign((prev) => (prev === null ? prev : null));
+        return;
+      }
+      const band = media.getBoundingClientRect();
+      const homeRect = home.getBoundingClientRect();
+      const bw = band.width;
+      const bh = band.height;
+      if (bw < 1 || bh < 1) return;
+      const navH = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 0;
+      const stageH = Math.max(bh - navH, 0);
+      const frameH = stageH * 0.881;
+      const frameW = (frameH * 9) / 16;
+      const frameLeft = homeRect.left - band.left;
+      const frameTop = navH + stageH * 0.059;
+      const cx = frameLeft + frameW / 2;
+      const cy = frameTop + frameH / 2;
+      let dw = Math.max(cx / FALLS_X, (bw - cx) / (1 - FALLS_X), bw);
+      let dh = dw / 1.6;
+      const dhNeed = Math.max(cy / FALLS_Y, (bh - cy) / (1 - FALLS_Y));
+      if (dh < dhNeed) {
+        dh = dhNeed;
+        dw = dh * 1.6;
+      }
+      const frame = { left: frameLeft, top: frameTop, width: frameW, height: frameH };
+      const photo = { left: cx - FALLS_X * dw, top: cy - FALLS_Y * dh, width: dw, height: dh };
+      media.parentElement?.style.setProperty('--hero-frame-left', `${frameLeft}px`);
+      setAlign((prev) => (nearly(prev?.frame, frame) && nearly(prev?.photo, photo) ? prev : { frame, photo }));
+    };
+
+    place();
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(place);
+    observer?.observe(media);
+    const home = document.querySelector('[data-nav-home]');
+    if (home) observer?.observe(home);
+    window.addEventListener('resize', place);
+    document.fonts?.ready?.then(place);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', place);
+    };
+  }, [bleed]);
+
+  const photoStyle = align?.photo
+    ? {
+        width: `${align.photo.width}px`,
+        height: `${align.photo.height}px`,
+        left: `${align.photo.left}px`,
+        top: `${align.photo.top}px`,
+        right: 'auto',
+        bottom: 'auto',
+        maxWidth: 'none',
+        objectFit: 'cover',
+      }
+    : undefined;
+  const frameStyle = align?.frame
+    ? {
+        left: `${align.frame.left}px`,
+        top: `${align.frame.top}px`,
+        width: `${align.frame.width}px`,
+        height: `${align.frame.height}px`,
+      }
+    : undefined;
   const credit = (
     <p className={menu ? `${styles.heroCap} ${styles.heroCapFlush}` : styles.heroCap}>
       <Link href={HERO.creditHref}>{HERO.credit}</Link>
@@ -89,52 +175,78 @@ export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href={POPPINS} />
       </Head>
-      <div className={`container ${styles.heroSlot}`}>
-        <section className={styles.heroBand} aria-label="Marymere Falls">
-          <div className={styles.heroMedia}>
+      <div className={bleed ? styles.heroSlotBleed : `container ${styles.heroSlot}`}>
+        <section className={bleed ? `${styles.heroBand} ${styles.heroBleed}` : styles.heroBand} aria-label="Marymere Falls">
+          <div className={styles.heroMedia} ref={mediaRef}>
             <Image
               src={HERO.src}
               alt={HERO.alt}
               fill
               priority
               unoptimized
-              sizes="(max-width: 1400px) 100vw, 1400px"
+              sizes={bleed ? '100vw' : '(max-width: 1400px) 100vw, 1400px'}
               className={styles.heroPhoto}
+              style={photoStyle}
             />
             <div className={styles.heroShade} aria-hidden="true" />
-            <div className={styles.portrait}>
+            {bleed ? (
+              <>
+                <div className={styles.heroWear} aria-hidden="true" />
+                <div className={styles.heroVignette} aria-hidden="true" />
+              </>
+            ) : null}
+            <div className={styles.portrait} style={frameStyle}>
               <div className={styles.portraitRim} aria-hidden="true" />
               <div className={styles.portraitBand}>
                 <a
                   className={styles.portraitPin}
-                  href={MAP_HREF}
+                  href={ALLTRAILS_HREF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Marymere Falls on the map"
+                  aria-label="Marymere Falls on AllTrails"
                 >
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12z" />
                     <circle cx="12" cy="10" r="2.5" />
                   </svg>
                 </a>
-                <span className={styles.portraitPlace}>MARYMERE FALLS · OLYMPIC NATIONAL PARK</span>
+                <a
+                  className={styles.portraitPlace}
+                  href={MAPS_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Marymere Falls on Google Maps"
+                >
+                  MARYMERE FALLS · OLYMPIC NATIONAL PARK
+                </a>
               </div>
             </div>
           </div>
           <div className={styles.heroCopy}>
             <p className={styles.heroKicker}>{HERO.kicker}</p>
             <Title className={`${styles.heroTitle} ${articleTitleFont.className}`}>
-              {titleNodes
-                ? titleNodes.map((node, i) =>
-                    node.accent ? (
-                      <span key={`${node.text}-${i}`} className={heroAccentClassName}>
-                        {node.text}
-                      </span>
-                    ) : (
-                      node.text
-                    ),
-                  )
-                : HERO.title}
+              {bleed ? (
+                <>
+                  <span className={styles.heroLine}>Always look for the</span>
+                  <span className={styles.heroLine2}>
+                    <span className={heroAccentClassName}>story</span>
+                    {' in '}
+                    <span className={heroAccentClassName}>the terrain</span>.
+                  </span>
+                </>
+              ) : titleNodes ? (
+                titleNodes.map((node, i) =>
+                  node.accent ? (
+                    <span key={`${node.text}-${i}`} className={heroAccentClassName}>
+                      {node.text}
+                    </span>
+                  ) : (
+                    node.text
+                  ),
+                )
+              ) : (
+                HERO.title
+              )}
             </Title>
             {menu ? (
               <div className={styles.heroNav}>
