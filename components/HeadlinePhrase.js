@@ -2,7 +2,7 @@ import { phraseSpan } from '@/lib/headlinePhrase';
 import { headlineAccentClassName } from '@/components/headlineAccent';
 
 /**
- * Article h1 with one noun or noun phrase in the shared Caveat accent.
+ * Article h1 with one noun or noun phrase in the shared Allura accent.
  * `color` is that article's middle swatch (adjusted for contrast) and is
  * passed as --accent-script. Without it the phrase stays in the title face.
  */

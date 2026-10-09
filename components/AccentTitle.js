@@ -2,7 +2,7 @@ import { phraseSpan } from '@/lib/headlinePhrase';
 import { headlineAccentClassName } from '@/components/headlineAccent';
 
 /**
- * Card title using the same accent phrase and Caveat treatment as the article h1.
+ * Card title using the same accent phrase and Allura treatment as the article h1.
  * `color` is that card's middle swatch (adjusted for contrast), passed as
  * --accent-script. Without a swatch the accent keeps its current color.
  */
