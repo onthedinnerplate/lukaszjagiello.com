@@ -21,8 +21,13 @@
   --radius: 4px;
 }
 
+/* Two rows once the full-size name no longer fits beside the links.
+   Below 720px the name is smaller, so the bar can be shorter. */
+@media (max-width: 960px) {
+  :root { --nav-h: 136px; }
+}
 @media (max-width: 720px) {
-  :root { --nav-h: 104px; } /* nav wraps to two rows */
+  :root { --nav-h: 104px; }
 }
 
 *, *::before, *::after { box-sizing: border-box; }

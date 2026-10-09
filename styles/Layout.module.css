@@ -85,16 +85,20 @@
   font-weight: 700;
 }
 
-@media (max-width: 720px) {
+/* Stack the links under the name before they run past the viewport.
+   The name and Photography stay at desktop size until 720px. */
+@media (max-width: 960px) {
   .nav {
     flex-direction: column;
     justify-content: center;
     gap: 0.35rem;
   }
-  .brand { font-size: 1rem; }
-  .brandMark { width: 24px; height: 24px; }
   .links { gap: 0; }
   .link { padding: 0.4rem 0.6rem; }
+}
+@media (max-width: 720px) {
+  .brand { font-size: 1rem; }
+  .brandMark { width: 24px; height: 24px; }
 }
 
 .main {
