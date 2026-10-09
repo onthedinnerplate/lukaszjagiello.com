@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
@@ -116,12 +116,16 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
     return () => cancelAnimationFrame(frame);
   }, [isAll]);
 
-  const scrollToAll = (slug) => {
-    setGridCategory(slug);
+  const rememberCategory = (slug) => {
     const href = galleryPathFor(slug);
     if (window.location.pathname !== href) {
       window.history.pushState({ galleryCategory: slug }, '', href);
     }
+  };
+
+  const scrollToAll = (slug) => {
+    setGridCategory(slug);
+    rememberCategory(slug);
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.getElementById('all-photographs')?.scrollIntoView({
       behavior: reduce ? 'auto' : 'smooth',
@@ -129,13 +133,27 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
     });
   };
 
+  // The All photographs menu filters the grid the visitor is already looking at.
+  const filterGrid = (slug) => {
+    const y = window.scrollY;
+    setGridCategory(slug);
+    rememberCategory(slug);
+    requestAnimationFrame(() => {
+      if (window.scrollY !== y) window.scrollTo(0, y);
+    });
+  };
+
   const filterFuture = (slug) => {
     setFutureCategory((current) => (current === slug ? 'all' : slug));
   };
 
-  const gridPhotos = spreadBySubject(
-    gridCategory === 'all' ? photos : photos.filter((photo) => inCategory(photo, gridCategory)),
-    (photo) => photoNumberFromSrc(photo.src),
+  const gridSource = useMemo(
+    () => (gridCategory === 'all' ? photos : photos.filter((photo) => inCategory(photo, gridCategory))),
+    [photos, gridCategory],
+  );
+  const gridPhotos = useMemo(
+    () => spreadBySubject(gridSource, (photo) => photoNumberFromSrc(photo.src)),
+    [gridSource],
   );
   const futurePhotos = spreadBySubject(
     futureCategory === 'all' ? future : future.filter((photo) => inCategory(photo, futureCategory)),
@@ -270,11 +288,19 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
             <GallerySectionNav
               active={gridCategory}
               counts={counts}
-              onSelect={scrollToAll}
+              onSelect={filterGrid}
               label={isAll ? 'Gallery categories' : `${category.label} gallery categories`}
             />
           </div>
-          <MasonryGallery photos={gridPhotos} layout="uniform" wide headingId="all-photos-title" equalCards />
+          <MasonryGallery
+            photos={gridPhotos}
+            sequence={gridSource}
+            linkCategory={gridCategory}
+            layout="uniform"
+            wide
+            headingId="all-photos-title"
+            equalCards
+          />
         </section>
 
         <section className={`${styles.band} ${styles.anchor} ${styles.futureBand}`} id="future-photographs" aria-labelledby="future-photos-title">
