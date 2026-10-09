@@ -56,12 +56,19 @@
   padding: 0.625rem 0.75rem 0.75rem;
   font-size: 0.9375rem;
 }
-.title { font-weight: 600; flex: 1 1 auto; min-width: 0; line-height: 1.3; }
+.title {
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
+  flex: 1 1 auto;
+  min-width: 0;
+  line-height: 1.3;
+}
 .location {
   display: block;
   margin-top: 0.15rem;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: 0.6875rem;
-  font-weight: 500;
+  font-weight: 300;
   line-height: 1.4;
   letter-spacing: 0.01em;
   color: var(--muted);
@@ -273,13 +280,14 @@
   align-items: center;
   gap: 0.75rem;
   margin: 0 0 1.15rem;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 300;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #4a4a4a;
 }
-.sectionLabel span { color: #8a8a8a; font-weight: 400; }
+.sectionLabel span { color: #8a8a8a; font-weight: 300; }
 .sectionLabel::after { content: ""; flex: 1; height: 1px; background: #dedad2; }
 .gridLabel { margin-bottom: 0.45rem; }
 .gridNav { margin: 0 0 0.35rem; }
@@ -324,8 +332,9 @@
 }
 .saleMoreLabel {
   margin: 0 0 0.4rem;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: 0.72rem;
-  font-weight: 600;
+  font-weight: 300;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #f0e2c4;

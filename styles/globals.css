@@ -66,7 +66,13 @@ body {
   text-shadow: none;
 }
 
-h1, h2, h3 { line-height: 1.2; margin: 0 0 0.5em; font-weight: 600; letter-spacing: -0.01em; }
+/* Headings are Poppins Light. Sizes, spacing, and color stay on the rules below
+   and in each module. Script accents set their own family on the inner span. */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
+}
+h1, h2, h3 { line-height: 1.2; margin: 0 0 0.5em; letter-spacing: -0.01em; }
 h1 { font-size: clamp(2rem, 4.5vw, 3rem); }
 h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
 p { margin: 0 0 1em; }

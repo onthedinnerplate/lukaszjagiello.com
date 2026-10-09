@@ -195,8 +195,9 @@
 .title {
   margin: 0;
   flex: 1 1 auto;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 300;
 }
 .meta {
   margin: 0;

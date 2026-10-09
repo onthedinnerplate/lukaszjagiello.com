@@ -197,8 +197,9 @@
 .footerCol { min-width: 0; }
 .footerHeading {
   margin: 0 0 0.6rem;
+  font-family: Poppins, system-ui, sans-serif;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 300;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--charcoal);
