@@ -11,7 +11,8 @@ import HeadlinePhrase from '@/components/HeadlinePhrase';
 import Swatches from '@/components/Swatches';
 import { ArticleShare, PhotoCardActions } from '@/components/ShareButtons';
 import { getPhotos } from '@/lib/photo-data';
-import { photoNumberFromSrc } from '@/lib/photoCaption';
+import { mentionsGear, photoNumberFromSrc } from '@/lib/photoCaption';
+import { AffiliateDisclosure, GearLine, gearLineClass } from '@/components/GearStoreLinks';
 import {
   articles as articleRecords,
   formatArticleDate,
@@ -198,8 +199,9 @@ export default function JournalArticle({ article }) {
               ))}
               <section className={styles.bag} aria-labelledby="from-the-bag">
                 <h2 id="from-the-bag">From the bag</h2>
-                <p className={styles.settings}>{article.gear.settings}</p>
+                <p className={`${styles.settings} ${gearLineClass}`}><GearLine text={article.gear.settings} /></p>
                 <p>{article.gear.note}</p>
+                {mentionsGear(article.gear.settings) ? <AffiliateDisclosure /> : null}
               </section>
               <p className={styles.photoLink}>
                 <Link href={photo.href}>View the photograph</Link>

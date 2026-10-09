@@ -3,7 +3,8 @@ import Link from 'next/link';
 import Lightbox from './Lightbox';
 import { PhotoCardActions } from './ShareButtons';
 import ResponsiveImage from './ResponsiveImage';
-import { captionFor, photoNumberFromSrc } from '@/lib/photoCaption';
+import { captionFor, mentionsGear, photoNumberFromSrc } from '@/lib/photoCaption';
+import { AffiliateDisclosure, GearLine, gearBlockClass, gearLineClass } from './GearStoreLinks';
 import { ogImageSrc } from '@/lib/slug';
 import styles from '@/styles/Gallery.module.css';
 
@@ -70,6 +71,7 @@ export default function MasonryGallery({
   const handleNextImage = () => setSelectedIndex((prev) => (prev + 1) % photos.length);
   const handlePrevImage = () => setSelectedIndex((prev) => (prev - 1 + photos.length) % photos.length);
 
+  const showDisclosure = photos.some((photo) => mentionsGear(captionFor(photo).equipment));
   const tiled = layout === 'uniform' || layout === 'tight';
   const listClass = tiled
     ? `${styles.uniform} ${layout === 'tight' ? styles.tight : ''}`
@@ -134,8 +136,12 @@ export default function MasonryGallery({
                     {photo.location ? <span className={styles.location}>{photo.location}</span> : null}
                   </span>
                   {(equipment || specs) && (
-                    <span className={styles.metaBlock}>
-                      {equipment && <span className={styles.meta}>{equipment}</span>}
+                    <span className={`${styles.metaBlock} ${gearBlockClass}`}>
+                      {equipment && (
+                        <span className={`${styles.meta} ${gearLineClass}`}>
+                          <GearLine text={equipment} />
+                        </span>
+                      )}
                       {specs && <span className={styles.meta}>{specs}</span>}
                     </span>
                   )}
@@ -145,6 +151,7 @@ export default function MasonryGallery({
           );
         })}
       </ul>
+      {showDisclosure ? <AffiliateDisclosure /> : null}
 
       <Lightbox
         id={lightboxId}
