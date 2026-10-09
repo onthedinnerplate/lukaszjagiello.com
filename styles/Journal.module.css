@@ -1069,6 +1069,12 @@
   }
 }
 @media (max-width: 768px) {
+  .heroSlot {
+    container-type: inline-size;
+    --hero-bleed: calc(var(--nav-h) + 1.5rem);
+    margin-top: calc(-1 * var(--nav-h));
+    padding-top: 0;
+  }
   .heroBand {
     display: flex;
     flex-direction: column;
@@ -1082,9 +1088,15 @@
   }
   .heroMedia {
     position: relative;
-    aspect-ratio: 1440 / 612;
+    aspect-ratio: auto;
+    height: calc(100cqw * 612 / 1440 + var(--hero-bleed));
     border-radius: 12px;
     overflow: hidden;
+  }
+  .heroPhoto { object-position: center calc(var(--hero-bleed) - 8cqw); }
+  .portrait {
+    top: calc(var(--hero-bleed) + 0.059 * 100cqw * 612 / 1440);
+    height: calc(0.881 * 100cqw * 612 / 1440);
   }
   .heroShade { display: none; }
   .portrait { --band: 20px; --rim: 7px; }
@@ -1128,5 +1140,29 @@
     height: 100%;
     object-fit: cover;
     object-position: center center;
+  }
+}
+
+/* Desktop hero runs under the fixed bar. The bar covers --nav-h; the old
+   1.5rem gap above the card becomes photograph too. Copy, portrait and the
+   card's bottom stay where they were, and the original crop stays put. */
+@media (min-width: 769px) {
+  .heroSlot {
+    container-type: inline-size;
+    --hero-bleed: calc(var(--nav-h) + 1.5rem);
+    margin-top: calc(-1 * var(--nav-h));
+    padding-top: 0;
+  }
+  .heroBand {
+    height: calc(100cqw * 612 / 1440 + var(--hero-bleed));
+    aspect-ratio: auto;
+  }
+  .heroPhoto { object-position: center calc(var(--hero-bleed) - 8cqw); }
+  .portrait {
+    top: calc(var(--hero-bleed) + 0.059 * 100cqw * 612 / 1440);
+    height: calc(0.881 * 100cqw * 612 / 1440);
+  }
+  .heroCopy {
+    top: calc(var(--hero-bleed) + (100cqw * 612 / 1440) / 2);
   }
 }
