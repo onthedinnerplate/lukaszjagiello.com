@@ -24,7 +24,7 @@ function PinMark() {
 }
 
 /**
- * Pinterest, Share, and Buy, in that order, in the bottom-right corner of a photo.
+ * Pinterest, Share, Buy, then AllTrails when the photo is a hike, in the bottom-right corner.
  * Share and Buy are the Gallery controls. Pinterest is the same disc, and pins
  * this image. `pinUrl` is the photo page, or the article when the card belongs
  * to one. The description is the card title.
