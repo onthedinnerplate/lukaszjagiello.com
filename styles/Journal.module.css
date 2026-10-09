@@ -1477,3 +1477,75 @@
     top: calc(var(--hero-bleed) + (100cqw * 612 / 1440) / 2);
   }
 }
+
+/* Phones: homepage keeps a tall hero. Other pages drop the photograph and slogan. */
+@media (min-width: 768px) {
+  .phoneTitle { display: none !important; }
+}
+@media (max-width: 767px) {
+  .heroSlot {
+    margin-top: 0;
+    padding-top: 0.35rem;
+  }
+  .heroSlot .heroBand {
+    display: block;
+    height: auto;
+    overflow: visible;
+    background: transparent;
+  }
+  .heroSlot .heroMedia,
+  .heroSlot .heroKicker,
+  .heroSlot .heroTitle,
+  .heroSlot .heroSub,
+  .heroSlot .goldRule,
+  .heroSlot .heroCap { display: none; }
+  .heroSlot .heroCopy {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    width: auto;
+    max-width: none;
+    transform: none;
+    padding: 0.2rem var(--gutter) 0;
+  }
+  .heroSlot .heroNav { margin: 0; }
+
+  .heroBleed .portrait { display: none; }
+  .heroSlotBleed > .heroBand {
+    position: relative;
+    height: auto;
+    min-height: 78vh;
+  }
+  .heroBleed .heroMedia {
+    height: 78vh;
+    min-height: 520px;
+  }
+  .heroBleed .heroPhoto {
+    object-fit: cover;
+    object-position: 66% 47%;
+  }
+  .heroBleed .heroShade { display: block; }
+  .heroBleed .heroCopy {
+    position: absolute;
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    max-width: none;
+    transform: none;
+    padding: 2.75rem var(--gutter) 1.1rem;
+    background: linear-gradient(to top, rgba(2, 10, 10, 0.78), rgba(2, 10, 10, 0));
+  }
+  .heroBleed .heroKicker { color: #C9D1B4; }
+  .heroBleed .heroTitle,
+  .heroBleed .heroSub,
+  .heroBleed .heroCap a { color: #fff; }
+  .heroBleed .heroTitle .headlineAccent { color: var(--hero-accent, #d7e2a8); }
+  .heroBleed .heroNav :global(a),
+  .heroBleed .heroNav :global(a:hover) { color: #fff; }
+  .heroBleed .heroNav :global(span) { color: #C9D1B4; }
+  .heroBleed .heroLine2 { white-space: normal; }
+  .heroBleed .goldRule { background: #A3AD62; }
+}

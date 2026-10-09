@@ -426,5 +426,23 @@
 .sitemapList li { padding: 0.25rem 0; }
 .sitemapPhotos { columns: 2; column-gap: 2rem; }
 @media (max-width: 600px) { .sitemapPhotos { columns: 1; } }
+
+@media (max-width: 767px) {
+  .page { padding-top: 1rem; }
+  .galleryPage { padding-top: 0.75rem; }
+  .pageHeader { margin-bottom: 1.15rem; }
+  .pageHeader h1,
+  .galleryHeading {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
 .sitemapPhotos li { break-inside: avoid; }
 .sitemapLoc { color: var(--muted); font-size: 0.875rem; }
