@@ -279,6 +279,7 @@ export async function getStaticProps() {
     return {
       slug: article.slug,
       title: article.title,
+      headlinePhrase: article.headlinePhrase,
       dek: article.dek,
       location: article.location,
       photoSlug: article.photoSlug,
