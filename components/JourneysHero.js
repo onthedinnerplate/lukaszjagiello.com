@@ -45,6 +45,11 @@ const HERO = {
   credit: 'Marymere Falls · Olympic National Park, Washington',
 };
 
+const MARYMERE = photos.find((p) => p.title === 'Marymere Falls');
+const MAP_HREF = MARYMERE?.coords
+  ? `https://www.google.com/maps/search/?api=1&query=${MARYMERE.coords.lat},${MARYMERE.coords.lng}`
+  : 'https://www.google.com/maps/search/?api=1&query=48.0533,-123.7895';
+
 /**
  * The Journeys landing hero: Marymere photograph, kicker, headline, subline,
  * gold rule and photo credit.
@@ -53,9 +58,9 @@ const HERO = {
  * and the photo credit sits flush against that bar. Pages without `nav`
  * keep the credit in the lower corner of the photograph.
  *
- * `headingAs` is `h1` where this headline is the page's only heading (Home,
- * Journeys). Pass `p` on pages that already have their own h1 so the slogan
- * keeps the hero type styles without adding a second heading.
+ * `headingAs` is `h1` where this headline is the page's only heading
+ * (Journeys). Pass `p` on pages that already have their own h1 — Home uses
+ * "Selected photographs" — so the slogan keeps the hero type without a second h1.
  */
 export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
   const Title = headingAs;
@@ -72,43 +77,65 @@ export default function JourneysHero({ nav = null, headingAs = 'h1' }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href={POPPINS} />
       </Head>
-      <section className={styles.heroBand} aria-label="Marymere Falls">
-        <Image
-          src={HERO.src}
-          alt={HERO.alt}
-          fill
-          priority
-          unoptimized
-          sizes="100vw"
-          className={styles.heroPhoto}
-        />
-        <div className={styles.heroShade} aria-hidden="true" />
-        <div className={styles.heroCopy}>
-          <p className={styles.heroKicker}>{HERO.kicker}</p>
-          <Title className={styles.heroTitle}>
-            {titleNodes
-              ? titleNodes.map((node, i) =>
-                  node.accent ? (
-                    <span key={`${node.text}-${i}`} className={headlineAccentClassName}>
-                      {node.text}
-                    </span>
-                  ) : (
-                    node.text
-                  ),
-                )
-              : HERO.title}
-          </Title>
-          {nav ? (
-            <div className={styles.heroNav}>
-              <CategoryNav {...nav} />
+      <div className={`container ${styles.heroSlot}`}>
+        <section className={styles.heroBand} aria-label="Marymere Falls">
+          <div className={styles.heroMedia}>
+            <Image
+              src={HERO.src}
+              alt={HERO.alt}
+              fill
+              priority
+              unoptimized
+              sizes="(max-width: 1400px) 100vw, 1400px"
+              className={styles.heroPhoto}
+            />
+            <div className={styles.heroShade} aria-hidden="true" />
+            <div className={styles.portrait}>
+              <div className={styles.portraitRim} aria-hidden="true" />
+              <div className={styles.portraitBand}>
+                <a
+                  className={styles.portraitPin}
+                  href={MAP_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Marymere Falls on the map"
+                >
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12z" />
+                    <circle cx="12" cy="10" r="2.5" />
+                  </svg>
+                </a>
+                <span className={styles.portraitPlace}>MARYMERE FALLS · OLYMPIC NATIONAL PARK</span>
+              </div>
             </div>
-          ) : null}
-          {nav ? credit : null}
-          <p className={styles.heroSub}>{JOURNEYS_HERO_DESCRIPTION}</p>
-          <span className={styles.goldRule} aria-hidden="true" />
-        </div>
-        {nav ? null : credit}
-      </section>
+          </div>
+          <div className={styles.heroCopy}>
+            <p className={styles.heroKicker}>{HERO.kicker}</p>
+            <Title className={styles.heroTitle}>
+              {titleNodes
+                ? titleNodes.map((node, i) =>
+                    node.accent ? (
+                      <span key={`${node.text}-${i}`} className={headlineAccentClassName}>
+                        {node.text}
+                      </span>
+                    ) : (
+                      node.text
+                    ),
+                  )
+                : HERO.title}
+            </Title>
+            {nav ? (
+              <div className={styles.heroNav}>
+                <CategoryNav {...nav} />
+              </div>
+            ) : null}
+            {nav ? credit : null}
+            <p className={styles.heroSub}>{JOURNEYS_HERO_DESCRIPTION}</p>
+            <span className={styles.goldRule} aria-hidden="true" />
+          </div>
+          {nav ? null : credit}
+        </section>
+      </div>
     </>
   );
 }

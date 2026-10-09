@@ -56,7 +56,7 @@
   padding: 0.625rem 0.75rem 0.75rem;
   font-size: 0.9375rem;
 }
-.title { font-weight: 600; flex: 1 1 auto; min-width: 45%; line-height: 1.3; }
+.title { font-weight: 600; flex: 1 1 auto; min-width: 0; line-height: 1.3; }
 .location {
   display: block;
   margin-top: 0.15rem;
@@ -85,17 +85,22 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  flex: 0 0 auto;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
   text-align: right;
 }
 .meta {
   display: block;
+  max-width: 100%;
   font-size: 0.625rem; /* ~25% smaller than before (was 0.8125rem) */
   font-weight: 500;
   line-height: 1.4;
   letter-spacing: 0.01em;
   color: var(--muted);
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: right;
 }
 /* Share: round 50%-white disc with dark icon, bottom-right of the image. */
 .cardActions {
@@ -204,7 +209,7 @@
   height: 2px;
   margin: 0;
   padding: 0;
-  background: var(--orange);
+  background: var(--menu-underline, var(--orange));
   transform-origin: left center;
   transform: translate3d(var(--x, 0px), var(--y, 0px), 0) scaleX(var(--w, 0));
   transition: transform 220ms ease;
@@ -411,14 +416,27 @@
 }
 .uniform .item { margin: 0; break-inside: auto; }
 .tileFigure {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1 1 auto;
   border: 1px solid rgba(196, 163, 90, 0.38);
   border-radius: 12px;
   box-shadow: 0 1px 2px rgba(26, 26, 26, 0.05);
   background: #fff;
+  overflow: hidden;
 }
 .frameCover {
+  flex: 0 0 auto;
   aspect-ratio: 1 / 1;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
 }
+.uniform .item {
+  display: flex;
+  min-width: 0;
+}
+.caption { flex: 1 1 auto; min-width: 0; }
 .frameCover .imgBtn {
   position: absolute;
   inset: 0;
@@ -505,13 +523,16 @@
 .selectedCell {
   position: relative;
   min-width: 0;
-  height: 100%;
+  aspect-ratio: 3 / 4;
+  height: auto;
   overflow: hidden;
   border-radius: 12px;
   background: var(--surface);
   line-height: 0;
 }
 .selectedOpen {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
@@ -535,7 +556,12 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   .selectedImg { transition: filter 0.3s ease, transform 0.4s ease; }
-  .selectedCell:hover .selectedImg { filter: grayscale(0%); transform: scale(1.02); }
+  .selectedCell:hover .selectedImg,
+  .selectedCell:focus-within .selectedImg { filter: grayscale(0%); transform: scale(1.02); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .selectedCell:hover .selectedImg,
+  .selectedCell:focus-within .selectedImg { filter: grayscale(0%); }
 }
 .futureBand { margin-bottom: 0; }
 .futureBand .uniform { margin: 0; }

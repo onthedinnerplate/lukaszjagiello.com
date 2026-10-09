@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import Link from 'next/link';
 import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
@@ -12,6 +12,7 @@ import { ogImageSrc } from '@/lib/slug';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
 import { galleryPathFor, inCategory } from '@/lib/categories';
 import { site } from '@/lib/site';
+import SelectedPhotographs, { selectedPhotos } from '@/components/SelectedPhotographs';
 import pageStyles from '@/styles/Page.module.css';
 import styles from '@/styles/Gallery.module.css';
 
@@ -65,58 +66,6 @@ function GallerySectionNav({ active, counts, onSelect, onDark = false, label = '
   );
 }
 
-function SelectedRow({ photos, height }) {
-  const [open, setOpen] = useState(false);
-  const [index, setIndex] = useState(0);
-  const lightboxId = useId();
-  if (!photos.length) return null;
-  return (
-    <>
-      <div className={styles.selectedRow} style={height ? { height: `${height}px` } : undefined}>
-        {photos.map((photo, i) => (
-          <div key={photo.src} className={styles.selectedCell} style={{ backgroundColor: photo.color }}>
-            <PhotoCardActions
-              title={photo.title}
-              shareUrl={photo.href}
-              pinUrl={photo.href}
-              mediaUrl={ogImageSrc(photo.src) || photo.src}
-              photo={photo}
-            />
-            <button
-              type="button"
-              className={styles.selectedOpen}
-              onClick={() => { setIndex(i); setOpen(true); }}
-              aria-label={photo.title}
-              aria-expanded={open && index === i}
-              aria-controls={lightboxId}
-            >
-              <ResponsiveImage
-                pictureClassName={styles.selectedPicture}
-                src={photo.thumb || photo.src}
-                alt={photo.alt}
-                width={photo.thumbWidth || photo.width}
-                height={photo.thumbHeight || photo.height}
-                sizes="(max-width: 768px) 25vw, 20vw"
-                srcSet={photo.thumbSrcSet}
-                className={styles.selectedImg}
-                loading={i < 2 ? 'eager' : 'lazy'}
-              />
-            </button>
-          </div>
-        ))}
-      </div>
-      <Lightbox
-        id={lightboxId}
-        isOpen={open}
-        photo={photos[index]}
-        onClose={() => setOpen(false)}
-        onPrev={() => setIndex((n) => (n - 1 + photos.length) % photos.length)}
-        onNext={() => setIndex((n) => (n + 1) % photos.length)}
-      />
-    </>
-  );
-}
-
 /** Shared by /gallery (all) and /gallery/[category]. */
 export default function GalleryPage({ photos, category, counts }) {
   const isAll = !category || category.slug === 'all';
@@ -140,26 +89,13 @@ export default function GalleryPage({ photos, category, counts }) {
 
   const gate = photos.find((photo) => photoNumberFromSrc(photo.src) === 12) || photos[0] || null;
   const more = gate ? photos.filter((photo) => photo.src !== gate.src).slice(0, 6) : [];
-  const selected = photos.slice(0, Math.min(4, photos.length));
+  const selected = selectedPhotos(photos);
   const future = pickFuture(photos);
 
   const [gridCategory, setGridCategory] = useState(isAll ? 'all' : category.slug);
   const [futureCategory, setFutureCategory] = useState('all');
   const [gateOpen, setGateOpen] = useState(false);
   const gateLightboxId = useId();
-  const frameRef = useRef(null);
-  const [rowHeight, setRowHeight] = useState(0);
-
-  useLayoutEffect(() => {
-    const frame = frameRef.current;
-    if (!frame) return undefined;
-    const apply = () => setRowHeight(Math.round(frame.getBoundingClientRect().height));
-    apply();
-    if (typeof ResizeObserver === 'undefined') return undefined;
-    const observer = new ResizeObserver(apply);
-    observer.observe(frame);
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const onPop = () => setGridCategory(slugFromPath(window.location.pathname));
@@ -235,7 +171,7 @@ export default function GalleryPage({ photos, category, counts }) {
             />
             <div className={styles.saleFeatured}>
               <div className={styles.saleMain}>
-                <div className={styles.gateFrame} ref={frameRef} style={{ backgroundColor: gate.color }}>
+                <div className={styles.gateFrame} style={{ backgroundColor: gate.color }}>
                   <PhotoCardActions
                     title={gate.title}
                     shareUrl={gate.href}
@@ -310,7 +246,7 @@ export default function GalleryPage({ photos, category, counts }) {
             onSelect={scrollToAll}
             label="Selected photograph categories"
           />
-          <SelectedRow photos={selected} height={rowHeight} />
+          <SelectedPhotographs photos={selected} />
         </section>
 
         <section className={`${styles.band} ${styles.anchor}`} id="all-photographs" aria-labelledby="all-photos-title">

@@ -37,7 +37,7 @@ function allTileSizes(width, height) {
   const ratio = width > 0 && height > 0 ? width / height : 1;
   const cover = Math.max(1, ratio).toFixed(3);
   const slot = (cols, gaps) =>
-    `calc((min(100vw, 1240px) - 2 * clamp(16px, 4vw, 40px) - ${gaps}) / ${cols} * ${cover})`;
+    `calc((min(100vw, 1400px) - 2 * clamp(16px, 4vw, 40px) - ${gaps}) / ${cols} * ${cover})`;
   return [
     `(max-width: 768px) ${slot(2, '0.85rem')}`,
     `(max-width: 1099px) ${slot(3, '2rem')}`,

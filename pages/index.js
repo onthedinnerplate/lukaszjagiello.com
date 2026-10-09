@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Seo from '@/components/Seo';
 import JourneysHero from '@/components/JourneysHero';
 import MasonryGallery from '@/components/MasonryGallery';
+import SelectedPhotographs, { selectedPhotos } from '@/components/SelectedPhotographs';
 import { getPhotos, heroNavCounts } from '@/lib/photo-data';
 import { journeysThenGalleryPath } from '@/lib/categories';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
@@ -15,7 +16,7 @@ const meta = {
   description: site.description,
 };
 
-export default function Home({ photos, navCounts }) {
+export default function Home({ photos, selected, navCounts }) {
   return (
     <>
       <Seo
@@ -27,6 +28,7 @@ export default function Home({ photos, navCounts }) {
       />
 
       <JourneysHero
+        headingAs="p"
         nav={{
           active: '',
           counts: navCounts,
@@ -36,6 +38,13 @@ export default function Home({ photos, navCounts }) {
           disableEmpty: true,
         }}
       />
+
+      <section className={`${styles.section} ${styles.sectionFirst}`} aria-labelledby="selected-photos">
+        <div className={styles.sectionHead}>
+          <h1 id="selected-photos">Selected photographs</h1>
+        </div>
+        <SelectedPhotographs photos={selected} />
+      </section>
 
       <section className={styles.section} aria-labelledby="featured-heading">
         <div className={styles.sectionHead}>
@@ -65,5 +74,5 @@ export async function getStaticProps() {
     .map((n) => byNumber.get(n))
     .filter(Boolean);
   const photos = curated.length ? curated : all.slice(0, site.homeFeaturedCount);
-  return { props: { photos, navCounts: heroNavCounts(all) } };
+  return { props: { photos, selected: selectedPhotos(all), navCounts: heroNavCounts(all) } };
 }
