@@ -565,7 +565,13 @@
   letter-spacing: -0.03em;
   color: #EEF0E6;
 }
-.heroTitle .headlineAccent { color: #182A17; }
+.heroTitle .headlineAccent {
+  color: #B9C27A;
+  /* Allura draws small in its em box. 1.7em makes the phrase about 1.35× the Poppins words. */
+  font-size: 1.7em;
+  letter-spacing: 0;
+  word-spacing: 0;
+}
 /* Caveat accent shared by article headlines and the Journeys hero phrases.
    Family comes from the next/font class paired with this one.
    Color is the hero white (#fff). Article pages override it inline with their swatch. */
@@ -586,6 +592,22 @@
 .heroTitle:has(+ .heroNav) { margin-bottom: 0; }
 .heroNav { margin: 0.45rem 0 0; max-width: 100%; }
 .heroNav :global(nav) { margin: 0; }
+/* Desktop: one row. The copy column is narrow, so tighten the gaps before People wraps. */
+@media (min-width: 1000px) {
+  .heroNav :global(ul) {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    gap: 0.15rem 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .heroNav :global(a) {
+    white-space: nowrap;
+    font-size: clamp(0.72rem, 0.78vw, 0.92rem);
+  }
+}
 .heroNav :global(a) {
   color: #EEF0E6;
   padding-top: 0.15rem;
@@ -1053,7 +1075,7 @@
   .heroTitle,
   .heroSub,
   .heroCap a { color: #020A0A; }
-  .heroTitle .headlineAccent { color: #182A17; }
+  .heroTitle .headlineAccent { color: #B9C27A; }
   .heroNav :global(a),
   .heroNav :global(a:hover) { color: #020A0A; }
   .heroNav :global(span) { color: #334824; }
