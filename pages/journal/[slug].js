@@ -7,7 +7,7 @@ import CategoryNav from '@/components/CategoryNav';
 import Lightbox from '@/components/Lightbox';
 import PhotoMap from '@/components/PhotoMap';
 import ShapeMosaic from '@/components/ShapeMosaic';
-import AccentTitle from '@/components/AccentTitle';
+import HeadlinePhrase from '@/components/HeadlinePhrase';
 import { getPhotos } from '@/lib/photo-data';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
 import {
@@ -150,7 +150,13 @@ export default function JournalArticle({ article }) {
           <div className={styles.panel}>
             <span className={styles.accent} aria-hidden="true" />
             {article.location ? <p className={styles.kicker}>{article.location}</p> : null}
-            <AccentTitle title={article.title} color={shape.accent} as="h1" className={styles.title} />
+            <HeadlinePhrase
+              title={article.title}
+              phrase={article.headlinePhrase}
+              color={shape.palette[2]}
+              as="h1"
+              className={styles.title}
+            />
             <p className={styles.dek}>{article.dek}</p>
             <p className={styles.byline}>
               {article.location ? (
@@ -211,8 +217,9 @@ export async function getStaticProps({ params }) {
   const record = articleRecords.find((article) => article.slug === params.slug);
   if (!record) return { notFound: true };
   const number = photoNumberFromSrc(record.expectSrc);
-  if (!shapes[String(number)]) {
-    throw new Error(`No journal shape for ${record.slug}.`);
+  const shape = shapes[String(number)];
+  if (!shape?.palette?.[2]) {
+    throw new Error(`No swatch 3 for ${record.slug}.`);
   }
   const photos = await getPhotos();
   const articles = hydrateArticles(photos);
