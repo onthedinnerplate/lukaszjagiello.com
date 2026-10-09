@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { site, isPlaceholderSocial } from '@/lib/site';
 import { CATEGORIES, galleryPathFor } from '@/lib/categories';
-import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
+import { articleTitleFont } from '@/lib/fonts';
+import { accentScriptFont } from '@/components/headlineAccent';
 import styles from '@/styles/Layout.module.css';
 import BackToTop from './BackToTop';
 

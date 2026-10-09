@@ -1,12 +1,9 @@
 import { phraseSpan } from '@/lib/headlinePhrase';
-import { accentScriptFont as caveat } from '@/lib/fonts';
-
-// Caveat 400, the site's handwritten accent face. Shared with the header
-// so the same self-hosted file is preloaded once (font-display: block).
+import { headlineAccentClassName } from '@/components/headlineAccent';
 
 /**
- * Article h1 with one noun or noun phrase in Caveat 400.
- * `color` is that article's swatch 3. Size, spacing, and weight stay on the span.
+ * Article h1 with one noun or noun phrase in the shared Caveat accent.
+ * `color` is that article's swatch 3 and overrides the accent's hero white.
  */
 export default function HeadlinePhrase({ title, phrase, color, as: Tag = 'h1', className }) {
   const span = color ? phraseSpan(title, phrase) : null;
@@ -14,19 +11,7 @@ export default function HeadlinePhrase({ title, phrase, color, as: Tag = 'h1', c
   return (
     <Tag className={className}>
       {span.before}
-      <span
-        className={caveat.className}
-        style={{
-          color,
-          fontSize: '1.45em',
-          lineHeight: 1,
-          fontWeight: 400,
-          letterSpacing: '0.02em',
-          wordSpacing: '0.06em',
-          marginLeft: '0.1em',
-          marginRight: '0.1em',
-        }}
-      >
+      <span className={headlineAccentClassName} style={{ color }}>
         {span.phrase}
       </span>
       {span.after}

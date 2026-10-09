@@ -470,6 +470,20 @@
   letter-spacing: -0.03em;
   color: #fff;
 }
+/* Caveat accent shared by article headlines and the Journeys hero phrases.
+   Family comes from the next/font class paired with this one.
+   Color is the hero white (#fff). Article pages override it inline with their swatch. */
+.headlineAccent {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.45em;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  word-spacing: 0.06em;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+  color: #fff;
+}
 /* Category bar lives under the headline, on the dark photograph. */
 .heroTitle:has(+ .heroNav) { margin-bottom: 0; }
 .heroNav { margin: 0.45rem 0 0; max-width: 100%; }
@@ -574,7 +588,17 @@
 .featuredDek { margin: 0.35rem 0 0.85rem; font-style: italic; color: var(--muted); }
 .storyLink { color: var(--charcoal); font-weight: 600; text-decoration: none; }
 .storyLink:hover { text-decoration: underline; }
-.more { background: #1f2121; color: #f5f3ee; padding: 1.5rem 1.35rem 1.35rem; }
+.featuredPhoto { min-width: 0; }
+.more {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 70vh;
+  background: #1f2121;
+  color: #f5f3ee;
+  padding: 1.5rem 1.35rem 1.35rem;
+  overflow: hidden;
+}
 .moreLabel {
   margin: 0 0 0.4rem;
   font-size: 0.72rem;
@@ -583,7 +607,34 @@
   text-transform: uppercase;
   color: #f0e2c4;
 }
-.more ul { list-style: none; margin: 0; padding: 0; }
+.moreScroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(240, 226, 196, 0.45) transparent;
+}
+.moreScroll:focus-visible {
+  outline: 2px solid #f0e2c4;
+  outline-offset: -2px;
+}
+.moreScroll::-webkit-scrollbar { width: 8px; }
+.moreScroll::-webkit-scrollbar-track { background: transparent; }
+.moreScroll::-webkit-scrollbar-thumb {
+  background: rgba(240, 226, 196, 0.4);
+  border-radius: 999px;
+}
+.moreScroll ul { list-style: none; margin: 0; padding: 0 0.35rem 1.75rem 0; }
+.moreScroll::after {
+  content: "";
+  position: sticky;
+  bottom: 0;
+  display: block;
+  height: 1.75rem;
+  margin-top: -1.75rem;
+  background: linear-gradient(to bottom, rgba(31, 33, 33, 0), #1f2121);
+  pointer-events: none;
+}
 .more li { padding: 0.8rem 0; border-bottom: 1px solid #3c3e3e; }
 .morePlace {
   margin: 0 0 0.2rem;
@@ -729,7 +780,27 @@
   .featuredPanel { margin-top: -4.5rem; margin-left: auto; }
 }
 @media (min-width: 1000px) {
-  .featured { grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.72fr); align-items: start; }
+  .featured {
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.72fr);
+    column-gap: 1.25rem;
+    row-gap: 0;
+    align-items: start;
+  }
+  /* The portrait and the stories column share one row. A zero height keeps
+     the column from stretching that row; min-height fills it to the photo. */
+  .featuredMain { display: contents; }
+  .featuredPhoto { grid-column: 1; grid-row: 1; }
+  .featured .swatches { grid-column: 1; grid-row: 2; }
+  .featuredMap { grid-column: 1; grid-row: 3; }
+  .featuredPanel { grid-column: 1; grid-row: 4; }
+  .more {
+    grid-column: 2;
+    grid-row: 1;
+    height: 0;
+    min-height: 100%;
+    max-height: none;
+    align-self: stretch;
+  }
   .earth { grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); align-items: center; }
 }
 @media (min-width: 1100px) {

@@ -146,7 +146,9 @@ export default function JournalIndex({ articles, counts }) {
               <h2 id="featured-story" className={styles.sectionLabel}>Featured story</h2>
               <div className={styles.featured}>
                 <div className={styles.featuredMain}>
-                  <ShapeMosaic src={featured.photo.src} alt={featured.photo.alt} />
+                  <div className={styles.featuredPhoto}>
+                    <ShapeMosaic src={featured.photo.src} alt={featured.photo.alt} />
+                  </div>
                   <Swatches shape={featuredShape} featured />
                   <div className={styles.featuredMap}>
                     <PhotoMap
@@ -166,14 +168,21 @@ export default function JournalIndex({ articles, counts }) {
                 </div>
                 <aside className={styles.more} aria-labelledby="more-stories">
                   <h3 id="more-stories" className={styles.moreLabel}>More stories</h3>
-                  <ul>
-                    {more.map((article) => (
-                      <li key={article.slug}>
-                        {article.location ? <p className={styles.morePlace}>{article.location}</p> : null}
-                        <Link href={`/journal/${article.slug}`}>{article.title}</Link>
-                      </li>
-                    ))}
-                  </ul>
+                  <div
+                    className={styles.moreScroll}
+                    tabIndex={0}
+                    role="region"
+                    aria-label="More stories"
+                  >
+                    <ul>
+                      {more.map((article) => (
+                        <li key={article.slug}>
+                          {article.location ? <p className={styles.morePlace}>{article.location}</p> : null}
+                          <Link href={`/journal/${article.slug}`}>{article.title}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                   <a href="#all-journeys" className={styles.storyLink}>All journeys</a>
                 </aside>
               </div>
