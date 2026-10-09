@@ -620,7 +620,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: var(--focus, center);
 }
 @media (prefers-reduced-motion: no-preference) {
   .selectedImg { transition: transform 0.4s ease; }
@@ -677,13 +677,19 @@
     padding-right: var(--card-inset, 0.7rem);
   }
   .frameCover,
-  .equalCards .frameCover {
+  .equalCards .frameCover,
+  .selectedCell {
     flex: 0 0 auto;
-    aspect-ratio: 3 / 4;
+    width: 100%;
     height: auto;
+    aspect-ratio: 4 / 5;
   }
   .frameCover .img,
-  .img { object-fit: cover; object-position: var(--focus, center); }
+  .img,
+  .selectedImg {
+    object-fit: cover;
+    object-position: var(--focus-phone, var(--focus, center));
+  }
   .selectedRow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .selectedItem { display: flex; flex-direction: column; min-width: 0; }
   .selectedDetails { display: block; padding: 0.4rem var(--card-inset, 0.7rem) 0; }

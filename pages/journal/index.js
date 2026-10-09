@@ -21,6 +21,7 @@ import { CATEGORIES } from '@/lib/categories';
 import { byNumber, CLUSTER_NUMBERS, inspirationsFrom, LATEST_SLUGS, MORE_NUMBERS, shapeFor } from '@/lib/journeys';
 import { spreadBySubject } from '@/lib/subjectOrder';
 import { accentScriptFromPalette } from '@/lib/accentInk';
+import { phoneCardFocusStyle } from '@/lib/photoFocus';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import styles from '@/styles/Journal.module.css';
 
@@ -72,7 +73,6 @@ function JourneyThumb({ photo }) {
       sizes={allTileSizes(photo.thumbWidth, photo.thumbHeight)}
       srcSet={photo.thumbSrcSet || undefined}
       className={styles.allThumb}
-      style={photo.focus ? { objectPosition: photo.focus } : undefined}
       loading="lazy"
       decoding="async"
     />
@@ -94,7 +94,7 @@ function JourneyCard({ article, compactSwatches = true }) {
     <article
       className={styles.journeyCard}
       style={{
-        '--focus': article.photo.focus || 'center',
+        ...phoneCardFocusStyle(article.photo),
         ...(accentScript ? { '--accent-script': accentScript } : {}),
       }}
     >
@@ -195,7 +195,7 @@ export default function JournalIndex({ articles, counts }) {
               <h2 id="featured-story" className={styles.sectionLabel}>Featured story</h2>
               <div className={styles.featured}>
                 <div className={styles.featuredMain}>
-                  <div className={`${styles.featuredPhoto} ${styles.frameWrap}`} style={{ '--focus': featured.photo.focus || 'center' }}>
+                  <div className={`${styles.featuredPhoto} ${styles.frameWrap}`} style={phoneCardFocusStyle(featured.photo)}>
                     <ShapeMosaic src={featured.photo.src} alt={featured.photo.alt} />
                     <PhotoCardActions
                       title={featured.title}
@@ -281,7 +281,7 @@ export default function JournalIndex({ articles, counts }) {
                   return (
                     <li key={article.slug}>
                       <div className={styles.allTile} style={accentScript ? { '--accent-script': accentScript } : undefined}>
-                        <div className={`${styles.allFrame} ${article.photo.thumb ? '' : styles.allThumbPlaceholder}`} style={{ '--focus': article.photo.focus || 'center' }}>
+                        <div className={`${styles.allFrame} ${article.photo.thumb ? '' : styles.allThumbPlaceholder}`} style={phoneCardFocusStyle(article.photo)}>
                           <Link href={href} className={styles.allPhotoLink} aria-label={`Read ${article.title}`}>
                             <JourneyThumb photo={article.photo} />
                           </Link>
@@ -342,7 +342,7 @@ export default function JournalIndex({ articles, counts }) {
           </div>
           <ul className={styles.cluster} aria-hidden="true">
             {cluster.map((article) => (
-              <li key={article.slug}>
+              <li key={article.slug} style={phoneCardFocusStyle(article.photo)}>
                 <ShapeMosaic src={article.photo.src} alt="" />
               </li>
             ))}
@@ -387,6 +387,10 @@ export async function getStaticProps() {
         thumbWidth: source?.thumbWidth || null,
         thumbHeight: source?.thumbHeight || null,
         focus: article.photo.focus || null,
+        focusX: article.photo.focusX,
+        focusY: article.photo.focusY,
+        width: article.photo.width,
+        height: article.photo.height,
       },
     };
   });
