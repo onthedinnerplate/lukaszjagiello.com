@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { site, isPlaceholderSocial } from '@/lib/site';
-import { CATEGORIES, galleryPathFor } from '@/lib/categories';
+import { CATEGORIES, categoryMenuLabel, galleryPathFor } from '@/lib/categories';
 import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
 import styles from '@/styles/Layout.module.css';
 import BackToTop from './BackToTop';
@@ -162,7 +162,7 @@ function Footer() {
   const year = new Date().getFullYear();
   const columns = [
     { heading: 'Explore', links: site.nav.map(({ label, href }) => ({ label, href })) },
-    { heading: 'Gallery', links: [{ label: 'All photographs', href: '/gallery' }, ...CATEGORIES.map((c) => ({ label: c.label, href: galleryPathFor(c.slug) }))] },
+    { heading: 'Gallery', links: [{ label: 'All photographs', href: '/gallery' }, ...CATEGORIES.map((c) => ({ label: categoryMenuLabel(c), href: galleryPathFor(c.slug) }))] },
     {
       heading: 'Shop',
       links: [

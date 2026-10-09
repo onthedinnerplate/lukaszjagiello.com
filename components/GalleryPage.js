@@ -11,7 +11,7 @@ import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { spreadBySubject } from '@/lib/subjectOrder';
 import { ogImageSrc } from '@/lib/slug';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
-import { galleryPathFor, inCategory, journeysThenGalleryPath } from '@/lib/categories';
+import { JOURNEY_MENU_LABEL, galleryPathFor, inCategory, journeysThenGalleryPath } from '@/lib/categories';
 import { site } from '@/lib/site';
 import SelectedPhotographs, { selectedPhotos } from '@/components/SelectedPhotographs';
 import palettes from '@/lib/photoPalettes.json';
@@ -176,7 +176,7 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
           active: isAll ? '' : category.slug,
           counts: navCounts,
           hrefFor: journeysThenGalleryPath,
-          allLabel: 'Journeys',
+          allLabel: JOURNEY_MENU_LABEL,
           label: 'Hero categories',
           disableEmpty: true,
         } : null}

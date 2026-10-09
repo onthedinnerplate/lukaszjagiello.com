@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { CATEGORIES, galleryPathFor } from '@/lib/categories';
+import { CATEGORIES, categoryMenuLabel, galleryPathFor } from '@/lib/categories';
 import styles from '@/styles/Gallery.module.css';
 
 const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
@@ -30,6 +30,7 @@ export default function CategoryNav({
   separateCount = false,
 }) {
   const items = (includeAll ? [{ slug: 'all', label: allLabel }, ...CATEGORIES] : CATEGORIES)
+    .map((item) => ({ ...item, label: item.slug === 'all' ? item.label : categoryMenuLabel(item) }))
     .filter((item) => !hideEmpty || item.slug === 'all' || counts[item.slug] > 0);
   const activeSet = new Set(Array.isArray(active) ? active : [active]);
   const countKey = items.map((item) => counts[item.slug] ?? '').join(',');
