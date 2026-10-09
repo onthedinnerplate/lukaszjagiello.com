@@ -137,10 +137,11 @@ export default function JournalIndex({ articles, counts }) {
     ? inspirationPool.filter((article) => (article.photo.categories || []).includes(inspireActive))
     : inspirationPool;
   const filterInspirations = (slug) => {
-    const y = window.scrollY;
     setInspireCategory(slug);
-    requestAnimationFrame(() => {
-      if (window.scrollY !== y) window.scrollTo(0, y);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById('inspirations')?.closest('section')?.scrollIntoView({
+      behavior: reduce ? 'auto' : 'smooth',
+      block: 'start',
     });
   };
   const more = byNumber(visible, MORE_NUMBERS);
