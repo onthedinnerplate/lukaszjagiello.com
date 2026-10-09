@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Seo from '@/components/Seo';
+import JourneysHeader from '@/components/JourneysHeader';
 import { validateContact, LIMITS } from '@/lib/contact';
+import { getPhotos } from '@/lib/photo-data';
+import { journeysHeroSrc } from '@/lib/journeysHero';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
 import styles from '@/styles/Page.module.css';
@@ -14,7 +17,7 @@ const meta = {
 
 const FIELDS = ['name', 'email', 'message'];
 
-export default function Contact() {
+export default function Contact({ heroSrc }) {
   const { query } = useRouter();
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
@@ -92,6 +95,7 @@ export default function Contact() {
         keywords={['hire a photographer', 'photo prints', 'image licensing']}
         jsonLd={graph(websiteNode(), personNode(), { ...pageNode('ContactPage', meta), mainEntity: { '@id': personNode()['@id'] } })}
       />
+      <JourneysHeader src={heroSrc} titleAs="p" />
       <article className={styles.page}>
         <header className={styles.pageHeader}>
           <h1>Contact</h1>
@@ -139,4 +143,9 @@ export default function Contact() {
       </article>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const photos = await getPhotos();
+  return { props: { heroSrc: journeysHeroSrc(photos) } };
 }

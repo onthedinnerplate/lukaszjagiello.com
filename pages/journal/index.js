@@ -1,9 +1,7 @@
-import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Seo from '@/components/Seo';
-import CategoryNav from '@/components/CategoryNav';
+import JourneysHeader from '@/components/JourneysHeader';
 import PhotoMap from '@/components/PhotoMap';
 import ShapeMosaic from '@/components/ShapeMosaic';
 import AccentTitle from '@/components/AccentTitle';
@@ -17,8 +15,6 @@ import {
 import { byNumber, CLUSTER_NUMBERS, inspirationsFrom, LATEST_SLUGS, MORE_NUMBERS, shapeFor } from '@/lib/journeys';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import styles from '@/styles/Journal.module.css';
-
-const POPPINS = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap';
 
 const meta = {
   path: '/journal',
@@ -72,45 +68,17 @@ export default function JournalIndex({ articles, counts, hero }) {
         keywords={['photography journal', 'journeys', ...articles.map((a) => a.location).filter(Boolean)]}
         jsonLd={graph(websiteNode(), personNode(), pageNode('CollectionPage', meta))}
       />
-      <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="stylesheet" href={POPPINS} />
-      </Head>
       <article className={styles.landing}>
-        <div className={styles.landingCats}>
-          <CategoryNav
-            active={category}
-            counts={counts}
-            hrefFor={journalCategoryPath}
-            label="Journal categories"
-            disableEmpty
-          />
-        </div>
-
-        <section className={styles.heroBand} aria-label="Marymere Falls">
-          <Image
-            src={hero.src}
-            alt=""
-            fill
-            priority
-            unoptimized
-            sizes="100vw"
-            className={styles.heroPhoto}
-          />
-          <div className={styles.heroShade} aria-hidden="true" />
-          <div className={styles.heroCopy}>
-            <p className={styles.heroKicker}>Journeys · Stories from the terrain</p>
-            <h1 className={styles.heroTitle}>Always look for the story in the terrain.</h1>
-            <p className={styles.heroSub}>{meta.description}</p>
-            <span className={styles.goldRule} aria-hidden="true" />
-          </div>
-          <p className={styles.heroCap}>
-            <Link href="/journal/a-thin-line-of-light-in-a-green-room">
-              Marymere Falls · Olympic National Park, Washington
-            </Link>
-          </p>
-        </section>
+        <JourneysHeader
+          src={hero.src}
+          categories={{
+            active: category,
+            counts,
+            hrefFor: journalCategoryPath,
+            label: 'Journal categories',
+            disableEmpty: true,
+          }}
+        />
 
         <div className={styles.landingWrap}>
           {latest.length > 0 ? (
