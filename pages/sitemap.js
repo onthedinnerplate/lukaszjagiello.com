@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Seo from '@/components/Seo';
-import SiteCategoryNav from '@/components/SiteCategoryNav';
 import { graph, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
 import { CATEGORIES, categoryMenuLabel, galleryPathFor } from '@/lib/categories';
@@ -19,9 +18,6 @@ export default function Sitemap({ photos, navCounts }) {
     <>
       <Seo title={meta.title} description={meta.description} path={meta.path} jsonLd={graph(websiteNode(), pageNode('WebPage', meta))} />
       <article className={styles.page}>
-        <div className={styles.pageCats}>
-          <SiteCategoryNav counts={navCounts} label="Sitemap categories" />
-        </div>
         <header className={styles.pageHeader}>
           <h1>Sitemap</h1>
           <p className={styles.lede}>Every page on the site. Search engines use the <a href="/sitemap.xml">XML version</a>.</p>

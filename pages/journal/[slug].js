@@ -2,7 +2,6 @@ import { useId, useRef, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Seo from '@/components/Seo';
-import SiteCategoryNav from '@/components/SiteCategoryNav';
 import Lightbox from '@/components/Lightbox';
 import PhotoMap from '@/components/PhotoMap';
 import ArticleLead from '@/components/ArticleLead';
@@ -88,13 +87,6 @@ export default function JournalArticle({ article, navCounts }) {
         <meta property="article:author" content={article.author} />
       </Head>
       <article className={styles.article} style={{ '--accent': shape.accent, '--accent-script': accentScript }}>
-        <div className={styles.journalCats}>
-          <SiteCategoryNav
-            active={photo.categories}
-            counts={navCounts}
-            label="Journal categories"
-          />
-        </div>
         <div className={styles.spread}>
           <div className={styles.visual}>
             <div className={styles.frameWrap}>

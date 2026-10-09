@@ -2,7 +2,6 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import SiteCategoryNav from '@/components/SiteCategoryNav';
 import { heroAccentClassName } from '@/components/headlineAccent';
 import { accentScriptInk } from '@/lib/accentInk';
 import { articleTitleFont } from '@/lib/fonts';
@@ -282,11 +281,6 @@ export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = fal
                 HERO.title
               )}
             </Title>
-            {menu ? (
-              <div className={styles.heroNav}>
-                <SiteCategoryNav {...menu} />
-              </div>
-            ) : null}
             {menu ? credit : null}
             <p className={styles.heroSub}>{JOURNEYS_HERO_DESCRIPTION}</p>
             <span className={styles.goldRule} aria-hidden="true" />

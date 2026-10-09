@@ -16,7 +16,9 @@
   --font: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
   /* One horizontal row: logo, name, Photography, and the links share the bar.
      960px and under wrap the links onto a second row; 720px uses the smaller name. */
-  --nav-h: 72px;
+  --nav-row: 72px;
+  --cat-bar: 44px;
+  --nav-h: calc(var(--nav-row) + var(--cat-bar));
   --gutter: clamp(16px, 4vw, 40px);
   --container-max: 1400px;
   --max: 1200px;
@@ -38,14 +40,14 @@
 }
 
 @media (max-width: 960px) {
-  :root { --nav-h: 108px; }
+  :root { --nav-row: 108px; }
 }
 @media (max-width: 720px) {
-  :root { --nav-h: 88px; }
+  :root { --nav-row: 88px; }
 }
 /* Phones: one nav row. Tablet (768–960) keeps the wrapped two-row height. */
 @media (max-width: 767px) {
-  :root { --nav-h: 64px; }
+  :root { --nav-row: 64px; --cat-bar: 52px; }
   body { overflow-x: clip; }
 }
 

@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
 import JourneysHero from '@/components/JourneysHero';
-import CategoryNav from '@/components/CategoryNav';
 import { PhotoCardActions } from '@/components/ShareButtons';
 import Lightbox from '@/components/Lightbox';
 import ResponsiveImage from '@/components/ResponsiveImage';
@@ -53,21 +52,6 @@ function slugFromPath(path) {
   return parts[1] || 'all';
 }
 
-function GallerySectionNav({ active, counts, onSelect, onDark = false, label = 'Gallery categories' }) {
-  return (
-    <div className={`${styles.sectionNav} ${onDark ? styles.sectionNavOnDark : ''}`}>
-      <CategoryNav
-        active={active}
-        counts={counts}
-        hrefFor={galleryPathFor}
-        includeAll={false}
-        label={label}
-        onSelect={onSelect}
-      />
-    </div>
-  );
-}
-
 /** Shared by /gallery (all) and /gallery/[category]. */
 export default function GalleryPage({ photos, category, counts, navCounts }) {
   const isAll = !category || category.slug === 'all';
@@ -95,7 +79,6 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
   const future = pickFuture(photos);
 
   const [gridCategory, setGridCategory] = useState(isAll ? 'all' : category.slug);
-  const [futureCategory, setFutureCategory] = useState('all');
   const [gateOpen, setGateOpen] = useState(false);
   const gateLightboxId = useId();
 
@@ -117,37 +100,6 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
     return () => cancelAnimationFrame(frame);
   }, [isAll]);
 
-  const rememberCategory = (slug) => {
-    const href = galleryPathFor(slug);
-    if (window.location.pathname !== href) {
-      window.history.pushState({ galleryCategory: slug }, '', href);
-    }
-  };
-
-  const scrollToAll = (slug) => {
-    setGridCategory(slug);
-    rememberCategory(slug);
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    document.getElementById('all-photographs')?.scrollIntoView({
-      behavior: reduce ? 'auto' : 'smooth',
-      block: 'start',
-    });
-  };
-
-  // The All photographs menu filters the grid the visitor is already looking at.
-  const filterGrid = (slug) => {
-    const y = window.scrollY;
-    setGridCategory(slug);
-    rememberCategory(slug);
-    requestAnimationFrame(() => {
-      if (window.scrollY !== y) window.scrollTo(0, y);
-    });
-  };
-
-  const filterFuture = (slug) => {
-    setFutureCategory((current) => (current === slug ? 'all' : slug));
-  };
-
   const gridSource = useMemo(
     () => (gridCategory === 'all' ? photos : photos.filter((photo) => inCategory(photo, gridCategory))),
     [photos, gridCategory],
@@ -156,10 +108,7 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
     () => spreadBySubject(gridSource, (photo) => photoNumberFromSrc(photo.src)),
     [gridSource],
   );
-  const futurePhotos = spreadBySubject(
-    futureCategory === 'all' ? future : future.filter((photo) => inCategory(photo, futureCategory)),
-    (photo) => photoNumberFromSrc(photo.src),
-  );
+  const futurePhotos = spreadBySubject(future, (photo) => photoNumberFromSrc(photo.src));
 
   return (
     <>
@@ -192,12 +141,6 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
         {gate ? (
           <section className={styles.band} aria-labelledby="gate-hero-title">
             <h2 id="gate-hero-title" className={styles.sectionLabel}>Featured photography</h2>
-            <GallerySectionNav
-              active={gridCategory}
-              counts={counts}
-              onSelect={scrollToAll}
-              label="Featured photograph categories"
-            />
             <div className={styles.saleFeatured}>
               <div className={styles.saleMain}>
                 <div className={styles.gateFrame} style={{ backgroundColor: gate.color }}>
@@ -235,13 +178,6 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
               {more.length > 0 ? (
                 <aside className={styles.saleMore} aria-labelledby="more-photographs">
                   <h3 id="more-photographs" className={styles.saleMoreLabel}>More photographs</h3>
-                  <GallerySectionNav
-                    active={gridCategory}
-                    counts={counts}
-                    onSelect={scrollToAll}
-                    onDark
-                    label="More photographs categories"
-                  />
                   <ul>
                     {more.map((item) => (
                       <li key={item.src}>
@@ -268,12 +204,6 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
           <h2 id="selected-photos" className={styles.sectionLabel}>
             Selected photographs <span>{selected.length}</span>
           </h2>
-          <GallerySectionNav
-            active={gridCategory}
-            counts={counts}
-            onSelect={scrollToAll}
-            label="Selected photograph categories"
-          />
           <SelectedPhotographs photos={selected} />
         </section>
 
@@ -281,14 +211,6 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
           <h2 id="all-photos-title" className={`${styles.sectionLabel} ${styles.gridLabel}`}>
             All photographs <span>{gridPhotos.length}</span>
           </h2>
-          <div className={styles.gridNav}>
-            <GallerySectionNav
-              active={gridCategory}
-              counts={counts}
-              onSelect={filterGrid}
-              label={isAll ? 'Gallery categories' : `${category.label} gallery categories`}
-            />
-          </div>
           <MasonryGallery
             photos={gridPhotos}
             sequence={gridSource}
@@ -305,12 +227,6 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
           <h2 id="future-photos-title" className={styles.sectionLabel}>
             Future photographs <span>{futurePhotos.length}</span>
           </h2>
-          <GallerySectionNav
-            active={futureCategory}
-            counts={{}}
-            onSelect={filterFuture}
-            label="Future photograph categories"
-          />
           <MasonryGallery
             photos={futurePhotos}
             layout="tight"

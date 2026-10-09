@@ -3,11 +3,33 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { site, isPlaceholderSocial } from '@/lib/site';
 import { CATEGORIES, categoryMenuLabel, galleryPathFor } from '@/lib/categories';
+import { photos } from '@/lib/photos';
+import { articles } from '@/lib/articles';
+import SiteCategoryNav from '@/components/SiteCategoryNav';
 import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
 import styles from '@/styles/Layout.module.css';
 import BackToTop from './BackToTop';
 
 const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
+
+function menuCounts() {
+  const counts = { all: articles.length };
+  for (const { slug } of CATEGORIES) counts[slug] = 0;
+  for (const photo of photos) {
+    for (const slug of photo.categories || []) {
+      if (Object.prototype.hasOwnProperty.call(counts, slug)) counts[slug] += 1;
+    }
+  }
+  return counts;
+}
+
+const MENU_COUNTS = menuCounts();
+
+function categoryActive(path) {
+  if (path === '/journal' || path.startsWith('/journal/')) return 'all';
+  const match = path.match(/^\/gallery\/([^/]+)/);
+  return match ? match[1] : '';
+}
 
 function currentPath(asPath) {
   return (asPath || '/').split('?')[0].split('#')[0];
@@ -26,6 +48,7 @@ function Nav() {
   const [ready, setReady] = useState(false);
   const [instant, setInstant] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const measure = (el) => {
     const list = listRef.current;
@@ -63,6 +86,13 @@ function Nav() {
   }, [path]);
 
   useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
     if (!menuOpen) return undefined;
     const onKey = (event) => {
       if (event.key === 'Escape') setMenuOpen(false);
@@ -92,7 +122,7 @@ function Nav() {
     : { '--x': '0px', '--y': '0px', '--w': 0, opacity: 0 };
 
   return (
-    <header className={styles.header}>
+    <header className={scrolled ? `${styles.header} ${styles.headerScrolled}` : styles.header}>
       <nav
         className={`${styles.nav} container${ready ? ` ${styles.navReady}` : ''}${menuOpen ? ` ${styles.navOpen}` : ''}`}
         aria-label="Main"
@@ -150,6 +180,13 @@ function Nav() {
           />
         </ul>
       </nav>
+      <div className={`${styles.catBar} container`}>
+        <SiteCategoryNav
+          counts={MENU_COUNTS}
+          active={categoryActive(path)}
+          label="Categories"
+        />
+      </div>
     </header>
   );
 }
