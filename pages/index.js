@@ -28,7 +28,7 @@ export default function Home({ photos, navCounts }) {
 
       <JourneysHero
         nav={{
-          active: '',
+          active: 'home',
           counts: navCounts,
           hrefFor: journeysThenGalleryPath,
           allLabel: 'Journeys',

@@ -194,6 +194,8 @@
 .catNavReady .catActive { border-bottom-color: transparent; }
 .catDisabled { color: var(--muted); cursor: default; }
 .catDisabled:hover { border-bottom-color: transparent; color: var(--muted); }
+.catMeta { display: inline-flex; align-items: baseline; gap: 0.35rem; }
+.catSep { font-weight: 400; opacity: 0.55; }
 .catCount { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
 /* One orange rule for the whole row. translate + scaleX so only transform moves. */
 .catIndicator {

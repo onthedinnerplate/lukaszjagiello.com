@@ -1,5 +1,5 @@
 import GalleryPage from '@/components/GalleryPage';
-import { getGalleryPhotos, categoryCounts, withDownloadTiers } from '@/lib/photo-data';
+import { getGalleryPhotos, categoryCounts, heroNavCounts, withDownloadTiers } from '@/lib/photo-data';
 
 export default function Gallery(props) {
   return <GalleryPage {...props} />;
@@ -7,5 +7,5 @@ export default function Gallery(props) {
 
 export async function getStaticProps() {
   const photos = withDownloadTiers(await getGalleryPhotos());
-  return { props: { photos, category: null, counts: categoryCounts(photos) } };
+  return { props: { photos, category: null, counts: categoryCounts(photos), navCounts: heroNavCounts(photos) } };
 }
