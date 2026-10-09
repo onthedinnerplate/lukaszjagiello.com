@@ -394,7 +394,17 @@
   .saleTrio { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (min-width: 1000px) {
-  .saleFeatured { grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.72fr); align-items: start; }
+  .saleFeatured {
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.72fr);
+    align-items: stretch;
+    /* Same column gap as the All photographs grid at this width. */
+    column-gap: 1rem;
+  }
+  /* Specified height keeps the panel from stretching the row. min-height
+     then matches the photo, which is what sizes the row. */
+  .saleMore { height: 0; min-height: 100%; overflow: auto; }
+  .saleMore > ul > li { padding: 0.42rem 0; }
+  .saleMore .saleLink { margin-top: 0.7rem; }
   .saleClose { grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); align-items: center; }
 }
 
@@ -464,6 +474,7 @@
 @media (min-width: 1100px) {
   .uniform { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 1.15rem; row-gap: 1.6rem; }
   .tight { column-gap: 0; row-gap: 0; }
+  .saleFeatured { column-gap: 1.15rem; }
 }
 
 /* html already sets scroll-padding-top to the nav height, so the anchor
