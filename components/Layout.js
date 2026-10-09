@@ -25,6 +25,7 @@ function Nav() {
   const [box, setBox] = useState(null);
   const [ready, setReady] = useState(false);
   const [instant, setInstant] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const measure = (el) => {
     const list = listRef.current;
@@ -57,6 +58,19 @@ function Nav() {
     measure(activeItem());
   };
 
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [path]);
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const onKey = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+
   useIsoLayoutEffect(() => {
     measure(activeItem());
     setReady(true);
@@ -80,7 +94,7 @@ function Nav() {
   return (
     <header className={styles.header}>
       <nav
-        className={`${styles.nav} container${ready ? ` ${styles.navReady}` : ''}`}
+        className={`${styles.nav} container${ready ? ` ${styles.navReady}` : ''}${menuOpen ? ` ${styles.navOpen}` : ''}`}
         aria-label="Main"
         onMouseLeave={rest}
         onBlur={(event) => {
@@ -101,7 +115,17 @@ function Nav() {
             <span className={`${styles.brandScript} ${accentScriptFont.className}`}>Photography</span>
           </span>
         </Link>
-        <ul className={styles.links} ref={listRef}>
+        <button
+          type="button"
+          className={styles.menuButton}
+          aria-expanded={menuOpen}
+          aria-controls="site-menu"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span className="sr-only">{menuOpen ? 'Close menu' : 'Open menu'}</span>
+          <span className={styles.burger} data-open={menuOpen ? 'true' : 'false'} aria-hidden="true" />
+        </button>
+        <ul id="site-menu" className={styles.links} ref={listRef}>
           {site.nav.map(({ label, href }) => {
             const current = sectionCurrent(path, href);
             return (

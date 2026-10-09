@@ -43,6 +43,10 @@
 @media (max-width: 720px) {
   :root { --nav-h: 88px; }
 }
+/* Phones: one nav row. Tablet (768–960) keeps the wrapped two-row height. */
+@media (max-width: 767px) {
+  :root { --nav-h: 64px; }
+}
 
 *, *::before, *::after { box-sizing: border-box; }
 
