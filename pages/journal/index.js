@@ -183,7 +183,6 @@ export default function JournalIndex({ articles, counts }) {
             counts,
             hrefFor: journalCategoryPath,
             label: 'Journal categories',
-            disableEmpty: true,
           }}
         />
         <p className="sr-only" aria-live="polite" aria-atomic="true">{filterNote}</p>

@@ -1,13 +1,15 @@
 import Link from 'next/link';
 import LegalPage from '@/components/LegalPage';
+import { categoryNavProps } from '@/lib/photo-data';
 import { site } from '@/lib/site';
 import styles from '@/styles/Page.module.css';
 
 const UPDATED = 'October 8, 2026';
 
-export default function Privacy() {
+export default function Privacy({ navCounts }) {
   return (
     <LegalPage
+      navCounts={navCounts}
       path="/privacy"
       title="Privacy Policy"
       description={`How ${site.name} handles the small amount of personal information it collects when you browse the site or buy a download.`}
@@ -107,4 +109,8 @@ export default function Privacy() {
       </section>
     </LegalPage>
   );
+}
+
+export async function getStaticProps() {
+  return { props: await categoryNavProps() };
 }

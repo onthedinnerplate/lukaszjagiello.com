@@ -2,13 +2,13 @@ import { useId, useRef, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Seo from '@/components/Seo';
-import CategoryNav from '@/components/CategoryNav';
+import SiteCategoryNav from '@/components/SiteCategoryNav';
 import Lightbox from '@/components/Lightbox';
 import PhotoMap from '@/components/PhotoMap';
 import ArticleLead from '@/components/ArticleLead';
 import HeadlinePhrase from '@/components/HeadlinePhrase';
 import Swatches from '@/components/Swatches';
-import { getPhotos } from '@/lib/photo-data';
+import { getPhotos, heroNavCounts } from '@/lib/photo-data';
 import { mentionsGear, photoNumberFromSrc } from '@/lib/photoCaption';
 import { AffiliateDisclosure, GearLine, gearLineClass } from '@/components/GearStoreLinks';
 import TrailBadge from '@/components/TrailBadge';
@@ -16,9 +16,6 @@ import {
   articles as articleRecords,
   formatArticleDate,
   hydrateArticle,
-  hydrateArticles,
-  journalCategoryCounts,
-  journalCategoryPath,
 } from '@/lib/articles';
 import shapes from '@/lib/journalShapes.json';
 import { accentScriptFromPalette } from '@/lib/accentInk';
@@ -36,7 +33,7 @@ function ExpandIcon() {
   );
 }
 
-export default function JournalArticle({ article }) {
+export default function JournalArticle({ article, navCounts }) {
   const path = `/journal/${article.slug}`;
   const { photo } = article;
   const shape = shapes[String(article.photoNumber)];
@@ -92,12 +89,10 @@ export default function JournalArticle({ article }) {
       </Head>
       <article className={styles.article} style={{ '--accent': shape.accent, '--accent-script': accentScript }}>
         <div className={styles.journalCats}>
-          <CategoryNav
+          <SiteCategoryNav
             active={photo.categories}
-            counts={article.counts}
-            hrefFor={journalCategoryPath}
+            counts={navCounts}
             label="Journal categories"
-            disableEmpty
           />
         </div>
         <div className={styles.spread}>
@@ -226,11 +221,11 @@ export async function getStaticProps({ params }) {
     throw new Error(`No swatch 3 for ${record.slug}.`);
   }
   const photos = await getPhotos();
-  const articles = hydrateArticles(photos);
   const article = hydrateArticle(record, photos);
   return {
     props: {
-      article: { ...article, counts: journalCategoryCounts(articles) },
+      article,
+      navCounts: heroNavCounts(photos),
     },
   };
 }

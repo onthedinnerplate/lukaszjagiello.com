@@ -1,14 +1,16 @@
 import Link from 'next/link';
 import LegalPage from '@/components/LegalPage';
+import { categoryNavProps } from '@/lib/photo-data';
 import { site } from '@/lib/site';
 import { TIERS, formatPrice } from '@/lib/store';
 import styles from '@/styles/Page.module.css';
 
 const UPDATED = 'October 8, 2026';
 
-export default function Licensing() {
+export default function Licensing({ navCounts }) {
   return (
     <LegalPage
+      navCounts={navCounts}
       path="/licensing"
       title="Sales & Licensing"
       description={`What you get when you buy a digital download from ${site.name}: a personal-use licence, not the copyright. Refunds, commercial licensing and prints.`}
@@ -122,4 +124,8 @@ export default function Licensing() {
       </section>
     </LegalPage>
   );
+}
+
+export async function getStaticProps() {
+  return { props: await categoryNavProps() };
 }
