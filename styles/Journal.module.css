@@ -470,6 +470,20 @@
   letter-spacing: -0.03em;
   color: #fff;
 }
+/* Caveat accent shared by article headlines and the Journeys hero phrases.
+   Family comes from the next/font class paired with this one.
+   Color is the hero white (#fff). Article pages override it inline with their swatch. */
+.headlineAccent {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.45em;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  word-spacing: 0.06em;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
+  color: #fff;
+}
 /* Category bar lives under the headline, on the dark photograph. */
 .heroTitle:has(+ .heroNav) { margin-bottom: 0; }
 .heroNav { margin: 0.45rem 0 0; max-width: 100%; }
