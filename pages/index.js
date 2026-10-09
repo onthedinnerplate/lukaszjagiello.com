@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import Seo from '@/components/Seo';
 import JourneysHero from '@/components/JourneysHero';
-import MasonryGallery from '@/components/MasonryGallery';
 import SelectedPhotographs, { selectedPhotos } from '@/components/SelectedPhotographs';
 import { getPhotos, heroNavCounts } from '@/lib/photo-data';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
-import { photoNumberFromSrc } from '@/lib/photoCaption';
 import styles from '@/styles/Home.module.css';
 
 const meta = {
@@ -15,7 +13,7 @@ const meta = {
   description: site.description,
 };
 
-export default function Home({ photos, selected, navCounts }) {
+export default function Home({ selected, navCounts }) {
   return (
     <>
       <Seo
@@ -48,7 +46,7 @@ export default function Home({ photos, selected, navCounts }) {
           <h2 id="featured-heading">Featured Collections</h2>
           <p>A selection of curated photography from diverse locations and subjects.</p>
         </div>
-        <MasonryGallery photos={photos} headingId="featured-heading" layout="uniform" grayscale={false} equalCards />
+        <SelectedPhotographs photos={selected} />
       </section>
 
       <section className={styles.cta} aria-labelledby="cta-heading">
@@ -65,11 +63,5 @@ export default function Home({ photos, selected, navCounts }) {
 
 export async function getStaticProps() {
   const all = await getPhotos();
-  // Curated set, selected by photo number so retitling/reordering photos.js never changes it.
-  const byNumber = new Map(all.map((p) => [photoNumberFromSrc(p.src), p]));
-  const curated = (site.homeFeatured || [])
-    .map((n) => byNumber.get(n))
-    .filter(Boolean);
-  const photos = curated.length ? curated : all.slice(0, site.homeFeaturedCount);
-  return { props: { photos, selected: selectedPhotos(all), navCounts: heroNavCounts(all) } };
+  return { props: { selected: selectedPhotos(all), navCounts: heroNavCounts(all) } };
 }
