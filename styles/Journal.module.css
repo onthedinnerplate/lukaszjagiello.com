@@ -537,6 +537,8 @@
   padding: 0;
   line-height: 1;
   vertical-align: baseline;
+  /* Homepage phrases stay moss. Other heroes keep the per-page swatch. */
+  color: #B9C27A;
 }
 .heroBand {
   position: relative;
