@@ -49,10 +49,12 @@ export default function GalleryPage({ photos, category, counts }) {
       <section className={styles.galleryPage} aria-labelledby="gallery-heading">
         <header className={styles.pageHeader}>
           <h1 id="gallery-heading">{isAll ? 'Gallery' : category.label}</h1>
-          <p className={styles.lede}>
-            {photos.length} {photos.length === 1 ? 'photograph' : 'photographs'}
-            {isAll ? '.' : ` — ${category.description.toLowerCase()}.`}
-          </p>
+          {isAll ? null : (
+            <p className={styles.lede}>
+              {photos.length} {photos.length === 1 ? 'photograph' : 'photographs'}
+              {` — ${category.description.toLowerCase()}.`}
+            </p>
+          )}
         </header>
         <MasonryGallery photos={photos} wide headingId="gallery-heading" />
       </section>
