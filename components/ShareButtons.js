@@ -1,9 +1,8 @@
 import ShareButton from './ShareButton';
 import BuyIcon from './BuyIcon';
 import { alltrailsHref } from '@/lib/affiliate';
-import { pinDescription, pinterestPinHref, toAbsoluteUrl } from '@/lib/shareUrls';
+import { pinterestPinHref, toAbsoluteUrl } from '@/lib/shareUrls';
 import gallery from '@/styles/Gallery.module.css';
-import styles from '@/styles/ShareButtons.module.css';
 
 function TrailMark() {
   return (
@@ -119,35 +118,3 @@ export function PhotoCardActions({ title, shareUrl, pinUrl, mediaUrl, photo }) {
   );
 }
 
-function PinIcon() {
-  return (
-    <svg className={styles.icon} width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.7" />
-      <path d="M10 17V7.8h3.15a2.85 2.85 0 0 1 0 5.7H10" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-/** Pinterest pin for the article itself, at the end of the story. */
-export function ArticleShare({ title, excerpt, articlePath, mediaPath }) {
-  const href = pinterestPinHref({
-    pageUrl: toAbsoluteUrl(articlePath),
-    mediaUrl: toAbsoluteUrl(mediaPath),
-    description: pinDescription(title, excerpt),
-  });
-  return (
-    <div className={styles.alignEnd}>
-      <a
-        className={styles.btn}
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-share-pin="entry"
-        aria-label={`Pin article: ${title}`}
-      >
-        <PinIcon />
-        <span>Pin article</span>
-      </a>
-    </div>
-  );
-}

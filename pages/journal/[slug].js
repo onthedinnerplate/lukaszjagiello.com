@@ -180,9 +180,6 @@ export default function JournalArticle({ article, navCounts }) {
                 <p>{article.gear.note}</p>
                 {mentionsGear(article.gear.settings) ? <AffiliateDisclosure /> : null}
               </section>
-              <p className={styles.photoLink}>
-                <Link href={photo.href}>View the photograph</Link>
-              </p>
               {article.companion ? (
                 <p className={styles.photoLink}>
                   <Link href={article.companion.href}>{article.companion.title}</Link>
