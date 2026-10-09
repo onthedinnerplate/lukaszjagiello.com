@@ -681,9 +681,12 @@
   .catCount { font-size: 0.85em; }
 
   .cardSwatchesPhone { display: block; }
-  .figure,
-  .tileFigure,
-  .selectedItem { --card-inset: 0.7rem; }
+  .cardActions {
+    left: var(--card-inset, 0.7rem);
+    right: var(--card-inset, 0.7rem);
+    width: auto;
+    justify-content: space-between;
+  }
   .caption {
     flex-direction: column;
     align-items: flex-start;
