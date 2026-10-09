@@ -195,7 +195,8 @@
   gap: 0.4rem;
   padding: 0.35rem 0;
   color: var(--charcoal);
-  font-weight: 500;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
   text-decoration: none;
   /* The 2px border holds the space. Colour comes from the sliding indicator once it is measured. */
   border-bottom: 2px solid transparent;
@@ -203,15 +204,15 @@
 }
 .catLink:hover { border-bottom-color: rgba(26, 26, 26, 0.3); }
 .catLink:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; border-radius: 2px; }
-.catActive { font-weight: 600; border-bottom-color: var(--orange); }
+.catActive { font-weight: 300; border-bottom-color: var(--orange); }
 .catNavReady .catLink,
 .catNavReady .catLink:hover,
 .catNavReady .catActive { border-bottom-color: transparent; }
 .catDisabled { color: var(--muted); cursor: default; }
 .catDisabled:hover { border-bottom-color: transparent; color: var(--muted); }
 .catMeta { display: inline-flex; align-items: baseline; gap: 0.35rem; }
-.catSep { font-weight: 400; opacity: 0.55; }
-.catCount { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+.catSep { font-weight: 300; opacity: 0.55; }
+.catCount { font-size: 0.75rem; color: var(--muted); font-weight: 300; }
 /* One orange rule for the whole row. translate + scaleX so only transform moves. */
 .catIndicator {
   position: absolute;

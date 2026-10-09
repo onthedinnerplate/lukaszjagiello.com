@@ -59,9 +59,10 @@
 }
 .brand:hover { background: none; }
 .brand:hover .brandName { text-decoration: underline; }
-/* Given name stays Poppins Light. Photography is Shadows Into Light Two:
-   upright handwriting like Caveat, with a thinner stroke, at twice the name. */
-.brand .brandGiven {
+/* The whole wordmark is Poppins Light. Photography stays gold and at 2em. */
+.brand .brandGiven,
+.brand .brandScript {
+  font-family: Poppins, system-ui, sans-serif;
   font-weight: 300;
   font-style: normal;
 }
@@ -74,8 +75,6 @@
   background: rgba(196, 163, 90, 0.6);
 }
 .brand .brandScript {
-  font-weight: 400;
-  font-style: normal;
   font-synthesis: none;
   -webkit-font-synthesis: none;
   color: #c4a35a;
@@ -118,14 +117,15 @@
   display: inline-block;
   padding: 0.35rem 0;
   border-bottom: 2px solid transparent;
-  font-weight: 500;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
   text-decoration: none;
   transition: color 0.15s ease;
 }
 .link:hover { border-bottom-color: rgba(26, 26, 26, 0.3); }
 .link[aria-current='page'] {
   border-bottom-color: var(--menu-underline);
-  font-weight: 700;
+  font-weight: 300;
 }
 /* Once the sliding rule is measured it replaces the static border, same as CategoryNav. */
 .navReady .link,
