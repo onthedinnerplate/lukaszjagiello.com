@@ -94,16 +94,25 @@ export default function PhotoPage({ photo, prev, next, tiers, photoNumber }) {
               aria-label={`View ${photo.title} full screen`}
               title="View full screen"
             >
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                width={photo.width}
-                height={photo.height}
-                sizes="(max-width: 900px) 100vw, 66vw"
-                priority
-                unoptimized
-                className={styles.photoImg}
-              />
+              <picture style={{ display: 'block', width: '100%' }}>
+                {photo.fullAvif ? (
+                  <source
+                    type="image/avif"
+                    srcSet={`${photo.fullAvif} ${photo.width}w`}
+                    sizes="(max-width: 900px) 100vw, 66vw"
+                  />
+                ) : null}
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  width={photo.width}
+                  height={photo.height}
+                  sizes="(max-width: 900px) 100vw, 66vw"
+                  priority
+                  unoptimized
+                  className={styles.photoImg}
+                />
+              </picture>
             </button>
             <ShareButton
               title={photo.title}

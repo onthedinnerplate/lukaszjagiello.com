@@ -1,8 +1,13 @@
 import { useEffect, useRef } from 'react';
-import Image from 'next/image';
 import ShareButton from './ShareButton';
+import ResponsiveImage from './ResponsiveImage';
 import { captionFor } from '@/lib/photoCaption';
 import styles from '@/styles/Lightbox.module.css';
+
+// Overlay padding is the gutter (40px from 768px up, 16px below). The panel
+// itself stops at 1600px. One candidate today (the 1600px-wide full); AVIF
+// wins when a sibling exists.
+const SIZES = '(max-width: 768px) calc(100vw - 32px), min(1600px, calc(100vw - 80px))';
 
 export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
   const overlayRef = useRef(null);
@@ -82,14 +87,17 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
 
       <div className={styles.container} onClick={(e) => e.stopPropagation()}>
         <div className={styles.imageWrapper}>
-          <Image
+          <ResponsiveImage
             key={photo.src}
+            pictureClassName={styles.picture}
             src={photo.src}
             alt={photo.alt}
-            fill
-            sizes="(max-width: 768px) 100vw, 90vw"
-            priority
-            unoptimized
+            width={photo.width}
+            height={photo.height}
+            sizes={SIZES}
+            srcSet={photo.width ? `${photo.src} ${photo.width}w` : undefined}
+            avifSrcSet={photo.fullAvif && photo.width ? `${photo.fullAvif} ${photo.width}w` : undefined}
+            fetchPriority="high"
             style={{ objectFit: 'contain' }}
           />
         </div>

@@ -1,0 +1,1394 @@
+{
+  "quality": 80,
+  "floor": 68,
+  "edges": [
+    400,
+    800,
+    1200,
+    1920
+  ],
+  "sharpen": "sigma 0.5 on downscale",
+  "color": "sRGB, metadata stripped",
+  "photos": {
+    "10": {
+      "source": "private/downloads/10/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 21498
+        },
+        "800": {
+          "quality": 80,
+          "width": 533,
+          "height": 800,
+          "bytes": 59218
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 112592
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1280,
+          "height": 1920,
+          "bytes": 246990
+        }
+      }
+    },
+    "11": {
+      "source": "private/downloads/11/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 225,
+          "bytes": 15528
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 450,
+          "bytes": 51052
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 675,
+          "bytes": 99900
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1080,
+          "bytes": 230082
+        }
+      }
+    },
+    "12": {
+      "source": "private/downloads/12/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 12704
+        },
+        "800": {
+          "quality": 80,
+          "width": 533,
+          "height": 800,
+          "bytes": 35796
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 65288
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1280,
+          "height": 1920,
+          "bytes": 135510
+        }
+      }
+    },
+    "13": {
+      "source": "private/downloads/13/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 18928
+        },
+        "800": {
+          "quality": 80,
+          "width": 534,
+          "height": 800,
+          "bytes": 48720
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 89618
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1281,
+          "height": 1920,
+          "bytes": 182224
+        }
+      }
+    },
+    "14": {
+      "source": "private/downloads/14/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 225,
+          "bytes": 19474
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 450,
+          "bytes": 66972
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 675,
+          "bytes": 146276
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1080,
+          "bytes": 358446
+        }
+      }
+    },
+    "15": {
+      "source": "private/downloads/15/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 266,
+          "bytes": 18930
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 533,
+          "bytes": 63420
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 800,
+          "bytes": 127560
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1280,
+          "bytes": 293842
+        }
+      }
+    },
+    "16": {
+      "source": "private/downloads/16/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 16446
+        },
+        "800": {
+          "quality": 80,
+          "width": 533,
+          "height": 800,
+          "bytes": 56826
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 114786
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1280,
+          "height": 1920,
+          "bytes": 264250
+        }
+      }
+    },
+    "17": {
+      "source": "private/downloads/17/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 309,
+          "height": 400,
+          "bytes": 35692
+        },
+        "800": {
+          "quality": 80,
+          "width": 618,
+          "height": 800,
+          "bytes": 136508
+        },
+        "1200": {
+          "quality": 80,
+          "width": 927,
+          "height": 1200,
+          "bytes": 300648
+        },
+        "1920": {
+          "quality": 68,
+          "width": 1483,
+          "height": 1920,
+          "bytes": 552522
+        }
+      }
+    },
+    "18": {
+      "source": "private/downloads/18/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 250,
+          "bytes": 16746
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 500,
+          "bytes": 56426
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 750,
+          "bytes": 112968
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1200,
+          "bytes": 282226
+        }
+      }
+    },
+    "19": {
+      "source": "private/downloads/19/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 27904
+        },
+        "800": {
+          "quality": 80,
+          "width": 533,
+          "height": 800,
+          "bytes": 98972
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 218218
+        },
+        "1920": {
+          "quality": 76,
+          "width": 1281,
+          "height": 1920,
+          "bytes": 457582
+        }
+      }
+    },
+    "20": {
+      "source": "private/downloads/20/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 16438
+        },
+        "800": {
+          "quality": 80,
+          "width": 534,
+          "height": 800,
+          "bytes": 45464
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 86462
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1281,
+          "height": 1920,
+          "bytes": 181304
+        }
+      }
+    },
+    "21": {
+      "source": "private/downloads/21/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 266,
+          "height": 400,
+          "bytes": 17870
+        },
+        "800": {
+          "quality": 80,
+          "width": 533,
+          "height": 800,
+          "bytes": 52300
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 95706
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1280,
+          "height": 1920,
+          "bytes": 199454
+        }
+      }
+    },
+    "22": {
+      "source": "private/downloads/22/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 286,
+          "bytes": 36236
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 572,
+          "bytes": 102500
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 857,
+          "bytes": 192880
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1371,
+          "bytes": 386832
+        }
+      }
+    },
+    "23": {
+      "source": "private/downloads/23/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 12830
+        },
+        "800": {
+          "quality": 80,
+          "width": 534,
+          "height": 800,
+          "bytes": 39550
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 79802
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1281,
+          "height": 1920,
+          "bytes": 181214
+        }
+      }
+    },
+    "24": {
+      "source": "private/downloads/24/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 267,
+          "bytes": 20042
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 534,
+          "bytes": 65512
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 800,
+          "bytes": 136002
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1281,
+          "bytes": 307622
+        }
+      }
+    },
+    "25": {
+      "source": "private/downloads/25/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 266,
+          "bytes": 12240
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 534,
+          "bytes": 44480
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 800,
+          "bytes": 89058
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1280,
+          "bytes": 203090
+        }
+      }
+    },
+    "26": {
+      "source": "private/downloads/26/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 265,
+          "bytes": 32214
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 530,
+          "bytes": 111048
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 795,
+          "bytes": 231768
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1272,
+          "bytes": 494980
+        }
+      }
+    },
+    "27": {
+      "source": "private/downloads/27/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 76,
+          "width": 400,
+          "height": 267,
+          "bytes": 44418
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 534,
+          "bytes": 179770
+        },
+        "1200": {
+          "quality": 72,
+          "width": 1200,
+          "height": 800,
+          "bytes": 340038
+        },
+        "1920": {
+          "quality": 68,
+          "width": 1920,
+          "height": 1281,
+          "bytes": 811830
+        }
+      }
+    },
+    "28": {
+      "source": "private/downloads/28/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 43374
+        },
+        "800": {
+          "quality": 80,
+          "width": 534,
+          "height": 800,
+          "bytes": 171790
+        },
+        "1200": {
+          "quality": 72,
+          "width": 800,
+          "height": 1200,
+          "bytes": 332888
+        },
+        "1920": {
+          "quality": 68,
+          "width": 1281,
+          "height": 1920,
+          "bytes": 828258
+        }
+      }
+    },
+    "29": {
+      "source": "private/downloads/29/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 267,
+          "bytes": 12598
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 534,
+          "bytes": 31462
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 800,
+          "bytes": 55616
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1281,
+          "bytes": 108748
+        }
+      }
+    },
+    "30": {
+      "source": "private/downloads/30/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 307,
+          "bytes": 29580
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 615,
+          "bytes": 81430
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 923,
+          "bytes": 145540
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1476,
+          "bytes": 284164
+        }
+      }
+    },
+    "31": {
+      "source": "private/downloads/31/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 224,
+          "height": 400,
+          "bytes": 22448
+        },
+        "800": {
+          "quality": 80,
+          "width": 449,
+          "height": 800,
+          "bytes": 77754
+        },
+        "1200": {
+          "quality": 80,
+          "width": 675,
+          "height": 1200,
+          "bytes": 162424
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1080,
+          "height": 1920,
+          "bytes": 474236
+        }
+      }
+    },
+    "32": {
+      "source": "private/downloads/32/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 225,
+          "bytes": 17138
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 450,
+          "bytes": 55542
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 675,
+          "bytes": 110632
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1080,
+          "bytes": 263252
+        }
+      }
+    },
+    "33": {
+      "source": "private/downloads/33/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 225,
+          "height": 400,
+          "bytes": 12370
+        },
+        "800": {
+          "quality": 80,
+          "width": 450,
+          "height": 800,
+          "bytes": 38736
+        },
+        "1200": {
+          "quality": 80,
+          "width": 675,
+          "height": 1200,
+          "bytes": 81190
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1080,
+          "height": 1920,
+          "bytes": 189652
+        }
+      }
+    },
+    "34": {
+      "source": "private/downloads/34/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 282,
+          "height": 400,
+          "bytes": 40650
+        },
+        "800": {
+          "quality": 80,
+          "width": 563,
+          "height": 800,
+          "bytes": 164118
+        },
+        "1200": {
+          "quality": 76,
+          "width": 845,
+          "height": 1200,
+          "bytes": 314312
+        },
+        "1920": {
+          "quality": 68,
+          "width": 1352,
+          "height": 1920,
+          "bytes": 762414
+        }
+      }
+    },
+    "35": {
+      "source": "private/downloads/35/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 315,
+          "height": 400,
+          "bytes": 25618
+        },
+        "800": {
+          "quality": 80,
+          "width": 629,
+          "height": 800,
+          "bytes": 67582
+        },
+        "1200": {
+          "quality": 80,
+          "width": 943,
+          "height": 1200,
+          "bytes": 115264
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1509,
+          "height": 1920,
+          "bytes": 231378
+        }
+      }
+    },
+    "36": {
+      "source": "private/downloads/36/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 42094
+        },
+        "800": {
+          "quality": 80,
+          "width": 534,
+          "height": 800,
+          "bytes": 137712
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 274670
+        },
+        "1920": {
+          "quality": 76,
+          "width": 1280,
+          "height": 1920,
+          "bytes": 465434
+        }
+      }
+    },
+    "37": {
+      "source": "private/downloads/37/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 259,
+          "height": 400,
+          "bytes": 34286
+        },
+        "800": {
+          "quality": 80,
+          "width": 518,
+          "height": 800,
+          "bytes": 130510
+        },
+        "1200": {
+          "quality": 80,
+          "width": 776,
+          "height": 1200,
+          "bytes": 280534
+        },
+        "1920": {
+          "quality": 76,
+          "width": 1242,
+          "height": 1920,
+          "bytes": 528094
+        }
+      }
+    },
+    "38": {
+      "source": "private/downloads/38/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 266,
+          "bytes": 23950
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 533,
+          "bytes": 76000
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 800,
+          "bytes": 150630
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1280,
+          "bytes": 316286
+        }
+      }
+    },
+    "39": {
+      "source": "private/downloads/39/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 250,
+          "bytes": 16502
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 500,
+          "bytes": 54798
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 750,
+          "bytes": 112018
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1200,
+          "bytes": 267920
+        }
+      }
+    },
+    "40": {
+      "source": "private/downloads/40/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 309,
+          "height": 400,
+          "bytes": 41120
+        },
+        "800": {
+          "quality": 80,
+          "width": 618,
+          "height": 800,
+          "bytes": 157524
+        },
+        "1200": {
+          "quality": 76,
+          "width": 927,
+          "height": 1200,
+          "bytes": 301270
+        },
+        "1920": {
+          "quality": 68,
+          "width": 1483,
+          "height": 1920,
+          "bytes": 640532
+        }
+      }
+    },
+    "41": {
+      "source": "private/downloads/41/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 250,
+          "bytes": 28730
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 500,
+          "bytes": 112060
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 750,
+          "bytes": 251668
+        },
+        "1920": {
+          "quality": 76,
+          "width": 1920,
+          "height": 1200,
+          "bytes": 519122
+        }
+      }
+    },
+    "42": {
+      "source": "private/downloads/42/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 267,
+          "bytes": 13582
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 534,
+          "bytes": 33922
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 800,
+          "bytes": 62970
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1281,
+          "bytes": 130022
+        }
+      }
+    },
+    "43": {
+      "source": "private/downloads/43/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 267,
+          "bytes": 19900
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 534,
+          "bytes": 49928
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 800,
+          "bytes": 88510
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1281,
+          "bytes": 172312
+        }
+      }
+    },
+    "44": {
+      "source": "private/downloads/44/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 13918
+        },
+        "800": {
+          "quality": 80,
+          "width": 533,
+          "height": 800,
+          "bytes": 39778
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 71668
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1280,
+          "height": 1920,
+          "bytes": 133362
+        }
+      }
+    },
+    "45": {
+      "source": "private/downloads/45/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 26256
+        },
+        "800": {
+          "quality": 80,
+          "width": 533,
+          "height": 800,
+          "bytes": 77438
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 142730
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1280,
+          "height": 1920,
+          "bytes": 279692
+        }
+      }
+    },
+    "46": {
+      "source": "private/downloads/46/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 15702
+        },
+        "800": {
+          "quality": 80,
+          "width": 533,
+          "height": 800,
+          "bytes": 45352
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 84440
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1280,
+          "height": 1920,
+          "bytes": 176468
+        }
+      }
+    },
+    "01": {
+      "source": "private/downloads/01/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 19642
+        },
+        "800": {
+          "quality": 80,
+          "width": 534,
+          "height": 800,
+          "bytes": 46368
+        },
+        "1200": {
+          "quality": 80,
+          "width": 801,
+          "height": 1200,
+          "bytes": 73882
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1281,
+          "height": 1920,
+          "bytes": 123768
+        }
+      }
+    },
+    "02": {
+      "source": "private/downloads/02/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 267,
+          "bytes": 24190
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 534,
+          "bytes": 67720
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 801,
+          "bytes": 116510
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1281,
+          "bytes": 217688
+        }
+      }
+    },
+    "03": {
+      "source": "private/downloads/03/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 266,
+          "bytes": 21992
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 533,
+          "bytes": 86738
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 799,
+          "bytes": 189450
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1280,
+          "bytes": 499344
+        }
+      }
+    },
+    "04": {
+      "source": "private/downloads/04/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 30436
+        },
+        "800": {
+          "quality": 80,
+          "width": 533,
+          "height": 800,
+          "bytes": 113858
+        },
+        "1200": {
+          "quality": 80,
+          "width": 801,
+          "height": 1200,
+          "bytes": 253640
+        },
+        "1920": {
+          "quality": 68,
+          "width": 1281,
+          "height": 1920,
+          "bytes": 523528
+        }
+      }
+    },
+    "05": {
+      "source": "private/downloads/05/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 20864
+        },
+        "800": {
+          "quality": 80,
+          "width": 534,
+          "height": 800,
+          "bytes": 67914
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 138252
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1280,
+          "height": 1920,
+          "bytes": 309176
+        }
+      }
+    },
+    "06": {
+      "source": "private/downloads/06/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 267,
+          "bytes": 25538
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 533,
+          "bytes": 85918
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 800,
+          "bytes": 175974
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1280,
+          "bytes": 382600
+        }
+      }
+    },
+    "07": {
+      "source": "private/downloads/07/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 400,
+          "height": 267,
+          "bytes": 17356
+        },
+        "800": {
+          "quality": 80,
+          "width": 800,
+          "height": 534,
+          "bytes": 52656
+        },
+        "1200": {
+          "quality": 80,
+          "width": 1200,
+          "height": 800,
+          "bytes": 104824
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1920,
+          "height": 1281,
+          "bytes": 224080
+        }
+      }
+    },
+    "08": {
+      "source": "private/downloads/08/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 33760
+        },
+        "800": {
+          "quality": 80,
+          "width": 534,
+          "height": 800,
+          "bytes": 100040
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 185320
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1281,
+          "height": 1920,
+          "bytes": 366504
+        }
+      }
+    },
+    "09": {
+      "source": "private/downloads/09/full.jpg",
+      "fromOriginal": true,
+      "variants": {
+        "400": {
+          "quality": 80,
+          "width": 267,
+          "height": 400,
+          "bytes": 23662
+        },
+        "800": {
+          "quality": 80,
+          "width": 533,
+          "height": 800,
+          "bytes": 64812
+        },
+        "1200": {
+          "quality": 80,
+          "width": 800,
+          "height": 1200,
+          "bytes": 120362
+        },
+        "1920": {
+          "quality": 80,
+          "width": 1280,
+          "height": 1920,
+          "bytes": 236164
+        }
+      }
+    }
+  }
+}

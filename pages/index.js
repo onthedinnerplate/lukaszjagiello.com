@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import Image from 'next/image';
+import Head from 'next/head';
 import Link from 'next/link';
 import Lightbox from '@/components/Lightbox';
 import Seo from '@/components/Seo';
 import MasonryGallery from '@/components/MasonryGallery';
 import HeroSpotlight from '@/components/HeroSpotlight';
+import ResponsiveImage from '@/components/ResponsiveImage';
 import ShareButton from '@/components/ShareButton';
 import BuyIcon from '@/components/BuyIcon';
 import { getPhotos, getHero } from '@/lib/photo-data';
@@ -18,6 +19,12 @@ const meta = {
   title: null,
   description: site.description,
 };
+
+// Tiles are ~221px at 1440 (the 1400px hero, image column, 3 tracks).
+// The fifth tile spans the row under 900px, so it is ~100vw there.
+// 240px × 2 covers the cover-crop and the 1.08 Ken Burns on the tall tile.
+const TILE_SIZES = '(max-width: 900px) 50vw, 240px';
+const TILE_WIDE_SIZES = '(max-width: 900px) 100vw, 240px';
 
 export default function Home({ hero, photos, total }) {
   // Hero collage = first `heroCount` of the curated homepage set (cover-cropped to the grid).
@@ -54,7 +61,33 @@ export default function Home({ hero, photos, total }) {
         jsonLd={graph(websiteNode(), personNode(), pageNode('WebPage', { ...meta, title: site.name }))}
       />
 
+      <Head>
+        {heroImages[0]?.thumbSrcSet ? (
+          <link
+            rel="preload"
+            as="image"
+            imageSrcSet={heroImages[0].thumbSrcSet}
+            imageSizes={TILE_SIZES}
+            fetchPriority="high"
+          />
+        ) : null}
+      </Head>
+
       <section className={styles.hero} aria-labelledby="hero-heading">
+        <picture className={styles.heroImg}>
+          <source type="image/avif" srcSet={hero.avifSrcSet} sizes={hero.sizes} />
+          <source type="image/webp" srcSet={hero.webpSrcSet} sizes={hero.sizes} />
+          <img
+            src={hero.src}
+            alt={hero.alt}
+            width={hero.width}
+            height={hero.height}
+            sizes={hero.sizes}
+            srcSet={hero.webpSrcSet}
+            decoding="async"
+            loading="lazy"
+          />
+        </picture>
         <div className={styles.heroText}>
           <h1 id="hero-heading" className={styles.heroTitle}>
             Every Frame Has A Story
@@ -91,13 +124,16 @@ export default function Home({ hero, photos, total }) {
                 onClick={(e) => onTileClick(e, photo)}
                 aria-label={`${photo.title} — view fullscreen`}
               >
-                <Image
-                  src={photo.src}
+                <ResponsiveImage
+                  pictureClassName={styles.heroPicture}
+                  src={photo.thumb || photo.src}
                   alt={photo.alt}
-                  fill
-                  sizes="(max-width: 900px) 50vw, 20vw"
-                  {...(idx === 0 ? { priority: true } : { loading: 'lazy' })}
-                  unoptimized
+                  width={photo.thumbWidth || photo.width}
+                  height={photo.thumbHeight || photo.height}
+                  sizes={idx === heroImages.length - 1 ? TILE_WIDE_SIZES : TILE_SIZES}
+                  srcSet={photo.thumbSrcSet}
+                  loading={idx === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={idx === 0 ? 'high' : undefined}
                   style={{ objectFit: 'cover', objectPosition: photo.focus || '50% 50%' }}
                 />
               </Link>

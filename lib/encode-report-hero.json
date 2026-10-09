@@ -1,0 +1,33 @@
+{
+  "source": "private/downloads/41/full.jpg",
+  "originalFile": "DSC05293-Enhanced-NR.jpg",
+  "crop": "cover, position south, aspect 1200/550 (matches the previous banner)",
+  "sizes": "(max-width: 1400px) 100vw, 1400px",
+  "color": "sRGB, metadata stripped",
+  "variants": {
+    "1280": {
+      "width": 1280,
+      "height": 587,
+      "webpQuality": 80,
+      "webpBytes": 206544,
+      "avifQuality": 55,
+      "avifBytes": 114935
+    },
+    "1920": {
+      "width": 1920,
+      "height": 880,
+      "webpQuality": 80,
+      "webpBytes": 441656,
+      "avifQuality": 55,
+      "avifBytes": 245926
+    },
+    "2560": {
+      "width": 2560,
+      "height": 1173,
+      "webpQuality": 77,
+      "webpBytes": 702308,
+      "avifQuality": 55,
+      "avifBytes": 444551
+    }
+  }
+}

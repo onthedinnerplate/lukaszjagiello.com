@@ -39,8 +39,21 @@
   flex-wrap: wrap;
 }
 
+/* Banner file (DSC05293, bottom crop). Not painted: the collage is the hero
+   layout, and showing this frame would add a band the page does not have. */
 .heroImg {
   display: none;
+}
+
+.heroPicture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.heroPicture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .heroGrid {
