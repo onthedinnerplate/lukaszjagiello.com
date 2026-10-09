@@ -128,6 +128,7 @@
   justify-content: center;
   align-items: flex-start;
 }
+.photoColumn { width: 100%; min-width: 0; }
 @media (max-width: 900px) {
   .photoLayout { grid-template-columns: 1fr; gap: 1.5rem; }
   .photoStage { order: -1; }

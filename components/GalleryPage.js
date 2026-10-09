@@ -13,6 +13,7 @@ import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo
 import { galleryPathFor, inCategory } from '@/lib/categories';
 import { site } from '@/lib/site';
 import SelectedPhotographs, { selectedPhotos } from '@/components/SelectedPhotographs';
+import Swatches from '@/components/Swatches';
 import palettes from '@/lib/photoPalettes.json';
 import pageStyles from '@/styles/Page.module.css';
 import styles from '@/styles/Gallery.module.css';
@@ -173,6 +174,13 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
                       fetchPriority="high"
                     />
                   </button>
+                </div>
+                <div className={styles.cardSwatches}>
+                  <Swatches
+                    shape={{ palette: palettes[String(photoNumberFromSrc(gate.src))] }}
+                    compact
+                    phoneOnly
+                  />
                 </div>
               </div>
               {more.length > 0 ? (
