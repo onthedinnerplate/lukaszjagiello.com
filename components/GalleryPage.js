@@ -20,6 +20,10 @@ import styles from '@/styles/Gallery.module.css';
  * already matches each gallery category. Photo 13 is tagged people and
  * architecture; it is used only for people. Nothing is relabelled.
  */
+/** Selected row, left to right. Golden Gate is the long exposure (photo 12).
+ *  Snoqualmie is the rim view already in this row (photo 38). */
+const SELECTED_ORDER = [41, 39, 12, 38];
+
 const FUTURE_PICKS = [
   { n: 23, category: 'landscape' },
   { n: 34, category: 'landscape' },
@@ -34,6 +38,11 @@ const FUTURE_PICKS = [
   { n: 2, category: 'people' },
   { n: 13, category: 'people' },
 ];
+
+function pickSelected(photos) {
+  const byNumber = new Map(photos.map((photo) => [photoNumberFromSrc(photo.src), photo]));
+  return SELECTED_ORDER.map((n) => byNumber.get(n)).filter(Boolean);
+}
 
 function pickFuture(photos) {
   const byNumber = new Map(photos.map((photo) => [photoNumberFromSrc(photo.src), photo]));
@@ -99,6 +108,7 @@ function SelectedRow({ photos, height }) {
                 sizes="(max-width: 768px) 25vw, 20vw"
                 srcSet={photo.thumbSrcSet}
                 className={styles.selectedImg}
+                style={photo.focus ? { objectPosition: photo.focus } : undefined}
                 loading={i < 2 ? 'eager' : 'lazy'}
               />
             </button>
@@ -140,7 +150,7 @@ export default function GalleryPage({ photos, category, counts }) {
 
   const gate = photos.find((photo) => photoNumberFromSrc(photo.src) === 12) || photos[0] || null;
   const more = gate ? photos.filter((photo) => photo.src !== gate.src).slice(0, 6) : [];
-  const selected = photos.slice(0, Math.min(4, photos.length));
+  const selected = pickSelected(photos);
   const future = pickFuture(photos);
 
   const [gridCategory, setGridCategory] = useState(isAll ? 'all' : category.slug);
