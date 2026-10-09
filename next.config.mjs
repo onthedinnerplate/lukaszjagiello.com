@@ -81,6 +81,17 @@ const nextConfig = {
       },
       // /photo/NN (and /photo/N) stay valid when a title — and its slug — changes.
       ...numericPhotoRedirects(photos),
+      // Photo 04 was titled "Negril Lighthouse at Dusk". Both slash forms 301 to the daylight slug.
+      {
+        source: '/photo/negril-lighthouse-at-dusk',
+        destination: '/photo/negril-lighthouse-in-daylight',
+        statusCode: 301,
+      },
+      {
+        source: '/photo/negril-lighthouse-at-dusk/',
+        destination: '/photo/negril-lighthouse-in-daylight',
+        statusCode: 301,
+      },
     ];
   },
 };

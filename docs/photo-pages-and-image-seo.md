@@ -74,7 +74,7 @@ Related rules that have already bitten this project once:
 ### 1.1 Route and data
 
 * Add `pages/photo/[slug].js` with `getStaticPaths` (all 46, `fallback: false`) and `getStaticProps`.
-* Slug = kebab-case of the title: `"Negril Lighthouse at Dusk"` → `negril-lighthouse-at-dusk`. Put the slugifier in `lib/photoCaption.js` (or a new `lib/slug.js`) and use it everywhere — never hand-type slugs.
+* Slug = kebab-case of the title: `"Negril Lighthouse in Daylight"` → `negril-lighthouse-in-daylight`. Put the slugifier in `lib/photoCaption.js` (or a new `lib/slug.js`) and use it everywhere — never hand-type slugs.
 * **Stability:** the photo number NN is the identity; the slug is derived. Resolve `[slug]` by generating slugs for all photos and matching. If two titles ever collide, append `-NN`. Optional but recommended: also accept `/photo/NN` and 301 it to the slug URL so a renamed title doesn't break an old shared link.
 * Add `href` (the photo page path) to each photo object in `getPhotos()` so components don't rebuild it.
 
@@ -201,7 +201,7 @@ Current fulls over 1 MB (measured in repo):
 | 28 | Forgotten Homestead | 1.86 MB |
 | 34 | Myrtle Falls | 1.58 MB |
 | 31 | Black Oystercatcher | 1.55 MB |
-| 04 | Negril Lighthouse at Dusk | 1.20 MB |
+| 04 | Negril Lighthouse in Daylight | 1.20 MB |
 | 37 | Snoqualmie Falls | 1.17 MB |
 | 40 | Mossy Rainforest | 1.17 MB |
 | 17 | Redwood Highway | 1.09 MB |
@@ -242,7 +242,7 @@ needed).
 | 01 | Flag Bearer | Bloody Bay, Negril, Jamaica |
 | 02 | Jamaican Dance Troupe | Bloody Bay, Negril, Jamaica |
 | 03 | Negril Lighthouse | Negril, Jamaica |
-| 04 | Negril Lighthouse at Dusk | Negril, Jamaica |
+| 04 | Negril Lighthouse in Daylight | Negril, Jamaica |
 | 05 | Lone Boat Under Storm Clouds | Seven Mile Beach, Negril, Jamaica |
 | 06 | After the Storm | Seven Mile Beach, Negril, Jamaica |
 | 07 | Anchorage at Sunset | Bloody Bay, Negril, Jamaica |
