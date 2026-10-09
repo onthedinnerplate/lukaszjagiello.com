@@ -20,6 +20,7 @@ import CategoryNav from '@/components/CategoryNav';
 import { CATEGORIES, galleryPathFor } from '@/lib/categories';
 import { byNumber, CLUSTER_NUMBERS, inspirationsFrom, LATEST_SLUGS, MORE_NUMBERS, shapeFor } from '@/lib/journeys';
 import { spreadBySubject } from '@/lib/subjectOrder';
+import { accentScriptFromPalette } from '@/lib/accentInk';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import styles from '@/styles/Journal.module.css';
 
@@ -83,9 +84,10 @@ function locationLines(location) {
 
 function JourneyCard({ article, compactSwatches = true }) {
   const shape = shapeFor(article);
+  const accentScript = accentScriptFromPalette(shape?.palette)?.used;
   const href = `/journal/${article.slug}`;
   return (
-    <article className={styles.journeyCard}>
+    <article className={styles.journeyCard} style={accentScript ? { '--accent-script': accentScript } : undefined}>
       <div className={styles.frameWrap}>
         <Link href={href} className={styles.cardPhotoLink} aria-label={`Read ${article.title}`}>
           <ShapeMosaic src={article.photo.src} alt="" />
@@ -103,7 +105,7 @@ function JourneyCard({ article, compactSwatches = true }) {
         <AccentTitle
           title={article.title}
           phrase={article.headlinePhrase}
-          color={shape.palette[2]}
+          color={accentScript}
           className={styles.journeyTitle}
         />
         <p className={styles.cardDek}>{article.dek}</p>
@@ -148,6 +150,7 @@ export default function JournalIndex({ articles, counts }) {
   const catalogue = spreadBySubject(visible, (article) => article.photoNumber);
   const cluster = byNumber(articles, CLUSTER_NUMBERS);
   const featuredShape = featured ? shapeFor(featured) : null;
+  const featuredInk = accentScriptFromPalette(featuredShape?.palette)?.used;
   const [filterNote, setFilterNote] = useState('');
   const skipFilterNote = useRef(true);
   useEffect(() => {
@@ -223,12 +226,12 @@ export default function JournalIndex({ articles, counts }) {
                       title={featured.photo.title}
                     />
                   </div>
-                  <div className={styles.featuredPanel}>
+                  <div className={styles.featuredPanel} style={featuredInk ? { '--accent-script': featuredInk } : undefined}>
                     <p className={styles.featuredKicker}>Featured · Ruby Beach · Washington</p>
                     <AccentTitle
                       title={featured.title}
                       phrase={featured.headlinePhrase}
-                      color={featuredShape.palette[2]}
+                      color={featuredInk}
                       as="h3"
                       className={styles.featuredTitle}
                     />
@@ -309,10 +312,11 @@ export default function JournalIndex({ articles, counts }) {
                 {catalogue.map((article) => {
                   const place = locationLines(article.location);
                   const shape = shapeFor(article);
+                  const accentScript = accentScriptFromPalette(shape?.palette)?.used;
                   const href = `/journal/${article.slug}`;
                   return (
                     <li key={article.slug}>
-                      <div className={styles.allTile}>
+                      <div className={styles.allTile} style={accentScript ? { '--accent-script': accentScript } : undefined}>
                         <div className={`${styles.allFrame} ${article.photo.thumb ? '' : styles.allThumbPlaceholder}`}>
                           <Link href={href} className={styles.allPhotoLink} aria-label={`Read ${article.title}`}>
                             <JourneyThumb photo={article.photo} />
@@ -330,7 +334,7 @@ export default function JournalIndex({ articles, counts }) {
                           <AccentTitle
                             title={article.title}
                             phrase={article.headlinePhrase}
-                            color={shape?.palette?.[2]}
+                            color={accentScript}
                             as="span"
                             className={styles.allTitle}
                           />
