@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Seo from '@/components/Seo';
 import { graph, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
-import { CATEGORIES, galleryPathFor } from '@/lib/categories';
+import { CATEGORIES, categoryMenuLabel, galleryPathFor } from '@/lib/categories';
 import { getGalleryPhotos } from '@/lib/photo-data';
 import styles from '@/styles/Page.module.css';
 
@@ -35,7 +35,7 @@ export default function Sitemap({ photos }) {
             <h2>Gallery</h2>
             <ul className={styles.sitemapList}>
               <li><Link href="/gallery">All photographs</Link></li>
-              {CATEGORIES.map((c) => <li key={c.slug}><Link href={galleryPathFor(c.slug)}>{c.label}</Link></li>)}
+              {CATEGORIES.map((c) => <li key={c.slug}><Link href={galleryPathFor(c.slug)}>{categoryMenuLabel(c)}</Link></li>)}
             </ul>
           </section>
         </div>

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Seo from '@/components/Seo';
 import JourneysHero from '@/components/JourneysHero';
 import { getPhotos, heroNavCounts } from '@/lib/photo-data';
-import { journeysThenGalleryPath } from '@/lib/categories';
+import { JOURNEY_MENU_LABEL, journeysThenGalleryPath } from '@/lib/categories';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
 import { gearFromMetadata, mentionsGear } from '@/lib/photoCaption';
@@ -36,7 +36,7 @@ export default function About({ navCounts }) {
           active: 'about',
           counts: navCounts,
           hrefFor: journeysThenGalleryPath,
-          allLabel: 'Journeys',
+          allLabel: JOURNEY_MENU_LABEL,
           label: 'About categories',
           disableEmpty: true,
         }}
