@@ -668,7 +668,8 @@
 .allCopy {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
+  width: 100%;
   min-width: 0;
 }
 .allGold {
@@ -685,32 +686,12 @@
   line-height: 1.22;
   letter-spacing: -0.02em;
 }
-.allSwatches { container-type: inline-size; min-width: 0; }
-.allSwatches .swatches {
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  gap: 0.2rem;
-  margin: 0.28rem 0 0;
+.allSwatches {
+  display: block;
   width: 100%;
-}
-.allSwatches .swatchItem {
-  flex: 1 1 0;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.12rem;
   min-width: 0;
 }
-.allSwatches .swatch {
-  width: 16px;
-  height: 16px;
-  border-radius: 3px;
-}
-.allSwatches .hex {
-  font-size: 6.5px;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
-  white-space: nowrap;
-}
+.allSwatches .swatches { margin: 0.4rem 0 0; }
 .allLocRow {
   display: flex;
   align-items: center;
@@ -798,8 +779,6 @@
   .inspireGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .allList { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 1rem; row-gap: 1.5rem; }
   .allTitle { font-size: 1.05rem; }
-  .allSwatches .swatch { width: 20px; height: 20px; }
-  .allSwatches .hex { font-size: 8px; letter-spacing: -0.03em; }
   .featuredPanel { margin-top: -4.5rem; margin-left: auto; }
 }
 @media (min-width: 1000px) {
@@ -808,8 +787,6 @@
 }
 @media (min-width: 1100px) {
   .allList { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 1.15rem; row-gap: 1.6rem; }
-  .allSwatches .swatch { width: 22px; height: 22px; }
-  .allSwatches .hex { font-size: 9px; letter-spacing: -0.02em; }
 }
 @media (max-width: 768px) {
   .heroShade { background: linear-gradient(180deg, rgba(8, 14, 12, 0.15) 0%, rgba(8, 14, 12, 0.72) 100%); }
