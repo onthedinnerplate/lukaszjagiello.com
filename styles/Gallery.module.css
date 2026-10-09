@@ -34,17 +34,11 @@
 .img {
   width: 100%;
   height: auto;
-  filter: grayscale(100%);
   cursor: pointer;
 }
 @media (prefers-reduced-motion: no-preference) {
-  .img {
-    transition: transform 0.4s ease, filter 0.3s ease;
-  }
-  .item:hover .img {
-    transform: scale(1.02);
-    filter: grayscale(0%);
-  }
+  .img { transition: transform 0.4s ease; }
+  .item:hover .img { transform: scale(1.02); }
 }
 
 .caption {
@@ -503,8 +497,6 @@
   object-fit: cover;
 }
 .frameCover .picture { display: block; height: 100%; }
-.imgColor,
-.item:hover .imgColor { filter: none; }
 .item:hover .imgColor { transform: scale(1.05); }
 /* Homepage only: one row height, photos pinned to the top, settings wrap. */
 .equalCards { align-items: stretch; }
@@ -632,17 +624,10 @@
   object-fit: cover;
   object-position: center;
 }
-.selectedImg {
-  filter: grayscale(100%);
-}
 @media (prefers-reduced-motion: no-preference) {
-  .selectedImg { transition: filter 0.3s ease, transform 0.4s ease; }
+  .selectedImg { transition: transform 0.4s ease; }
   .selectedCell:hover .selectedImg,
-  .selectedCell:focus-within .selectedImg { filter: grayscale(0%); transform: scale(1.02); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .selectedCell:hover .selectedImg,
-  .selectedCell:focus-within .selectedImg { filter: grayscale(0%); }
+  .selectedCell:focus-within .selectedImg { transform: scale(1.02); }
 }
 .futureBand { margin-bottom: 0; }
 .futureBand .uniform { margin: 0; }
