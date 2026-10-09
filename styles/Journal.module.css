@@ -567,6 +567,19 @@
   top: 5.9%;
   height: 88.1%;
   pointer-events: none;
+  border-radius: 16px;
+  /* One moss wash across the rim and the band: 75% at the top-left, solid at the bottom-right. */
+  background: linear-gradient(135deg, rgba(185, 194, 122, 0.75), rgba(185, 194, 122, 1));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) top / 100% var(--rim) no-repeat,
+    linear-gradient(#fff 0 0) bottom / 100% var(--band) no-repeat,
+    linear-gradient(#fff 0 0) left top / var(--rim) calc(100% - var(--band)) no-repeat,
+    linear-gradient(#fff 0 0) right top / var(--rim) calc(100% - var(--band)) no-repeat;
+  mask:
+    linear-gradient(#fff 0 0) top / 100% var(--rim) no-repeat,
+    linear-gradient(#fff 0 0) bottom / 100% var(--band) no-repeat,
+    linear-gradient(#fff 0 0) left top / var(--rim) calc(100% - var(--band)) no-repeat,
+    linear-gradient(#fff 0 0) right top / var(--rim) calc(100% - var(--band)) no-repeat;
 }
 .portraitRim {
   position: absolute;
@@ -574,8 +587,8 @@
   right: 0;
   left: 0;
   bottom: var(--band);
-  border: var(--rim) solid #B9C27A;
-  border-bottom: 0;
+  border: 0;
+  background: transparent;
   border-radius: 16px 16px 0 0;
 }
 .portraitBand {
@@ -589,7 +602,7 @@
   gap: 4px;
   min-height: var(--band);
   padding: 2px 6px 2px 5px;
-  background: #B9C27A;
+  background: transparent;
   border-radius: 0 0 16px 16px;
   color: #fff;
 }
