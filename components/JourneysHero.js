@@ -42,13 +42,14 @@ export const JOURNEYS_HERO_DESCRIPTION =
 // Marymere Falls (photo 41, slug marymere-falls). Kept as literals so this
 // component does not pull the essay catalogue into every page bundle.
 const HERO_SRC = '/images/gallery/lightbox/lukasz-jagiello-41-full.webp';
-// Photo 41 middle swatch (journalShapes "41".palette[2]). The hero has no
-// swatch row, so the handwritten words take this photograph's middle color.
+// Photo 41 middle swatch, the 3rd of five (photoPalettes "41"[2], same as
+// journalShapes "41".palette[2]). Every hero uses this color, not the
+// page's own swatch.
 const HERO_MIDDLE = '#182a17';
-// Lightest patch under those words: 95th percentile of "the terrain"
-// on the full-width Journeys hero at 1440px. Gallery, About, and Contact
-// match it. Marymere photograph plus the left scrim.
-const HERO_PHOTO_SURFACE = '#2a5430';
+// Lightest patch under the handwritten words: 95th percentile at 1440px
+// on Gallery, About, Contact, and Journeys (they share this crop). The
+// homepage bleed is darker, so this patch is the one the shared ink clears.
+const HERO_PHOTO_SURFACE = '#244118';
 const heroOnPhoto = accentScriptInk(HERO_MIDDLE, HERO_PHOTO_SURFACE);
 const heroOnPage = accentScriptInk(HERO_MIDDLE, '#ffffff');
 const heroAccentStyle = {
