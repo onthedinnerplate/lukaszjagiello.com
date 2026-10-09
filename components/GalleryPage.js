@@ -8,6 +8,7 @@ import { PhotoCardActions } from '@/components/ShareButtons';
 import Lightbox from '@/components/Lightbox';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
+import { spreadBySubject } from '@/lib/subjectOrder';
 import { ogImageSrc } from '@/lib/slug';
 import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo';
 import { galleryPathFor, inCategory, journeysThenGalleryPath } from '@/lib/categories';
@@ -132,12 +133,14 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
     setFutureCategory((current) => (current === slug ? 'all' : slug));
   };
 
-  const gridPhotos = gridCategory === 'all'
-    ? photos
-    : photos.filter((photo) => inCategory(photo, gridCategory));
-  const futurePhotos = futureCategory === 'all'
-    ? future
-    : future.filter((photo) => inCategory(photo, futureCategory));
+  const gridPhotos = spreadBySubject(
+    gridCategory === 'all' ? photos : photos.filter((photo) => inCategory(photo, gridCategory)),
+    (photo) => photoNumberFromSrc(photo.src),
+  );
+  const futurePhotos = spreadBySubject(
+    futureCategory === 'all' ? future : future.filter((photo) => inCategory(photo, futureCategory)),
+    (photo) => photoNumberFromSrc(photo.src),
+  );
 
   return (
     <>
