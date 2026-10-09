@@ -73,7 +73,12 @@ function JourneyCard({ article, compactSwatches = true }) {
     <Link href={`/journal/${article.slug}`} className={styles.journeyCard}>
       <ShapeMosaic src={article.photo.src} alt={article.photo.alt} />
       <Swatches shape={shape} compact={compactSwatches} />
-      <AccentTitle title={article.title} color={shape.accent} className={styles.journeyTitle} />
+      <AccentTitle
+        title={article.title}
+        phrase={article.headlinePhrase}
+        color={shape.palette[2]}
+        className={styles.journeyTitle}
+      />
       <p className={styles.cardDek}>{article.dek}</p>
     </Link>
   );
@@ -160,7 +165,13 @@ export default function JournalIndex({ articles, counts }) {
                   </div>
                   <div className={styles.featuredPanel}>
                     <p className={styles.featuredKicker}>Featured · Ruby Beach · Washington</p>
-                    <AccentTitle title={featured.title} color={featuredShape.accent} as="h3" className={styles.featuredTitle} />
+                    <AccentTitle
+                      title={featured.title}
+                      phrase={featured.headlinePhrase}
+                      color={featuredShape.palette[2]}
+                      as="h3"
+                      className={styles.featuredTitle}
+                    />
                     <span className={styles.goldRule} aria-hidden="true" />
                     <p className={styles.featuredDek}>{featured.dek}</p>
                     <Link href={`/journal/${featured.slug}`} className={styles.storyLink}>Read the story</Link>
@@ -218,7 +229,13 @@ export default function JournalIndex({ articles, counts }) {
                       <JourneyThumb photo={article.photo} />
                       <span className={styles.allCopy}>
                         <span className={styles.allGold} aria-hidden="true" />
-                        <AccentTitle title={article.title} color={shapeFor(article).accent} as="span" className={styles.allTitle} />
+                        <AccentTitle
+                          title={article.title}
+                          phrase={article.headlinePhrase}
+                          color={shapeFor(article).palette[2]}
+                          as="span"
+                          className={styles.allTitle}
+                        />
                         {article.location ? <span className={styles.allPlace}>{article.location}</span> : <span className={styles.allPlace}> </span>}
                       </span>
                     </Link>

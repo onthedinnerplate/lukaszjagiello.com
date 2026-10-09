@@ -58,6 +58,8 @@
   font-weight: 400;
   font-style: normal;
   color: inherit;
+  /* Twice the header brand size (2em), not the article accent ratio (1.45em). */
+  font-size: 2em;
 }
 
 .links {

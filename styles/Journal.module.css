@@ -549,6 +549,8 @@
   display: grid;
   gap: 1.75rem 1.25rem;
 }
+.latestGrid > li,
+.inspireGrid > li { min-width: 0; }
 .journeyCard {
   display: flex;
   flex-direction: column;
@@ -559,6 +561,9 @@
 .journeyCard:hover .journeyTitle { color: var(--orange); }
 .journeyTitle {
   margin: 0.15rem 0 0;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
   font-family: Poppins, system-ui, sans-serif;
   font-weight: 300;
   font-size: clamp(1.15rem, 1.6vw, 1.45rem);
@@ -584,6 +589,9 @@
 }
 .featuredTitle {
   margin: 0;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
   font-family: Poppins, system-ui, sans-serif;
   font-weight: 300;
   font-size: clamp(1.7rem, 2.5vw, 2.15rem);
@@ -714,6 +722,9 @@
   background: #c4a35a;
 }
 .allTitle {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
   font-family: Poppins, system-ui, sans-serif;
   font-weight: 300;
   font-size: 0.95rem;
