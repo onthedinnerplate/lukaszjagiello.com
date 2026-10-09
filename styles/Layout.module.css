@@ -70,10 +70,13 @@
 .brand:hover,
 .brand:hover .brandName { background: none; text-decoration: none; }
 /* The given name stays Poppins Light. Photography is Allura, gold. */
-.brand .brandGiven {
+.brand .brandGiven,
+.brand:hover .brandGiven,
+.brand:focus .brandGiven {
   font-family: Poppins, system-ui, sans-serif;
   font-weight: 300;
   font-style: normal;
+  color: var(--charcoal);
 }
 .brandSep {
   flex: none;
