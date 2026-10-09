@@ -1539,15 +1539,76 @@
     background: linear-gradient(to top, rgba(2, 10, 10, 0.78), rgba(2, 10, 10, 0));
   }
   .heroBleed .heroKicker { color: #C9D1B4; }
+  .heroBleed { --menu-underline: #A3AD62; }
   .heroBleed .heroTitle,
   .heroBleed .heroSub,
   .heroBleed .heroCap a { color: #fff; }
-  .heroBleed .heroTitle .headlineAccent { color: var(--hero-accent, #d7e2a8); }
+  .heroBleed .heroTitle {
+    font-size: clamp(1.7rem, 7.6vw, 2.05rem);
+    line-height: 1.12;
+    overflow-wrap: break-word;
+  }
+  .heroBleed .heroTitle .headlineAccent {
+    color: var(--hero-accent, #d7e2a8);
+    font-size: 1.55em;
+  }
+  .heroBleed .heroLine2 { white-space: normal; line-height: 1.05; }
   .heroBleed .heroNav :global(a),
   .heroBleed .heroNav :global(a:hover) { color: #fff; }
   .heroBleed .heroNav :global(span) { color: #C9D1B4; }
-  .heroBleed .heroLine2 { white-space: normal; }
   .heroBleed .goldRule { background: #A3AD62; }
+  .article .title {
+    max-width: none;
+    font-size: clamp(1.65rem, 7.2vw, 2rem);
+    line-height: 1.12;
+    overflow-wrap: break-word;
+  }
+  .article .dropCap::first-letter {
+    font-size: 3.2rem;
+    line-height: 0.7;
+  }
+  .article .storyFrame { --band: 52px; }
+  .article .portraitPin {
+    width: 44px;
+    height: 44px;
+  }
+  .article .portraitPin svg { width: 20px; height: 20px; }
+  .article .portraitPlace {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+  .article .viewRow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.5rem;
+    margin: 0.35rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    white-space: normal;
+  }
+  .article .viewFull,
+  .article .viewRow a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .article .viewFull {
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: var(--accent);
+    cursor: pointer;
+    gap: 0.28rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 
   .featuredMap { display: none; }
   .stage,
