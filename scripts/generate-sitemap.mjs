@@ -49,6 +49,10 @@ const pages = [
   ...journalArticles,
   { path: '/about', priority: '0.6', freq: 'monthly' },
   { path: '/contact', priority: '0.5', freq: 'yearly' },
+  { path: '/sitemap', priority: '0.3', freq: 'weekly' },
+  { path: '/privacy', priority: '0.2', freq: 'yearly' },
+  { path: '/terms', priority: '0.2', freq: 'yearly' },
+  { path: '/licensing', priority: '0.4', freq: 'yearly' },
   ...photoPages,
 ];
 

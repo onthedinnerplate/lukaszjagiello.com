@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Link from 'next/link';
 import styles from '@/styles/Page.module.css';
 
 /**
@@ -53,7 +54,7 @@ export default function BuyButton({ photoNumber, tiers = [], licence }) {
         <span className={styles.buyNote}>Secure payment by Stripe. File delivered instantly.</span>
       </div>
       {error && <p className={styles.buyError} role="alert">{error}</p>}
-      <p className={styles.buyLicence}>{licence}</p>
+      <p className={styles.buyLicence}>{licence} <Link href="/licensing">Full licence terms</Link></p>
     </section>
   );
 }
