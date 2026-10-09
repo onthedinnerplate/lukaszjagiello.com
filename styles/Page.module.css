@@ -307,7 +307,7 @@
 /* Same square map card, sized to sit beside a one-line place name.
    The place name and hint stay in the button for its accessible name. */
 .mapSquare { position: static; flex: none; }
-.mapCardSquare {
+.mapCard.mapCardSquare {
   width: 44px;
   height: 44px;
   min-width: 44px;
