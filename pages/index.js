@@ -2,7 +2,8 @@ import Link from 'next/link';
 import Seo from '@/components/Seo';
 import JourneysHero from '@/components/JourneysHero';
 import MasonryGallery from '@/components/MasonryGallery';
-import { getPhotos } from '@/lib/photo-data';
+import { getPhotos, heroNavCounts } from '@/lib/photo-data';
+import { journeysThenGalleryPath } from '@/lib/categories';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
 import { photoNumberFromSrc } from '@/lib/photoCaption';
@@ -14,7 +15,7 @@ const meta = {
   description: site.description,
 };
 
-export default function Home({ photos }) {
+export default function Home({ photos, navCounts }) {
   return (
     <>
       <Seo
@@ -25,7 +26,16 @@ export default function Home({ photos }) {
         jsonLd={graph(websiteNode(), personNode(), pageNode('WebPage', { ...meta, title: site.name }))}
       />
 
-      <JourneysHero />
+      <JourneysHero
+        nav={{
+          active: '',
+          counts: navCounts,
+          hrefFor: journeysThenGalleryPath,
+          allLabel: 'Journeys',
+          label: 'Home categories',
+          disableEmpty: true,
+        }}
+      />
 
       <section className={styles.section} aria-labelledby="featured-heading">
         <div className={styles.sectionHead}>
@@ -55,5 +65,5 @@ export async function getStaticProps() {
     .map((n) => byNumber.get(n))
     .filter(Boolean);
   const photos = curated.length ? curated : all.slice(0, site.homeFeaturedCount);
-  return { props: { photos } };
+  return { props: { photos, navCounts: heroNavCounts(all) } };
 }
