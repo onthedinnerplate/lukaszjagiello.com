@@ -254,14 +254,13 @@ export async function getStaticProps() {
     photoSlug: article.photoSlug,
     photoNumber: article.photoNumber,
     companion: article.companion ? { src: article.companion.src } : null,
-      photo: {
+    photo: {
       src: article.photo.src,
-      alt: article.photo.alt,
+      alt: article.photo.alt || '',
       title: article.photo.title,
       categories: article.photo.categories,
       coords: article.photo.coords,
       thumb: smallThumbSrc(article.photo.thumb, smallThumbExists),
-      alt: article.photo.alt || '',
       focus: article.photo.focus || null,
     },
   }));
