@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import ShareButton from './ShareButton';
 import ResponsiveImage from './ResponsiveImage';
 import { captionFor } from '@/lib/photoCaption';
@@ -9,15 +9,25 @@ import styles from '@/styles/Lightbox.module.css';
 // wins when a sibling exists.
 const SIZES = '(max-width: 768px) calc(100vw - 32px), min(1600px, calc(100vw - 80px))';
 
-export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+export default function Lightbox({ id, isOpen, photo, onClose, onPrev, onNext }) {
   const overlayRef = useRef(null);
+  const closeRef = useRef(null);
+  const titleId = useId();
+  const onCloseRef = useRef(onClose);
+  const onPrevRef = useRef(onPrev);
+  const onNextRef = useRef(onNext);
+  onCloseRef.current = onClose;
+  onPrevRef.current = onPrev;
+  onNextRef.current = onNext;
 
   // Native fullscreen where the platform allows it (desktop browsers, Android).
   // iPhone Safari has no element fullscreen, so there the overlay itself is the
   // fullscreen experience. If the browser leaves fullscreen (Esc, swipe, system
   // UI), close the lightbox too so the two states never disagree.
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return undefined;
     const el = overlayRef.current;
     const doc = document;
     const request = el && (el.requestFullscreen || el.webkitRequestFullscreen);
@@ -36,7 +46,7 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
     const onFsChange = () => {
       const fsEl = doc.fullscreenElement || doc.webkitFullscreenElement;
       if (fsEl) entered = true;
-      else if (entered) onClose();
+      else if (entered) onCloseRef.current();
     };
     doc.addEventListener('fullscreenchange', onFsChange);
     doc.addEventListener('webkitfullscreenchange', onFsChange);
@@ -54,34 +64,86 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
         }
       }
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) return undefined;
+    const previouslyFocused = document.activeElement;
+    const root = overlayRef.current;
+    closeRef.current?.focus();
 
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') onPrev();
-      if (e.key === 'ArrowRight') onNext();
+    const focusable = () => {
+      if (!root) return [];
+      return [...root.querySelectorAll(FOCUSABLE)].filter((el) => el.getAttribute('aria-hidden') !== 'true');
     };
 
-    window.addEventListener('keydown', handleKeyDown);
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onCloseRef.current();
+        return;
+      }
+      if (e.key === 'ArrowLeft') onPrevRef.current();
+      if (e.key === 'ArrowRight') onNextRef.current();
+      if (e.key !== 'Tab') return;
+      const list = focusable();
+      if (!list.length) {
+        e.preventDefault();
+        return;
+      }
+      const first = list[0];
+      const last = list[list.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || !root?.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || !root?.contains(active))) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
+      if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
+        previouslyFocused.focus();
+      }
     };
-  }, [isOpen, onClose, onPrev, onNext]);
+  }, [isOpen]);
 
-  if (!isOpen || !photo) return null;
+  if (!isOpen || !photo) {
+    // Keep the id in the document so aria-controls on the opener stays valid
+    // while the dialog is collapsed.
+    return id ? <div id={id} hidden /> : null;
+  }
 
   const { equipment, specs } = captionFor(photo);
   const shareUrl = photo.href;
+  const label = photo.title || photo.alt || 'Photograph';
 
   return (
-    <div ref={overlayRef} className={styles.overlay} onClick={onClose} role="dialog" aria-modal="true" aria-label={photo.title || photo.alt}>
-      <button type="button" className={styles.closeBtn} onClick={onClose} aria-label="Close lightbox" title="Close (Esc)">
+    <div
+      id={id}
+      ref={overlayRef}
+      className={styles.overlay}
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={photo.title ? titleId : undefined}
+      aria-label={photo.title ? undefined : label}
+    >
+      <button
+        ref={closeRef}
+        type="button"
+        className={styles.closeBtn}
+        onClick={(e) => { e.stopPropagation(); onClose(); }}
+        aria-label="Close lightbox"
+        title="Close (Esc)"
+      >
         ✕
       </button>
 
@@ -103,7 +165,7 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
         </div>
 
         <div className={styles.caption}>
-          {photo.title && <h2 className={styles.title}>{photo.title}</h2>}
+          {photo.title && <h2 id={titleId} className={styles.title}>{photo.title}</h2>}
           {(equipment || specs) && (
             <div className={styles.metaBlock}>
               {equipment && <p className={styles.meta}>{equipment}</p>}
@@ -114,10 +176,10 @@ export default function Lightbox({ isOpen, photo, onClose, onPrev, onNext }) {
         </div>
       </div>
 
-      <button type="button" className={`${styles.navBtn} ${styles.prevBtn}`} onClick={onPrev} aria-label="Previous image" title="Previous (←)">
+      <button type="button" className={`${styles.navBtn} ${styles.prevBtn}`} onClick={(e) => { e.stopPropagation(); onPrev(); }} aria-label="Previous image" title="Previous (←)">
         ‹
       </button>
-      <button type="button" className={`${styles.navBtn} ${styles.nextBtn}`} onClick={onNext} aria-label="Next image" title="Next (→)">
+      <button type="button" className={`${styles.navBtn} ${styles.nextBtn}`} onClick={(e) => { e.stopPropagation(); onNext(); }} aria-label="Next image" title="Next (→)">
         ›
       </button>
     </div>

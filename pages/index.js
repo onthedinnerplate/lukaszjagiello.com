@@ -14,7 +14,7 @@ const meta = {
   description: site.description,
 };
 
-export default function Home({ photos, total }) {
+export default function Home({ photos }) {
   return (
     <>
       <Seo
@@ -37,11 +37,10 @@ export default function Home({ photos, total }) {
 
       <section className={styles.cta} aria-labelledby="cta-heading">
         <h2 id="cta-heading" className={styles.ctaTitle}>
-          View all work
+          Stories from the terrain
         </h2>
-        <p className={styles.ctaText}>Explore the complete gallery with {total} photographs.</p>
         <Link href="/gallery" className="button">
-          See the full collection
+          See our journeys
         </Link>
       </section>
     </>
@@ -56,5 +55,5 @@ export async function getStaticProps() {
     .map((n) => byNumber.get(n))
     .filter(Boolean);
   const photos = curated.length ? curated : all.slice(0, site.homeFeaturedCount);
-  return { props: { photos, total: all.length } };
+  return { props: { photos } };
 }
