@@ -260,14 +260,12 @@ button {
     color: var(--color-white);
     font-size: var(--font-size-5xl);
     margin-bottom: var(--spacing-md);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .hero-text p {
     font-size: var(--font-size-lg);
     color: var(--color-white);
     margin-bottom: var(--spacing-lg);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Buttons */
