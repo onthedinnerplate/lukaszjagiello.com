@@ -24,11 +24,13 @@ export default function CategoryNav({
   disableEmpty = false,
   includeAll = true,
   allLabel = 'All',
+  hideEmpty = false,
   onSelect = null,
   leading = [],
   separateCount = false,
 }) {
-  const items = includeAll ? [{ slug: 'all', label: allLabel }, ...CATEGORIES] : CATEGORIES;
+  const items = (includeAll ? [{ slug: 'all', label: allLabel }, ...CATEGORIES] : CATEGORIES)
+    .filter((item) => !hideEmpty || item.slug === 'all' || counts[item.slug] > 0);
   const activeSet = new Set(Array.isArray(active) ? active : [active]);
   const countKey = items.map((item) => counts[item.slug] ?? '').join(',');
   const listRef = useRef(null);

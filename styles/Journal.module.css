@@ -674,6 +674,9 @@
 }
 .sectionLabel span { color: #8a8a8a; font-weight: 300; }
 .sectionLabel::after { content: ""; flex: 1; height: 1px; background: #dedad2; }
+.inspireLabel { margin-bottom: 0.45rem; }
+.inspireNav { margin: 0 0 1.1rem; }
+.inspireNav :global(nav) { margin: 0; }
 .latestGrid,
 .inspireGrid {
   list-style: none;
