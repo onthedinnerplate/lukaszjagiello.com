@@ -16,11 +16,19 @@ function sectionCurrent(path, href) {
   return path === href || path.startsWith(`${href}/`);
 }
 
+/** Pages whose first screen is a photograph running under the fixed bar. */
+function heroBehindNav(path) {
+  if (path === '/' || path === '/about' || path === '/contact' || path === '/gallery' || path === '/journal') return true;
+  if (path.startsWith('/gallery/') || path.startsWith('/journal/')) return true;
+  return false;
+}
+
 function Nav() {
   const { asPath } = useRouter();
   const path = currentPath(asPath);
+  const onHero = heroBehindNav(path);
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${onHero ? styles.headerOnHero : ''}`}>
       <nav className={styles.nav} aria-label="Main">
         <Link href="/" className={styles.brand} aria-current={path === '/' ? 'page' : undefined}>
           <img
