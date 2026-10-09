@@ -279,6 +279,15 @@
   .footerBottom { align-items: flex-start; }
   .copyright,
   .footerLink { overflow-wrap: anywhere; }
+  .footerList li { display: flex; }
+  .footerLink,
+  .footerLegalLink {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+  }
 }
 
 .main {
