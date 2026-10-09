@@ -409,8 +409,8 @@
     position: relative;
     z-index: 2;
     align-self: start;
-    /* Top of the panel sits at 75% of the 9:16 frame. It covers 20px of the frame's right edge. */
-    margin-top: calc(max(var(--frame-min), 100cqi * var(--frame-share)) * 16 / 9 * 0.75);
+    /* The 20px overlap stays so the panel width does not change. The top offset only cleared the side frame. */
+    margin-top: 0;
     margin-left: calc(var(--overlap) * -1);
     padding: 1.25rem 1.35rem 1.5rem;
     background: #fff;
@@ -675,6 +675,61 @@
   color: #fff;
   text-decoration: none;
   pointer-events: auto;
+}
+/* Photographs in the article body fill the text column's content box. */
+.lead .storyFrame {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  margin: 0 0 1.2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+  overflow: hidden;
+  background: transparent;
+}
+.lead .storyOpen {
+  position: relative;
+  inset: auto;
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+  background: none;
+}
+.lead .storyPhoto {
+  position: static;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+  object-fit: contain;
+}
+.column img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  margin: 0 0 1.2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
 }
 /* Article lead: the photograph fills the article column, edge to edge. */
 .storyFrame {
