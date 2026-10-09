@@ -224,6 +224,12 @@
   background: var(--white, #fff);
 }
 .mapExternal:hover { text-decoration: underline; }
+/* Article and featured-story maps sit in a parent that sets the width.
+   Photo pages do not pass `bare`, so these rules never apply there. */
+.mapBare { width: 100%; }
+.mapCardBare { border-radius: 8px; }
+.mapPanelBare { margin-top: 0.45rem; }
+.mapPanelBare iframe { height: 200px; }
 @media (max-width: 640px) {
   .photoHeader { align-items: flex-start; gap: 1rem; }
   .mapCard { width: 108px; height: 108px; }

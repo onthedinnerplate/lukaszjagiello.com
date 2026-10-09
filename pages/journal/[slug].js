@@ -5,7 +5,11 @@ import Link from 'next/link';
 import Seo from '@/components/Seo';
 import CategoryNav from '@/components/CategoryNav';
 import Lightbox from '@/components/Lightbox';
+import PhotoMap from '@/components/PhotoMap';
+import ShapeMosaic from '@/components/ShapeMosaic';
+import AccentTitle from '@/components/AccentTitle';
 import { getPhotos } from '@/lib/photo-data';
+import { photoNumberFromSrc } from '@/lib/photoCaption';
 import {
   articles as articleRecords,
   formatArticleDate,
@@ -14,41 +18,11 @@ import {
   journalCategoryCounts,
   journalCategoryPath,
 } from '@/lib/articles';
-import treatments from '@/lib/journalTreatments.json';
+import shapes from '@/lib/journalShapes.json';
 import { graph, personNode, websiteNode, pageNode, articleNode } from '@/lib/seo';
 import styles from '@/styles/Journal.module.css';
 
-const GUTTER = 6;
-
-function cropOf(panel, src) {
-  const { x, y, w, h } = panel;
-  const left = x <= 0.001 ? 0 : GUTTER / 2;
-  const top = y <= 0.001 ? 0 : GUTTER / 2;
-  const right = x + w >= 0.999 ? 0 : GUTTER / 2;
-  const bottom = y + h >= 0.999 ? 0 : GUTTER / 2;
-  const posX = w >= 0.999 ? 0 : (x / (1 - w)) * 100;
-  const posY = h >= 0.999 ? 0 : (y / (1 - h)) * 100;
-  return {
-    left: `calc(${x * 100}% + ${left}px)`,
-    top: `calc(${y * 100}% + ${top}px)`,
-    width: `calc(${w * 100}% - ${left + right}px)`,
-    height: `calc(${h * 100}% - ${top + bottom}px)`,
-    backgroundImage: `url("${src}")`,
-    backgroundSize: `${w >= 0.999 ? 100 : 100 / w}% ${h >= 0.999 ? 100 : 100 / h}%`,
-    backgroundPosition: `${posX}% ${posY}%`,
-  };
-}
-
-/** Largest circle that fits inside a panel, in the mosaic's own aspect. */
-function circleBox(panel, ar) {
-  const cellAr = (panel.w / panel.h) * ar;
-  if (cellAr >= 1) {
-    const w = panel.h / ar;
-    return { ...panel, x: panel.x + (panel.w - w) / 2, w };
-  }
-  const h = panel.w * ar;
-  return { ...panel, y: panel.y + (panel.h - h) / 2, h };
-}
+const POPPINS = 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap';
 
 function ExpandIcon() {
   return (
@@ -58,13 +32,14 @@ function ExpandIcon() {
   );
 }
 
-export default function JournalArticle({ article, counts }) {
+export default function JournalArticle({ article }) {
   const path = `/journal/${article.slug}`;
   const { photo } = article;
-  const treatment = treatments[article.slug];
+  const shape = shapes[String(article.photoNumber)];
   const [lbOpen, setLbOpen] = useState(false);
   const openerRef = useRef(null);
   const ar = photo.width / photo.height;
+  const hasMap = photo.coords && typeof photo.coords.lat === 'number';
 
   const openLightbox = (event) => {
     openerRef.current = event.currentTarget;
@@ -99,22 +74,22 @@ export default function JournalArticle({ article, counts }) {
         path={path}
         image={photo.og}
         ogType="article"
-        keywords={[article.location, photo.title, 'photography journal']}
+        keywords={[article.location, photo.title, 'photography journal'].filter(Boolean)}
         jsonLd={jsonLd}
       />
       <Head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="stylesheet" href={POPPINS} />
         <meta property="article:published_time" content={article.date} />
         <meta property="article:modified_time" content={article.date} />
         <meta property="article:author" content={article.author} />
       </Head>
-      <article
-        className={styles.article}
-        style={{ '--ar': ar, '--accent': treatment.overlay }}
-      >
+      <article className={styles.article} style={{ '--ar': ar, '--accent': shape.accent }}>
         <div className={styles.journalCats}>
           <CategoryNav
             active={photo.categories}
-            counts={counts}
+            counts={article.counts}
             hrefFor={journalCategoryPath}
             label="Journal categories"
             disableEmpty
@@ -134,50 +109,34 @@ export default function JournalArticle({ article, counts }) {
         </figure>
         <div className={styles.spread}>
           <div className={styles.visual}>
-            <div className={styles.stage}>
-              {treatment.blocks.map((block, i) => (
-                <span
-                  key={`block-${i}`}
-                  className={styles.block}
-                  style={{
-                    left: `${block.x * 100}%`,
-                    top: `${block.y * 100}%`,
-                    width: `${block.w * 100}%`,
-                    height: `${block.h * 100}%`,
-                    background: block.color,
-                  }}
-                  aria-hidden="true"
-                />
-              ))}
-              <button
-                type="button"
-                className={styles.mosaicBtn}
-                onClick={openLightbox}
-                aria-label={`View full image: ${photo.alt}`}
-              >
-                {treatment.panels.map((panel, i) => {
-                  const box = panel.shape === 'circle' ? circleBox(panel, ar) : panel;
-                  return (
-                    <span
-                      key={`slice-${i}`}
-                      className={`${styles.slice} ${panel.shape === 'circle' ? styles.circle : ''}`}
-                      style={cropOf(box, photo.src)}
-                    >
-                      {panel.overlay ? <span className={styles.veil} style={{ background: treatment.overlay }} /> : null}
-                    </span>
-                  );
-                })}
-              </button>
-            </div>
+            <ShapeMosaic
+              shape={shape}
+              src={photo.src}
+              alt={photo.alt}
+              companionSrc={article.companion?.src}
+              onClick={openLightbox}
+            />
             <div className={styles.under}>
+              {article.taken ? (
+                <p className={styles.taken}>
+                  Photo taken
+                  <span aria-hidden="true"> · </span>
+                  <time dateTime={article.taken}>{formatArticleDate(article.taken)}</time>
+                </p>
+              ) : null}
               <ul className={styles.swatches}>
-                {treatment.palette.map((hex, i) => (
-                  <li key={`swatch-${i}`} className={styles.swatchItem}>
+                {shape.palette.map((hex, i) => (
+                  <li key={`${hex}-${i}`} className={styles.swatchItem}>
                     <span className={styles.swatch} style={{ background: hex }} />
                     <span className={styles.hex}>{hex}</span>
                   </li>
                 ))}
               </ul>
+              {hasMap ? (
+                <div className={styles.mapSlot}>
+                  <PhotoMap bare coords={photo.coords} location={article.location} title={photo.title} />
+                </div>
+              ) : null}
               <p className={styles.viewRow}>
                 <button type="button" className={styles.viewFull} onClick={openLightbox}>
                   View full image
@@ -190,14 +149,16 @@ export default function JournalArticle({ article, counts }) {
           </div>
           <div className={styles.panel}>
             <span className={styles.accent} aria-hidden="true" />
-            <p className={styles.kicker}>{article.location}</p>
-            <h1 className={styles.title}>{article.title}</h1>
+            {article.location ? <p className={styles.kicker}>{article.location}</p> : null}
+            <AccentTitle title={article.title} color={shape.accent} as="h1" className={styles.title} />
             <p className={styles.dek}>{article.dek}</p>
             <p className={styles.byline}>
-              <span className={styles.desktopOnly}>
-                <span className={styles.place}>{article.location}</span>
-                <span aria-hidden="true"> · </span>
-              </span>
+              {article.location ? (
+                <span className={styles.desktopOnly}>
+                  <span className={styles.place}>{article.location}</span>
+                  <span aria-hidden="true"> · </span>
+                </span>
+              ) : null}
               <time dateTime={article.date}>{formatArticleDate(article.date)}</time>
               <span aria-hidden="true"> · </span>
               <span>{article.author}</span>
@@ -219,6 +180,11 @@ export default function JournalArticle({ article, counts }) {
               <p className={styles.photoLink}>
                 <Link href={photo.href}>View the photograph</Link>
               </p>
+              {article.companion ? (
+                <p className={styles.photoLink}>
+                  <Link href={article.companion.href}>{article.companion.title}</Link>
+                </p>
+              ) : null}
             </div>
           </div>
         </div>
@@ -244,15 +210,16 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const record = articleRecords.find((article) => article.slug === params.slug);
   if (!record) return { notFound: true };
-  if (!treatments[record.slug]) {
-    throw new Error(`No journal treatment for ${record.slug}.`);
+  const number = photoNumberFromSrc(record.expectSrc);
+  if (!shapes[String(number)]) {
+    throw new Error(`No journal shape for ${record.slug}.`);
   }
   const photos = await getPhotos();
   const articles = hydrateArticles(photos);
+  const article = hydrateArticle(record, photos);
   return {
     props: {
-      article: hydrateArticle(record, photos),
-      counts: journalCategoryCounts(articles),
+      article: { ...article, counts: journalCategoryCounts(articles) },
     },
   };
 }
