@@ -108,7 +108,7 @@ export default function JournalArticle({ article, counts }) {
         <meta property="article:author" content={article.author} />
       </Head>
       <article
-        className={styles.article}
+        className={`${styles.article} ${photo.height > photo.width ? styles.articlePortrait : ''}`}
         style={{ '--ar': ar, '--accent': treatment.overlay }}
       >
         <div className={styles.journalCats}>

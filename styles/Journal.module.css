@@ -154,7 +154,7 @@
 
   .spread {
     display: grid;
-    grid-template-columns: minmax(312px, 42%) minmax(0, 1fr);
+    grid-template-columns: minmax(300px, 35%) minmax(0, 1fr);
     align-items: start;
     container-type: inline-size;
     margin-top: 1.2rem;
@@ -171,6 +171,11 @@
     width: 100%;
     aspect-ratio: var(--ar);
     z-index: 1;
+  }
+  /* Portrait frames use the same 35% column, so the height comes down
+     with the width. Cap it to that scaled height and no taller. */
+  .articlePortrait .stage {
+    max-height: calc(100cqi * 0.35 / var(--ar));
   }
   .block {
     position: absolute;
@@ -281,8 +286,11 @@
     position: relative;
     z-index: 2;
     align-self: start;
-    --overlap: 104px;
-    margin-top: calc(max(312px, 100cqi * 0.42) / var(--ar) * 0.56);
+    justify-self: start;
+    width: min(40rem, 100%);
+    --photo: max(300px, 100cqi * 0.35);
+    --overlap: calc(var(--photo) * 0.2);
+    margin-top: calc(var(--photo) / var(--ar) * 0.56);
     margin-left: calc(var(--overlap) * -1);
     padding: 1.4rem 0.15rem 0.2rem var(--overlap);
     background: var(--white);
