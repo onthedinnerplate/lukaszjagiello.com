@@ -1,12 +1,13 @@
 // Generates stylised landscape placeholder JPEGs (gradient sky, sun, layered
-// ridges) for every entry in lib/photos.js, plus the hero, OG image and icons.
+// ridges) for every entry in lib/photos.js, plus the hero and OG image.
+// Favicons are the real camera-shutter files in public/ and are not generated here.
 // Existing files are left alone unless --force is passed, so running this
 // after you've added real photos will NOT overwrite them.
 //
 //   npm run placeholders            # create missing files only
 //   npm run placeholders -- --force # regenerate everything
 
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -94,17 +95,3 @@ for (const p of photos) {
 await writeJpeg(`images/${hero.file}`, 2560, 1100, 'hero', 'hero');
 await writeJpeg('og-image.jpg', 1200, 630, 'hero', 'og');
 
-// Icons: simple lime/charcoal monogram-free mark (no text, so no font deps).
-const iconSvg = (s) => `<svg xmlns="http://www.w3.org/2000/svg" width="${s}" height="${s}" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#3A3A3A"/>
-  <path d="M8 48 L24 26 L34 38 L42 30 L56 48 Z" fill="#39FF14"/>
-  <circle cx="44" cy="18" r="6" fill="#39FF14"/>
-</svg>`;
-const svgPath = path.join(root, 'favicon.svg');
-if (!existsSync(svgPath) || force) writeFileSync(svgPath, iconSvg(64));
-for (const [name, size] of [['apple-touch-icon.png', 180], ['icon-192.png', 192], ['icon-512.png', 512]]) {
-  const out = path.join(root, name);
-  if (existsSync(out) && !force) continue;
-  await sharp(Buffer.from(iconSvg(size))).png().toFile(out);
-  console.log(`wrote ${name}`);
-}
