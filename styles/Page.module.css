@@ -3,10 +3,19 @@
   margin: 0 auto;
   padding: 3.5rem var(--gutter) 1rem;
 }
-.galleryPage {
+/* Horizontal frame shared with the site header (.nav composes this).
+   Vertical padding stays on .galleryPage so the bar height does not change. */
+.contentFrame {
   max-width: var(--max-wide);
-  margin: 0 auto;
-  padding: 3rem var(--gutter) 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+.galleryPage {
+  composes: contentFrame;
+  padding-top: 3rem;
+  padding-bottom: 1rem;
 }
 .pageHeader { margin-bottom: 2.5rem; }
 .galleryHeading { margin-bottom: 0.15rem; }
