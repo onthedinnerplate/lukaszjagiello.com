@@ -2,8 +2,11 @@ import { useId, useState } from 'react';
 import { PhotoCardActions } from '@/components/ShareButtons';
 import Lightbox from '@/components/Lightbox';
 import ResponsiveImage from '@/components/ResponsiveImage';
-import { photoNumberFromSrc } from '@/lib/photoCaption';
+import Swatches from '@/components/Swatches';
+import { GearLine } from '@/components/GearStoreLinks';
+import { captionFor, photoNumberFromSrc } from '@/lib/photoCaption';
 import { ogImageSrc } from '@/lib/slug';
+import palettes from '@/lib/photoPalettes.json';
 import styles from '@/styles/Gallery.module.css';
 
 /** The four-pillar row, in display order. Shared by the homepage and the gallery. */
@@ -40,38 +43,52 @@ export default function SelectedPhotographs({ photos }) {
   return (
     <>
       <div className={styles.selectedRow}>
-        {photos.map((photo, i) => (
-          <div key={photo.src} className={styles.selectedCell} style={{ backgroundColor: photo.color }}>
-            <PhotoCardActions
-              title={photo.title}
-              shareUrl={photo.href}
-              pinUrl={photo.href}
-              mediaUrl={ogImageSrc(photo.src) || photo.src}
-              photo={photo}
-            />
-            <button
-              type="button"
-              className={styles.selectedOpen}
-              onClick={() => { setIndex(i); setOpen(true); }}
-              aria-label={photo.title}
-              aria-expanded={open && index === i}
-              aria-controls={lightboxId}
-            >
-              <ResponsiveImage
-                pictureClassName={styles.selectedPicture}
-                src={photo.thumb || photo.src}
-                alt={photo.alt}
-                width={photo.thumbWidth || photo.width}
-                height={photo.thumbHeight || photo.height}
-                sizes="(max-width: 768px) 25vw, 20vw"
-                srcSet={photo.thumbSrcSet}
-                className={styles.selectedImg}
-                style={{ objectPosition: cropPosition(photo) }}
-                loading={i < 2 ? 'eager' : 'lazy'}
-              />
-            </button>
-          </div>
-        ))}
+        {photos.map((photo, i) => {
+          const num = photoNumberFromSrc(photo.src);
+          const palette = palettes[String(num)];
+          const { equipment, specs } = captionFor(photo);
+          return (
+            <div key={photo.src} className={styles.selectedItem}>
+              <div className={styles.selectedCell} style={{ backgroundColor: photo.color }}>
+                <PhotoCardActions
+                  title={photo.title}
+                  shareUrl={photo.href}
+                  pinUrl={photo.href}
+                  mediaUrl={ogImageSrc(photo.src) || photo.src}
+                  photo={photo}
+                />
+                <button
+                  type="button"
+                  className={styles.selectedOpen}
+                  onClick={() => { setIndex(i); setOpen(true); }}
+                  aria-label={photo.title}
+                  aria-expanded={open && index === i}
+                  aria-controls={lightboxId}
+                >
+                  <ResponsiveImage
+                    pictureClassName={styles.selectedPicture}
+                    src={photo.thumb || photo.src}
+                    alt={photo.alt}
+                    width={photo.thumbWidth || photo.width}
+                    height={photo.thumbHeight || photo.height}
+                    sizes="(max-width: 767px) 50vw, 20vw"
+                    srcSet={photo.thumbSrcSet}
+                    className={styles.selectedImg}
+                    style={{ objectPosition: cropPosition(photo) }}
+                    loading={i < 2 ? 'eager' : 'lazy'}
+                  />
+                </button>
+              </div>
+              <div className={styles.selectedDetails}>
+                {Array.isArray(palette) && palette.length ? <Swatches shape={{ palette }} compact /> : null}
+                <p className={styles.selectedTitle}>{photo.title}</p>
+                {photo.location ? <p className={styles.selectedLoc}>{photo.location}</p> : null}
+                {equipment ? <p className={styles.selectedMeta}><GearLine text={equipment} /></p> : null}
+                {specs ? <p className={styles.selectedMeta}>{specs}</p> : null}
+              </div>
+            </div>
+          );
+        })}
       </div>
       <Lightbox
         id={lightboxId}

@@ -14,6 +14,26 @@ function TrailMark() {
   );
 }
 
+function BuyMark() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+      <path d="M3 6h18" />
+      <path d="M16 10a4 4 0 0 1-8 0" />
+    </svg>
+  );
+}
+
+function mapHref(photo) {
+  const coords = photo?.coords;
+  if (coords && Number.isFinite(coords.lat) && Number.isFinite(coords.lng)) {
+    return `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}`;
+  }
+  const location = typeof photo?.location === 'string' ? photo.location.trim() : '';
+  if (!location) return '';
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
+}
+
 function PinMark() {
   return (
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -34,6 +54,8 @@ export function PhotoCardActions({ title, shareUrl, pinUrl, mediaUrl, photo }) {
   const media = toAbsoluteUrl(mediaUrl || shareUrl);
   const href = pinterestPinHref({ pageUrl, mediaUrl: media, description: title || '' });
   const trailHref = alltrailsHref(photo);
+  const trailFallback = trailHref ? '' : mapHref(photo);
+  const forSale = Boolean(photo?.forSale && photo?.href);
   const stop = (event) => event.stopPropagation();
 
   return (
@@ -56,7 +78,17 @@ export function PhotoCardActions({ title, shareUrl, pinUrl, mediaUrl, photo }) {
         toastClassName={gallery.toast}
         wrapperClassName={gallery.shareWrap}
       />
-      <BuyIcon photo={photo} className={gallery.share} />
+      {forSale ? <BuyIcon photo={photo} className={gallery.share} /> : (
+        <a
+          className={`${gallery.share} ${gallery.phoneOnlyAction}`}
+          href={photo?.href ? `${photo.href}#buy` : '/contact'}
+          aria-label={`Buy a download of ${title}`}
+          title="Buy a download"
+          onClick={stop}
+        >
+          <BuyMark />
+        </a>
+      )}
       {trailHref ? (
         <a
           className={gallery.share}
@@ -69,7 +101,20 @@ export function PhotoCardActions({ title, shareUrl, pinUrl, mediaUrl, photo }) {
         >
           <TrailMark />
         </a>
-      ) : null}
+      ) : (
+        <a
+          className={`${gallery.share} ${gallery.phoneOnlyAction}`}
+          href={trailFallback || undefined}
+          target={trailFallback ? '_blank' : undefined}
+          rel={trailFallback ? 'noopener noreferrer' : undefined}
+          aria-label="Open the map"
+          title="Map"
+          aria-disabled={trailFallback ? undefined : true}
+          onClick={stop}
+        >
+          <TrailMark />
+        </a>
+      )}
     </span>
   );
 }
