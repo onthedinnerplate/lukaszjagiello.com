@@ -1,6 +1,7 @@
 // Lightbox fulls, regenerated from the committed camera JPEGs.
 //
-// Source: private/downloads/NN/full.jpg (q92, original pixel size). The published
+// Source: private/downloads/NN/full.jpg, or full.jpg.enc decrypted with
+// DOWNLOAD_FILES_KEY (q92, original pixel size). The published
 // full keeps its current pixel size (1600px wide) so layout does not move.
 // WebP quality starts at 80. Files that fit under 500 KB stay there. Frames that
 // cannot hold quality 50 under 500 KB — the detailed foliage outliers — are
@@ -17,6 +18,7 @@ import { existsSync, readFileSync, renameSync, unlinkSync, writeFileSync } from 
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { readDownloadPlaintext } from '../lib/download-crypto.js';
 import { photos } from '../lib/photos.js';
 import { bestUnder, encodeAvif, encodeWebp, renderPixels } from './encode-utils.mjs';
 
@@ -68,14 +70,24 @@ for (const p of photos) {
   if (only && !only.has(nn)) continue;
   const dest = path.join(pub, p.src);
   const name = path.basename(dest);
-  const jpeg = path.join(downloads, nn, 'full.jpg');
-
-  if (!existsSync(jpeg)) {
+  const jpegPath = path.join(downloads, nn, 'full.jpg');
+  let jpeg;
+  try {
+    jpeg = readDownloadPlaintext(jpegPath);
+  } catch (err) {
     failed++;
-    console.error(`✗ ${name}: needs the original from the owner (missing ${path.relative(root, jpeg)})`);
-    report[nn] = { error: 'missing-original', source: path.relative(root, jpeg) };
+    const why = err.code === 'NO_KEY' ? 'DOWNLOAD_FILES_KEY is not set' : 'could not read the paid original';
+    console.error(`✗ ${name}: ${why}`);
+    report[nn] = { error: 'unreadable-original', source: path.relative(root, `${jpegPath}.enc`) };
     continue;
   }
+  if (!jpeg) {
+    failed++;
+    console.error(`✗ ${name}: needs the original from the owner (missing ${path.relative(root, jpegPath)})`);
+    report[nn] = { error: 'missing-original', source: path.relative(root, jpegPath) };
+    continue;
+  }
+  const sourceLabel = existsSync(jpegPath) ? path.relative(root, jpegPath) : path.relative(root, `${jpegPath}.enc`);
   if (!existsSync(dest)) {
     failed++;
     console.error(`✗ ${name}: current full missing, so the target pixel size is unknown`);
@@ -119,7 +131,7 @@ for (const p of photos) {
     ok++;
     report[nn] = {
       title: p.title,
-      source: path.relative(root, jpeg),
+      source: sourceLabel,
       width: raw.info.width,
       height: raw.info.height,
       webpQuality: webp.quality,

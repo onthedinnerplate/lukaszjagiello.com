@@ -94,5 +94,5 @@ Sitemap: ${SITE_URL}/sitemap.xml
 writeFileSync(path.join(pub, 'sitemap.xml'), xml);
 writeFileSync(path.join(pub, 'robots.txt'), robots);
 console.log(
-  `sitemap.xml (${pages.length} URLs, ${photos.length} gallery images, ${photoPages.length} photo pages, ${journalArticles.length} journal articles) and robots.txt written for ${SITE_URL}`,
+  `sitemap.xml (${pages.length} URLs, ${photos.length} gallery images, ${journalArticles.length} journal articles) and robots.txt written for ${SITE_URL}`,
 );

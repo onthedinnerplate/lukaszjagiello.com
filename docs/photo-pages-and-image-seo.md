@@ -17,7 +17,7 @@ on Render's small instance.
 
 | Path | What it is |
 |---|---|
-| `lib/photos.js` | The 46 photos: `src` (lightbox full), `thumb`, `alt`, `title`. Order = gallery order. Filenames are `lukasz-jagiello-NN-*.webp`; **NN is the photo's stable identity.** |
+| `lib/photos.js` | `src` (lightbox full), `thumb`, `alt`, `title`. Order = gallery order. Filenames are `lukasz-jagiello-NN-*.webp`; **NN is the photo's stable identity.** |
 | `lib/photo-data.js` | Server-only. `getPhotos()` / `getHero()` read dimensions and dominant colour from `lib/photo-manifest.json` (no image work) and add `thumbWidth`, `thumbHeight`, `href`, and the leading `/` on `src`/`thumb`. Use this in `getStaticProps`; never import `photos.js` directly into a page. |
 | `lib/photo-manifest.json` + `scripts/generate-photo-manifest.mjs` | Written in `prebuild` (`npm run manifest`): sharp measures all 46 fulls + thumbs + hero **once** (~9 s). Committed so dev works without running it. |
 | `lib/photoMetadata.js` | EXIF per photo number: `camera`, `lens`, `focal_length`, `shutter_speed`, `aperture`, `iso`. |
@@ -44,8 +44,7 @@ encoding — runs in a `prebuild` script, never in `getStaticProps`,
 
 Why this is a hard rule here: `next build` renders pages across ~11 worker
 processes, each with its own module scope. A module-level cache does **not**
-protect you — every worker still pays the full cost once. When the 46 photo
-pages landed, `getPhotos()` was decoding all 92 WebPs per worker
+protect you — every worker still pays the full cost once. When the pages landed, `getPhotos()` was decoding all 92 WebPs per worker
 (`sharp.stats()` fully decodes a 1–1.8 MB file to find the dominant colour),
 and every page blew Next's 60-second static-generation limit on Render's
 instance. The build failed outright.
@@ -297,7 +296,7 @@ needed).
 - [ ] `Seo.js` accepts per-page `image`; photo pages pass their 1200×630 JPEG
 - [ ] JSON-LD `ImageObject` with `license`, `acquireLicensePage`, `contentLocation`, `exifData`
 - [ ] Canonical per page; share buttons in card + lightbox use `photo.href`; `#photo-NN` still opens lightbox
-- [ ] Sitemap includes all 46 photo URLs with `image:image` (loc, title, caption)
+- [ ] Sitemap includes all URLs with `image:image` (loc, title, caption)
 - [ ] Optional: `/photo/NN` → 301 → slug URL
 
 **Images**
@@ -308,8 +307,8 @@ needed).
 - [ ] `width`/`height` present on every image
 
 **Verify**
-- [ ] `npm run build` passes (46 photo pages in the build output), with **no** "took more than 60 seconds" lines — page generation must not touch image files (see *Build rule*)
+- [ ] `npm run build` passes (pages in the build output), with **no** "took more than 60 seconds" lines — page generation must not touch image files (see *Build rule*)
 - [ ] Paste a photo URL into iMessage / Slack / LinkedIn Post Inspector → the photo shows, not the site card
 - [ ] Google Rich Results Test on one photo page: `ImageObject` valid, no errors
-- [ ] `/sitemap.xml` lists 50 URLs (4 pages + 46 photos)
+- [ ] `/sitemap.xml` lists 50 URLs (4 pages)
 - [ ] Lighthouse mobile on `/gallery` and one photo page: no CLS, LCP < 2.5 s

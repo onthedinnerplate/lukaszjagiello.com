@@ -71,5 +71,5 @@ try {
 }
 
 writeFileSync(out, JSON.stringify(manifest, null, 2) + '\n');
-console.log(`photo-manifest.json: ${Object.keys(manifest.photos).length} photos${manifest.hero ? ' + hero' : ''} measured, ${failed} failed.`);
+console.log(`photo-manifest.json: ${manifest.hero ? 'hero ' : ''}measured, ${failed} failed.`);
 if (failed) process.exitCode = 1;
