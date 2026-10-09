@@ -53,6 +53,7 @@ function cardPhoto(article) {
   return {
     title: article.photo.title || article.title,
     href: article.photo.href,
+    src: article.photo.src,
     forSale: article.photo.forSale,
   };
 }
