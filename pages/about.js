@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Seo from '@/components/Seo';
+import JourneysHero from '@/components/JourneysHero';
 import { graph, personNode, websiteNode, pageNode } from '@/lib/seo';
 import { site } from '@/lib/site';
 import { gearFromMetadata } from '@/lib/photoCaption';
@@ -25,6 +26,8 @@ export default function About() {
         keywords={['about the photographer', ...gear.cameras.map((c) => c.name), ...lensList]}
         jsonLd={graph(websiteNode(), { ...pageNode('ProfilePage', meta), mainEntity: { '@id': personNode()['@id'] } }, personNode())}
       />
+      {/* Slogan stays a paragraph: "About" remains the only h1. */}
+      <JourneysHero headingAs="p" />
       <article className={styles.page}>
         <header className={styles.pageHeader}>
           <h1>About</h1>
