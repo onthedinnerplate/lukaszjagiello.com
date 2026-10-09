@@ -1,12 +1,11 @@
 import { useId, useRef, useState } from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import Seo from '@/components/Seo';
 import CategoryNav from '@/components/CategoryNav';
 import Lightbox from '@/components/Lightbox';
 import PhotoMap from '@/components/PhotoMap';
-import ShapeMosaic from '@/components/ShapeMosaic';
+import ArticleLead from '@/components/ArticleLead';
 import HeadlinePhrase from '@/components/HeadlinePhrase';
 import Swatches from '@/components/Swatches';
 import { getPhotos } from '@/lib/photo-data';
@@ -23,7 +22,7 @@ import {
 } from '@/lib/articles';
 import shapes from '@/lib/journalShapes.json';
 import { accentScriptFromPalette } from '@/lib/accentInk';
-import { articleHeroObjectPosition, portraitObjectPosition } from '@/lib/photoFocus';
+import { accentScriptFont } from '@/lib/fonts';
 import { graph, personNode, websiteNode, pageNode, articleNode } from '@/lib/seo';
 import styles from '@/styles/Journal.module.css';
 
@@ -45,8 +44,6 @@ export default function JournalArticle({ article }) {
   const [lbOpen, setLbOpen] = useState(false);
   const lightboxId = useId();
   const openerRef = useRef(null);
-  const ar = photo.width / photo.height;
-  const heroPosition = articleHeroObjectPosition(photo);
   const hasMap = photo.coords && typeof photo.coords.lat === 'number';
 
   const openLightbox = (event) => {
@@ -93,7 +90,7 @@ export default function JournalArticle({ article }) {
         <meta property="article:modified_time" content={article.date} />
         <meta property="article:author" content={article.author} />
       </Head>
-      <article className={styles.article} style={{ '--ar': ar, '--accent': shape.accent, '--accent-script': accentScript }}>
+      <article className={styles.article} style={{ '--accent': shape.accent, '--accent-script': accentScript }}>
         <div className={styles.journalCats}>
           <CategoryNav
             active={photo.categories}
@@ -103,26 +100,13 @@ export default function JournalArticle({ article }) {
             disableEmpty
           />
         </div>
-        <figure className={styles.hero} style={{ backgroundColor: photo.color }}>
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            width={photo.width}
-            height={photo.height}
-            sizes="100vw"
-            priority
-            unoptimized
-            className={styles.heroImg}
-            style={heroPosition ? { objectPosition: heroPosition } : undefined}
-          />
-        </figure>
         <div className={styles.spread}>
           <div className={styles.visual}>
             <div className={styles.frameWrap}>
-              <ShapeMosaic
-                src={photo.src}
-                alt={photo.alt}
-                objectPosition={portraitObjectPosition(photo)}
+              <ArticleLead
+                photo={photo}
+                location={article.location}
+                alltrailsUrl={article.trail?.alltrailsUrl}
                 onClick={openLightbox}
                 expanded={lbOpen}
                 controlsId={lightboxId}
@@ -182,8 +166,13 @@ export default function JournalArticle({ article }) {
               <span>{article.author}</span>
             </p>
             <div className={styles.lead}>
-              {article.paragraphs.slice(0, 2).map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
+              {article.paragraphs.slice(0, 2).map((paragraph, index) => (
+                <p
+                  key={paragraph}
+                  className={index === 0 ? `${accentScriptFont.className} ${styles.dropCap}` : undefined}
+                >
+                  {paragraph}
+                </p>
               ))}
             </div>
             <div className={styles.column}>

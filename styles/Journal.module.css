@@ -297,13 +297,16 @@
   }
 
   .spread {
-    --overlap: 104px;
+    --overlap: 20px;
+    --frame-min: 280px;
+    --frame-share: 0.34;
     display: grid;
-    grid-template-columns: minmax(312px, 42%) minmax(0, 1fr);
+    grid-template-columns: minmax(var(--frame-min), 34%) minmax(0, 1fr);
     align-items: start;
     container-type: inline-size;
     margin-top: 1.2rem;
   }
+  .spread .storyFrame { --story-overlap: 20px; }
   .visual {
     display: block;
     grid-column: 1;
@@ -406,26 +409,19 @@
     position: relative;
     z-index: 2;
     align-self: start;
-    margin-top: calc(max(312px, 100cqi * 0.42) / var(--ar) * 0.56);
+    /* Top of the panel sits at 75% of the 9:16 frame. It covers 20px of the frame's right edge. */
+    margin-top: calc(max(var(--frame-min), 100cqi * var(--frame-share)) * 16 / 9 * 0.75);
     margin-left: calc(var(--overlap) * -1);
-    /* Right and bottom match the left inset. Top stays 1.4rem. Mobile never hits this rule. */
-    padding: 1.4rem var(--overlap) var(--overlap);
-    background: var(--white);
-    border-radius: var(--radius-photo);
+    padding: 1.25rem 1.35rem 1.5rem;
+    background: #fff;
+    border: 3px solid #B9C27A;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 10px 28px rgba(26, 26, 26, 0.06);
+    box-shadow: none;
   }
   .lead,
   .column { display: block; }
-  .accent {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 4.25rem;
-    height: 2px;
-    background: #c4a35a;
-  }
+  .accent { display: none; }
   .kicker { display: none; }
   .desktopOnly { display: inline; }
   .place { color: var(--accent); }
@@ -460,13 +456,10 @@
     line-height: 1.7;
     color: var(--muted);
   }
-  .lead p:first-child::first-letter {
-    float: left;
-    font-size: 3.35rem;
-    line-height: 0.75;
+  .lead .dropCap::first-letter {
+    font-family: Allura, cursive;
     font-weight: 400;
-    padding: 0.08em 0.1em 0 0;
-    color: var(--charcoal);
+    color: #B9C27A;
   }
   .column { width: auto; margin: 0; padding: 0.35rem 0 0; }
   .column > p:not(.photoLink) {
@@ -662,6 +655,80 @@
   color: #fff;
   text-decoration: none;
   pointer-events: auto;
+}
+/* Article lead: the photograph lives only inside this 9:16 moss frame. */
+.storyFrame {
+  --band: 32px;
+  --rim: 8px;
+  --story-overlap: 0px;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #14210f;
+  z-index: 1;
+}
+.storyOpen {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  display: block;
+}
+.storyOpen:focus-visible { outline: 3px solid var(--orange); outline-offset: -3px; }
+.storyPhoto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.storyWash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(185, 194, 122, 0.75), rgba(185, 194, 122, 1));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) top / 100% var(--rim) no-repeat,
+    linear-gradient(#fff 0 0) bottom / 100% var(--band) no-repeat,
+    linear-gradient(#fff 0 0) left top / var(--rim) calc(100% - var(--band)) no-repeat,
+    linear-gradient(#fff 0 0) right top / var(--rim) calc(100% - var(--band)) no-repeat;
+  mask:
+    linear-gradient(#fff 0 0) top / 100% var(--rim) no-repeat,
+    linear-gradient(#fff 0 0) bottom / 100% var(--band) no-repeat,
+    linear-gradient(#fff 0 0) left top / var(--rim) calc(100% - var(--band)) no-repeat,
+    linear-gradient(#fff 0 0) right top / var(--rim) calc(100% - var(--band)) no-repeat;
+}
+.storyBand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: var(--band);
+  padding: 2px calc(var(--story-overlap) + 10px) 2px 6px;
+  color: #fff;
+  pointer-events: none;
+}
+.article .dropCap { font-family: var(--font); }
+.dropCap::first-letter {
+  font-family: Allura, cursive;
+  font-weight: 400;
+  font-style: normal;
+  float: left;
+  font-size: 4.6rem;
+  line-height: 0.62;
+  padding: 0.16em 0.08em 0 0;
+  color: #B9C27A;
 }
 .heroCopy {
   position: absolute;
@@ -1340,6 +1407,15 @@
   /* Stacked article photo: grow it upward under the nav. The extra height
      keeps the photo's bottom, and the title under it, where they were. */
   .article { padding-top: 0; }
+  .article .visual { display: block; }
+  .article .panel {
+    display: block;
+    margin: 1.25rem 0 0;
+    padding: 1.15rem 1rem 1.4rem;
+    background: #fff;
+    border: 3px solid #B9C27A;
+    border-radius: 16px;
+  }
   .article > .hero {
     position: relative;
     margin-top: calc(-1 * var(--nav-h));
