@@ -59,8 +59,8 @@
 }
 .brand:hover { background: none; }
 .brand:hover .brandName { text-decoration: underline; }
-/* Given name stays Poppins Light. Photography is Allura, gold, about 1.35×
-   the name optically (Allura draws small in the em box, so 1.7em). */
+/* Given name stays Poppins Light. Photography is Shadows Into Light Two:
+   upright handwriting like Caveat, with a thinner stroke, at twice the name. */
 .brand .brandGiven {
   font-weight: 300;
   font-style: normal;
@@ -73,13 +73,12 @@
   background: #c4a35a;
 }
 .brand .brandScript {
-  font-family: Allura, "Allura Fallback", cursive;
   font-weight: 400;
   font-style: normal;
   font-synthesis: none;
   -webkit-font-synthesis: none;
   color: #c4a35a;
-  font-size: 1.7em;
+  font-size: 2em;
   line-height: 1;
   margin: 0;
 }
