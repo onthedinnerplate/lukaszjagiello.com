@@ -100,16 +100,18 @@ function JourneyCard({ article, compactSwatches = true }) {
           photo={cardPhoto(article)}
         />
       </div>
-      <Link href={href} className={styles.journeyBody}>
+      <div className={styles.journeyBody}>
         <Swatches shape={shape} compact={compactSwatches} />
-        <AccentTitle
-          title={article.title}
-          phrase={article.headlinePhrase}
-          color={accentScript}
-          className={styles.journeyTitle}
-        />
-        <p className={styles.cardDek}>{article.dek}</p>
-      </Link>
+        <Link href={href} className={styles.journeyTextLink}>
+          <AccentTitle
+            title={article.title}
+            phrase={article.headlinePhrase}
+            color={accentScript}
+            className={styles.journeyTitle}
+          />
+          <p className={styles.cardDek}>{article.dek}</p>
+        </Link>
+      </div>
       <ArticleShare
         title={article.title}
         excerpt={article.dek}
@@ -329,19 +331,21 @@ export default function JournalIndex({ articles, counts }) {
                             photo={cardPhoto(article)}
                           />
                         </div>
-                        <Link href={href} className={styles.allCopy}>
-                          <span className={styles.allGold} aria-hidden="true" />
-                          <AccentTitle
-                            title={article.title}
-                            phrase={article.headlinePhrase}
-                            color={accentScript}
-                            as="span"
-                            className={styles.allTitle}
-                          />
+                        <div className={styles.allCopy}>
+                          <Link href={href} className={styles.allCopyLink}>
+                            <span className={styles.allGold} aria-hidden="true" />
+                            <AccentTitle
+                              title={article.title}
+                              phrase={article.headlinePhrase}
+                              color={accentScript}
+                              as="span"
+                              className={styles.allTitle}
+                            />
+                          </Link>
                           <span className={styles.allSwatches}>
                             <Swatches shape={shape} compact />
                           </span>
-                        </Link>
+                        </div>
                         <div className={styles.allLocRow}>
                           {place ? (
                             <span className={styles.allPlace}>
