@@ -1001,6 +1001,25 @@
 @media (min-width: 1100px) {
   .allList { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 1.15rem; row-gap: 1.6rem; }
 }
+/* Incomplete last row stays out of the grid. Each query matches one column count. */
+@media (max-width: 768px) {
+  .allList > li:nth-child(2n + 1):nth-last-child(-n + 1),
+  .allList > li:nth-child(2n + 1):nth-last-child(-n + 1) ~ li {
+    display: none;
+  }
+}
+@media (min-width: 769px) and (max-width: 1099px) {
+  .allList > li:nth-child(3n + 1):nth-last-child(-n + 2),
+  .allList > li:nth-child(3n + 1):nth-last-child(-n + 2) ~ li {
+    display: none;
+  }
+}
+@media (min-width: 1100px) {
+  .allList > li:nth-child(4n + 1):nth-last-child(-n + 3),
+  .allList > li:nth-child(4n + 1):nth-last-child(-n + 3) ~ li {
+    display: none;
+  }
+}
 @media (max-width: 768px) {
   .heroBand {
     display: flex;
