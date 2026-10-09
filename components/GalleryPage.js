@@ -14,6 +14,7 @@ import { graph, personNode, websiteNode, pageNode, imageObject } from '@/lib/seo
 import { galleryPathFor, inCategory, journeysThenGalleryPath } from '@/lib/categories';
 import { site } from '@/lib/site';
 import SelectedPhotographs, { selectedPhotos } from '@/components/SelectedPhotographs';
+import palettes from '@/lib/photoPalettes.json';
 import pageStyles from '@/styles/Page.module.css';
 import styles from '@/styles/Gallery.module.css';
 
@@ -300,6 +301,7 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
             wide
             headingId="all-photos-title"
             equalCards
+            palettes={palettes}
           />
         </section>
 
@@ -319,6 +321,7 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
             anchor={false}
             headingId="future-photos-title"
             equalCards
+            palettes={palettes}
           />
         </section>
       </section>

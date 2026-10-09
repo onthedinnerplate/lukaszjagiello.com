@@ -2,6 +2,7 @@ import { useEffect, useId, useState } from 'react';
 import Link from 'next/link';
 import Lightbox from './Lightbox';
 import { PhotoCardActions } from './ShareButtons';
+import Swatches from './Swatches';
 import ResponsiveImage from './ResponsiveImage';
 import { captionFor, mentionsGear, photoNumberFromSrc } from '@/lib/photoCaption';
 import { AffiliateDisclosure, GearLine, gearBlockClass, gearLineClass } from './GearStoreLinks';
@@ -34,6 +35,7 @@ export default function MasonryGallery({
   anchor = true,
   grayscale = true,
   equalCards = false,
+  palettes = null,
 }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -112,6 +114,7 @@ export default function MasonryGallery({
               ? '(max-width: 768px) 100vw, 33vw'
               : (wide ? SIZES_WIDE : SIZES);
           const prioritized = i < priorityCount;
+          const palette = palettes?.[String(num)];
           return (
             <li key={photo.src} id={anchor ? `photo-${num}` : undefined} className={styles.item}>
               <figure className={`${styles.figure} ${tiled ? styles.tileFigure : ''}`}>
@@ -145,6 +148,11 @@ export default function MasonryGallery({
                     />
                   </Link>
                 </div>
+                {Array.isArray(palette) && palette.length ? (
+                  <div className={styles.cardSwatches}>
+                    <Swatches shape={{ palette }} compact />
+                  </div>
+                ) : null}
                 <figcaption className={styles.caption}>
                   <span className={styles.title}>
                     {photo.href ? <Link href={href} className={styles.titleLink}>{photo.title}</Link> : photo.title}

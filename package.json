@@ -5,7 +5,7 @@
   "description": "Portfolio website for \u0141ukasz Jagie\u0142\u0142o Photography (lukaszjagiello.com).",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-photo-manifest.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-sitemap.mjs",
+    "prebuild": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-photo-manifest.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-gallery-palettes.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-sitemap.mjs",
     "build": "next build --webpack",
     "start": "next start",
     "placeholders": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-placeholders.mjs",
