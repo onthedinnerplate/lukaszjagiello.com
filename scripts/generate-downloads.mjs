@@ -8,6 +8,9 @@
 // 1080/2k are resized to the tier's long edge; full is the original re-encoded
 // at quality 92 with metadata (EXIF/copyright) preserved. Existing outputs are
 // skipped unless --force. Requires `sharp` (a devDependency of this repo).
+//
+// The .jpg files are plaintext and gitignored. Before committing, run
+// `npm run encrypt-downloads` so the repo only contains .jpg.enc.
 
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
@@ -69,5 +72,6 @@ for (const [num, filename] of Object.entries(originals)) {
 }
 
 console.log(`\n${done} files written, ${skipped} already present.`);
+console.log('Plaintext JPEGs are gitignored. Encrypt them before committing: npm run encrypt-downloads');
 if (tooSmall.length) console.warn(`\nSkipped (original too small for tier):\n  ${tooSmall.join('\n  ')}`);
 if (missing.length) console.warn(`\nNot found in ${args.source}:\n  ${missing.join('\n  ')}`);

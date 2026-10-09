@@ -9,5 +9,8 @@ npm-debug.log*
 # Generated at build time by scripts/generate-sitemap.mjs
 public/sitemap.xml
 public/robots.txt
-# Paid downloads (private/downloads/NN/*.jpg) are committed; raw originals never are
+# Plaintext paid downloads must never be committed. Only *.jpg.enc belongs in git.
+private/downloads/**/*.jpg
+private/downloads/**/*.jpg.enc.tmp
+# Raw camera originals never belong in the repo
 private/downloads/originals/

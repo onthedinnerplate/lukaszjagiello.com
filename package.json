@@ -15,7 +15,8 @@
     "og": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-og.mjs",
     "sitemap": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-sitemap.mjs",
     "manifest": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-photo-manifest.mjs",
-    "downloads": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-downloads.mjs"
+    "downloads": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-downloads.mjs",
+    "encrypt-downloads": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/encrypt-downloads.mjs"
   },
   "engines": {
     "node": ">=22.12.0"
