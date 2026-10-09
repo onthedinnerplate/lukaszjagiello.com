@@ -25,5 +25,5 @@ export const heroScriptFont = Allura({
 /** Font family, weight, style, size, spacing, and hero white. */
 export const headlineAccentClassName = `${accentScriptFont.className} ${styles.headlineAccent}`;
 
-/** Allura 400 on the Journeys hero phrases. Size and moss color come from .heroTitle .headlineAccent. */
+/** Allura 400 on the Journeys hero phrases. Size and color come from .heroTitle .headlineAccent. */
 export const heroAccentClassName = `${heroScriptFont.className} ${styles.headlineAccent}`;
