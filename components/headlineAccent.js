@@ -1,17 +1,11 @@
-import { Allura } from 'next/font/google';
 import styles from '@/styles/Journal.module.css';
+import { accentScriptFont } from '@/lib/fonts';
 
 // Allura 400 for every handwritten accent word: hero phrases, article
-// headlines, and journey cards. One face so the size stays consistent.
-// font-display: block plus preload so the script does not flash a fallback.
-export const accentScriptFont = Allura({
-  weight: '400',
-  subsets: ['latin'],
-  display: 'block',
-  preload: true,
-  style: 'normal',
-  adjustFontFallback: true,
-});
+// headlines, and journey cards. The face lives in lib/fonts.js so the nav
+// word "Photography" uses the same file. font-display: block plus preload
+// so the script does not flash a fallback.
+export { accentScriptFont };
 
 export const heroScriptFont = accentScriptFont;
 

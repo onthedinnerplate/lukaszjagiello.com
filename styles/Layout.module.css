@@ -59,9 +59,8 @@
 }
 .brand:hover { background: none; }
 .brand:hover .brandName { text-decoration: underline; }
-/* The whole wordmark is Poppins Light. Photography stays gold and at 2em. */
-.brand .brandGiven,
-.brand .brandScript {
+/* The given name stays Poppins Light. Photography is Allura, gold. */
+.brand .brandGiven {
   font-family: Poppins, system-ui, sans-serif;
   font-weight: 300;
   font-style: normal;
@@ -75,11 +74,19 @@
   background: rgba(196, 163, 90, 0.6);
 }
 .brand .brandScript {
+  /* Family is named here as well as on the next/font class, so the shared
+     Poppins rule cannot leave this word in a fallback face. */
+  font-family: Allura, "Allura Fallback", cursive;
+  font-weight: 400;
+  font-style: normal;
   font-synthesis: none;
   -webkit-font-synthesis: none;
   color: #c4a35a;
-  font-size: 2em;
+  /* Allura draws small in its em box. 1.7em is about 1.35× the Poppins name. */
+  font-size: 1.7em;
   line-height: 1;
+  letter-spacing: 0;
+  word-spacing: 0;
   margin: 0;
 }
 .brandName,

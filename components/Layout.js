@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { site, isPlaceholderSocial } from '@/lib/site';
 import { CATEGORIES, galleryPathFor } from '@/lib/categories';
-import { articleTitleFont } from '@/lib/fonts';
+import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
 import styles from '@/styles/Layout.module.css';
 import BackToTop from './BackToTop';
 
@@ -114,7 +114,7 @@ function Nav() {
           <span className={styles.brandName}>
             <span className={`${styles.brandGiven} ${articleTitleFont.className}`}>Łukasz Jagiełło</span>
             <span className={styles.brandSep} aria-hidden="true" />
-            <span className={`${styles.brandScript} ${articleTitleFont.className}`}>Photography</span>
+            <span className={`${styles.brandScript} ${accentScriptFont.className}`}>Photography</span>
           </span>
         </Link>
         <ul className={styles.links} ref={listRef}>
