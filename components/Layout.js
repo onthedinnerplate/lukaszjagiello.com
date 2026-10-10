@@ -41,6 +41,15 @@ function isHomeChrome(path) {
   return previewChromePath(path) === '/' || path === HERO_PARALLAX_PATH;
 }
 
+/** Header category row. Homepage and Gallery omit it at every width.
+    Other pages keep it on desktop; phones hide it in CSS. */
+function omitCategoryBar(path) {
+  const chrome = previewChromePath(path);
+  if (chrome === '/about' || chrome === '/contact') return true;
+  if (hidesCategoryBar(path)) return true;
+  return path === '/' || path === '/gallery';
+}
+
 function sectionCurrent(path, href) {
   const chrome = previewChromePath(path);
   if (href === '/') return isHomeChrome(path);
@@ -208,7 +217,7 @@ function Nav() {
           />
         </ul>
       </nav>
-      {previewChromePath(path) === '/about' || previewChromePath(path) === '/contact' || hidesCategoryBar(path) ? null : (
+      {omitCategoryBar(path) ? null : (
         <div className={`${styles.catBar} container`}>
           <SiteCategoryNav
             counts={MENU_COUNTS}

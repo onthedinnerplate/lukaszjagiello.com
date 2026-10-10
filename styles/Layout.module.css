@@ -17,9 +17,9 @@
   inset: 0 0 auto 0;
   z-index: 50;
   height: auto;
-  background: rgba(255, 255, 255, 0.92);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
+  background: #fff;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 .headerScrolled {
   background: #fff;
@@ -70,7 +70,7 @@
 }
 .brand:hover,
 .brand:hover .brandName { background: none; text-decoration: none; }
-/* The given name stays Poppins Light. Photography is Allura, gold. */
+/* The given name stays Poppins Light. Photography is Allura, black. */
 .brand .brandGiven,
 .brand:hover .brandGiven,
 .brand:focus .brandGiven {
@@ -84,12 +84,9 @@
   align-self: center;
   width: 1px;
   height: 0.9em;
-  /* Same gold as Photography, at 60% so the line stays thinner than the word. */
-  background: rgba(196, 163, 90, 0.6);
+  background: #000;
 }
-/* Preview page mocks only. Live pages never get .markBlack. The bar is
-   solid white, and Photography with its separator are black, including
-   while the bar sits over the homepage hero. */
+/* Same solid white bar and black wordmark. Preview mocks still add this class. */
 .markBlack {
   background: #fff;
   -webkit-backdrop-filter: none;
@@ -108,7 +105,7 @@
   font-style: normal;
   font-synthesis: none;
   -webkit-font-synthesis: none;
-  color: #c4a35a;
+  color: #000;
   /* Allura draws small in its em box. 1.7em is about 1.35× the Poppins name. */
   font-size: 1.7em;
   line-height: 1;
@@ -337,6 +334,9 @@
   min-height: var(--cat-bar);
   display: flex;
   align-items: center;
+}
+@media (max-width: 767px) {
+  .catBar { display: none; }
 }
 .catBar nav { margin: 0; }
 

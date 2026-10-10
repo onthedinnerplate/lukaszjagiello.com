@@ -55,8 +55,12 @@
 }
 /* Phones: one nav row. Tablet (768–960) keeps the wrapped two-row height. */
 @media (max-width: 767px) {
-  :root { --nav-row: 64px; --cat-bar: 52px; }
+  :root { --nav-row: 64px; --cat-bar: 0px; --nav-h: var(--nav-row); }
   body { overflow-x: clip; }
+}
+/* Homepage and Gallery do not render the category row, so the bar is one row. */
+html:not(:has([class*="catBar"])) {
+  --nav-h: var(--nav-row);
 }
 @media (min-width: 769px) {
   :root { --gallery-gap: 1.5rem; }
