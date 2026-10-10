@@ -36,6 +36,7 @@ const journalArticles = articlesNewestFirst().map((article) => {
   };
 });
 
+// /preview/* is a noindex review surface (see lib/previewRoutes.js). Never list it.
 const pages = [
   { path: '/', priority: '1.0', freq: 'weekly' },
   { path: '/gallery', priority: '0.9', freq: 'weekly', images: photos.map((p) => ({ src: p.src })) },
@@ -55,6 +56,11 @@ const pages = [
   { path: '/licensing', priority: '0.4', freq: 'yearly' },
   ...photoPages,
 ];
+
+const listedPreview = pages.filter((p) => p.path === '/preview' || p.path.startsWith('/preview/'));
+if (listedPreview.length) {
+  throw new Error(`sitemap: preview routes must stay out (${listedPreview.map((p) => p.path).join(', ')})`);
+}
 
 const url = (p) => `${SITE_URL}${p === '/' ? '/' : p}`;
 const imageTags = (imgs = []) =>
@@ -88,6 +94,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
+# /preview/ is noindex and omitted from the sitemap.
 Sitemap: ${SITE_URL}/sitemap.xml
 `;
 

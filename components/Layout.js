@@ -10,6 +10,7 @@ import SectionSpy from '@/components/SectionSpy';
 import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
 import styles from '@/styles/Layout.module.css';
 import BackToTop from './BackToTop';
+import { HERO_PARALLAX_PATH } from '@/lib/previewRoutes';
 
 const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
@@ -36,8 +37,12 @@ function currentPath(asPath) {
   return (asPath || '/').split('?')[0].split('#')[0];
 }
 
+function isHomeChrome(path) {
+  return path === '/' || path === HERO_PARALLAX_PATH;
+}
+
 function sectionCurrent(path, href) {
-  if (href === '/') return path === '/';
+  if (href === '/') return isHomeChrome(path);
   return path === href || path.startsWith(`${href}/`);
 }
 
@@ -146,7 +151,7 @@ function Nav() {
           if (!event.currentTarget.contains(event.relatedTarget)) rest();
         }}
       >
-        <Link href="/" className={styles.brand} aria-current={path === '/' ? 'page' : undefined}>
+        <Link href="/" className={styles.brand} aria-current={isHomeChrome(path) ? 'page' : undefined}>
           <img
             className={styles.brandMark}
             src="/icon-192.png"
@@ -204,7 +209,7 @@ function Nav() {
           />
         </div>
       )}
-      {path === '/' ? null : <SectionSpy path={path} />}
+      {isHomeChrome(path) ? null : <SectionSpy path={path} />}
     </header>
   );
 }
@@ -212,7 +217,7 @@ function Nav() {
 function footerCurrent(path, href) {
   if (!href || href.startsWith('mailto:') || href.startsWith('http')) return false;
   const target = href.split('#')[0].split('?')[0];
-  if (target === '/') return path === '/';
+  if (target === '/') return isHomeChrome(path);
   // "All photographs" is only the gallery index; a category has its own link.
   if (target === '/gallery') return path === '/gallery';
   if (target === '/journal') return path === '/journal' || path.startsWith('/journal/');
@@ -293,7 +298,7 @@ function Footer() {
 
 export default function Layout({ children }) {
   const { asPath } = useRouter();
-  const onHero = currentPath(asPath) === '/';
+  const onHero = isHomeChrome(currentPath(asPath));
   return (
     <>
       <a href="#main" className={styles.skipLink}>

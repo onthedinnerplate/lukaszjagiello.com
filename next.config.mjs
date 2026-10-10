@@ -23,8 +23,10 @@ const csp = [
   `connect-src 'self'${isDev ? ' ws: wss:' : ''}`,
   "form-action 'self'",
   // Photo pages embed Google Maps on demand (components/PhotoMap.js).
-  'frame-src https://www.google.com https://maps.google.com',
-  "frame-ancestors 'none'",
+  // 'self' lets /preview/hero-compare iframe the homepage and the parallax preview.
+  "frame-src 'self' https://www.google.com https://maps.google.com",
+  // SAMEORIGIN so that compare page can frame this site. Other origins still cannot.
+  "frame-ancestors 'self'",
   "base-uri 'self'",
   "object-src 'none'",
   "manifest-src 'self'",
@@ -36,7 +38,7 @@ const securityHeaders = [
   // HSTS: 2 years. Add "; preload" and submit to hstspreload.org only once
   // you're sure every subdomain will serve HTTPS forever — it's hard to undo.
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains' },
-  { key: 'X-Frame-Options', value: 'DENY' },
+  { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=()' },
