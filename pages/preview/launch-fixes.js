@@ -1,10 +1,11 @@
 import Seo from '@/components/Seo';
 import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
+import { LAUNCH_FIXES_PATH } from '@/lib/previewRoutes';
 import { site } from '@/lib/site';
 import styles from '@/styles/LaunchFixesPreview.module.css';
 
-// Isolated proposal page. Not linked from the menu (site.nav) and not listed
-// in scripts/generate-sitemap.mjs. noindex is set below.
+// Isolated proposal page. Registered in lib/previewRoutes.js, noindex,
+// omitted from the sitemap, and not linked from site.nav.
 
 const CURRENT_GOLD = '#c4a35a';
 const PROPOSED_GOLD = '#8c7032';
@@ -139,8 +140,8 @@ export default function LaunchFixesPreview() {
       <Seo
         title="Launch fixes preview"
         description="Proposal for search titles, meta descriptions, and a deeper menu gold. Not for indexing."
-        path="/preview/launch-fixes"
-        noindex
+        path={LAUNCH_FIXES_PATH}
+        robots="noindex"
       />
       <article className={styles.page}>
         <header className={styles.header}>
