@@ -231,6 +231,26 @@
 }
 .sectionFirst { padding-top: 1.75rem; }
 
+/* Phones keep one heading. The visible section below is display:none, so this
+   h1 is the page's only one. Above 767px it is not rendered. */
+.phoneTitle { display: none; }
+
+@media (max-width: 767px) {
+  .phoneHide { display: none; }
+  .phoneTitle {
+    display: block;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
 .sectionHead { margin-bottom: 3rem; }
 .sectionHead h1,
 .sectionHead h2 {

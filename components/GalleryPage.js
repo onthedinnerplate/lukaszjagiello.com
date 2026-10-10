@@ -208,7 +208,7 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
           </section>
         ) : null}
 
-        <section className={styles.band} aria-labelledby="selected-photos">
+        <section className={`${styles.band} ${styles.phoneHide}`} aria-labelledby="selected-photos">
           <h2 id="selected-photos" className={styles.sectionLabel}>
             Selected photographs <span>{selected.length}</span>
           </h2>

@@ -37,7 +37,8 @@ export default function Home({ photos, selected, navCounts }) {
         }}
       />
 
-      <section className={`${styles.section} ${styles.sectionFirst}`} aria-labelledby="selected-photos">
+      <h1 className={styles.phoneTitle}>Selected photographs</h1>
+      <section className={`${styles.section} ${styles.sectionFirst} ${styles.phoneHide}`} aria-labelledby="selected-photos">
         <h1 id="selected-photos" className={galleryStyles.sectionLabel}>
           Selected photographs
         </h1>

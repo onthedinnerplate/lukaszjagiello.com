@@ -58,14 +58,15 @@ export default function SectionSpy({ path }) {
 
   useEffect(() => {
     if (!items.length) return undefined;
-    const nodes = items.map((item) => document.getElementById(item.id)).filter(Boolean);
+    const shown = (el) => el && el.getClientRects().length > 0;
+    const nodes = items.map((item) => document.getElementById(item.id)).filter(shown);
     if (!nodes.length) return undefined;
 
     const choose = () => {
       const line = headerOffset() + 8;
       const ranked = items
         .map((item) => ({ item, el: document.getElementById(item.id) }))
-        .filter((entry) => entry.el)
+        .filter((entry) => shown(entry.el))
         .sort((a, b) => a.el.getBoundingClientRect().top - b.el.getBoundingClientRect().top);
       if (!ranked.length) return;
       let chosen = ranked[0].item.id;
@@ -120,7 +121,7 @@ export default function SectionSpy({ path }) {
     <nav className={`${styles.spyBar} container`} aria-label="On this page">
       <ul className={styles.spyList} ref={listRef}>
         {items.map((item) => (
-          <li key={item.id}>
+          <li key={item.id} className={item.id === 'selected-photos' ? styles.spyPhoneHide : undefined}>
             <a
               href={`#${item.id}`}
               className={styles.spyLink}
