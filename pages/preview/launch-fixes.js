@@ -4,7 +4,7 @@ import { CATEGORIES } from '@/lib/categories';
 import { articles } from '@/lib/articles';
 import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
 import { photos } from '@/lib/photos';
-import { GALLERY_NO_CATEGORIES_PATH, HOME_NO_CATEGORIES_PATH, LAUNCH_FIXES_PATH } from '@/lib/previewRoutes';
+import { GALLERY_NO_CATEGORIES_PATH, HOME_NO_CATEGORIES_PATH, HOME_ON_WHITE_PATH, LAUNCH_FIXES_PATH } from '@/lib/previewRoutes';
 import { site } from '@/lib/site';
 import styles from '@/styles/LaunchFixesPreview.module.css';
 
@@ -156,13 +156,13 @@ function PageFrame({ title, src, width, viewHeight }) {
   );
 }
 
-function PagePair({ heading, currentSrc, proposedSrc, width, viewHeight }) {
+function PagePair({ heading, currentSrc, proposedSrc, width, viewHeight, proposedTitle = 'Without category row' }) {
   return (
     <div className={styles.pageBlock}>
       <h3 className={styles.pageName}>{heading}</h3>
       <div className={width > 500 ? styles.pair : styles.phoneStage}>
         <PageFrame title="Current" src={currentSrc} width={width} viewHeight={viewHeight} />
-        <PageFrame title="Without category row" src={proposedSrc} width={width} viewHeight={viewHeight} />
+        <PageFrame title={proposedTitle} src={proposedSrc} width={width} viewHeight={viewHeight} />
       </div>
     </div>
   );
@@ -231,7 +231,7 @@ export default function LaunchFixesPreview() {
     <>
       <Seo
         title="Launch fixes preview"
-        description="Proposal for search titles, meta descriptions, menu gold, and pages without the category row. Not for indexing."
+        description="Proposal for search titles, menu gold, pages without the category row, and a white homepage. Not for indexing."
         path={LAUNCH_FIXES_PATH}
         robots="noindex"
       />
@@ -240,8 +240,9 @@ export default function LaunchFixesPreview() {
           <p className={styles.kicker}>Preview only</p>
           <h1>Launch fixes</h1>
           <p className={styles.lede}>
-            Proposed search text, a deeper gold for the menu, and the homepage and Gallery without the
-            category row. Nothing here is applied to the live pages, the menu, or the sitemap.
+            Proposed search text, a deeper gold for the menu, the homepage and Gallery without the
+            category row, and a homepage whose hero sits on white with a black Photography wordmark.
+            Nothing here is applied to the live pages, the menu, or the sitemap.
           </p>
         </header>
 
@@ -302,6 +303,32 @@ export default function LaunchFixesPreview() {
           <h3 className={styles.pageName}>Gallery</h3>
           <PagePair heading="Desktop" currentSrc="/gallery" proposedSrc={GALLERY_NO_CATEGORIES_PATH} width={1280} viewHeight={560} />
           <PagePair heading="Phone" currentSrc="/gallery" proposedSrc={GALLERY_NO_CATEGORIES_PATH} width={390} viewHeight={680} />
+        </section>
+
+        <section className={styles.section} id="home-on-white" aria-labelledby="home-on-white-heading">
+          <h2 id="home-on-white-heading">Homepage on white</h2>
+          <p className={styles.note}>
+            Current keeps the dark field around the hero image, Photography in {CURRENT_GOLD}, and the
+            thin separator in rgba(196, 163, 90, 0.6). On white covers that field with #fff, leaves the
+            framed photograph, and sets Photography and the separator to #000. The slogan uses charcoal
+            so it can be read on the white field. Preview only.
+          </p>
+          <PagePair
+            heading="Desktop"
+            currentSrc="/"
+            proposedSrc={HOME_ON_WHITE_PATH}
+            width={1280}
+            viewHeight={760}
+            proposedTitle="On white"
+          />
+          <PagePair
+            heading="Phone"
+            currentSrc="/"
+            proposedSrc={HOME_ON_WHITE_PATH}
+            width={390}
+            viewHeight={760}
+            proposedTitle="On white"
+          />
         </section>
       </article>
     </>

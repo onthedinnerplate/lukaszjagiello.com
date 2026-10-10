@@ -10,7 +10,7 @@ import SectionSpy from '@/components/SectionSpy';
 import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
 import styles from '@/styles/Layout.module.css';
 import BackToTop from './BackToTop';
-import { HERO_PARALLAX_PATH, hidesCategoryBar, previewChromePath } from '@/lib/previewRoutes';
+import { HERO_PARALLAX_PATH, hidesCategoryBar, previewChromePath, usesBlackWordmark } from '@/lib/previewRoutes';
 
 const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
@@ -143,7 +143,14 @@ function Nav() {
     : { '--x': '0px', '--y': '0px', '--w': 0, opacity: 0 };
 
   return (
-    <header ref={headerRef} className={scrolled ? `${styles.header} ${styles.headerScrolled}` : styles.header}>
+    <header
+      ref={headerRef}
+      className={[
+        styles.header,
+        scrolled ? styles.headerScrolled : '',
+        usesBlackWordmark(path) ? styles.markBlack : '',
+      ].filter(Boolean).join(' ')}
+    >
       <nav
         className={`${styles.nav} container${ready ? ` ${styles.navReady}` : ''}${menuOpen ? ` ${styles.navOpen}` : ''}`}
         aria-label="Main"

@@ -87,6 +87,10 @@
   /* Same gold as Photography, at 60% so the line stays thinner than the word. */
   background: rgba(196, 163, 90, 0.6);
 }
+/* Homepage-on-white preview only. Live pages never get .markBlack. */
+.markBlack .brandSep { background: #000; }
+.markBlack .brand .brandScript { color: #000; }
+
 .brand .brandScript {
   /* Family is named here as well as on the next/font class, so the shared
      Poppins rule cannot leave this word in a fallback face. */

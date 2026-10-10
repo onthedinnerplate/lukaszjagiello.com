@@ -16,7 +16,7 @@ const meta = {
   description: site.description,
 };
 
-export default function Home({ photos, selected, navCounts, noindexPath = '' }) {
+export default function Home({ photos, selected, navCounts, noindexPath = '', onWhite = false }) {
   return (
     <>
       <Seo
@@ -30,6 +30,7 @@ export default function Home({ photos, selected, navCounts, noindexPath = '' }) 
 
       <JourneysHero
         bleed
+        onWhite={onWhite}
         headingAs="p"
         nav={{
           active: 'home',
