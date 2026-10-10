@@ -580,11 +580,9 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Top of the frame is the sky/bridge. Scale past the half-height cover
-     window so the crop ends at the bridge foot instead of the foreground rocks. */
-  object-position: center top;
-  transform: scale(2.8);
-  transform-origin: center top;
+  /* 2:3 photograph in a 4:3 frame. The catalog focal point sits on the
+     bridge, and this cover window keeps both towers and the span in frame. */
+  object-position: 50% 12%;
   display: block;
 }
 .selectedRow {

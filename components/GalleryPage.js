@@ -170,6 +170,7 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
                       srcSet={gate.width ? `${gate.src} ${gate.width}w` : undefined}
                       avifSrcSet={gate.fullAvif && gate.width ? `${gate.fullAvif} ${gate.width}w` : undefined}
                       className={styles.gateImg}
+                      style={{ objectPosition: gate.focus || '50% 12%' }}
                       loading="eager"
                       fetchPriority="high"
                     />
