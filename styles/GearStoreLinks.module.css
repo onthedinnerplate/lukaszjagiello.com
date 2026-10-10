@@ -17,42 +17,40 @@ span.block {
 .links {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
   margin-left: 0.28rem;
-  vertical-align: -3px;
+  vertical-align: -0.15em;
   white-space: nowrap;
+  line-height: 0;
 }
 
 .link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1px;
-  color: inherit;
-  opacity: 0.62;
+  padding: 0;
+  color: #6b6b6b;
   line-height: 0;
   text-decoration: none;
 }
 
 .link:hover,
 .link:focus-visible {
-  color: inherit;
-  opacity: 1;
+  color: #FF9900;
   text-decoration: none;
 }
 
 .icon {
   display: block;
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
 }
 @media (max-width: 767px) {
-  .links { gap: 0; margin-left: 0.1rem; }
-  .link {
-    min-width: 44px;
-    min-height: 44px;
-    margin: -12px 0;
-    padding: 12px 8px;
+  .links { margin-left: 0.2rem; }
+  .link::after {
+    content: "";
+    position: absolute;
+    inset: -15px -12px;
   }
 }
 
