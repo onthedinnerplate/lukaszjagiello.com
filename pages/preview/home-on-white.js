@@ -5,10 +5,11 @@ import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { HOME_ON_WHITE_PATH } from '@/lib/previewRoutes';
 import { site } from '@/lib/site';
 
-// Same homepage as /, with a white field around the hero image and a black
-// Photography wordmark. noindex, not in the menu, not in the sitemap.
+// Same homepage as /. The hero is unchanged. Below it the page is white, and
+// the menu turns Photography black only after it has scrolled past the hero.
+// noindex, not in the menu, not in the sitemap.
 export default function HomeOnWhite(props) {
-  return <Home {...props} noindexPath={HOME_ON_WHITE_PATH} onWhite />;
+  return <Home {...props} noindexPath={HOME_ON_WHITE_PATH} />;
 }
 
 export async function getStaticProps() {

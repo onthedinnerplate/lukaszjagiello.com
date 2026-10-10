@@ -10,7 +10,7 @@ import SectionSpy from '@/components/SectionSpy';
 import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
 import styles from '@/styles/Layout.module.css';
 import BackToTop from './BackToTop';
-import { HERO_PARALLAX_PATH, hidesCategoryBar, previewChromePath, usesBlackWordmark } from '@/lib/previewRoutes';
+import { HERO_PARALLAX_PATH, hidesCategoryBar, lightBelowHero, previewChromePath } from '@/lib/previewRoutes';
 
 const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
@@ -56,6 +56,7 @@ function Nav() {
   const [instant, setInstant] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [pastHero, setPastHero] = useState(false);
   const headerRef = useRef(null);
 
   const measure = (el) => {
@@ -99,6 +100,29 @@ function Nav() {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!lightBelowHero(path)) {
+      setPastHero(false);
+      return undefined;
+    }
+    const onScroll = () => {
+      const hero = document.querySelector('section[aria-label="Marymere Falls"]');
+      const header = headerRef.current;
+      if (!hero || !header) {
+        setPastHero(false);
+        return;
+      }
+      setPastHero(hero.getBoundingClientRect().bottom <= header.getBoundingClientRect().bottom + 1);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [path]);
 
   useIsoLayoutEffect(() => {
     const el = headerRef.current;
@@ -148,7 +172,7 @@ function Nav() {
       className={[
         styles.header,
         scrolled ? styles.headerScrolled : '',
-        usesBlackWordmark(path) ? styles.markBlack : '',
+        lightBelowHero(path) && pastHero ? styles.markBlack : '',
       ].filter(Boolean).join(' ')}
     >
       <nav
@@ -267,7 +291,7 @@ function Footer() {
   ];
 
   return (
-    <footer className={styles.footer}>
+    <footer className={lightBelowHero(path) ? `${styles.footer} ${styles.footerWhite}` : styles.footer}>
       <div className={styles.footerInner}>
         <nav className={styles.footerGrid} aria-label="Site footer">
           {columns.map((col) => (
@@ -308,14 +332,20 @@ function Footer() {
 
 export default function Layout({ children }) {
   const { asPath } = useRouter();
-  const onHero = isHomeChrome(currentPath(asPath));
+  const path = currentPath(asPath);
+  const onHero = isHomeChrome(path);
+  const mainClass = [
+    styles.main,
+    onHero ? styles.mainUnderHero : '',
+    lightBelowHero(path) ? styles.mainWhite : '',
+  ].filter(Boolean).join(' ');
   return (
     <>
       <a href="#main" className={styles.skipLink}>
         Skip to main content
       </a>
       <Nav />
-      <main id="main" tabIndex={-1} className={onHero ? `${styles.main} ${styles.mainUnderHero}` : styles.main}>
+      <main id="main" tabIndex={-1} className={mainClass}>
         {children}
       </main>
       <Footer />

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import Seo from '@/components/Seo';
 import SiteCategoryNav from '@/components/SiteCategoryNav';
 import { CATEGORIES } from '@/lib/categories';
@@ -135,7 +136,35 @@ function PhoneMenu({ gold }) {
   );
 }
 
-function PageFrame({ title, src, width, viewHeight }) {
+function PageFrame({ title, src, width, viewHeight, scrollPastHero = false }) {
+  const frameRef = useRef(null);
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame || !scrollPastHero) return undefined;
+    const place = () => {
+      const doc = frame.contentDocument;
+      const win = frame.contentWindow;
+      const hero = doc?.querySelector('section[aria-label="Marymere Falls"]');
+      const header = doc?.querySelector('header');
+      if (!doc || !win || !hero || !header) return false;
+      const headerBottom = header.getBoundingClientRect().bottom;
+      const top = win.scrollY + hero.getBoundingClientRect().bottom - headerBottom + 24;
+      if (top < 80) return false;
+      win.scrollTo(0, top);
+      return win.scrollY > 80;
+    };
+    frame.addEventListener('load', place);
+    const timer = setInterval(place, 400);
+    const stop = setTimeout(() => clearInterval(timer), 8000);
+    place();
+    return () => {
+      frame.removeEventListener('load', place);
+      clearInterval(timer);
+      clearTimeout(stop);
+    };
+  }, [scrollPastHero, src]);
+
   return (
     <figure className={styles.frameCard}>
       <figcaption className={styles.goldCaption}>
@@ -150,19 +179,19 @@ function PageFrame({ title, src, width, viewHeight }) {
           '--view-h': `${viewHeight}px`,
         }}
       >
-        <iframe className={styles.frame} title={title} src={src} loading="lazy" />
+        <iframe ref={frameRef} className={styles.frame} title={title} src={src} loading="lazy" />
       </div>
     </figure>
   );
 }
 
-function PagePair({ heading, currentSrc, proposedSrc, width, viewHeight, proposedTitle = 'Without category row' }) {
+function PagePair({ heading, currentSrc, proposedSrc, width, viewHeight, proposedTitle = 'Without category row', scrollPastHero = false }) {
   return (
     <div className={styles.pageBlock}>
       <h3 className={styles.pageName}>{heading}</h3>
       <div className={width > 500 ? styles.pair : styles.phoneStage}>
-        <PageFrame title="Current" src={currentSrc} width={width} viewHeight={viewHeight} />
-        <PageFrame title={proposedTitle} src={proposedSrc} width={width} viewHeight={viewHeight} />
+        <PageFrame title="Current" src={currentSrc} width={width} viewHeight={viewHeight} scrollPastHero={scrollPastHero} />
+        <PageFrame title={proposedTitle} src={proposedSrc} width={width} viewHeight={viewHeight} scrollPastHero={scrollPastHero} />
       </div>
     </div>
   );
@@ -231,7 +260,7 @@ export default function LaunchFixesPreview() {
     <>
       <Seo
         title="Launch fixes preview"
-        description="Proposal for search titles, menu gold, pages without the category row, and a white homepage. Not for indexing."
+        description="Proposal for search titles, menu gold, pages without the category row, and a white page below the homepage hero. Not for indexing."
         path={LAUNCH_FIXES_PATH}
         robots="noindex"
       />
@@ -241,8 +270,8 @@ export default function LaunchFixesPreview() {
           <h1>Launch fixes</h1>
           <p className={styles.lede}>
             Proposed search text, a deeper gold for the menu, the homepage and Gallery without the
-            category row, and a homepage whose hero sits on white with a black Photography wordmark.
-            Nothing here is applied to the live pages, the menu, or the sitemap.
+            category row, and a homepage that stays white below the hero. Nothing here is applied to
+            the live pages, the menu, or the sitemap.
           </p>
         </header>
 
@@ -306,28 +335,47 @@ export default function LaunchFixesPreview() {
         </section>
 
         <section className={styles.section} id="home-on-white" aria-labelledby="home-on-white-heading">
-          <h2 id="home-on-white-heading">Homepage on white</h2>
+          <h2 id="home-on-white-heading">Below the hero</h2>
           <p className={styles.note}>
-            Current keeps the dark field around the hero image, Photography in {CURRENT_GOLD}, and the
-            thin separator in rgba(196, 163, 90, 0.6). On white covers that field with #fff, leaves the
-            framed photograph, and sets Photography and the separator to #000. The slogan uses charcoal
-            so it can be read on the white field. Preview only.
+            The hero is unchanged: the same dark field, Photography in {CURRENT_GOLD}, and the separator
+            in rgba(196, 163, 90, 0.6). Below the hero the page is #fff. Once the menu has scrolled past
+            the hero, that bar is #fff and Photography and the separator are #000. Preview only.
           </p>
+          <h3 className={styles.pageName}>At the hero</h3>
           <PagePair
             heading="Desktop"
             currentSrc="/"
             proposedSrc={HOME_ON_WHITE_PATH}
             width={1280}
-            viewHeight={760}
-            proposedTitle="On white"
+            viewHeight={560}
+            proposedTitle="Same hero"
           />
           <PagePair
             heading="Phone"
             currentSrc="/"
             proposedSrc={HOME_ON_WHITE_PATH}
             width={390}
-            viewHeight={760}
-            proposedTitle="On white"
+            viewHeight={680}
+            proposedTitle="Same hero"
+          />
+          <h3 className={styles.pageName}>Scrolled past the hero</h3>
+          <PagePair
+            heading="Desktop"
+            currentSrc="/"
+            proposedSrc={HOME_ON_WHITE_PATH}
+            width={1280}
+            viewHeight={560}
+            proposedTitle="White, black wordmark"
+            scrollPastHero
+          />
+          <PagePair
+            heading="Phone"
+            currentSrc="/"
+            proposedSrc={HOME_ON_WHITE_PATH}
+            width={390}
+            viewHeight={680}
+            proposedTitle="White, black wordmark"
+            scrollPastHero
           />
         </section>
       </article>

@@ -110,7 +110,7 @@ function readHeroDrop(el) {
   return Number.isFinite(px) ? px : 0;
 }
 
-export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = false, onWhite = false }) {
+export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = false }) {
   const Title = headingAs;
   const menu = heroNavProps(nav);
   const titleNodes = bleed ? null : titleWithAccents(HERO.title);
@@ -197,12 +197,6 @@ export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = fal
       <Link href={HERO.creditHref}>{HERO.credit}</Link>
     </p>
   );
-  const frame = align?.frame;
-  const whiteField = onWhite && frame
-    ? {
-        clipPath: `polygon(evenodd, 0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${frame.left + 8}px ${frame.top + 8}px, ${frame.left + frame.width - 8}px ${frame.top + 8}px, ${frame.left + frame.width - 8}px ${frame.top + frame.height - 32}px, ${frame.left + 8}px ${frame.top + frame.height - 32}px, ${frame.left + 8}px ${frame.top + 8}px)`,
-      }
-    : undefined;
   return (
     <>
       <Head>
@@ -212,11 +206,7 @@ export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = fal
       </Head>
       <div className={bleed ? styles.heroSlotBleed : styles.heroSlot}>
         <section
-          className={[
-            styles.heroBand,
-            bleed ? styles.heroBleed : '',
-            onWhite ? styles.heroOnWhite : '',
-          ].filter(Boolean).join(' ')}
+          className={bleed ? `${styles.heroBand} ${styles.heroBleed}` : styles.heroBand}
           style={heroAccentStyle}
           aria-label="Marymere Falls"
         >
@@ -231,14 +221,13 @@ export default function JourneysHero({ nav = null, headingAs = 'h1', bleed = fal
               className={styles.heroPhoto}
               style={photoStyle}
             />
-            {onWhite ? null : <div className={styles.heroShade} aria-hidden="true" />}
-            {bleed && !onWhite ? (
+            <div className={styles.heroShade} aria-hidden="true" />
+            {bleed ? (
               <>
                 <div className={styles.heroWear} aria-hidden="true" />
                 <div className={styles.heroVignette} aria-hidden="true" />
               </>
             ) : null}
-            {whiteField ? <div className={styles.heroWhiteField} style={whiteField} aria-hidden="true" /> : null}
             <div className={styles.portrait} style={frameStyle}>
               <div className={styles.portraitRim} aria-hidden="true" />
               <div className={styles.portraitBand}>

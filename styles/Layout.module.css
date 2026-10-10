@@ -87,9 +87,18 @@
   /* Same gold as Photography, at 60% so the line stays thinner than the word. */
   background: rgba(196, 163, 90, 0.6);
 }
-/* Homepage-on-white preview only. Live pages never get .markBlack. */
+/* Homepage preview, only after the menu has scrolled past the hero.
+   Live pages never get .markBlack. The bar is solid white and Photography
+   with its separator turn black. Over the hero they stay the current gold. */
+.markBlack {
+  background: #fff;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
 .markBlack .brandSep { background: #000; }
 .markBlack .brand .brandScript { color: #000; }
+.mainWhite { background: #fff; }
+.footer.footerWhite { background: #fff; }
 
 .brand .brandScript {
   /* Family is named here as well as on the next/font class, so the shared
