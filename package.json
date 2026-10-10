@@ -2,7 +2,7 @@
   "name": "lukaszjagiello-com",
   "version": "1.0.0",
   "private": true,
-  "description": "Portfolio website for \u0141ukasz Jagie\u0142\u0142o Photography (lukaszjagiello.com).",
+  "description": "Portfolio website for Łukasz Jagiełło Photography (lukaszjagiello.com).",
   "scripts": {
     "dev": "next dev",
     "prebuild": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-photo-manifest.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-gallery-palettes.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-sitemap.mjs",
@@ -22,6 +22,7 @@
     "node": ">=22.12.0"
   },
   "dependencies": {
+    "framer-motion": "^14.1.0",
     "next": "^16.4.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

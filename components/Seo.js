@@ -11,6 +11,7 @@ export default function Seo({
   keywords = [],
   jsonLd,
   noindex = false,
+  robots,
   image,
   ogType = 'website',
 }) {
@@ -19,6 +20,8 @@ export default function Seo({
   const og = image || site.ogImage;
   const ogImage = absoluteUrl(og.src);
   const allKeywords = [...new Set([...keywords, ...site.keywords])].join(', ');
+  const robotsContent = robots ?? (noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large');
+  const indexable = robots == null ? !noindex : !/noindex/i.test(String(robots));
 
   return (
     <Head>
@@ -26,8 +29,8 @@ export default function Seo({
       <meta name="description" content={description} />
       <meta name="keywords" content={allKeywords} />
       <meta name="author" content={site.photographer} />
-      <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
-      {!noindex && <link rel="canonical" href={url} />}
+      <meta name="robots" content={robotsContent} />
+      {indexable && <link rel="canonical" href={url} />}
 
       <meta property="og:type" content={ogType} />
       <meta property="og:site_name" content={site.name} />
