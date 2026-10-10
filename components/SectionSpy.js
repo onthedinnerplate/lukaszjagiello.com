@@ -3,13 +3,6 @@ import styles from '@/styles/Layout.module.css';
 
 const MENUS = [
   {
-    test: (path) => path === '/',
-    items: [
-      { id: 'selected-photos', label: 'Selected' },
-      { id: 'featured-heading', label: 'Featured' },
-    ],
-  },
-  {
     test: (path) => path === '/gallery' || path.startsWith('/gallery/'),
     items: [
       { id: 'gate-hero-title', label: 'Featured' },

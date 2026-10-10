@@ -204,7 +204,7 @@ function Nav() {
           />
         </div>
       )}
-      <SectionSpy path={path} />
+      {path === '/' ? null : <SectionSpy path={path} />}
     </header>
   );
 }
