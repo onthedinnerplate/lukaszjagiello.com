@@ -5,9 +5,9 @@ import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { HOME_ON_WHITE_PATH } from '@/lib/previewRoutes';
 import { site } from '@/lib/site';
 
-// Same homepage as /. The hero is unchanged. Below it the page is white, and
-// the menu turns Photography black only after it has scrolled past the hero.
-// noindex, not in the menu, not in the sitemap.
+// Same homepage as /. The hero image is unchanged. The nav is solid white
+// with Photography and its separator in black, including over the hero.
+// Below the hero the page is white. noindex, not in the menu, not in the sitemap.
 export default function HomeOnWhite(props) {
   return <Home {...props} noindexPath={HOME_ON_WHITE_PATH} />;
 }

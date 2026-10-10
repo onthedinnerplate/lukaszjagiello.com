@@ -211,8 +211,8 @@ function PhoneHeaderMock({ name, detail, showCategories }) {
               <img className={styles.phoneMark} src="/icon-192.png" alt="" width={22} height={22} />
               <span className={styles.phoneName}>
                 <span className={`${styles.phoneGiven} ${articleTitleFont.className}`}>Łukasz Jagiełło</span>
-                <span className={styles.sep} aria-hidden="true" />
-                <span className={`${styles.phoneScript} ${accentScriptFont.className}`}>Photography</span>
+                <span className={showCategories ? styles.sep : `${styles.sep} ${styles.sepBlack}`} aria-hidden="true" />
+                <span className={`${styles.phoneScript} ${accentScriptFont.className}${showCategories ? '' : ` ${styles.phoneScriptBlack}`}`}>Photography</span>
               </span>
             </div>
             <span className={styles.phoneBurger} aria-hidden="true" />
@@ -260,7 +260,7 @@ export default function LaunchFixesPreview() {
     <>
       <Seo
         title="Launch fixes preview"
-        description="Proposal for search titles, menu gold, pages without the category row, and a white page below the homepage hero. Not for indexing."
+        description="Proposal for search titles, menu gold, a white nav with a black wordmark, pages without the category row, and a white page below the homepage hero. Not for indexing."
         path={LAUNCH_FIXES_PATH}
         robots="noindex"
       />
@@ -269,9 +269,10 @@ export default function LaunchFixesPreview() {
           <p className={styles.kicker}>Preview only</p>
           <h1>Launch fixes</h1>
           <p className={styles.lede}>
-            Proposed search text, a deeper gold for the menu, the homepage and Gallery without the
-            category row, and a homepage that stays white below the hero. Nothing here is applied to
-            the live pages, the menu, or the sitemap.
+            Proposed search text, a deeper gold for the menu study, a white navigation bar with
+            Photography in black, the homepage and Gallery without the category row, and a homepage
+            that stays white below the hero. Nothing here is applied to the live pages, the menu, or
+            the sitemap.
           </p>
         </header>
 
@@ -298,7 +299,8 @@ export default function LaunchFixesPreview() {
             Photography in the white menu bar, and the current page in the phone menu, use {CURRENT_GOLD} (
             {ratioLabel(CURRENT_GOLD)} on white). The proposal is {PROPOSED_GOLD} ({ratioLabel(PROPOSED_GOLD)} on
             white), the same gold deepened past 4.5:1. The thin decorative line stays rgba(196, 163, 90, 0.6) in
-            both.
+            both. The page mocks further down use a separate treatment: a white bar with Photography and
+            the separator in #000.
           </p>
           <div className={styles.compare}>
             <GoldColumn name="Current" hex={CURRENT_GOLD} />
@@ -310,8 +312,9 @@ export default function LaunchFixesPreview() {
           <h2 id="phone-cat-heading">Category row on phones</h2>
           <p className={styles.note}>
             A close-up of the phone header. Journey, Landscape, Animal, Architecture, and People stay in the
-            current frame. The frames below show the whole homepage and Gallery, at desktop width and at
-            390px, beside the same pages with that row removed.
+            current frame. The proposed close-up uses a white bar with Photography and the separator in
+            #000. The frames below show the whole homepage and Gallery, at desktop width and at 390px,
+            beside the same pages with that row removed.
           </p>
           <div className={styles.phoneStage}>
             <PhoneHeaderMock name="Current" detail="390px · category row kept" showCategories />
@@ -323,23 +326,24 @@ export default function LaunchFixesPreview() {
           <h2 id="page-frames-heading">Homepage and Gallery</h2>
           <p className={styles.note}>
             Desktop frames lay out at 1280px and scale into the column. Phone frames lay out at 390px.
-            Current is the live page. Without category row is the same page, preview only, with Journey,
-            Landscape, Animal, Architecture, and People removed from the header.
+            Current is the live page, with the gold wordmark. White nav is the same page, preview only:
+            the bar is #fff, Photography and the vertical separator are #000, and Journey, Landscape,
+            Animal, Architecture, and People are removed from the header. The hero image is unchanged.
           </p>
           <h3 className={styles.pageName}>Homepage</h3>
-          <PagePair heading="Desktop" currentSrc="/" proposedSrc={HOME_NO_CATEGORIES_PATH} width={1280} viewHeight={560} />
-          <PagePair heading="Phone" currentSrc="/" proposedSrc={HOME_NO_CATEGORIES_PATH} width={390} viewHeight={680} />
+          <PagePair heading="Desktop" currentSrc="/" proposedSrc={HOME_NO_CATEGORIES_PATH} width={1280} viewHeight={560} proposedTitle="White nav" />
+          <PagePair heading="Phone" currentSrc="/" proposedSrc={HOME_NO_CATEGORIES_PATH} width={390} viewHeight={680} proposedTitle="White nav" />
           <h3 className={styles.pageName}>Gallery</h3>
-          <PagePair heading="Desktop" currentSrc="/gallery" proposedSrc={GALLERY_NO_CATEGORIES_PATH} width={1280} viewHeight={560} />
-          <PagePair heading="Phone" currentSrc="/gallery" proposedSrc={GALLERY_NO_CATEGORIES_PATH} width={390} viewHeight={680} />
+          <PagePair heading="Desktop" currentSrc="/gallery" proposedSrc={GALLERY_NO_CATEGORIES_PATH} width={1280} viewHeight={560} proposedTitle="White nav" />
+          <PagePair heading="Phone" currentSrc="/gallery" proposedSrc={GALLERY_NO_CATEGORIES_PATH} width={390} viewHeight={680} proposedTitle="White nav" />
         </section>
 
         <section className={styles.section} id="home-on-white" aria-labelledby="home-on-white-heading">
           <h2 id="home-on-white-heading">Below the hero</h2>
           <p className={styles.note}>
-            The hero is unchanged: the same dark field, Photography in {CURRENT_GOLD}, and the separator
-            in rgba(196, 163, 90, 0.6). Below the hero the page is #fff. Once the menu has scrolled past
-            the hero, that bar is #fff and Photography and the separator are #000. Preview only.
+            The hero image is unchanged: the same dark field. On the preview the navigation bar is #fff
+            even over that hero, and Photography and the vertical separator are #000. Below the hero the
+            rest of the homepage stays #fff. Preview only.
           </p>
           <h3 className={styles.pageName}>At the hero</h3>
           <PagePair
@@ -348,7 +352,7 @@ export default function LaunchFixesPreview() {
             proposedSrc={HOME_ON_WHITE_PATH}
             width={1280}
             viewHeight={560}
-            proposedTitle="Same hero"
+            proposedTitle="White nav"
           />
           <PagePair
             heading="Phone"
@@ -356,7 +360,7 @@ export default function LaunchFixesPreview() {
             proposedSrc={HOME_ON_WHITE_PATH}
             width={390}
             viewHeight={680}
-            proposedTitle="Same hero"
+            proposedTitle="White nav"
           />
           <h3 className={styles.pageName}>Scrolled past the hero</h3>
           <PagePair

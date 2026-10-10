@@ -87,9 +87,9 @@
   /* Same gold as Photography, at 60% so the line stays thinner than the word. */
   background: rgba(196, 163, 90, 0.6);
 }
-/* Homepage preview, only after the menu has scrolled past the hero.
-   Live pages never get .markBlack. The bar is solid white and Photography
-   with its separator turn black. Over the hero they stay the current gold. */
+/* Preview page mocks only. Live pages never get .markBlack. The bar is
+   solid white, and Photography with its separator are black, including
+   while the bar sits over the homepage hero. */
 .markBlack {
   background: #fff;
   -webkit-backdrop-filter: none;

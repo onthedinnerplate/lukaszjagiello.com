@@ -5,8 +5,9 @@ import { photoNumberFromSrc } from '@/lib/photoCaption';
 import { HOME_NO_CATEGORIES_PATH } from '@/lib/previewRoutes';
 import { site } from '@/lib/site';
 
-// Same homepage as /, with the header category row removed by Layout.
-// noindex, not in the menu, not in the sitemap.
+// Same homepage as /. The header category row is removed, and the nav is
+// solid white with Photography and its separator in black, including over
+// the hero. The hero image is unchanged. noindex, not in the menu, not in the sitemap.
 export default function HomeNoCategories(props) {
   return <Home {...props} noindexPath={HOME_NO_CATEGORIES_PATH} />;
 }
