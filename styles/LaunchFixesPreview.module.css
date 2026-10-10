@@ -1,0 +1,222 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem var(--gutter) 3.5rem;
+}
+
+.header { margin-bottom: 2.5rem; max-width: 42rem; }
+
+.kicker {
+  margin: 0 0 0.4rem;
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.lede {
+  margin: 0;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 1.125rem;
+  color: var(--muted);
+}
+
+.section { margin-bottom: 3rem; }
+
+.note {
+  max-width: 44rem;
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.pageBlock { margin-bottom: 1.75rem; }
+
+.pageName {
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.copyCard,
+.goldCard {
+  margin: 0;
+  padding: 1.1rem 1.15rem 1.2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.cardLabel {
+  margin: 0 0 0.85rem;
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.fieldLabel {
+  margin: 0.85rem 0 0.35rem;
+  font-size: 0.95rem;
+  color: var(--charcoal);
+}
+
+.fieldLabel:first-of-type { margin-top: 0; }
+
+.count {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--border);
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--charcoal);
+  vertical-align: 1px;
+}
+
+.quote {
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  background: #fff;
+  border-radius: 8px;
+  color: var(--charcoal);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.goldCaption { margin: 0 0 0.25rem; }
+
+.goldMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.7rem;
+  margin: 0 0 0.85rem;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
+}
+
+.goldMeta code {
+  font-size: 0.95rem;
+  color: var(--charcoal);
+}
+
+.swatch {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.mockBlock { margin-top: 0.85rem; }
+
+.mockLabel {
+  margin: 0 0 0.4rem;
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  min-height: 72px;
+  padding: 0.6rem 0.85rem;
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px 8px 0 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  font-size: clamp(0.95rem, 1.6vw, 1.35rem);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.mark {
+  width: 28px;
+  height: 28px;
+  flex: none;
+}
+
+.brandName {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+
+.given {
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--charcoal);
+}
+
+.sep {
+  flex: none;
+  align-self: center;
+  width: 1px;
+  height: 0.9em;
+  background: rgba(196, 163, 90, 0.6);
+}
+
+.script {
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  font-size: 1.7em;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.phone {
+  width: min(100%, 220px);
+  margin: 0 0 0 auto;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(26, 26, 26, 0.12);
+  overflow: hidden;
+}
+
+.phone li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 16px;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
+  text-align: center;
+  color: var(--charcoal);
+}
+
+.phone li + li { border-top: 1px solid var(--border); }
+
+@media (max-width: 800px) {
+  .compare { grid-template-columns: 1fr; }
+  .brand { font-size: 1.05rem; }
+}
