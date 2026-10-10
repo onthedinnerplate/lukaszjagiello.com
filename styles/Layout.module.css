@@ -369,6 +369,7 @@
 @media (max-width: 767px) {
   .spyList { justify-content: space-between; gap: 0.3rem; }
   .spyLink { font-size: clamp(11px, 2.7vw, 13px); letter-spacing: -0.02em; }
+  .spyPhoneHide { display: none; }
 }
 
 .main {

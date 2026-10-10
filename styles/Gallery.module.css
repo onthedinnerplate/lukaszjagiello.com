@@ -637,6 +637,7 @@
 
 /* Phones: five labels on one line. 11px is the largest size that fits at 360px. */
 @media (max-width: 767px) {
+  .phoneHide { display: none; }
   .catNav { margin-top: 0.2rem; max-width: 100%; }
   .catList {
     flex-wrap: nowrap;
