@@ -28,7 +28,8 @@
 }
 .header,
 .headerScrolled {
-  border-bottom: none;
+  /* Hairline under the menu. Not the old 2px moss rule. */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: none;
   text-shadow: none;
   filter: none;
