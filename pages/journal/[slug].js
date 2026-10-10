@@ -88,16 +88,6 @@ export default function JournalArticle({ article, navCounts }) {
       <article className={styles.article} style={{ '--accent': shape.accent, '--accent-script': accentScript }}>
         <div className={styles.spread}>
           <div className={styles.visual}>
-            <div className={styles.frameWrap}>
-              <ArticleLead
-                photo={photo}
-                location={article.location}
-                alltrailsUrl={article.trail?.alltrailsUrl}
-                onClick={openLightbox}
-                expanded={lbOpen}
-                controlsId={lightboxId}
-              />
-            </div>
             <div className={styles.under}>
               {article.taken ? (
                 <p className={styles.taken}>
@@ -152,6 +142,14 @@ export default function JournalArticle({ article, navCounts }) {
               <span>{article.author}</span>
             </p>
             <div className={styles.lead}>
+              <ArticleLead
+                photo={photo}
+                location={article.location}
+                alltrailsUrl={article.trail?.alltrailsUrl}
+                onClick={openLightbox}
+                expanded={lbOpen}
+                controlsId={lightboxId}
+              />
               {article.paragraphs.slice(0, 2).map((paragraph, index) => (
                 <p key={paragraph} className={index === 0 ? styles.dropCap : undefined}>
                   {paragraph}
