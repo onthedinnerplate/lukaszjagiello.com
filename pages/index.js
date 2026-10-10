@@ -16,15 +16,16 @@ const meta = {
   description: site.description,
 };
 
-export default function Home({ photos, selected, navCounts }) {
+export default function Home({ photos, selected, navCounts, noindexPath = '' }) {
   return (
     <>
       <Seo
         title={meta.title}
         description={meta.description}
-        path={meta.path}
+        path={noindexPath || meta.path}
         keywords={['photography portfolio', 'landscape photography', 'professional photographer']}
-        jsonLd={graph(websiteNode(), personNode(), pageNode('WebPage', { ...meta, title: site.name }))}
+        robots={noindexPath ? 'noindex' : undefined}
+        jsonLd={noindexPath ? undefined : graph(websiteNode(), personNode(), pageNode('WebPage', { ...meta, title: site.name }))}
       />
 
       <JourneysHero

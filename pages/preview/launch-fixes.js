@@ -4,7 +4,7 @@ import { CATEGORIES } from '@/lib/categories';
 import { articles } from '@/lib/articles';
 import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
 import { photos } from '@/lib/photos';
-import { LAUNCH_FIXES_PATH } from '@/lib/previewRoutes';
+import { GALLERY_NO_CATEGORIES_PATH, HOME_NO_CATEGORIES_PATH, LAUNCH_FIXES_PATH } from '@/lib/previewRoutes';
 import { site } from '@/lib/site';
 import styles from '@/styles/LaunchFixesPreview.module.css';
 
@@ -135,6 +135,39 @@ function PhoneMenu({ gold }) {
   );
 }
 
+function PageFrame({ title, src, width, viewHeight }) {
+  return (
+    <figure className={styles.frameCard}>
+      <figcaption className={styles.goldCaption}>
+        <span className={styles.cardLabel}>{title}</span>
+        <span className={styles.goldMeta}>{width}px</span>
+      </figcaption>
+      <div
+        className={styles.frameClip}
+        style={{
+          height: viewHeight,
+          '--frame-w': `${width}px`,
+          '--view-h': `${viewHeight}px`,
+        }}
+      >
+        <iframe className={styles.frame} title={title} src={src} loading="lazy" />
+      </div>
+    </figure>
+  );
+}
+
+function PagePair({ heading, currentSrc, proposedSrc, width, viewHeight }) {
+  return (
+    <div className={styles.pageBlock}>
+      <h3 className={styles.pageName}>{heading}</h3>
+      <div className={width > 500 ? styles.pair : styles.phoneStage}>
+        <PageFrame title="Current" src={currentSrc} width={width} viewHeight={viewHeight} />
+        <PageFrame title="Without category row" src={proposedSrc} width={width} viewHeight={viewHeight} />
+      </div>
+    </div>
+  );
+}
+
 function PhoneHeaderMock({ name, detail, showCategories }) {
   return (
     <figure className={styles.phoneCard}>
@@ -198,7 +231,7 @@ export default function LaunchFixesPreview() {
     <>
       <Seo
         title="Launch fixes preview"
-        description="Proposal for search titles, meta descriptions, menu gold, and the phone category row. Not for indexing."
+        description="Proposal for search titles, meta descriptions, menu gold, and pages without the category row. Not for indexing."
         path={LAUNCH_FIXES_PATH}
         robots="noindex"
       />
@@ -207,8 +240,8 @@ export default function LaunchFixesPreview() {
           <p className={styles.kicker}>Preview only</p>
           <h1>Launch fixes</h1>
           <p className={styles.lede}>
-            Proposed search text, a deeper gold for the menu, and a phone header without the category row.
-            Nothing here is applied to the live pages, the menu, or the sitemap.
+            Proposed search text, a deeper gold for the menu, and the homepage and Gallery without the
+            category row. Nothing here is applied to the live pages, the menu, or the sitemap.
           </p>
         </header>
 
@@ -246,14 +279,29 @@ export default function LaunchFixesPreview() {
         <section className={styles.section} id="phone-categories" aria-labelledby="phone-cat-heading">
           <h2 id="phone-cat-heading">Category row on phones</h2>
           <p className={styles.note}>
-            Each frame is 390px wide: the phone header and the top of the homepage photograph. The current
-            header keeps Journey, Landscape, Animal, Architecture, and People. The proposal removes that row
-            on phones. Desktop keeps it. The live category menu is unchanged.
+            A close-up of the phone header. Journey, Landscape, Animal, Architecture, and People stay in the
+            current frame. The frames below show the whole homepage and Gallery, at desktop width and at
+            390px, beside the same pages with that row removed.
           </p>
           <div className={styles.phoneStage}>
             <PhoneHeaderMock name="Current" detail="390px · category row kept" showCategories />
             <PhoneHeaderMock name="Proposed" detail="390px · category row removed" showCategories={false} />
           </div>
+        </section>
+
+        <section className={styles.section} id="page-frames" aria-labelledby="page-frames-heading">
+          <h2 id="page-frames-heading">Homepage and Gallery</h2>
+          <p className={styles.note}>
+            Desktop frames lay out at 1280px and scale into the column. Phone frames lay out at 390px.
+            Current is the live page. Without category row is the same page, preview only, with Journey,
+            Landscape, Animal, Architecture, and People removed from the header.
+          </p>
+          <h3 className={styles.pageName}>Homepage</h3>
+          <PagePair heading="Desktop" currentSrc="/" proposedSrc={HOME_NO_CATEGORIES_PATH} width={1280} viewHeight={560} />
+          <PagePair heading="Phone" currentSrc="/" proposedSrc={HOME_NO_CATEGORIES_PATH} width={390} viewHeight={680} />
+          <h3 className={styles.pageName}>Gallery</h3>
+          <PagePair heading="Desktop" currentSrc="/gallery" proposedSrc={GALLERY_NO_CATEGORIES_PATH} width={1280} viewHeight={560} />
+          <PagePair heading="Phone" currentSrc="/gallery" proposedSrc={GALLERY_NO_CATEGORIES_PATH} width={390} viewHeight={680} />
         </section>
       </article>
     </>

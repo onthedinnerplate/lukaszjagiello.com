@@ -382,3 +382,40 @@
   object-fit: cover;
   object-position: 66% 28%;
 }
+
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.frameCard { margin: 0; min-width: 0; }
+
+.phoneStage .frameCard { width: min(100%, 390px); }
+
+.frameClip {
+  position: relative;
+  overflow: hidden;
+  height: 560px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  container-type: inline-size;
+}
+
+.frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--frame-w);
+  height: calc(var(--view-h) * var(--frame-w) / 100cqw);
+  border: 0;
+  background: #fff;
+  transform: scale(calc(100cqw / var(--frame-w)));
+  transform-origin: top left;
+}
+
+@media (max-width: 900px) {
+  .pair { grid-template-columns: 1fr; }
+}

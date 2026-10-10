@@ -54,7 +54,7 @@ function slugFromPath(path) {
 }
 
 /** Shared by /gallery (all) and /gallery/[category]. */
-export default function GalleryPage({ photos, category, counts, navCounts }) {
+export default function GalleryPage({ photos, category, counts, navCounts, noindexPath = '' }) {
   const isAll = !category || category.slug === 'all';
   const meta = isAll
     ? {
@@ -116,9 +116,10 @@ export default function GalleryPage({ photos, category, counts, navCounts }) {
       <Seo
         title={meta.title}
         description={meta.description}
-        path={meta.path}
+        path={noindexPath || meta.path}
         keywords={isAll ? ['photo gallery', 'landscape prints', 'wildlife photos'] : [`${category.label.toLowerCase()} photography`, `${category.label.toLowerCase()} prints`]}
-        jsonLd={jsonLd}
+        robots={noindexPath ? 'noindex' : undefined}
+        jsonLd={noindexPath ? undefined : jsonLd}
       />
       <JourneysHero
         headingAs="p"

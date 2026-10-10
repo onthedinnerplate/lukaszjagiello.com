@@ -10,7 +10,7 @@ import SectionSpy from '@/components/SectionSpy';
 import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
 import styles from '@/styles/Layout.module.css';
 import BackToTop from './BackToTop';
-import { HERO_PARALLAX_PATH } from '@/lib/previewRoutes';
+import { HERO_PARALLAX_PATH, hidesCategoryBar, previewChromePath } from '@/lib/previewRoutes';
 
 const useIsoLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
@@ -38,12 +38,13 @@ function currentPath(asPath) {
 }
 
 function isHomeChrome(path) {
-  return path === '/' || path === HERO_PARALLAX_PATH;
+  return previewChromePath(path) === '/' || path === HERO_PARALLAX_PATH;
 }
 
 function sectionCurrent(path, href) {
+  const chrome = previewChromePath(path);
   if (href === '/') return isHomeChrome(path);
-  return path === href || path.startsWith(`${href}/`);
+  return chrome === href || chrome.startsWith(`${href}/`);
 }
 
 function Nav() {
@@ -200,33 +201,35 @@ function Nav() {
           />
         </ul>
       </nav>
-      {path === '/about' || path === '/contact' ? null : (
+      {previewChromePath(path) === '/about' || previewChromePath(path) === '/contact' || hidesCategoryBar(path) ? null : (
         <div className={`${styles.catBar} container`}>
           <SiteCategoryNav
             counts={MENU_COUNTS}
-            active={categoryActive(path)}
+            active={categoryActive(previewChromePath(path))}
             label="Categories"
           />
         </div>
       )}
-      {isHomeChrome(path) ? null : <SectionSpy path={path} />}
+      {isHomeChrome(path) ? null : <SectionSpy path={previewChromePath(path)} />}
     </header>
   );
 }
 
 function footerCurrent(path, href) {
   if (!href || href.startsWith('mailto:') || href.startsWith('http')) return false;
+  const chrome = previewChromePath(path);
   const target = href.split('#')[0].split('?')[0];
   if (target === '/') return isHomeChrome(path);
   // "All photographs" is only the gallery index; a category has its own link.
-  if (target === '/gallery') return path === '/gallery';
-  if (target === '/journal') return path === '/journal' || path.startsWith('/journal/');
-  return path === target;
+  if (target === '/gallery') return chrome === '/gallery';
+  if (target === '/journal') return chrome === '/journal' || chrome.startsWith('/journal/');
+  return chrome === target;
 }
 
 function Footer() {
   const { asPath } = useRouter();
   const path = currentPath(asPath);
+  const chrome = previewChromePath(path);
   const year = new Date().getFullYear();
   const columns = [
     { heading: 'Explore', links: site.nav.map(({ label, href }) => ({ label, href })) },
@@ -236,7 +239,7 @@ function Footer() {
       links: [
         // The gallery page no longer carries a digital-download call to action.
         // Other pages keep this footer link.
-        ...(path === '/gallery' || path.startsWith('/gallery/') ? [] : [{ label: 'Digital downloads', href: '/gallery' }]),
+        ...(chrome === '/gallery' || chrome.startsWith('/gallery/') ? [] : [{ label: 'Digital downloads', href: '/gallery' }]),
         { label: 'Licensing', href: '/licensing' },
         { label: 'Prints — coming soon', href: '/contact' },
       ],
