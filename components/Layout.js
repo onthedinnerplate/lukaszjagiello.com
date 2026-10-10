@@ -195,13 +195,15 @@ function Nav() {
           />
         </ul>
       </nav>
-      <div className={`${styles.catBar} container`}>
-        <SiteCategoryNav
-          counts={MENU_COUNTS}
-          active={categoryActive(path)}
-          label="Categories"
-        />
-      </div>
+      {path === '/about' || path === '/contact' ? null : (
+        <div className={`${styles.catBar} container`}>
+          <SiteCategoryNav
+            counts={MENU_COUNTS}
+            active={categoryActive(path)}
+            label="Categories"
+          />
+        </div>
+      )}
       <SectionSpy path={path} />
     </header>
   );
