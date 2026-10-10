@@ -220,3 +220,165 @@
   .compare { grid-template-columns: 1fr; }
   .brand { font-size: 1.05rem; }
 }
+
+/* 390px phone header. The category row uses the live SiteCategoryNav.
+   These rules only apply inside this preview frame, so the live menu is unchanged.
+   Sizes match a 390px viewport (the live phone rules key off the window, not this frame). */
+.phoneStage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.phoneCard { margin: 0; }
+
+.phoneFrame {
+  width: min(390px, 100%);
+  height: 560px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(26, 26, 26, 0.08);
+}
+
+.phoneHeader {
+  flex: none;
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.phoneBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 16px;
+  padding-right: 52px;
+}
+
+.phoneBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  font-size: 12.5px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.phoneMark {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
+.phoneName {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.phoneGiven {
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--charcoal);
+}
+
+.phoneScript {
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  font-size: 1.45em;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #c4a35a;
+}
+
+.phoneBurger,
+.phoneBurger::before,
+.phoneBurger::after {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--charcoal);
+}
+
+.phoneBurger {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.phoneBurger::before,
+.phoneBurger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.phoneBurger::before { top: -6px; }
+.phoneBurger::after { top: 6px; }
+
+.phoneCats {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px 2px;
+  background: #fff;
+}
+
+.phoneCats nav { margin: 0; width: 100%; }
+
+.phoneCats ul {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.25rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+}
+
+.phoneCats li { flex: 0 0 auto; }
+
+.phoneCats a,
+.phoneCats a:hover {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-family: Poppins, system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--charcoal);
+  text-decoration: none;
+  padding: 0.35rem 0;
+  min-height: 44px;
+  border-bottom-color: transparent;
+}
+
+.phoneTop {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: #123;
+}
+
+.phoneTop img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 66% 28%;
+}

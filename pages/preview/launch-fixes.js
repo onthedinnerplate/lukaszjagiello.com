@@ -1,5 +1,9 @@
 import Seo from '@/components/Seo';
+import SiteCategoryNav from '@/components/SiteCategoryNav';
+import { CATEGORIES } from '@/lib/categories';
+import { articles } from '@/lib/articles';
 import { accentScriptFont, articleTitleFont } from '@/lib/fonts';
+import { photos } from '@/lib/photos';
 import { LAUNCH_FIXES_PATH } from '@/lib/previewRoutes';
 import { site } from '@/lib/site';
 import styles from '@/styles/LaunchFixesPreview.module.css';
@@ -9,6 +13,21 @@ import styles from '@/styles/LaunchFixesPreview.module.css';
 
 const CURRENT_GOLD = '#c4a35a';
 const PROPOSED_GOLD = '#8c7032';
+const HERO_TOP = '/images/gallery/lightbox/lukasz-jagiello-41-full.webp';
+
+/** Same totals as the live header row: Journey is the essay count, the rest are photographs. */
+function categoryCounts() {
+  const counts = { all: articles.length };
+  for (const { slug } of CATEGORIES) counts[slug] = 0;
+  for (const photo of photos) {
+    for (const slug of photo.categories || []) {
+      if (Object.prototype.hasOwnProperty.call(counts, slug)) counts[slug] += 1;
+    }
+  }
+  return counts;
+}
+
+const CATEGORY_COUNTS = categoryCounts();
 
 const COPY = [
   {
@@ -116,6 +135,46 @@ function PhoneMenu({ gold }) {
   );
 }
 
+function PhoneHeaderMock({ name, detail, showCategories }) {
+  return (
+    <figure className={styles.phoneCard}>
+      <figcaption className={styles.goldCaption}>
+        <span className={styles.cardLabel}>{name}</span>
+        <span className={styles.goldMeta}>{detail}</span>
+      </figcaption>
+      <div className={styles.phoneFrame}>
+        <div className={styles.phoneHeader}>
+          <div className={styles.phoneBar}>
+            <div className={styles.phoneBrand}>
+              <img className={styles.phoneMark} src="/icon-192.png" alt="" width={22} height={22} />
+              <span className={styles.phoneName}>
+                <span className={`${styles.phoneGiven} ${articleTitleFont.className}`}>Łukasz Jagiełło</span>
+                <span className={styles.sep} aria-hidden="true" />
+                <span className={`${styles.phoneScript} ${accentScriptFont.className}`}>Photography</span>
+              </span>
+            </div>
+            <span className={styles.phoneBurger} aria-hidden="true" />
+          </div>
+          {showCategories ? (
+            <div
+              className={styles.phoneCats}
+              onClickCapture={(event) => {
+                const node = event.target instanceof Element ? event.target : event.target?.parentElement;
+                if (node?.closest('a')) event.preventDefault();
+              }}
+            >
+              <SiteCategoryNav counts={CATEGORY_COUNTS} active="" label="Categories" />
+            </div>
+          ) : null}
+        </div>
+        <div className={styles.phoneTop}>
+          <img src={HERO_TOP} alt="" />
+        </div>
+      </div>
+    </figure>
+  );
+}
+
 function GoldColumn({ name, hex }) {
   const ratio = ratioLabel(hex);
   return (
@@ -139,7 +198,7 @@ export default function LaunchFixesPreview() {
     <>
       <Seo
         title="Launch fixes preview"
-        description="Proposal for search titles, meta descriptions, and a deeper menu gold. Not for indexing."
+        description="Proposal for search titles, meta descriptions, menu gold, and the phone category row. Not for indexing."
         path={LAUNCH_FIXES_PATH}
         robots="noindex"
       />
@@ -148,8 +207,8 @@ export default function LaunchFixesPreview() {
           <p className={styles.kicker}>Preview only</p>
           <h1>Launch fixes</h1>
           <p className={styles.lede}>
-            Proposed search text and a deeper gold for the menu. Nothing here is applied to the live pages,
-            the menu, or the sitemap.
+            Proposed search text, a deeper gold for the menu, and a phone header without the category row.
+            Nothing here is applied to the live pages, the menu, or the sitemap.
           </p>
         </header>
 
@@ -181,6 +240,19 @@ export default function LaunchFixesPreview() {
           <div className={styles.compare}>
             <GoldColumn name="Current" hex={CURRENT_GOLD} />
             <GoldColumn name="Proposed" hex={PROPOSED_GOLD} />
+          </div>
+        </section>
+
+        <section className={styles.section} id="phone-categories" aria-labelledby="phone-cat-heading">
+          <h2 id="phone-cat-heading">Category row on phones</h2>
+          <p className={styles.note}>
+            Each frame is 390px wide: the phone header and the top of the homepage photograph. The current
+            header keeps Journey, Landscape, Animal, Architecture, and People. The proposal removes that row
+            on phones. Desktop keeps it. The live category menu is unchanged.
+          </p>
+          <div className={styles.phoneStage}>
+            <PhoneHeaderMock name="Current" detail="390px · category row kept" showCategories />
+            <PhoneHeaderMock name="Proposed" detail="390px · category row removed" showCategories={false} />
           </div>
         </section>
       </article>
