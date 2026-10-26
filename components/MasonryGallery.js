@@ -6,6 +6,7 @@ import Swatches from './Swatches';
 import ResponsiveImage from './ResponsiveImage';
 import { captionFor, mentionsGear, photoNumberFromSrc } from '@/lib/photoCaption';
 import { AffiliateDisclosure, GearLine, gearBlockClass, gearLineClass } from './GearStoreLinks';
+import { phoneCardFocusStyle } from '@/lib/photoFocus';
 import { ogImageSrc } from '@/lib/slug';
 import styles from '@/styles/Gallery.module.css';
 
@@ -144,7 +145,7 @@ export default function MasonryGallery({
                       sizes={sizes}
                       srcSet={photo.thumbSrcSet}
                       className={grayscale ? styles.img : `${styles.img} ${styles.imgColor}`}
-                      style={{ '--focus': photo.focus || 'center' }}
+                      style={phoneCardFocusStyle(photo)}
                       loading={prioritized ? 'eager' : 'lazy'}
                       fetchPriority={prioritized ? 'high' : undefined}
                     />
