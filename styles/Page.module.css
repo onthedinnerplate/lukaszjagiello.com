@@ -406,6 +406,7 @@
 .buyNote { margin: 0; font-size: 0.75rem; color: var(--muted); }
 .buyError { margin: 0.5rem 0 0; font-size: 0.875rem; color: var(--error); font-weight: 500; }
 .buyLicence { margin: 0.625rem 0 0; font-size: 0.6875rem; line-height: 1.4; color: var(--muted); }
+.buySoon { margin: 1.25rem 0 0; font-size: 0.875rem; color: var(--muted); }
 .srOnly {
   position: absolute;
   width: 1px;

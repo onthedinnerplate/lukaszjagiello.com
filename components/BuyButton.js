@@ -13,7 +13,10 @@ export default function BuyButton({ photoNumber, tiers = [], licence }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
-  if (!tiers.length) return null;
+  // No ciphertext on disk: say so, and do not render a control that can start checkout.
+  if (!tiers.length) {
+    return <p className={styles.buySoon}>Downloads coming soon</p>;
+  }
   const chosen = tiers.find((t) => t.id === tier) || tiers[0];
 
   const buy = async () => {
