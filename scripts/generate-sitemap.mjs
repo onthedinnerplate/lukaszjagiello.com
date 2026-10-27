@@ -48,6 +48,7 @@ const pages = [
   })),
   { path: '/journal', priority: '0.8', freq: 'weekly', images: journalArticles.flatMap((a) => a.images) },
   ...journalArticles,
+  { path: '/contests', priority: '0.6', freq: 'monthly' },
   { path: '/about', priority: '0.6', freq: 'monthly' },
   { path: '/contact', priority: '0.5', freq: 'yearly' },
   { path: '/sitemap', priority: '0.3', freq: 'weekly' },
