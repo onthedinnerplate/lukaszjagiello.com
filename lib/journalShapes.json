@@ -4349,5 +4349,205 @@
     "overlay": "#302017",
     "accent": "#0d0604",
     "accentContrast": 20.1
+  },
+  "47": {
+    "num": "47",
+    "shape": "rectangle",
+    "reason": "swatches for the published photograph",
+    "choice": "",
+    "gridW": 24,
+    "gridH": 31,
+    "pieces": [],
+    "blocks": [],
+    "palette": [
+      "#191917",
+      "#2e2c27",
+      "#513a20",
+      "#9e6b1d",
+      "#e39e0c"
+    ],
+    "overlay": "#2e2c27",
+    "accent": "#513a20",
+    "accentContrast": 10.63
+  },
+  "48": {
+    "num": "48",
+    "shape": "rectangle",
+    "reason": "swatches for the published photograph",
+    "choice": "",
+    "gridW": 24,
+    "gridH": 31,
+    "pieces": [],
+    "blocks": [],
+    "palette": [
+      "#2a2d12",
+      "#0d4f81",
+      "#6e653d",
+      "#3a7eb5",
+      "#9d9883"
+    ],
+    "overlay": "#0d4f81",
+    "accent": "#2a2d12",
+    "accentContrast": 14.16
+  },
+  "49": {
+    "num": "49",
+    "shape": "rectangle",
+    "reason": "swatches for the published photograph",
+    "choice": "",
+    "gridW": 24,
+    "gridH": 31,
+    "pieces": [],
+    "blocks": [],
+    "palette": [
+      "#2a2818",
+      "#403e28",
+      "#5b5754",
+      "#5c6721",
+      "#9795ac"
+    ],
+    "overlay": "#403e28",
+    "accent": "#2a2818",
+    "accentContrast": 14.84
+  },
+  "50": {
+    "num": "50",
+    "shape": "rectangle",
+    "reason": "swatches for the published photograph",
+    "choice": "",
+    "gridW": 24,
+    "gridH": 31,
+    "pieces": [],
+    "blocks": [],
+    "palette": [
+      "#0c0a06",
+      "#342d22",
+      "#55554f",
+      "#8a8d88",
+      "#b4b8b5"
+    ],
+    "overlay": "#342d22",
+    "accent": "#0c0a06",
+    "accentContrast": 19.78
+  },
+  "51": {
+    "num": "51",
+    "shape": "rectangle",
+    "reason": "swatches for the published photograph",
+    "choice": "",
+    "gridW": 24,
+    "gridH": 31,
+    "pieces": [],
+    "blocks": [],
+    "palette": [
+      "#010101",
+      "#141519",
+      "#3c434a",
+      "#7d8a99",
+      "#c4d3e0"
+    ],
+    "overlay": "#141519",
+    "accent": "#010101",
+    "accentContrast": 20.87
+  },
+  "52": {
+    "num": "52",
+    "shape": "rectangle",
+    "reason": "swatches for the published photograph",
+    "choice": "",
+    "gridW": 24,
+    "gridH": 31,
+    "pieces": [],
+    "blocks": [],
+    "palette": [
+      "#0d0701",
+      "#3e2a0b",
+      "#6c5324",
+      "#998361",
+      "#e3cfb0"
+    ],
+    "overlay": "#3e2a0b",
+    "accent": "#0d0701",
+    "accentContrast": 20.04
+  },
+  "53": {
+    "num": "53",
+    "shape": "rectangle",
+    "reason": "swatches for the published photograph",
+    "choice": "",
+    "gridW": 24,
+    "gridH": 31,
+    "pieces": [],
+    "blocks": [],
+    "palette": [
+      "#1f2922",
+      "#323d35",
+      "#48544a",
+      "#687268",
+      "#8e958b"
+    ],
+    "overlay": "#323d35",
+    "accent": "#1f2922",
+    "accentContrast": 15.02
+  },
+  "54": {
+    "num": "54",
+    "shape": "rectangle",
+    "reason": "swatches for the published photograph",
+    "choice": "",
+    "gridW": 24,
+    "gridH": 31,
+    "pieces": [],
+    "blocks": [],
+    "palette": [
+      "#1e2626",
+      "#3c4c4c",
+      "#5b6965",
+      "#2d85ae",
+      "#80b8de"
+    ],
+    "overlay": "#3c4c4c",
+    "accent": "#1e2626",
+    "accentContrast": 15.44
+  },
+  "55": {
+    "num": "55",
+    "shape": "rectangle",
+    "reason": "swatches for the published photograph",
+    "choice": "",
+    "gridW": 24,
+    "gridH": 31,
+    "pieces": [],
+    "blocks": [],
+    "palette": [
+      "#120e03",
+      "#3b2e0a",
+      "#9a4617",
+      "#635c25",
+      "#91844d"
+    ],
+    "overlay": "#3b2e0a",
+    "accent": "#120e03",
+    "accentContrast": 19.27
+  },
+  "56": {
+    "num": "56",
+    "shape": "rectangle",
+    "reason": "swatches for the published photograph",
+    "choice": "",
+    "gridW": 24,
+    "gridH": 31,
+    "pieces": [],
+    "blocks": [],
+    "palette": [
+      "#151411",
+      "#23221d",
+      "#32322d",
+      "#45443f",
+      "#5f5a52"
+    ],
+    "overlay": "#23221d",
+    "accent": "#151411",
+    "accentContrast": 18.42
   }
 }

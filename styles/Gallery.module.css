@@ -163,6 +163,16 @@
   background: #fff;
 }
 .share:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+/* Same disc as Buy, with no link, when this photograph has no encrypted file. */
+.share.shareSoon,
+.share.shareSoon:hover,
+.share.shareSoon:focus,
+.share.shareSoon:focus-visible {
+  cursor: default;
+  opacity: 0.5;
+  background: #fff;
+  outline: none;
+}
 .toast {
   position: absolute;
   right: 0;
